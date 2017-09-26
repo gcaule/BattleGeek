@@ -1,8 +1,6 @@
 package fr.wcs.battlegeek.ui;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PointF;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,8 +16,6 @@ public class Item implements View.OnTouchListener {
     float mGridX = 0;
     float mGridY = 0;
     PointF position = new PointF();
-    Paint mPaintStroke = new Paint();
-    Paint mPaintFill = new Paint();
     private String TAG = "Item";
     private Grid mGrid;
     private ArrayList<Block> mBlocks = new ArrayList<>();
@@ -33,7 +29,6 @@ public class Item implements View.OnTouchListener {
     public Item(CreateMapView view, Grid grid) {
         mView = view;
         mGrid = grid;
-        init();
     }
 
     public Item(CreateMapView view, Grid grid, float gridX, float gridY) {
@@ -42,7 +37,6 @@ public class Item implements View.OnTouchListener {
         mGridX = gridX;
         mGridY = gridY;
         position.set(mGridX, mGridY);
-        init();
     }
 
     public float getGridX() {
@@ -80,17 +74,6 @@ public class Item implements View.OnTouchListener {
         mView.invalidate();
     }
 
-    private void init() {
-        mPaintStroke.setStyle(Paint.Style.STROKE);
-        mPaintStroke.setStrokeWidth(2);
-        mPaintStroke.setColor(Color.BLACK);
-        mPaintStroke.setAntiAlias(true);
-
-        mPaintFill.setStyle(Paint.Style.FILL);
-        mPaintFill.setColor(Color.DKGRAY);
-
-    }
-
     public void setBlock(Block block){
         mBlocks.add(block);
         if(block.getX() > mWidth) mWidth = (int) block.getX();
@@ -100,10 +83,7 @@ public class Item implements View.OnTouchListener {
     public void draw(Canvas canvas) {
         float cellSize = mGrid.getCellSize();
         for (Block block : mBlocks) {
-            float x = (mGridX + block.getX()) * cellSize;
-            float y = (mGridY + block.getY()) * cellSize;
-            canvas.drawRect(x, y, x + cellSize, y + cellSize, mPaintFill);
-            canvas.drawRect(x, y, x + cellSize, y + cellSize, mPaintStroke);
+            block.draw(canvas, mGridX, mGridY, cellSize);
         }
 
     }
@@ -130,7 +110,7 @@ public class Item implements View.OnTouchListener {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mInitialPosition = new PointF(mGridX, mGridY)
+                mInitialPosition = new PointF(mGridX, mGridY);
                 dx = mGridX - pos.x;
                 dy = mGridY - pos.y;
                 break;
