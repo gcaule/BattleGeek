@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BattleGeek</string>
+    <string name="launchGame">GO GO GO !</string>
+
 </resources>
