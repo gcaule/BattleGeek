@@ -20,6 +20,11 @@ public class CreateMapView extends View{
 
     private Grid mGrid;
     private Item mSelectedItem = null;
+
+    public ArrayList<Item> getItems() {
+        return mItems;
+    }
+
     private ArrayList<Item> mItems = new ArrayList<>();
     private Paint mPaint = new Paint();
 

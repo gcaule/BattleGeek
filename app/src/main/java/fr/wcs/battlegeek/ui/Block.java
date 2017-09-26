@@ -10,21 +10,25 @@ import android.graphics.PointF;
  */
 
 public class Block {
-    private PointF mCoordinates;
+    public PointF getPosition() {
+        return mPosition;
+    }
+
+    private PointF mPosition;
     private float mX;
     private float mY;
     private Paint mPaintStroke = new Paint();
     private Paint mPaintFill = new Paint();
+    private float mBlockSize;
 
-    public Block(PointF coordinates) {
-        mCoordinates = coordinates;
-        mX = coordinates.x;
-        mY = coordinates.y;
+    public Block(PointF position) {
+        mPosition = position;
+        mX = position.x;
+        mY = position.y;
         init();
     }
-
     public Block(float x, float y) {
-        mCoordinates = new PointF(x, y);
+        mPosition = new PointF(x, y);
         mX = x;
         mY = y;
         init();
@@ -46,7 +50,7 @@ public class Block {
 
     public void setX(float x) {
         mX = x;
-        mCoordinates.x = x;
+        mPosition.x = x;
     }
 
     public float getY() {
@@ -55,7 +59,7 @@ public class Block {
 
     public void setY(float y) {
         mY = y;
-        mCoordinates.y = y;
+        mPosition.y = y;
     }
 
     public boolean contains(PointF pointF) {
@@ -66,9 +70,10 @@ public class Block {
     }
 
     public void draw(Canvas canvas, float itemX, float itemY, float blockSize) {
-        float x = (itemX + mX) * blockSize;
-        float y = (itemY + mY) * blockSize;
-        canvas.drawRect(x, y, x + blockSize, y + blockSize, mPaintFill);
-        canvas.drawRect(x, y, x + blockSize, y + blockSize, mPaintStroke);
+        mBlockSize = blockSize;
+        float x = (itemX + mX) * mBlockSize;
+        float y = (itemY + mY) * mBlockSize;
+        canvas.drawRect(x, y, x + mBlockSize, y + mBlockSize, mPaintFill);
+        canvas.drawRect(x, y, x + mBlockSize, y + mBlockSize, mPaintStroke);
     }
 }

@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 public class Item implements View.OnTouchListener {
     CreateMapView mView;
-    float mGridX = 0;
-    float mGridY = 0;
-    PointF position = new PointF();
+    float mX = 0;
+    float mY = 0;
+    PointF mPosition = new PointF();
     private String TAG = "Item";
     private Grid mGrid;
     private ArrayList<Block> mBlocks = new ArrayList<>();
@@ -31,61 +31,54 @@ public class Item implements View.OnTouchListener {
         mGrid = grid;
     }
 
-    public Item(CreateMapView view, Grid grid, float gridX, float gridY) {
+    public Item(CreateMapView view, Grid grid, float x, float y) {
         mView = view;
         mGrid = grid;
-        mGridX = gridX;
-        mGridY = gridY;
-        position.set(mGridX, mGridY);
+        mX = x;
+        mY = y;
+        mPosition.set(mX, mY);
     }
 
-    public float getGridX() {
-        return mGridX;
+    public float getX() {
+        return mX;
     }
 
-    public void setGridX(float gridX) {
-        mGridX = gridX;
-        position.set(mGridX, mGridY);
+    public void setX(float x) {
+        mX = x;
+        mPosition.x = x;
     }
 
-    public float getGridY() {
-        return mGridY;
+    public float getY() {
+        return mY;
     }
 
-    public void setGridY(float gridY) {
-        mGridY = gridY;
-        position.set(mGridX, mGridY);
+    public void setY(float y) {
+        mY = y;
+        mPosition.y = y;
     }
 
     public PointF getPosition() {
-        return position;
+        return mPosition;
     }
 
     public void setPosition(PointF position) {
-        Block block = getBlock(position);
-        if (block != null) {
-            float offsetX = - block.getX();
-            float offsetY = - block.getY();
-            position.offset(offsetX, offsetY);
-        }
-        this.position = contrainsToGrid(position);
-        mGridX = position.x;
-        mGridY = position.y;
+        mPosition = position;
+        mX = position.x;
+        mY = position.y;
         mView.invalidate();
     }
 
-    public void setBlock(Block block){
+    public void setBlock(Block block) {
         mBlocks.add(block);
-        if(block.getX() > mWidth) mWidth = (int) block.getX();
-        if(block.getY() > mHeight) mHeight = (int) block.getY();
+        if (block.getX() > mWidth) mWidth = (int) block.getX();
+        if (block.getY() > mHeight) mHeight = (int) block.getY();
     }
 
     public void draw(Canvas canvas) {
         float cellSize = mGrid.getCellSize();
         for (Block block : mBlocks) {
-            block.draw(canvas, mGridX, mGridY, cellSize);
+            block.draw(canvas, mX, mY, cellSize);
         }
-
     }
 
     public boolean contains(PointF pointF) {
@@ -99,51 +92,60 @@ public class Item implements View.OnTouchListener {
     }
 
     private PointF mapToItem(PointF pointF) {
-        return new PointF(pointF.x - mGridX, pointF.y - mGridY);
+        return new PointF(pointF.x - mX, pointF.y - mY);
+    }
+
+    private PointF mapFromItem(PointF pointF) {
+        return new PointF(pointF.x + mX, pointF.y + mY);
     }
 
     @Override
-    public boolean onTouch(View view, MotionEvent event) {
+    public boolean onTouch(View parentView, MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
         PointF pos = mGrid.mapToGrid(x, y);
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mInitialPosition = new PointF(mGridX, mGridY);
-                dx = mGridX - pos.x;
-                dy = mGridY - pos.y;
+                mInitialPosition = new PointF(mX, mY);
+                dx = mX - pos.x;
+                dy = mY - pos.y;
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                //Log.e(TAG, "onTouchEvent: Move");
                 pos.offset(dx, dy);
+                pos = spanToGrid(pos);
                 setPosition(pos);
                 break;
 
             case MotionEvent.ACTION_UP:
-                setPosition(new PointF((float) (int) pos.x, (float) (int) pos.y));
+                pos.x = Math.round(mX);
+                pos.y = Math.round(mY);
+                pos = spanToGrid(pos);
+                pos = avoidSuperposition(pos);
+                setPosition(pos);
                 break;
         }
         return true;
     }
 
-    private Block getBlock(PointF pointF) {
-        for (Block block : mBlocks) {
-            PointF pos = mapToItem(pointF);
-            if (block.contains(pos)) {
-                return block;
-            }
-        }
-        return null;
-    }
-
-    private PointF contrainsToGrid(PointF pointF) {
+    private PointF spanToGrid(PointF pointF) {
         int mGridSize = mGrid.getSize();
         if (pointF.x < 0) pointF.x = 0;
         if (pointF.x + mWidth >= mGridSize - 1) pointF.x = mGridSize - 1 - mWidth;
         if (pointF.y < 0) pointF.y = 0;
         if (pointF.y + mHeight >= mGridSize - 1) pointF.y = mGridSize - 1 - mHeight;
+        return pointF;
+    }
+
+    private PointF avoidSuperposition(PointF pointF) {
+        for(Item item : mView.getItems()) {
+            for(Block block : mBlocks) {
+                if(item != this && item.contains(mapFromItem(block.getPosition()))){
+                    return mInitialPosition;
+                }
+            }
+        }
         return pointF;
     }
 }
