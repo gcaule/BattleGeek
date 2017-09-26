@@ -7,13 +7,10 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by adphi on 25/09/17.
@@ -59,7 +56,7 @@ public class CreateMapView extends View{
         mGrid.setHeight(w);
     }
 
-    @Override implements View.OnTouchListener
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         mGrid.draw(canvas);
@@ -68,9 +65,6 @@ public class CreateMapView extends View{
         }
     }
 
-    private float dx = 0;
-    private float dy = 0;
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
@@ -78,39 +72,26 @@ public class CreateMapView extends View{
         PointF pos = mGrid.mapToGrid(x, y);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Log.e(TAG, "onTouchEvent: Down");
-                if( mGrid.contains(x, y)) {
-                    Item item = getItem(pos);
-                    Log.e(TAG, "onTouchEvent: Inside Grid");
-                    if (item != null) {
-                        mSelectedItem = item;
-                        PointF itemPos = mSelectedItem.getPosition();
-                        dx = itemPos.x - pos.x;
-                        dy = itemPos.y - pos.y;
-                    }
+                mSelectedItem = getItem(pos);
+                if (mSelectedItem != null) {
+                    mSelectedItem.onTouch(this, event);
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                //Log.e(TAG, "onTouchEvent: Move");
                 if (mSelectedItem != null) {
-                    pos.offset(dx, dy);
-                    pos = mGrid.contrainsToGrid(pos);
-                    mSelectedItem.setPosition(pos);
+                    mSelectedItem.onTouch(this, event);
                 }
                 break;
             case MotionEvent.ACTION_UP:
                 if (mSelectedItem != null) {
-                    int gridSize = mGrid.getSize();
-                    pos = mGrid.contrainsToGrid(pos);
-                    mSelectedItem.setPosition(new PointF((float) (int) pos.x, (float) (int) pos.y));
+                    mSelectedItem.onTouch(this, event);
                     mSelectedItem = null;
-                    dx = 0;
-                    dy = 0;
                 }
                 break;
         }
         return true;
     }
+
 
     private Item getItem(PointF point) {
         for (Item item : mItems) {

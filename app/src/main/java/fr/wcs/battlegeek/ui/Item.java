@@ -3,8 +3,9 @@ package fr.wcs.battlegeek.ui;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PointF;
+import android.view.MotionEvent;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -12,16 +13,16 @@ import java.util.ArrayList;
  * Created by adphi on 25/09/17.
  */
 
-public class Item {
-    private String TAG = "Item";
-    private Grid mGrid;
+public class Item implements View.OnTouchListener {
     CreateMapView mView;
     float mGridX = 0;
     float mGridY = 0;
     PointF position = new PointF();
     Paint mPaintStroke = new Paint();
     Paint mPaintFill = new Paint();
-    private ArrayList<Point> mElements = new ArrayList<>();
+    private String TAG = "Item";
+    private Grid mGrid;
+    private ArrayList<Block> mBlocks = new ArrayList<>();
 
     public Item(CreateMapView view, Grid grid) {
         mView = view;
@@ -76,15 +77,14 @@ public class Item {
         mPaintFill.setStyle(Paint.Style.FILL);
         mPaintFill.setColor(Color.DKGRAY);
 
-        mElements.add(new Point(0, 0));
-        mElements.add(new Point(1, 0));
+        mBlocks.add(new Block(0, 0));
     }
 
     public void draw(Canvas canvas) {
         float cellSize = mGrid.getCellSize();
-        for (Point element : mElements) {
-            float x = (mGridX + element.x) * cellSize;
-            float y = (mGridY + element.y) * cellSize;
+        for (Block block : mBlocks) {
+            float x = (mGridX + block.getX()) * cellSize;
+            float y = (mGridY + block.getY()) * cellSize;
             canvas.drawRect(x, y, x + cellSize, y + cellSize, mPaintFill);
             canvas.drawRect(x, y, x + cellSize, y + cellSize, mPaintStroke);
         }
@@ -92,12 +92,46 @@ public class Item {
     }
 
     public boolean contains(PointF pointF) {
-        for (Point point : mElements) {
-            if ((int) pointF.x == position.x + point.x && (int) pointF.y == position.y + point.y) {
+        for (Block block : mBlocks) {
+            PointF itemCoordiantes = mapToItem(pointF);
+            if (block.contains(itemCoordiantes)) {
                 return true;
             }
         }
         return false;
     }
 
+    private PointF mapToItem(PointF pointF) {
+        return new PointF(pointF.x - mGridX, pointF.y - mGridY);
+    }
+
+    private float dx = 0;
+    private float dy = 0;
+
+    @Override
+    public boolean onTouch(View view, MotionEvent event) {
+        float x = event.getX();
+        float y = event.getY();
+        PointF pos = mGrid.mapToGrid(x, y);
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                dx = mGridX - pos.x;
+                dy = mGridY - pos.y;
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                //Log.e(TAG, "onTouchEvent: Move");
+                pos.offset(dx, dy);
+                pos = mGrid.contrainsToGrid(pos);
+                setPosition(pos);
+                break;
+
+            case MotionEvent.ACTION_UP:
+                pos = mGrid.contrainsToGrid(pos);
+                setPosition(new PointF((float) (int) pos.x, (float) (int) pos.y));
+                break;
+        }
+        return true;
+    }
 }
