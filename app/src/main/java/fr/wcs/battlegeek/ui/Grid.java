@@ -87,7 +87,6 @@ public class Grid {
     }
 
     public boolean contains(PointF pointF) {
-        pointF = mapToGrid(pointF);
         if (pointF.x >= 0 && pointF.x < size && pointF.y >= 0 && pointF.y < size) {
             return true;
         } else return false;

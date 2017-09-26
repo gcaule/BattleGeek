@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class CreateMapView extends View{
 
     private Grid mGrid;
-    private Item mSelectedItem;
+    private Item mSelectedItem = null;
     private ArrayList<Item> mItems = new ArrayList<>();
     private Paint mPaint = new Paint();
 
@@ -44,8 +44,19 @@ public class CreateMapView extends View{
         mPaint.setAntiAlias(true);
         mGrid = new Grid(8);
 
-        mItems.add(new Item(this,mGrid,  0, 0));
-        mItems.add(new Item(this, mGrid, 2, 2));
+        Item item1 = new Item(this,mGrid, 0, 0);
+        item1.setBlock(new Block(0, 0));
+        item1.setBlock(new Block(1, 0));
+        item1.setBlock(new Block(0, 1));
+        item1.setBlock(new Block(1, 1));
+        mItems.add(item1);
+
+        Item item2 = new Item(this, mGrid, 2, 2);
+        item2.setBlock(new Block(0, 0));
+        item2.setBlock(new Block(0, 1));
+        item2.setBlock(new Block(1, 1));
+        item2.setBlock(new Block(1, 2));
+        mItems.add(item2);
 
     }
 

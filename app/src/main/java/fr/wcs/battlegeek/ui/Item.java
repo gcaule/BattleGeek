@@ -24,6 +24,12 @@ public class Item implements View.OnTouchListener {
     private Grid mGrid;
     private ArrayList<Block> mBlocks = new ArrayList<>();
 
+    private int mWidth = 0;
+    private int mHeight = 0;
+    private float dx = 0;
+    private float dy = 0;
+    private PointF mInitialPosition;
+
     public Item(CreateMapView view, Grid grid) {
         mView = view;
         mGrid = grid;
@@ -62,7 +68,13 @@ public class Item implements View.OnTouchListener {
     }
 
     public void setPosition(PointF position) {
-        this.position = position;
+        Block block = getBlock(position);
+        if (block != null) {
+            float offsetX = - block.getX();
+            float offsetY = - block.getY();
+            position.offset(offsetX, offsetY);
+        }
+        this.position = contrainsToGrid(position);
         mGridX = position.x;
         mGridY = position.y;
         mView.invalidate();
@@ -77,7 +89,12 @@ public class Item implements View.OnTouchListener {
         mPaintFill.setStyle(Paint.Style.FILL);
         mPaintFill.setColor(Color.DKGRAY);
 
-        mBlocks.add(new Block(0, 0));
+    }
+
+    public void setBlock(Block block){
+        mBlocks.add(block);
+        if(block.getX() > mWidth) mWidth = (int) block.getX();
+        if(block.getY() > mHeight) mHeight = (int) block.getY();
     }
 
     public void draw(Canvas canvas) {
@@ -93,8 +110,8 @@ public class Item implements View.OnTouchListener {
 
     public boolean contains(PointF pointF) {
         for (Block block : mBlocks) {
-            PointF itemCoordiantes = mapToItem(pointF);
-            if (block.contains(itemCoordiantes)) {
+            PointF itemCoordinates = mapToItem(pointF);
+            if (block.contains(itemCoordinates)) {
                 return true;
             }
         }
@@ -105,9 +122,6 @@ public class Item implements View.OnTouchListener {
         return new PointF(pointF.x - mGridX, pointF.y - mGridY);
     }
 
-    private float dx = 0;
-    private float dy = 0;
-
     @Override
     public boolean onTouch(View view, MotionEvent event) {
         float x = event.getX();
@@ -116,6 +130,7 @@ public class Item implements View.OnTouchListener {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                mInitialPosition = new PointF(mGridX, mGridY)
                 dx = mGridX - pos.x;
                 dy = mGridY - pos.y;
                 break;
@@ -123,15 +138,32 @@ public class Item implements View.OnTouchListener {
             case MotionEvent.ACTION_MOVE:
                 //Log.e(TAG, "onTouchEvent: Move");
                 pos.offset(dx, dy);
-                pos = mGrid.contrainsToGrid(pos);
                 setPosition(pos);
                 break;
 
             case MotionEvent.ACTION_UP:
-                pos = mGrid.contrainsToGrid(pos);
                 setPosition(new PointF((float) (int) pos.x, (float) (int) pos.y));
                 break;
         }
         return true;
+    }
+
+    private Block getBlock(PointF pointF) {
+        for (Block block : mBlocks) {
+            PointF pos = mapToItem(pointF);
+            if (block.contains(pos)) {
+                return block;
+            }
+        }
+        return null;
+    }
+
+    private PointF contrainsToGrid(PointF pointF) {
+        int mGridSize = mGrid.getSize();
+        if (pointF.x < 0) pointF.x = 0;
+        if (pointF.x + mWidth >= mGridSize - 1) pointF.x = mGridSize - 1 - mWidth;
+        if (pointF.y < 0) pointF.y = 0;
+        if (pointF.y + mHeight >= mGridSize - 1) pointF.y = mGridSize - 1 - mHeight;
+        return pointF;
     }
 }
