@@ -109,6 +109,7 @@ public class Item implements View.OnTouchListener {
         mPosition = position;
         mX = position.x;
         mY = position.y;
+        // Refresh the View
         mView.invalidate();
     }
 
@@ -174,28 +175,39 @@ public class Item implements View.OnTouchListener {
      */
     @Override
     public boolean onTouch(View parentView, MotionEvent event) {
+        // Get the Coordinates of the Touch Event
         float x = event.getX();
         float y = event.getY();
+        // Mapt Coordinates to the Grid Coordinates System
         PointF pos = mGrid.mapToGrid(x, y);
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                // Store Initial Position
                 mInitialPosition = new PointF(mX, mY);
+                // Get the offset of the finger in the Item in order to not set the (0,0) of the Item at the Event Position
                 dx = mX - pos.x;
                 dy = mY - pos.y;
                 break;
 
             case MotionEvent.ACTION_MOVE:
+                // Apply the Offset
                 pos.offset(dx, dy);
+                // Limit position to the Grid's limits
                 pos = contrainsToGrid(pos);
+                // Apply the position change
                 setPosition(pos);
                 break;
 
             case MotionEvent.ACTION_UP:
+                // Snap the Item to the Grid
                 pos.x = Math.round(mX);
                 pos.y = Math.round(mY);
+                // Limit position to the Grid's limits
                 pos = contrainsToGrid(pos);
+                // Check for Superposition
                 pos = avoidSuperposition(pos);
+                // Apply the position change
                 setPosition(pos);
                 break;
         }
@@ -208,7 +220,9 @@ public class Item implements View.OnTouchListener {
      * @return
      */
     private PointF contrainsToGrid(PointF pointF) {
+        // get the grid Size
         int mGridSize = mGrid.getSize();
+        // Apply limits
         if (pointF.x < 0) pointF.x = 0;
         if (pointF.x + mWidth >= mGridSize - 1) pointF.x = mGridSize - 1 - mWidth;
         if (pointF.y < 0) pointF.y = 0;
@@ -222,16 +236,27 @@ public class Item implements View.OnTouchListener {
      * @return the PointF if no superposition, the initial position otherwise
      */
     private PointF avoidSuperposition(PointF pointF) {
+        // In order to avoid superposition we need to iterate through each item
+        // contained by the parent View
         for (Item item : mView.getItems()) {
+            // We also need to check for each block of the current Item
             for (Block block : mBlocks) {
+                // We switch to the Grid Coordinate System
                 PointF blockPos = mapFromItem(block.getPosition());
+                // the tricky part: the last position was not snap to grid
+                // so we need to Snap the position since the compared blocks
+                // have snap coordinates
                 blockPos.x = Math.round(blockPos.x);
                 blockPos.y = Math.round(blockPos.y);
+                // If the Item is not the one we are checking superposition for,
+                // and compared Item is on the same position
                 if (item != this && item.contains(blockPos)) {
+                    // we return the initial Touch Sequence position
                     return mInitialPosition;
                 }
             }
         }
+        // if we are here, everything is ok
         return pointF;
     }
 

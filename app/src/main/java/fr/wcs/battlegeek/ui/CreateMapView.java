@@ -147,7 +147,7 @@ public class CreateMapView extends View {
                 break;
         }
         return true;
-    }   
+    }
 
     /**
      * Method returning Item at the given PointF

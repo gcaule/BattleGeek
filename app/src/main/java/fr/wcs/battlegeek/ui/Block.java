@@ -89,6 +89,9 @@ public class Block {
         return mPosition;
     }
 
+    /**
+     * Initiate Painters
+     */
     private void init() {
         mPaintStroke.setStyle(Paint.Style.STROKE);
         mPaintStroke.setStrokeWidth(2);
