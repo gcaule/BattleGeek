@@ -67,26 +67,42 @@ public class CreateMapView extends View {
 
     /**
      * Initialisation Method
+     * This is where the Blocks of the Item are defined
      */
     private void init() {
         mPaint.setColor(Color.BLACK);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setAntiAlias(true);
-        mGrid = new Grid(8);
+        mGrid = new Grid(10);
 
-        Item item1 = new Item(this, mGrid, 0, 0);
-        item1.setBlock(new Block(0, 0));
-        item1.setBlock(new Block(1, 0));
-        item1.setBlock(new Block(0, 1));
-        item1.setBlock(new Block(1, 1));
-        mItems.add(item1);
+        Tetromino tetromino1 = new Tetromino(this, mGrid, Tetromino.Shape.I, null);
+        tetromino1.setPosition(new PointF(0,0));
+        mItems.add(tetromino1);
 
-        Item item2 = new Item(this, mGrid, 2, 2);
-        item2.setBlock(new Block(0, 0));
-        item2.setBlock(new Block(0, 1));
-        item2.setBlock(new Block(1, 1));
-        item2.setBlock(new Block(1, 2));
-        mItems.add(item2);
+        Tetromino tetromino2 = new Tetromino(this, mGrid, Tetromino.Shape.T, null);
+        tetromino2.setPosition(new PointF(2, 1));
+        mItems.add(tetromino2);
+
+        Tetromino tetromino3 = new Tetromino(this, mGrid, Tetromino.Shape.Z, null);
+        tetromino3.setPosition(new PointF(5, 5));
+        mItems.add(tetromino3);
+
+        Tetromino tetromino4 = new Tetromino(this, mGrid, Tetromino.Shape.O, null);
+        tetromino4.setPosition(new PointF(5, 2));
+        mItems.add(tetromino4);
+
+        Tetromino tetromino5 = new Tetromino(this, mGrid, Tetromino.Shape.J, null);
+        tetromino5.setPosition(new PointF(8, 6));
+        mItems.add(tetromino5);
+
+        Tetromino tetromino6 = new Tetromino(this, mGrid, Tetromino.Shape.L, null);
+        tetromino6.setPosition(new PointF(1, 5));
+        mItems.add(tetromino6);
+
+        Tetromino tetromino7 = new Tetromino(this, mGrid, Tetromino.Shape.S, null);
+        tetromino7.setPosition(new PointF(3, 6));
+        mItems.add(tetromino7);
+
 
     }
 
