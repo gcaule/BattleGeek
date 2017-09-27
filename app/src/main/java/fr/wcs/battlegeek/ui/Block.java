@@ -15,11 +15,13 @@ public class Block {
 
     // State
     private State mState = Alive;
+
     // Geometry
-    private PointF mPosition;
-    private float mX;
-    private float mY;
-    private float mBlockSize;
+    protected PointF mPosition;
+    protected float mX;
+    protected float mY;
+    protected float mBlockSize;
+
     // Painting
     private Paint mPaintStroke = new Paint();
     private Paint mPaintAliveFill = new Paint();
@@ -31,9 +33,9 @@ public class Block {
      * @param position PointF in Item
      */
     public Block(PointF position) {
-        mPosition = position;
-        mX = position.x;
-        mY = position.y;
+        this.mPosition = position;
+        this.mX = position.x;
+        this.mY = position.y;
         init();
     }
 
@@ -44,9 +46,9 @@ public class Block {
      * @param y position in Item
      */
     public Block(float x, float y) {
-        mPosition = new PointF(x, y);
-        mX = x;
-        mY = y;
+        this.mPosition = new PointF(x, y);
+        this.mX = x;
+        this.mY = y;
         init();
     }
 
@@ -87,44 +89,50 @@ public class Block {
         return mPosition;
     }
 
+    /**
+     * Initiate Painters
+     */
     private void init() {
-        mPaintStroke.setStyle(Paint.Style.STROKE);
-        mPaintStroke.setStrokeWidth(2);
-        mPaintStroke.setColor(Color.BLACK);
-        mPaintStroke.setAntiAlias(true);
+        this.mPaintStroke.setStyle(Paint.Style.STROKE);
+        this.mPaintStroke.setStrokeWidth(2);
+        this.mPaintStroke.setColor(Color.BLACK);
+        this.mPaintStroke.setAntiAlias(true);
 
-        mPaintAliveFill.setStyle(Paint.Style.FILL);
-        mPaintAliveFill.setColor(Color.DKGRAY);
+        this.mPaintAliveFill.setStyle(Paint.Style.FILL);
+        this.mPaintAliveFill.setColor(Color.DKGRAY);
+
+        this.mPaintDeadFill.setStyle(Paint.Style.FILL);
+        this.mPaintDeadFill.setColor(Color.BLACK);
     }
 
     /**
      * @return the x poisition in Item
      */
     public float getX() {
-        return mX;
+        return this.mX;
     }
 
     /**
      * @param x the x position in Item
      */
     public void setX(float x) {
-        mX = x;
-        mPosition.x = x;
+        this.mX = x;
+        this.mPosition.x = x;
     }
 
     /**
      * @return the y position in Item
      */
     public float getY() {
-        return mY;
+        return this.mY;
     }
 
     /**
      * @param y the y position in Item
      */
     public void setY(float y) {
-        mY = y;
-        mPosition.y = y;
+        this.mY = y;
+        this.mPosition.y = y;
     }
 
     /**
@@ -134,8 +142,8 @@ public class Block {
      * @return
      */
     public boolean contains(PointF pointF) {
-        if (mX <= pointF.x && pointF.x < mX + 1 &&
-                mY <= pointF.y && pointF.y < mY + 1)
+        if(this.mX <= pointF.x && pointF.x < this.mX + 1 &&
+           this.mY <= pointF.y && pointF.y < this.mY + 1)
             return true;
         else return false;
     }
@@ -149,7 +157,7 @@ public class Block {
      * @param blockSize the Size of the Block relative to the Canvas Coordinate System
      */
     public void draw(Canvas canvas, float itemX, float itemY, float blockSize) {
-        mBlockSize = blockSize;
+        this.mBlockSize = blockSize;
         float x = (itemX + mX) * mBlockSize;
         float y = (itemY + mY) * mBlockSize;
         switch (mState) {
