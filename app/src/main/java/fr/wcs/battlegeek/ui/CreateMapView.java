@@ -75,31 +75,31 @@ public class CreateMapView extends View {
         mPaint.setAntiAlias(true);
         mGrid = new Grid(10);
 
-        Tetromino tetromino1 = new Tetromino(this, mGrid, Tetromino.Shape.I, null);
+        Tetromino tetromino1 = new Tetromino(this, mGrid, Tetromino.Shape.I, Tetromino.Colors.LTBLUE);
         tetromino1.setPosition(new PointF(0,0));
         mItems.add(tetromino1);
 
-        Tetromino tetromino2 = new Tetromino(this, mGrid, Tetromino.Shape.T, null);
+        Tetromino tetromino2 = new Tetromino(this, mGrid, Tetromino.Shape.T, Tetromino.Colors.PURPLE);
         tetromino2.setPosition(new PointF(2, 1));
         mItems.add(tetromino2);
 
-        Tetromino tetromino3 = new Tetromino(this, mGrid, Tetromino.Shape.Z, null);
+        Tetromino tetromino3 = new Tetromino(this, mGrid, Tetromino.Shape.Z, Tetromino.Colors.RED);
         tetromino3.setPosition(new PointF(5, 5));
         mItems.add(tetromino3);
 
-        Tetromino tetromino4 = new Tetromino(this, mGrid, Tetromino.Shape.O, null);
+        Tetromino tetromino4 = new Tetromino(this, mGrid, Tetromino.Shape.O, Tetromino.Colors.YELLOW);
         tetromino4.setPosition(new PointF(5, 2));
         mItems.add(tetromino4);
 
-        Tetromino tetromino5 = new Tetromino(this, mGrid, Tetromino.Shape.J, null);
-        tetromino5.setPosition(new PointF(8, 6));
+        Tetromino tetromino5 = new Tetromino(this, mGrid, Tetromino.Shape.J, Tetromino.Colors.BLUE);
+        tetromino5.setPosition(new PointF(6, 7));
         mItems.add(tetromino5);
 
-        Tetromino tetromino6 = new Tetromino(this, mGrid, Tetromino.Shape.L, null);
+        Tetromino tetromino6 = new Tetromino(this, mGrid, Tetromino.Shape.L, Tetromino.Colors.ORANGE);
         tetromino6.setPosition(new PointF(1, 5));
         mItems.add(tetromino6);
 
-        Tetromino tetromino7 = new Tetromino(this, mGrid, Tetromino.Shape.S, null);
+        Tetromino tetromino7 = new Tetromino(this, mGrid, Tetromino.Shape.S, Tetromino.Colors.GREEN);
         tetromino7.setPosition(new PointF(3, 6));
         mItems.add(tetromino7);
 
