@@ -114,14 +114,14 @@ public class Item implements View.OnTouchListener {
 
             case MotionEvent.ACTION_MOVE:
                 pos.offset(dx, dy);
-                pos = spanToGrid(pos);
+                pos = contrainsToGrid(pos);
                 setPosition(pos);
                 break;
 
             case MotionEvent.ACTION_UP:
                 pos.x = Math.round(mX);
                 pos.y = Math.round(mY);
-                pos = spanToGrid(pos);
+                pos = contrainsToGrid(pos);
                 pos = avoidSuperposition(pos);
                 setPosition(pos);
                 break;
@@ -129,7 +129,7 @@ public class Item implements View.OnTouchListener {
         return true;
     }
 
-    private PointF spanToGrid(PointF pointF) {
+    private PointF contrainsToGrid(PointF pointF) {
         int mGridSize = mGrid.getSize();
         if (pointF.x < 0) pointF.x = 0;
         if (pointF.x + mWidth >= mGridSize - 1) pointF.x = mGridSize - 1 - mWidth;
@@ -139,13 +139,23 @@ public class Item implements View.OnTouchListener {
     }
 
     private PointF avoidSuperposition(PointF pointF) {
-        for(Item item : mView.getItems()) {
-            for(Block block : mBlocks) {
-                if(item != this && item.contains(mapFromItem(block.getPosition()))){
+        for (Item item : mView.getItems()) {
+            for (Block block : mBlocks) {
+                PointF blockPos = mapFromItem(block.getPosition());
+                blockPos.x = Math.round(blockPos.x);
+                blockPos.y = Math.round(blockPos.y);
+                if (item != this && item.contains(blockPos)) {
                     return mInitialPosition;
                 }
             }
         }
         return pointF;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "mBlocks=" + mBlocks +
+                '}';
     }
 }

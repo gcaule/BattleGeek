@@ -10,28 +10,36 @@ import android.graphics.PointF;
  */
 
 public class Block {
-    public PointF getPosition() {
-        return mPosition;
-    }
-
     private PointF mPosition;
     private float mX;
     private float mY;
+
+    @Override
+    public String toString() {
+        return "Block{" +
+                "mPosition=" + mPosition +
+                '}';
+    }
+
     private Paint mPaintStroke = new Paint();
     private Paint mPaintFill = new Paint();
     private float mBlockSize;
-
     public Block(PointF position) {
         mPosition = position;
         mX = position.x;
         mY = position.y;
         init();
     }
+
     public Block(float x, float y) {
         mPosition = new PointF(x, y);
         mX = x;
         mY = y;
         init();
+    }
+
+    public PointF getPosition() {
+        return mPosition;
     }
 
     private void init() {

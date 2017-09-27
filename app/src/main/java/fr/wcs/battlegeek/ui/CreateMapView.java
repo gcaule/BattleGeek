@@ -16,18 +16,12 @@ import java.util.ArrayList;
  * Created by adphi on 25/09/17.
  */
 
-public class CreateMapView extends View{
+public class CreateMapView extends View {
 
     private Grid mGrid;
     private Item mSelectedItem = null;
-
-    public ArrayList<Item> getItems() {
-        return mItems;
-    }
-
     private ArrayList<Item> mItems = new ArrayList<>();
     private Paint mPaint = new Paint();
-
     public CreateMapView(Context context) {
         super(context);
         init();
@@ -43,13 +37,17 @@ public class CreateMapView extends View{
         init();
     }
 
+    public ArrayList<Item> getItems() {
+        return mItems;
+    }
+
     private void init() {
         mPaint.setColor(Color.BLACK);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setAntiAlias(true);
         mGrid = new Grid(8);
 
-        Item item1 = new Item(this,mGrid, 0, 0);
+        Item item1 = new Item(this, mGrid, 0, 0);
         item1.setBlock(new Block(0, 0));
         item1.setBlock(new Block(1, 0));
         item1.setBlock(new Block(0, 1));
@@ -108,13 +106,10 @@ public class CreateMapView extends View{
         return true;
     }
 
-
     private Item getItem(PointF point) {
         for (Item item : mItems) {
             if (item.contains(point)) return item;
         }
         return null;
     }
-
-
 }
