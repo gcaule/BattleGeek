@@ -12,25 +12,45 @@ import java.util.ArrayList;
  */
 
 public class Item implements View.OnTouchListener {
+
+    private String TAG = "Item";
+
+    // References
     CreateMapView mView;
+    private Grid mGrid;
+
+    // Geometry
     float mX = 0;
     float mY = 0;
-    PointF mPosition = new PointF();
-    private String TAG = "Item";
-    private Grid mGrid;
-    private ArrayList<Block> mBlocks = new ArrayList<>();
-
     private int mWidth = 0;
     private int mHeight = 0;
+    PointF mPosition = new PointF();
+
+    // List of Contained Blocks
+    private ArrayList<Block> mBlocks = new ArrayList<>();
+
+    // Moved Item helpers
     private float dx = 0;
     private float dy = 0;
     private PointF mInitialPosition;
 
+    /**
+     * Constructor of an Item
+     * @param view the Parent View
+     * @param grid the Grid
+     */
     public Item(CreateMapView view, Grid grid) {
         mView = view;
         mGrid = grid;
     }
 
+    /**
+     * Constructor of an Item
+     * @param view the Parent View
+     * @param grid the Grid
+     * @param x the x Position in the Grid
+     * @param y the y Position in the Grid
+     */
     public Item(CreateMapView view, Grid grid, float x, float y) {
         mView = view;
         mGrid = grid;
@@ -39,28 +59,52 @@ public class Item implements View.OnTouchListener {
         mPosition.set(mX, mY);
     }
 
+    /**
+     * Get the x Position in the Grid Coordinates System
+     * @return
+     */
     public float getX() {
         return mX;
     }
 
+    /**
+     * Set the x Position in the Grid Coordinates System
+     * @param x
+     */
     public void setX(float x) {
         mX = x;
         mPosition.x = x;
     }
 
+    /**
+     * Get the y Position in the Grid Coordinates System
+     * @return
+     */
     public float getY() {
         return mY;
     }
 
+    /**
+     * Set the y Position in the Grid Coordinates System
+     * @param y
+     */
     public void setY(float y) {
         mY = y;
         mPosition.y = y;
     }
 
+    /**
+     * Get the Position in the Grid Coordiantes System
+     * @return
+     */
     public PointF getPosition() {
         return mPosition;
     }
 
+    /**
+     * Set the Position in the Grid Coordiantes System
+     * @param position
+     */
     public void setPosition(PointF position) {
         mPosition = position;
         mX = position.x;
@@ -68,12 +112,20 @@ public class Item implements View.OnTouchListener {
         mView.invalidate();
     }
 
+    /**
+     * Populate the Item with a Block
+     * @param block
+     */
     public void setBlock(Block block) {
         mBlocks.add(block);
         if (block.getX() > mWidth) mWidth = (int) block.getX();
         if (block.getY() > mHeight) mHeight = (int) block.getY();
     }
 
+    /**
+     * Method to draw the Item on the Canvas
+     * @param canvas
+     */
     public void draw(Canvas canvas) {
         float cellSize = mGrid.getCellSize();
         for (Block block : mBlocks) {
@@ -81,6 +133,11 @@ public class Item implements View.OnTouchListener {
         }
     }
 
+    /**
+     * Check if the PointF is contained in the Item
+     * @param pointF in the Grid Coordinates System
+     * @return
+     */
     public boolean contains(PointF pointF) {
         for (Block block : mBlocks) {
             PointF itemCoordinates = mapToItem(pointF);
@@ -91,14 +148,30 @@ public class Item implements View.OnTouchListener {
         return false;
     }
 
+    /**
+     * Map the PointF from the Grid Coordinate System to Item Coordinates System
+     * @param pointF
+     * @return
+     */
     private PointF mapToItem(PointF pointF) {
         return new PointF(pointF.x - mX, pointF.y - mY);
     }
 
+    /**
+     * Map the PointF from Item Coordinates System to the Grid Coordinate System
+     * @param pointF
+     * @return
+     */
     private PointF mapFromItem(PointF pointF) {
         return new PointF(pointF.x + mX, pointF.y + mY);
     }
 
+    /**
+     * The Method Handling Touch Event
+     * @param parentView the parent transmitting the Touch Event
+     * @param event
+     * @return
+     */
     @Override
     public boolean onTouch(View parentView, MotionEvent event) {
         float x = event.getX();
@@ -129,6 +202,11 @@ public class Item implements View.OnTouchListener {
         return true;
     }
 
+    /**
+     * Method Constraining the Point into the Grid limits
+     * @param pointF
+     * @return
+     */
     private PointF contrainsToGrid(PointF pointF) {
         int mGridSize = mGrid.getSize();
         if (pointF.x < 0) pointF.x = 0;
@@ -138,6 +216,11 @@ public class Item implements View.OnTouchListener {
         return pointF;
     }
 
+    /**
+     * Method that Check for superposition
+     * @param pointF The (Grid) Coordinates of the Item
+     * @return the PointF if no superposition, the initial position otherwise
+     */
     private PointF avoidSuperposition(PointF pointF) {
         for (Item item : mView.getItems()) {
             for (Block block : mBlocks) {
@@ -152,6 +235,10 @@ public class Item implements View.OnTouchListener {
         return pointF;
     }
 
+    /**
+     * String representation of the Item
+     * @return
+     */
     @Override
     public String toString() {
         return "Item{" +
