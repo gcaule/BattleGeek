@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BattleGeek</string>
+    <string name="launchGame">GO GO GO !</string>
+    <string name="main_title">Bataille Navale</string>
+    <string name="player_name">Nom du joueur</string>
+    <string name="button_hard">Difficile</string>
+    <string name="button_medium">Intermédiaire</string>
+    <string name="button_easy">Facile</string>
 </resources>
