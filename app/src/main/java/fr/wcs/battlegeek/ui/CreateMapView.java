@@ -18,29 +18,56 @@ import java.util.ArrayList;
 
 public class CreateMapView extends View {
 
+    // Grid and Items Container Definition
     private Grid mGrid;
-    private Item mSelectedItem = null;
     private ArrayList<Item> mItems = new ArrayList<>();
+
+    private Item mSelectedItem = null;
+
+    // Painting
     private Paint mPaint = new Paint();
+
+    /**
+     * View Constructor
+     * @param context
+     */
     public CreateMapView(Context context) {
         super(context);
         init();
     }
 
+    /**
+     * View Constructor
+     * @param context
+     * @param attrs
+     */
     public CreateMapView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
+    /**
+     * View Constructor
+     * @param context
+     * @param attrs
+     * @param defStyleAttr
+     */
     public CreateMapView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
+    /**
+     * Get the Items
+     * @return
+     */
     public ArrayList<Item> getItems() {
         return mItems;
     }
 
+    /**
+     * Initialisation Method
+     */
     private void init() {
         mPaint.setColor(Color.BLACK);
         mPaint.setStyle(Paint.Style.FILL);
@@ -63,6 +90,13 @@ public class CreateMapView extends View {
 
     }
 
+    /**
+     * Method that refresh the grid Size on View Size Changed Event
+     * @param w
+     * @param h
+     * @param oldw
+     * @param oldh
+     */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -70,6 +104,10 @@ public class CreateMapView extends View {
         mGrid.setHeight(w);
     }
 
+    /**
+     * Method Drawing the View Content : Grid and Items
+     * @param canvas
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -79,6 +117,11 @@ public class CreateMapView extends View {
         }
     }
 
+    /**
+     * Method Handling Touch Event and transmitting Event to the Items
+     * @param event
+     * @return
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
@@ -104,8 +147,13 @@ public class CreateMapView extends View {
                 break;
         }
         return true;
-    }
+    }   
 
+    /**
+     * Method returning Item at the given PointF
+     * @param point
+     * @return
+     */
     private Item getItem(PointF point) {
         for (Item item : mItems) {
             if (item.contains(point)) return item;

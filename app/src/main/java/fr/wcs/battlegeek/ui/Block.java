@@ -15,11 +15,13 @@ public class Block {
 
     // State
     private State mState = Alive;
+
     // Geometry
     private PointF mPosition;
     private float mX;
     private float mY;
     private float mBlockSize;
+
     // Painting
     private Paint mPaintStroke = new Paint();
     private Paint mPaintAliveFill = new Paint();
@@ -95,6 +97,9 @@ public class Block {
 
         mPaintAliveFill.setStyle(Paint.Style.FILL);
         mPaintAliveFill.setColor(Color.DKGRAY);
+
+        mPaintDeadFill.setStyle(Paint.Style.FILL);
+        mPaintDeadFill.setColor(Color.BLACK);
     }
 
     /**
