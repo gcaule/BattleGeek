@@ -26,7 +26,7 @@ public class TetrominoBlock extends Block {
     private float[] topHSLColor;
     private float[] bottomHSLColor;
     private float[] sidesHSLColor;
-    private float mCenterMargin = 20;
+    private float mCenterMargin = 15;
 
 
     public TetrominoBlock(PointF position, Tetromino.Colors color) {
