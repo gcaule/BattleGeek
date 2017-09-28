@@ -6,4 +6,7 @@
     <string name="button_hard">Difficile</string>
     <string name="button_medium">Intermédiaire</string>
     <string name="button_easy">Facile</string>
+    <string name="alreadyPlayedMessage">Heu... Ca sert à rien ça ...</string>
+    <string name="itemDrownMessage">Hey!! Coulé!!</string>
+    <string name="victoryMessage">Wahooo ! Gagné !!</string>
 </resources>
