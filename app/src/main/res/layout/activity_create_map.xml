@@ -9,7 +9,7 @@
     tools:context="fr.wcs.battlegeek.controller.CreateMapActivity">
 
     <fr.wcs.battlegeek.ui.MapView
-        android:id="@+id/createMapView"
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
@@ -27,9 +27,9 @@
         android:elevation="6dp"
         android:text="@string/launchGame"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/createMapView"
-        app:layout_constraintRight_toRightOf="@+id/createMapView"
-        app:layout_constraintTop_toTopOf="@+id/createMapView"
+        app:layout_constraintLeft_toLeftOf="@+id/mapView"
+        app:layout_constraintRight_toRightOf="@+id/mapView"
+        app:layout_constraintTop_toTopOf="@+id/mapView"
         app:layout_constraintVertical_bias="0.981"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"/>

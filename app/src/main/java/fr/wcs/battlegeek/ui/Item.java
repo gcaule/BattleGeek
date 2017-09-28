@@ -148,6 +148,15 @@ public class Item implements View.OnTouchListener {
     }
 
     /**
+     * Get the Blocks of the Item
+     *
+     * @return the ArrayList containing the Blocks
+     */
+    public ArrayList<Block> getBlocks(){
+        return this.mBlocks;
+    }
+
+    /**
      * Method to draw the Item on the Canvas
      *
      * @param canvas

@@ -1,6 +1,7 @@
 package fr.wcs.battlegeek.controller;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,7 +29,13 @@ public class GameActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         final Context mContext = getApplicationContext();
-        
+
+        // Get the Player Map previously created from the intent
+        Intent intent = getIntent();
+
+        char[][] mMapData = (char[][])intent.getExtras().getSerializable("mapData");
+        // TODO: Store the map for Game's Enemy communication
+
         final GameView gameView = (GameView) findViewById(R.id.gameView);
         gameView.setOnPlayListener(new GameView.PlayListener() {
             @Override
