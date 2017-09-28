@@ -9,6 +9,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import fr.wcs.battlegeek.controller.CreateMapActivity;
+
 public class MainMenuActivity extends AppCompatActivity {
 
     @Override

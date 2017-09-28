@@ -1,4 +1,4 @@
-package fr.wcs.battlegeek.controller;
+package fr.wcs.battlegeek.Model;
 
 /**
  * Created by apprenti on 27/09/17.
@@ -6,7 +6,7 @@ package fr.wcs.battlegeek.controller;
 
 public class Maps {
 
-    public static char[][] map1 = new char[][]{
+    private static char[][] map1 = new char[][]{
             {' ', ' ', ' ', 'T', 'T', 'T', ' ', ' ', ' ', ' '},
             {'Z', 'Z', ' ', ' ', 'T', ' ', ' ', ' ', ' ', 'I'},
             {' ', 'Z', 'Z', ' ', ' ', ' ', ' ', ' ', ' ', 'I'},
@@ -19,7 +19,7 @@ public class Maps {
             {' ', ' ', 'O', 'O', ' ', ' ', ' ', ' ', 'L', 'L'}
     };
 
-    public static char[][] map2 = new char[][]{
+    private static char[][] map2 = new char[][]{
             {' ', 'O', 'O', ' ', ' ', ' ', 'L', 'L', 'L', ' '},
             {' ', 'O', 'O', ' ', ' ', ' ', 'L', ' ', ' ', ' '},
             {' ', ' ', ' ', ' ', 'T', ' ', ' ', ' ', ' ', ' '},
@@ -32,7 +32,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map3 = new char[][]{
+    private static char[][] map3 = new char[][]{
             {' ', 'J', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {' ', 'J', 'J', 'J', ' ', ' ', ' ', 'O', 'O', ' '},
             {' ', ' ', ' ', ' ', ' ', 'S', ' ', 'O', 'O', ' '},
@@ -45,7 +45,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', ' ', 'T', 'T', 'T', ' '}
     };
 
-    public static char[][] map4 = new char[][]{
+    private static char[][] map4 = new char[][]{
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {' ', 'L', 'L', ' ', ' ', ' ', ' ', 'J', ' ', ' '},
             {' ', ' ', 'l', ' ', ' ', ' ', ' ', 'J', 'J', 'J'},
@@ -58,7 +58,7 @@ public class Maps {
             {' ', 'Z', 'Z', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map5 = new char[][]{
+    private static char[][] map5 = new char[][]{
             {' ', ' ', ' ', ' ', ' ', ' ', 'I', 'I', 'I', 'I'},
             {' ', 'Z', 'Z', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {' ', ' ', 'Z', 'Z', ' ', ' ', ' ', 'L', 'L', ' '},
@@ -71,7 +71,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map6 = new char[][]{
+    private static char[][] map6 = new char[][]{
             {' ', ' ', ' ', 'Z', ' ', ' ', 'S', 'S', ' ', ' '},
             {' ', ' ', 'Z', 'Z', ' ', 'S', 'S', ' ', ' ', ' '},
             {'I', ' ', 'Z', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -84,7 +84,7 @@ public class Maps {
             {' ', ' ', 'L', ' ', ' ', 'T', 'T', 'T', ' ', ' '}
     };
 
-    public static char[][] map7 = new char[][]{
+    private static char[][] map7 = new char[][]{
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {' ', ' ', 'Z', 'Z', ' ', ' ', ' ', ' ', 'T', ' '},
             {' ', 'I', ' ', 'Z', 'Z', ' ', ' ', 'T', 'T', ' '},
@@ -97,7 +97,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map8 = new char[][]{
+    private static char[][] map8 = new char[][]{
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {' ', 'L', 'L', 'L', ' ', 'I', 'I', 'I', 'I', ' '},
             {' ', 'L', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -110,7 +110,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', 'J', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map9 = new char[][]{
+    private static char[][] map9 = new char[][]{
             {' ', ' ', ' ', ' ', ' ', ' ', 'S', 'S', ' ', 'I'},
             {' ', 'T', ' ', ' ', ' ', 'S', 'S', ' ', ' ', 'I'},
             {'T', 'T', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'I'},
@@ -123,7 +123,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', 'O', 'O', ' ', ' ', ' '}
     };
 
-    public static char[][] map10 = new char[][]{
+    private static char[][] map10 = new char[][]{
             {' ', ' ', ' ', ' ', 'Z', ' ', ' ', ' ', 'L', ' '},
             {' ', ' ', ' ', 'Z', 'Z', ' ', 'L', 'L', 'L', ' '},
             {' ', ' ', ' ', 'Z', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -136,7 +136,7 @@ public class Maps {
             {'J', ' ', ' ', 'I', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map11 = new char[][]{
+    private static char[][] map11 = new char[][]{
             {' ', 'Z', ' ', ' ', ' ', ' ', 'L', ' ', ' ', ' '},
             {'Z', 'Z', ' ', ' ', ' ', ' ', 'L', ' ', ' ', ' '},
             {'Z', ' ', ' ', ' ', ' ', ' ', 'L', 'L', ' ', ' '},
@@ -149,7 +149,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', 'T', 'T', 'T'}
     };
 
-    public static char[][] map12 = new char[][]{
+    private static char[][] map12 = new char[][]{
             {' ', 'J', 'J', 'J', ' ', 'I', 'I', 'I', 'I', ' '},
             {' ', ' ', ' ', 'J', ' ', ' ', ' ', ' ', ' ', ' '},
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -162,7 +162,7 @@ public class Maps {
             {' ', 'Z', 'Z', ' ', ' ', ' ', ' ', 'S', 'S', ' '}
     };
 
-    public static char[][] map13 = new char[][]{
+    private static char[][] map13 = new char[][]{
             {' ', ' ', ' ', ' ', ' ', ' ', 'J', 'J', 'J', ' '},
             {' ', ' ', 'Z', 'Z', ' ', ' ', ' ', ' ', 'J', ' '},
             {' ', ' ', ' ', 'Z', 'Z', ' ', ' ', ' ', ' ', ' '},
@@ -175,7 +175,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map14 = new char[][]{
+    private static char[][] map14 = new char[][]{
             {' ', 'S', 'S', ' ', ' ', ' ', ' ', 'L', 'L', 'L'},
             {'S', 'S', ' ', ' ', ' ', ' ', ' ', 'L', ' ', ' '},
             {' ', ' ', ' ', ' ', ' ', 'O', 'O', ' ', ' ', ' '},
@@ -188,7 +188,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map15 = new char[][]{
+    private static char[][] map15 = new char[][]{
             {'O', 'O', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {'O', 'O', ' ', ' ', ' ', ' ', ' ', 'L', 'L', ' '},
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'L', ' '},
@@ -201,7 +201,7 @@ public class Maps {
             {' ', ' ', 'Z', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map16 = new char[][]{
+    private static char[][] map16 = new char[][]{
             {' ', ' ', ' ', 'I', ' ', ' ', ' ', ' ', ' ', ' '},
             {' ', ' ', ' ', 'I', ' ', ' ', ' ', ' ', 'O', 'O'},
             {'J', 'J', ' ', 'I', ' ', ' ', 'Z', ' ', 'O', 'O'},
@@ -214,7 +214,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map17 = new char[][]{
+    private static char[][] map17 = new char[][]{
             {' ', ' ', ' ', ' ', ' ', 'J', ' ', ' ', ' ', 'Z'},
             {'S', ' ', ' ', ' ', ' ', 'J', ' ', ' ', 'Z', 'Z'},
             {'S', 'S', ' ', ' ', 'J', 'J', ' ', ' ', 'Z', ' '},
@@ -227,7 +227,7 @@ public class Maps {
             {' ', ' ', 'T', 'T', 'T', ' ', ' ', ' ', 'O', 'O'}
     };
 
-    public static char[][] map18 = new char[][]{
+    private static char[][] map18 = new char[][]{
             {' ', ' ', 'O', 'O', ' ', 'J', 'J', ' ', ' ', ' '},
             {' ', ' ', 'O', 'O', ' ', 'J', ' ', ' ', ' ', ' '},
             {' ', 'Z', ' ', ' ', ' ', 'J', ' ', ' ', ' ', ' '},
@@ -240,7 +240,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map19 = new char[][]{
+    private static char[][] map19 = new char[][]{
             {' ', ' ', ' ', 'Z', 'Z', ' ', ' ', ' ', ' ', ' '},
             {' ', ' ', ' ', ' ', 'Z', 'Z', ' ', ' ', ' ', ' '},
             {'S', ' ', ' ', ' ', ' ', ' ', ' ', 'O', 'O', ' '},
@@ -253,7 +253,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', ' ', 'J', ' ', ' ', ' '}
     };
 
-    public static char[][] map20 = new char[][]{
+    private static char[][] map20 = new char[][]{
             {' ', ' ', ' ', ' ', 'O', 'O', ' ', ' ', ' ', 'Z'},
             {' ', ' ', ' ', ' ', 'O', 'O', ' ', ' ', 'Z', 'Z'},
             {'T', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Z', ' '},
@@ -266,7 +266,7 @@ public class Maps {
             {' ', ' ', 'I', 'I', 'I', 'I', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map21 = new char[][]{
+    private static char[][] map21 = new char[][]{
             {' ', ' ', 'J', 'J', 'J', ' ', ' ', ' ', ' ', ' '},
             {' ', ' ', ' ', ' ', 'J', ' ', ' ', 'O', 'O', ' '},
             {'L', ' ', ' ', ' ', ' ', ' ', ' ', 'O', 'O', ' '},
@@ -279,7 +279,7 @@ public class Maps {
             {' ', 'I', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map22 = new char[][]{
+    private static char[][] map22 = new char[][]{
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Z', 'Z', ' '},
             {' ', ' ', 'T', 'T', 'T', ' ', ' ', ' ', 'Z', 'Z'},
             {' ', ' ', ' ', 'T', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -292,7 +292,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map23 = new char[][]{
+    private static char[][] map23 = new char[][]{
             {'S', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {'S', 'S', ' ', ' ', 'T', 'T', 'T', ' ', ' ', ' '},
             {' ', 'S', ' ', ' ', ' ', 'T', ' ', 'O', 'O', ' '},
@@ -305,7 +305,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map24 = new char[][]{
+    private static char[][] map24 = new char[][]{
             {' ', ' ', 'I', ' ', ' ', ' ', ' ', 'L', ' ', ' '},
             {' ', ' ', 'I', ' ', ' ', ' ', ' ', 'L', ' ', ' '},
             {' ', ' ', 'I', ' ', 'J', 'J', ' ', 'L', 'L', ' '},
@@ -318,7 +318,7 @@ public class Maps {
             {' ', 'T', 'T', 'T', ' ', 'S', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map25 = new char[][]{
+    private static char[][] map25 = new char[][]{
             {' ', ' ', ' ', ' ', ' ', ' ', 'I', 'I', 'I', 'I'},
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {' ', 'J', 'J', ' ', ' ', ' ', ' ', ' ', 'S', 'S'},
@@ -331,7 +331,7 @@ public class Maps {
             {'Z', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map26 = new char[][]{
+    private static char[][] map26 = new char[][]{
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' '},
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', 'S', 'S', ' '},
             {'T', ' ', 'I', 'I', 'I', 'I', ' ', ' ', 'S', ' '},
@@ -344,7 +344,7 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', ' ', 'Z', 'Z', ' ', ' '}
     };
 
-    public static char[][] map27 = new char[][]{
+    private static char[][] map27 = new char[][]{
             {' ', ' ', ' ', 'L', 'L', 'L', ' ', ' ', ' ', ' '},
             {'O', 'O', ' ', 'L', ' ', ' ', ' ', ' ', ' ', ' '},
             {'O', 'O', ' ', ' ', ' ', ' ', ' ', 'S', 'S', ' '},
@@ -357,7 +357,7 @@ public class Maps {
             {' ', 'Z', 'Z', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
-    public static char[][] map28 = new char[][]{
+    private static char[][] map28 = new char[][]{
             {' ', ' ', ' ', ' ', ' ', ' ', 'T', 'T', 'T', ' '},
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', 'T', ' ', ' '},
             {' ', ' ', ' ', ' ', ' ', 'Z', 'Z', ' ', ' ', ' '},
@@ -370,7 +370,7 @@ public class Maps {
             {' ', 'S', ' ', ' ', 'L', ' ', 'O', 'O', ' ', ' '}
     };
 
-    public static char[][] map29 = new char[][]{
+    private static char[][] map29 = new char[][]{
             {'T', 'T', 'T', ' ', ' ', ' ', ' ', 'O', 'O', ' '},
             {' ', 'T', ' ', 'L', 'L', 'L', ' ', 'O', 'O', ' '},
             {' ', ' ', ' ', 'L', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -383,7 +383,7 @@ public class Maps {
             {' ', ' ', ' ', 'I', ' ', ' ', 'J', 'J', 'J', ' '}
     };
 
-    public static char[][] map30 = new char[][]{
+    private static char[][] map30 = new char[][]{
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {'J', 'J', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {' ', 'J', ' ', ' ', ' ', 'I', 'I', 'I', 'I', ' '},
@@ -395,5 +395,14 @@ public class Maps {
             {' ', 'Z', 'Z', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
+
+    private static char[][][] maps = new char [][][] {map1, map2, map3, map4, map5, map6, map7, map8, map9, map10,
+            map11, map12, map13, map14, map15, map16, map17, map18, map19, map20,
+            map21, map22, map23, map24, map25, map26, map27, map28, map29, map30};
+
+    public static char[][] getMap() {
+        int random = (int)(Math.random() * (29));
+        return maps[random];
+    }
 
 }

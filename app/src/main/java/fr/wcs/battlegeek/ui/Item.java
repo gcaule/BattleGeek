@@ -2,7 +2,6 @@ package fr.wcs.battlegeek.ui;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -25,13 +24,13 @@ public class Item implements View.OnTouchListener {
     State mState = State.Alive;
 
     // References
-    CreateMapView mView;
+    private MapView mView;
     private Grid mGrid;
 
     // Geometry
-    float mX = 0;
-    float mY = 0;
-    PointF mPosition = new PointF();
+    private float mX = 0;
+    private float mY = 0;
+    private PointF mPosition = new PointF();
     private int mWidth = 0;
     private int mHeight = 0;
 
@@ -49,7 +48,7 @@ public class Item implements View.OnTouchListener {
      * @param view the Parent View
      * @param grid the Grid
      */
-    public Item(CreateMapView view, Grid grid) {
+    public Item(MapView view, Grid grid) {
         this.mView = view;
         this.mGrid = grid;
     }
@@ -61,7 +60,7 @@ public class Item implements View.OnTouchListener {
      * @param x    the x Position in the Grid
      * @param y    the y Position in the Grid
      */
-    public Item(CreateMapView view, Grid grid, float x, float y) {
+    public Item(MapView view, Grid grid, float x, float y) {
         this.mView = view;
         this.mGrid = grid;
         this.mX = x;

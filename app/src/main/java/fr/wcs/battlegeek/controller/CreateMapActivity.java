@@ -1,4 +1,4 @@
-package fr.wcs.battlegeek;
+package fr.wcs.battlegeek.controller;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+
+import fr.wcs.battlegeek.R;
 
 /**
  * The Custom View in witch the User can place the Items in the Grid in order to create the Map
@@ -24,7 +26,7 @@ public class CreateMapActivity extends AppCompatActivity {
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreateMapActivity.this, MainActivity.class);
+                Intent intent = new Intent(CreateMapActivity.this, GameActivity.class);
                 startActivity(intent);
             }
 

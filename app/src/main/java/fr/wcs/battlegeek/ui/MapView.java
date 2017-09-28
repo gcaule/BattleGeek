@@ -2,8 +2,6 @@ package fr.wcs.battlegeek.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PointF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
  * Created by adphi on 25/09/17.
  */
 
-public class CreateMapView extends View {
+public class MapView extends View {
 
     // Grid and Items Container Definition
     private Grid mGrid;
@@ -24,14 +22,11 @@ public class CreateMapView extends View {
 
     private Item mSelectedItem = null;
 
-    // Painting
-    private Paint mPaint = new Paint();
-
     /**
      * View Constructor
      * @param context
      */
-    public CreateMapView(Context context) {
+    public MapView(Context context) {
         super(context);
         init();
     }
@@ -41,7 +36,7 @@ public class CreateMapView extends View {
      * @param context
      * @param attrs
      */
-    public CreateMapView(Context context, @Nullable AttributeSet attrs) {
+    public MapView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -52,7 +47,7 @@ public class CreateMapView extends View {
      * @param attrs
      * @param defStyleAttr
      */
-    public CreateMapView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public MapView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -70,9 +65,6 @@ public class CreateMapView extends View {
      * This is where the Blocks of the Item are defined
      */
     private void init() {
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setAntiAlias(true);
         mGrid = new Grid(10);
 
         Tetromino tetromino1 = new Tetromino(this, mGrid, Tetromino.Shape.I, Tetromino.Colors.LTBLUE);
