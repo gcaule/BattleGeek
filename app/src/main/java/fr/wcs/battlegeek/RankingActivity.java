@@ -13,9 +13,9 @@ public class RankingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
 
-        ImageButton home = (ImageButton) findViewById(R.id.button_home);
+        ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
 
-        home.setOnClickListener(new View.OnClickListener() {
+        buttonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RankingActivity.this, MainMenuActivity.class);

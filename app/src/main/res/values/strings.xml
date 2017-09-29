@@ -3,7 +3,10 @@
     <string name="launchGame">GO GO GO !</string>
     <string name="main_title">Bataille Navale</string>
     <string name="player_name">Nom du joueur</string>
-    <string name="button_hard">Difficile</string>
-    <string name="button_medium">Intermédiaire</string>
-    <string name="button_easy">Facile</string>
+    <string name="button_hard">Hardcore</string>
+    <string name="button_medium">Normal</string>
+    <string name="button_easy">Trop Sympa</string>
+    <string name="textViewSettings">Paramètres</string>
+    <string name="buttonValidate">Enregistrer</string>
+    <string name="message_welcome">\"Prêt à jouer ?\"</string>
 </resources>

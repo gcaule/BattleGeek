@@ -10,15 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".CreateMapActivity"/>
-        <activity android:name=".ScreenLauncher">
+        <activity android:name=".MainMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ScreenLauncher" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".MainMenuActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".RankingActivity">
 

@@ -14,13 +14,13 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        ImageButton settings = (ImageButton) findViewById(R.id.button_settings);
-        ImageButton trophy = (ImageButton) findViewById(R.id.button_trophy);
-        Button easyPlay = (Button) findViewById(R.id.button_easy);
-        Button mediumPlay = (Button) findViewById(R.id.button_medium);
-        Button hardPlay = (Button) findViewById(R.id.button_hard);
+        ImageButton buttonSettings = (ImageButton) findViewById(R.id.buttonSettings);
+        ImageButton buttonTrophy = (ImageButton) findViewById(R.id.buttonTrophy);
+        Button buttonEasyMode = (Button) findViewById(R.id.buttonEasyMode);
+        Button buttonMediumMode = (Button) findViewById(R.id.buttonMediumMode);
+        Button buttonHardMode = (Button) findViewById(R.id.buttonHardMode);
 
-        settings.setOnClickListener(new View.OnClickListener() {
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, SettingsActivity.class);
@@ -29,7 +29,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         });
 
-        trophy.setOnClickListener(new View.OnClickListener() {
+        buttonTrophy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, RankingActivity.class);
@@ -38,7 +38,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         });
 
-        easyPlay.setOnClickListener(new View.OnClickListener() {
+        buttonEasyMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, CreateMapActivity.class);
@@ -47,7 +47,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         });
 
-        mediumPlay.setOnClickListener(new View.OnClickListener() {
+        buttonMediumMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, CreateMapActivity.class);
@@ -56,7 +56,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         });
 
-        hardPlay.setOnClickListener(new View.OnClickListener() {
+        buttonHardMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, CreateMapActivity.class);
