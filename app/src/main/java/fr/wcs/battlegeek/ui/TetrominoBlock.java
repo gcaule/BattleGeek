@@ -75,6 +75,7 @@ public class TetrominoBlock extends Block {
         this.mBlockSize = blockSize;
         float x = (itemX + mX) * mBlockSize;
         float y = (itemY + mY) * mBlockSize;
+        mCenterMargin = this.mBlockSize * 15 / 100;
 
         float right = x + this.mBlockSize;
         float bottom = y + this.mBlockSize;

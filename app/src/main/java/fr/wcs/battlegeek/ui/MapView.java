@@ -2,36 +2,37 @@ package fr.wcs.battlegeek.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PointF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
 
+import static fr.wcs.battlegeek.ui.Tetromino.Shape.I;
+import static fr.wcs.battlegeek.ui.Tetromino.Shape.J;
+import static fr.wcs.battlegeek.ui.Tetromino.Shape.S;
+
 /**
  * Created by adphi on 25/09/17.
  */
 
-public class CreateMapView extends View {
+public class MapView extends View {
 
+    private String TAG = "MapView";
     // Grid and Items Container Definition
     private Grid mGrid;
     private ArrayList<Item> mItems = new ArrayList<>();
 
     private Item mSelectedItem = null;
 
-    // Painting
-    private Paint mPaint = new Paint();
-
     /**
      * View Constructor
      * @param context
      */
-    public CreateMapView(Context context) {
+    public MapView(Context context) {
         super(context);
         init();
     }
@@ -41,7 +42,7 @@ public class CreateMapView extends View {
      * @param context
      * @param attrs
      */
-    public CreateMapView(Context context, @Nullable AttributeSet attrs) {
+    public MapView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -52,7 +53,7 @@ public class CreateMapView extends View {
      * @param attrs
      * @param defStyleAttr
      */
-    public CreateMapView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public MapView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -70,12 +71,9 @@ public class CreateMapView extends View {
      * This is where the Blocks of the Item are defined
      */
     private void init() {
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setAntiAlias(true);
         mGrid = new Grid(10);
 
-        Tetromino tetromino1 = new Tetromino(this, mGrid, Tetromino.Shape.I, Tetromino.Colors.LTBLUE);
+        Tetromino tetromino1 = new Tetromino(this, mGrid, I, Tetromino.Colors.LTBLUE);
         tetromino1.setPosition(new PointF(0,0));
         mItems.add(tetromino1);
 
@@ -91,7 +89,7 @@ public class CreateMapView extends View {
         tetromino4.setPosition(new PointF(5, 2));
         mItems.add(tetromino4);
 
-        Tetromino tetromino5 = new Tetromino(this, mGrid, Tetromino.Shape.J, Tetromino.Colors.BLUE);
+        Tetromino tetromino5 = new Tetromino(this, mGrid, J, Tetromino.Colors.BLUE);
         tetromino5.setPosition(new PointF(6, 7));
         mItems.add(tetromino5);
 
@@ -99,7 +97,7 @@ public class CreateMapView extends View {
         tetromino6.setPosition(new PointF(1, 5));
         mItems.add(tetromino6);
 
-        Tetromino tetromino7 = new Tetromino(this, mGrid, Tetromino.Shape.S, Tetromino.Colors.GREEN);
+        Tetromino tetromino7 = new Tetromino(this, mGrid, S, Tetromino.Colors.GREEN);
         tetromino7.setPosition(new PointF(3, 6));
         mItems.add(tetromino7);
 
@@ -175,5 +173,51 @@ public class CreateMapView extends View {
             if (item.contains(point)) return item;
         }
         return null;
+    }
+
+    public char[][] getMapData(){
+        char[][] mapData = new char[10][10];
+        for (int row = 0; row < mapData.length; row++) {
+            for (int column = 0; column < mapData[row].length; column++) {
+                mapData[row][column] = ' ';
+            }
+        }
+        for(Item item : mItems) {
+            for(Block block : item.getBlocks()){
+                int x = (int)(block.getX() + item.getX());
+                int y = (int)(block.getY() + item.getY());
+                if(item instanceof Tetromino){
+                    Tetromino tetromino = (Tetromino) item;
+                    Log.d(TAG, "getMapData: Tetromino !!!!");
+                    switch(tetromino.getShape()){
+                        case I:
+                            mapData[y][x] = 'I';
+                            break;
+                        case O:
+                            mapData[y][x] = 'O';
+                            break;
+                        case T:
+                            mapData[y][x] = 'T';
+                            break;
+                        case J:
+                            mapData[y][x] = 'J';
+                            break;
+                        case L:
+                            mapData[y][x] = 'L';
+                            break;
+                        case S:
+                            mapData[y][x] = 'S';
+                            break;
+                        case Z:
+                            mapData[y][x] = 'Z';
+                            break;
+                    }
+                }
+                else {
+                    mapData[y][x] = 'X';
+                }
+            }
+        }
+        return mapData;
     }
 }

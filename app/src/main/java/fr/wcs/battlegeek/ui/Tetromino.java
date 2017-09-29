@@ -28,14 +28,14 @@ public class Tetromino extends Item {
     private Shape mShape;
     private Colors mColor;
 
-    public Tetromino(CreateMapView view, Grid grid, Shape shape, @Nullable Colors color) {
+    public Tetromino(MapView view, Grid grid, Shape shape, @Nullable Colors color) {
         super(view, grid);
         this.mShape = shape;
         this.mColor = color;
         init();
     }
 
-    public Tetromino(CreateMapView view, Grid grid, float x, float y, Shape shape, @Nullable Colors color) {
+    public Tetromino(MapView view, Grid grid, float x, float y, Shape shape, @Nullable Colors color) {
         super(view, grid, x, y);
         this.mShape = shape;
         this.mColor = color;

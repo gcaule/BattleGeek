@@ -3,6 +3,9 @@
     <string name="launchGame">GO GO GO !</string>
     <string name="main_title">Bataille Navale</string>
     <string name="player_name">Nom du joueur</string>
+    <string name="alreadyPlayedMessage">Heu... Ca sert à rien ça ...</string>
+    <string name="itemDrownMessage">Hey!! Coulé!!</string>
+    <string name="victoryMessage">Wahooo ! Gagné !!</string>
     <string name="button_hard">Hardcore</string>
     <string name="button_medium">Normal</string>
     <string name="button_easy">Trop Sympa</string>

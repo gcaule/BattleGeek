@@ -10,8 +10,6 @@ import android.graphics.PointF;
  */
 
 public class Grid {
-    // Reference to Parent
-    private CreateMapView mView;
 
     // Geometry
     private int size;
@@ -29,8 +27,7 @@ public class Grid {
      * @param mHeight the Height of the Grid (Global Coordinates System
      * @param size The number of Cells in a Row or in a Column
      */
-    public Grid(CreateMapView view, int mWidth, int mHeight, int size) {
-        this.mView = view;
+    public Grid(int mWidth, int mHeight, int size) {
         this.mWidth = mWidth;
         this.mHeight = mHeight;
         this.size = size;
