@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.wcs.battlegeek.MainMenuActivity">
+    tools:context="fr.wcs.battlegeek.MainMenuActivity"
+    android:background="@drawable/backgroundmainmenu"
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/buttonEasyMode"
