@@ -16,10 +16,6 @@ public class TetrominoBlock extends Block {
     private Paint mPaint = new Paint();
     private Path mPath = new Path();
 
-    /**
-     * TetrominoBlock is the smallest element of Tetrominos
-     * @param color The color of the Block
-     */
 
     private float mainHSLColorIndex;
     private float[] centerHSLColor;
@@ -28,6 +24,10 @@ public class TetrominoBlock extends Block {
     private float[] sidesHSLColor;
     private float mCenterMargin = 15;
 
+    /**
+     * TetrominoBlock is the smallest element of Tetrominos
+     * @param color The color of the Block
+     */
 
     public TetrominoBlock(PointF position, Tetromino.Colors color) {
         super(position);
@@ -68,6 +68,17 @@ public class TetrominoBlock extends Block {
         topHSLColor = new float[] {mainHSLColorIndex, 1f, 0.9f};
         bottomHSLColor = new float[] {mainHSLColorIndex, 1f, 0.2f};
         sidesHSLColor = new float[] {mainHSLColorIndex, 1f, 0.45f};
+    }
+
+    @Override
+    public void setState(State state) {
+        super.setState(state);
+        if(state == State.Dead) {
+            centerHSLColor = new float[] {mainHSLColorIndex, 1f, 0.25f};
+            topHSLColor = new float[] {mainHSLColorIndex, 1f, 0.5f};
+            bottomHSLColor = new float[] {mainHSLColorIndex, 1f, 0.1f};
+            sidesHSLColor = new float[] {mainHSLColorIndex, 1f, 0.15f};
+        }
     }
 
     @Override

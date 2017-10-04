@@ -9,4 +9,5 @@
     <string name="alreadyPlayedMessage">Heu... Ca sert à rien ça ...</string>
     <string name="itemDrownMessage">Hey!! Coulé!!</string>
     <string name="victoryMessage">Wahooo ! Gagné !!</string>
+    <string name="defeatMessage">Tu t\'es fait laminer par la stupide IA</string>
 </resources>

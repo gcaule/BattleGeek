@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -175,6 +174,10 @@ public class MapView extends View {
         return null;
     }
 
+    /**
+     * Method to dump edited map to map Model
+     * @return the map model
+     */
     public char[][] getMapData(){
         char[][] mapData = new char[10][10];
         for (int row = 0; row < mapData.length; row++) {
@@ -188,30 +191,7 @@ public class MapView extends View {
                 int y = (int)(block.getY() + item.getY());
                 if(item instanceof Tetromino){
                     Tetromino tetromino = (Tetromino) item;
-                    Log.d(TAG, "getMapData: Tetromino !!!!");
-                    switch(tetromino.getShape()){
-                        case I:
-                            mapData[y][x] = 'I';
-                            break;
-                        case O:
-                            mapData[y][x] = 'O';
-                            break;
-                        case T:
-                            mapData[y][x] = 'T';
-                            break;
-                        case J:
-                            mapData[y][x] = 'J';
-                            break;
-                        case L:
-                            mapData[y][x] = 'L';
-                            break;
-                        case S:
-                            mapData[y][x] = 'S';
-                            break;
-                        case Z:
-                            mapData[y][x] = 'Z';
-                            break;
-                    }
+                    mapData[y][x] = tetromino.getShape().toString().charAt(0);
                 }
                 else {
                     mapData[y][x] = 'X';
@@ -219,5 +199,18 @@ public class MapView extends View {
             }
         }
         return mapData;
+    }
+
+    /**
+     * Method to set Play State on the Player Map
+     * @param x
+     * @param y
+     */
+    public void setDead(int x, int y) {
+        for(Item item : mItems) {
+            if(item.contains(new PointF(x, y))){
+                item.setDead(x, y);
+            }
+        }
     }
 }

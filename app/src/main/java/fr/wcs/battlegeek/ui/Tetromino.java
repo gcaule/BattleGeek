@@ -95,11 +95,28 @@ public class Tetromino extends Item {
     }
 
     public enum Shape {
-        I, O, T, J, L, S, Z;
+        I ("I"),
+        O ("O"),
+        T ("T"),
+        J ("J"),
+        L ("J"),
+        S ("S"),
+        Z ("Z"),
+        NONE ("X");
+
+        private String name = "";
+
+        Shape(String name){
+            this.name = name;
+        }
+
+        public String toString(){
+            return name;
+        }
     }
 
     public enum Colors {
-        YELLOW, ORANGE, RED, PURPLE, GREEN, BLUE, LTBLUE;
+        YELLOW, ORANGE, RED, PURPLE, GREEN, BLUE, LTBLUE
     }
 
 }

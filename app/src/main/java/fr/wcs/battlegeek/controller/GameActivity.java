@@ -3,22 +3,36 @@ package fr.wcs.battlegeek.controller;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import fr.wcs.battlegeek.Model.Maps;
+import fr.wcs.battlegeek.Model.Result;
 import fr.wcs.battlegeek.R;
 import fr.wcs.battlegeek.ui.GameView;
+import fr.wcs.battlegeek.ui.Tetromino;
+
+import static fr.wcs.battlegeek.Model.Result.Type.DROWN;
+import static fr.wcs.battlegeek.Model.Result.Type.MISSED;
+import static fr.wcs.battlegeek.Model.Result.Type.VICTORY;
 
 public class GameActivity extends AppCompatActivity {
 
     private String TAG = "CustomView";
 
-    private char[][] mMap = Maps.getMap();
+    private AI mAI;
+    private char[][] mStorageMap = new char[10][10];
+    private GameController mGameControler;
+    private boolean canPlay = true;
+
+    private Toast mToast;
+    private Context mContext;
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -27,60 +41,77 @@ public class GameActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-
-        final Context mContext = getApplicationContext();
-
+         mContext = getApplicationContext();
         // Get the Player Map previously created from the intent
         Intent intent = getIntent();
 
-        char[][] mMapData = (char[][])intent.getExtras().getSerializable("mapData");
-        // TODO: Store the map for Game's Enemy communication
+        char[][] mMap = (char[][])intent.getExtras().getSerializable("mapData");
+        mGameControler = new GameController(mMap);
+        mAI = new AI();
 
         final GameView gameView = (GameView) findViewById(R.id.gameView);
         gameView.setOnPlayListener(new GameView.PlayListener() {
             @Override
             public void onPlayListener(int x, int y) {
-                char result = mMap[y][x];
-                if (result == ' ') {
+
+                if(!canPlay) {
+                    return;
+                }
+
+                if(alreadyPlayed(x, y)) {
+                    showToast(R.string.alreadyPlayedMessage);
+                    return;
+                }
+
+                canPlay = false;
+
+                Result result = mAI.shot(x, y);
+                Result.Type resultType = result.getType();
+                Tetromino.Shape resultShape = result.getShape();
+
+                if(resultType == MISSED) {
                     gameView.setPlouf(x, y);
-                    mMap[y][x] = '_';
-                } else if (Character.isLowerCase(result) || result == '_') {
-                    Toast.makeText(mContext, getString(R.string.alreadyPlayedMessage), Toast.LENGTH_SHORT).show();
-                } else {
-                    gameView.setTouch(x, y, result);
-                    mMap[y][x] = Character.toLowerCase(result);
-                    if(isDrown(result)) {
-                        Toast.makeText(mContext, getString(R.string.itemDrownMessage), Toast.LENGTH_SHORT).show();
+                    mStorageMap[y][x] = '_';
+                }
+                else {
+                    gameView.setTouch(x, y, resultShape);
+                    mStorageMap[y][x] = Character.toLowerCase(resultShape.toString().charAt(0));
+                    if(resultType == DROWN) {
+                        showToast(R.string.itemDrownMessage);
                     }
-                    if(victory()) {
-                        Toast.makeText(mContext, getString(R.string.victoryMessage), Toast.LENGTH_SHORT).show();
+
+                    if(resultType == VICTORY) {
+                        showToast(R.string.victoryMessage);
+                        return;
                     }
                 }
+
+                    // AI turn
+                    Point aiPlayCoordinates = mAI.play();
+                    Result iaResult = mGameControler.play(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                    if(iaResult.getType() == VICTORY) {
+                        showToast(R.string.defeatMessage);
+                    }
+                    mAI.setResult(iaResult);
+
+                canPlay = true;
             }
 
         });
     }
 
-    private boolean isDrown(char symbol) {
-        for(char[] row : mMap){
-            for(char letter : row){
-                if(symbol == letter) {
-                    return false;
-                }
-            }
-        }
-        return true;
+    public boolean alreadyPlayed(int x, int y) {
+        char symbol = mStorageMap[y][x];
+        Log.d(TAG, "alreadyPlayed() called with: x = [" + x + "], y = [" + y + "] symbol : " + symbol);
+        return symbol == '_' || Character.isLowerCase(symbol);
     }
 
-    private boolean victory() {
-        for(char[] row : mMap) {
-            for(char symbol: row) {
-                if(Character.isUpperCase(symbol)) {
-                    return false;
-                }
-            }
+    private void showToast(int stringResource) {
+        if(mToast == null) {
+            mToast = Toast.makeText(mContext, getString(stringResource), Toast.LENGTH_SHORT);
         }
-        return true;
+        mToast.setText(getString(stringResource));
+        mToast.setDuration(Toast.LENGTH_SHORT);
+        mToast.show();
     }
-
 }

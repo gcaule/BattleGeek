@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -72,9 +71,7 @@ public class GameView extends View{
         invalidate();
     }
 
-    public void setTouch(int x, int y, char result) {
-        Log.d(TAG, "setTouch() called with: x = [" + x + "], y = [" + y + "], result = [" + result + "]");
-        Tetromino.Shape shape = getShape(result);
+    public void setTouch(int x, int y, Tetromino.Shape shape) {
         Tetromino.Colors color = mColorsMap.get(shape);
         mBlocks.add(new TetrominoBlock(new PointF(x, y), color));
         invalidate();

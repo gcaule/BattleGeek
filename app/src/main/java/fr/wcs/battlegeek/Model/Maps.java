@@ -1,5 +1,9 @@
 package fr.wcs.battlegeek.Model;
 
+import android.graphics.Point;
+
+import java.util.ArrayList;
+
 /**
  * Created by apprenti on 27/09/17.
  */
@@ -403,6 +407,16 @@ public class Maps {
     public static char[][] getMap() {
         int random = (int)(Math.random() * (29));
         return maps[random];
+    }
+
+    public static ArrayList<Point> getPlayableCorrdiantes(){
+        ArrayList<Point> playableCoordianates = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                playableCoordianates.add(new Point(i, j));
+            }
+        }
+        return playableCoordianates;
     }
 
 }

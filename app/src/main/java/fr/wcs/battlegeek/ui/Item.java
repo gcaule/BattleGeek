@@ -148,6 +148,33 @@ public class Item implements View.OnTouchListener {
     }
 
     /**
+     * Method to get the Item's Block from Grid Coordinates
+     * @param x
+     * @param y
+     * @return
+     */
+    public Block getBlock(int x, int y) {
+        for(Block block : mBlocks) {
+            if(mapToItem(block.getPosition()) == new PointF(x, y)) {
+                return block;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Method to Set Block
+     * @param x Coordinate in Grid
+     * @param y Corrdinate in Grid
+     */
+    public void setDead(int x, int y) {
+        Block block = getBlock(x, y);
+        if(block != null){
+            block.setState(Block.State.Dead);
+        }
+    }
+
+    /**
      * Get the Blocks of the Item
      *
      * @return the ArrayList containing the Blocks
