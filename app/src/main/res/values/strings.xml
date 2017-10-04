@@ -11,5 +11,6 @@
     <string name="button_easy">Trop Sympa</string>
     <string name="textViewSettings">Paramètres</string>
     <string name="buttonValidate">Enregistrer</string>
+    <string name="titleRanking">Ranking</string>
     <string name="message_welcome">\"Prêt à jouer ?\"</string>
 </resources>
