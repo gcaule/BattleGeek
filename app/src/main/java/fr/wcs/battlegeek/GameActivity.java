@@ -1,52 +1,61 @@
-package fr.wcs.battlegeek.controller;
+package fr.wcs.battlegeek;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.view.WindowManager;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
-import fr.wcs.battlegeek.Model.Result;
-import fr.wcs.battlegeek.R;
+import fr.wcs.battlegeek.controller.AI;
+import fr.wcs.battlegeek.controller.GameController;
+import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.ui.GameView;
+import fr.wcs.battlegeek.ui.MapView;
 
-import static fr.wcs.battlegeek.Model.Result.Type.VICTORY;
+import static fr.wcs.battlegeek.R.id.viewFlipper;
+import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
 
 public class GameActivity extends AppCompatActivity {
 
-    private String TAG = "CustomView";
-
     private AI mAI;
-    private char[][] mStorageMap = new char[10][10];
     private GameController mGameControler;
     private boolean canPlay = true;
 
     private Toast mToast;
     private Context mContext;
 
+    private MapView mMapView;
+    private GameView mGameView;
+    private ViewFlipper mViewFlipper;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-         mContext = getApplicationContext();
-        // Get the Player Map previously created from the intent
-        Intent intent = getIntent();
 
-        char[][] mMap = (char[][])intent.getExtras().getSerializable("mapData");
-        mGameControler = new GameController(mMap);
-        mAI = new AI();
+        mContext = getApplicationContext();
+        mViewFlipper = (ViewFlipper) findViewById(viewFlipper);
+        Button buttonLaunchGame = (Button) findViewById(R.id.buttonLaunchGame);
 
-        final GameView gameView = (GameView) findViewById(R.id.gameView);
-        gameView.setOnPlayListener(new GameView.PlayListener() {
+        buttonLaunchGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMapView = (MapView) findViewById(R.id.mapView);
+                char[][] mapData = mMapView.getMapData();
+                mGameControler = new GameController(mapData);
+                mAI = new AI();
+                mViewFlipper.showNext();
+            }
+
+        });
+
+        mGameView = (GameView) findViewById(R.id.gameView);
+        mGameView.setOnPlayListener(new GameView.PlayListener() {
             @Override
             public void onPlayListener(int x, int y) {
 
@@ -65,17 +74,17 @@ public class GameActivity extends AppCompatActivity {
                 mGameControler.setResult(x, y, result);
                 switch (result.getType()) {
                     case MISSED:
-                        gameView.setPlouf(x, y);
+                        mGameView.setPlouf(x, y);
                         break;
                     case TOUCHED:
-                        gameView.setTouch(x, y, result.getShape());
+                        mGameView.setTouch(x, y, result.getShape());
                         break;
                     case DROWN:
-                        gameView.setTouch(x, y, result.getShape());
+                        mGameView.setTouch(x, y, result.getShape());
                         showToast(R.string.itemDrownMessage);
                         break;
                     case VICTORY:
-                        gameView.setTouch(x, y, result.getShape());
+                        mGameView.setTouch(x, y, result.getShape());
                         showToast(R.string.victoryMessage);
                         break;
                 }

@@ -2,14 +2,14 @@ package fr.wcs.battlegeek.controller;
 
 import android.util.Log;
 
-import fr.wcs.battlegeek.Model.Result;
+import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.ui.Tetromino;
 
 import static android.content.ContentValues.TAG;
-import static fr.wcs.battlegeek.Model.Result.Type.DROWN;
-import static fr.wcs.battlegeek.Model.Result.Type.MISSED;
-import static fr.wcs.battlegeek.Model.Result.Type.TOUCHED;
-import static fr.wcs.battlegeek.Model.Result.Type.VICTORY;
+import static fr.wcs.battlegeek.model.Result.Type.DROWN;
+import static fr.wcs.battlegeek.model.Result.Type.MISSED;
+import static fr.wcs.battlegeek.model.Result.Type.TOUCHED;
+import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
 import static fr.wcs.battlegeek.ui.Tetromino.Shape.NONE;
 
 /**

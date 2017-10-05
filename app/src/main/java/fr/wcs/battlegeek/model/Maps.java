@@ -1,4 +1,4 @@
-package fr.wcs.battlegeek.Model;
+package fr.wcs.battlegeek.model;
 
 import android.graphics.Point;
 

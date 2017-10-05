@@ -5,8 +5,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import fr.wcs.battlegeek.Model.Maps;
-import fr.wcs.battlegeek.Model.Result;
+import fr.wcs.battlegeek.model.Maps;
+import fr.wcs.battlegeek.model.Result;
 
 /**
  * Created by adphi on 03/10/17.
