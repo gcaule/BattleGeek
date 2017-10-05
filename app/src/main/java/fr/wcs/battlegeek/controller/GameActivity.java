@@ -1,5 +1,6 @@
 package fr.wcs.battlegeek.controller;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -7,21 +8,24 @@ import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import fr.wcs.battlegeek.Model.Result;
 import fr.wcs.battlegeek.R;
+import fr.wcs.battlegeek.ui.EndGameDefeatFragment;
+import fr.wcs.battlegeek.ui.EndGameVictoryFragment;
 import fr.wcs.battlegeek.ui.GameView;
 import fr.wcs.battlegeek.ui.Tetromino;
 
 import static fr.wcs.battlegeek.Model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.Model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.Model.Result.Type.VICTORY;
+import static fr.wcs.battlegeek.R.layout.activity_game;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends FragmentActivity {
 
     private String TAG = "CustomView";
 
@@ -34,14 +38,16 @@ public class GameActivity extends AppCompatActivity {
     private Context mContext;
 
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_game);
+        setContentView(activity_game);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-         mContext = getApplicationContext();
+        mContext = getApplicationContext();
         // Get the Player Map previously created from the intent
         Intent intent = getIntent();
 
@@ -81,18 +87,24 @@ public class GameActivity extends AppCompatActivity {
                     }
 
                     if(resultType == VICTORY) {
-                        showToast(R.string.victoryMessage);
+                        FragmentManager fm = getFragmentManager();
+                        EndGameVictoryFragment endGameVictoryFragment = new EndGameVictoryFragment();
+                        endGameVictoryFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
+                        endGameVictoryFragment.setCancelable(false);
                         return;
                     }
                 }
 
-                    // AI turn
-                    Point aiPlayCoordinates = mAI.play();
-                    Result iaResult = mGameControler.play(aiPlayCoordinates.x, aiPlayCoordinates.y);
-                    if(iaResult.getType() == VICTORY) {
-                        showToast(R.string.defeatMessage);
-                    }
-                    mAI.setResult(iaResult);
+                // AI turn
+                Point aiPlayCoordinates = mAI.play();
+                Result iaResult = mGameControler.play(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                if(iaResult.getType() == VICTORY) {
+                    FragmentManager fm = getFragmentManager();
+                    EndGameDefeatFragment endGameDefeatFragment = new EndGameDefeatFragment();
+                    endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
+                    endGameDefeatFragment.setCancelable(false);
+                }
+                mAI.setResult(iaResult);
 
                 canPlay = true;
             }
