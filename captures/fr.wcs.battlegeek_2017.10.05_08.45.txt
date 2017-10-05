@@ -1,0 +1,2 @@
+TASK fr.wcs.battlegeek id=536 userId=0
+  ACTIVITY fr.wcs.battlegeek/.controller.GameActivity 7c15f15 pid=4081

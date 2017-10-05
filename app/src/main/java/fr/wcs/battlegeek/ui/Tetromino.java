@@ -28,14 +28,14 @@ public class Tetromino extends Item {
     private Shape mShape;
     private Colors mColor;
 
-    public Tetromino(CreateMapView view, Grid grid, Shape shape, @Nullable Colors color) {
+    public Tetromino(MapView view, Grid grid, Shape shape, @Nullable Colors color) {
         super(view, grid);
         this.mShape = shape;
         this.mColor = color;
         init();
     }
 
-    public Tetromino(CreateMapView view, Grid grid, float x, float y, Shape shape, @Nullable Colors color) {
+    public Tetromino(MapView view, Grid grid, float x, float y, Shape shape, @Nullable Colors color) {
         super(view, grid, x, y);
         this.mShape = shape;
         this.mColor = color;
@@ -95,11 +95,28 @@ public class Tetromino extends Item {
     }
 
     public enum Shape {
-        I, O, T, J, L, S, Z;
+        I ("I"),
+        O ("O"),
+        T ("T"),
+        J ("J"),
+        L ("J"),
+        S ("S"),
+        Z ("Z"),
+        NONE ("X");
+
+        private String name = "";
+
+        Shape(String name){
+            this.name = name;
+        }
+
+        public String toString(){
+            return name;
+        }
     }
 
     public enum Colors {
-        YELLOW, ORANGE, RED, PURPLE, GREEN, BLUE, LTBLUE;
+        YELLOW, ORANGE, RED, PURPLE, GREEN, BLUE, LTBLUE
     }
 
 }

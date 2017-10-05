@@ -16,18 +16,18 @@ public class TetrominoBlock extends Block {
     private Paint mPaint = new Paint();
     private Path mPath = new Path();
 
+
+    private float mMainHSLColorIndex;
+    private float[] mCenterHSLColor;
+    private float[] mTopHSLColor;
+    private float[] mBottomHSLColor;
+    private float[] mSidesHSLColor;
+    private float mCenterMargin = 15;
+
     /**
      * TetrominoBlock is the smallest element of Tetrominos
      * @param color The color of the Block
      */
-
-    private float mainHSLColorIndex;
-    private float[] centerHSLColor;
-    private float[] topHSLColor;
-    private float[] bottomHSLColor;
-    private float[] sidesHSLColor;
-    private float mCenterMargin = 15;
-
 
     public TetrominoBlock(PointF position, Tetromino.Colors color) {
         super(position);
@@ -43,31 +43,42 @@ public class TetrominoBlock extends Block {
         this.mColor = color;
         switch (color) {
             case YELLOW :
-                mainHSLColorIndex = 60;
+                mMainHSLColorIndex = 60;
                 break;
             case ORANGE :
-                mainHSLColorIndex = 40;
+                mMainHSLColorIndex = 40;
                 break;
             case RED :
-                mainHSLColorIndex = 360;
+                mMainHSLColorIndex = 360;
                 break;
             case PURPLE:
-                mainHSLColorIndex = 290;
+                mMainHSLColorIndex = 290;
                 break;
             case GREEN :
-                mainHSLColorIndex = 130;
+                mMainHSLColorIndex = 130;
                 break;
             case BLUE :
-                mainHSLColorIndex = 260;
+                mMainHSLColorIndex = 260;
                 break;
             case LTBLUE:
-                mainHSLColorIndex = 180;
+                mMainHSLColorIndex = 180;
                 break;
         }
-        centerHSLColor = new float[] {mainHSLColorIndex, 1f, 0.65f};
-        topHSLColor = new float[] {mainHSLColorIndex, 1f, 0.9f};
-        bottomHSLColor = new float[] {mainHSLColorIndex, 1f, 0.2f};
-        sidesHSLColor = new float[] {mainHSLColorIndex, 1f, 0.45f};
+        mCenterHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.65f};
+        mTopHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.7f};
+        mBottomHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.2f};
+        mSidesHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.45f};
+    }
+
+    @Override
+    public void setState(State state) {
+        super.setState(state);
+        if(state == State.DEAD) {
+            mCenterHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.1f};
+            mTopHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.2f};
+            mBottomHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.05f};
+            mSidesHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.08f};
+        }
     }
 
     @Override
@@ -75,6 +86,7 @@ public class TetrominoBlock extends Block {
         this.mBlockSize = blockSize;
         float x = (itemX + mX) * mBlockSize;
         float y = (itemY + mY) * mBlockSize;
+        mCenterMargin = this.mBlockSize * 15 / 100;
 
         float right = x + this.mBlockSize;
         float bottom = y + this.mBlockSize;
@@ -91,7 +103,7 @@ public class TetrominoBlock extends Block {
         mPath.lineTo(right, bottom);
         mPath.lineTo(right - mCenterMargin, bottom - mCenterMargin);
         mPath.lineTo(right - mCenterMargin, y + mCenterMargin);
-        mPaint.setColor(ColorUtils.HSLToColor(sidesHSLColor));
+        mPaint.setColor(ColorUtils.HSLToColor(mSidesHSLColor));
         canvas.drawPath(mPath, mPaint);
 
         // Draw Top Side
@@ -101,7 +113,7 @@ public class TetrominoBlock extends Block {
         mPath.lineTo(right - mCenterMargin, y + mCenterMargin);
         mPath.lineTo(x + mCenterMargin, y + mCenterMargin);
         mPath.lineTo(x, y);
-        mPaint.setColor(ColorUtils.HSLToColor(topHSLColor));
+        mPaint.setColor(ColorUtils.HSLToColor(mTopHSLColor));
         canvas.drawPath(mPath, mPaint);
 
         //Draw Bottom Side
@@ -111,11 +123,11 @@ public class TetrominoBlock extends Block {
         mPath.lineTo(right - mCenterMargin, bottom - mCenterMargin);
         mPath.lineTo(x + mCenterMargin, bottom - mCenterMargin);
         mPath.lineTo(x, bottom);
-        mPaint.setColor(ColorUtils.HSLToColor(bottomHSLColor));
+        mPaint.setColor(ColorUtils.HSLToColor(mBottomHSLColor));
         canvas.drawPath(mPath, mPaint);
 
         // Draw Center Rect
-        mPaint.setColor(ColorUtils.HSLToColor(centerHSLColor));
+        mPaint.setColor(ColorUtils.HSLToColor(mCenterHSLColor));
         canvas.drawRect(x + mCenterMargin, y + mCenterMargin, right - mCenterMargin, bottom - mCenterMargin, mPaint);
     }
 }

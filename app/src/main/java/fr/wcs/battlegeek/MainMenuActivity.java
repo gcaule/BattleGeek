@@ -45,7 +45,7 @@ public class MainMenuActivity extends AppCompatActivity {
         easyPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainMenuActivity.this, CreateMapActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, GameActivity.class);
                 startActivity(intent);
             }
 
@@ -54,7 +54,7 @@ public class MainMenuActivity extends AppCompatActivity {
         mediumPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainMenuActivity.this, CreateMapActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, GameActivity.class);
                 startActivity(intent);
             }
 
@@ -63,7 +63,7 @@ public class MainMenuActivity extends AppCompatActivity {
         hardPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainMenuActivity.this, CreateMapActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, GameActivity.class);
                 startActivity(intent);
             }
 

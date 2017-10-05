@@ -6,4 +6,13 @@
     <string name="button_hard">Difficile</string>
     <string name="button_medium">Intermédiaire</string>
     <string name="button_easy">Facile</string>
+    <string name="alreadyPlayedMessage">Vous avez déjà joué cette case !</string>
+    <string name="itemDrownMessage">Vous avez détruit cette pièce !</string>
+    <string name="victoryMessage">Wahooo ! Gagné !!</string>
+    <string name="defeatMessage">Tu t\'es fait laminer par la stupide IA</string>
+    <string name="end_game_fragment_title">La partie est terminée !</string>
+    <string name="end_game_victory">Vous ressentez l\'ennivrante\nexaltation de la\nVICTOIRE !!</string>
+    <string name="ok_victory">A l\'aise…</string>
+    <string name="end_game_defeat">Vous avez en bouche\nl\'amer goût de la \nDEFAITE !!</string>
+    <string name="ok_defeat">T\'as triché…</string>
 </resources>

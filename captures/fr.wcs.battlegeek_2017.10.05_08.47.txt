@@ -1,0 +1,91 @@
+TASK fr.wcs.battlegeek id=536 userId=0
+  ACTIVITY fr.wcs.battlegeek/.controller.GameActivity 1e0c78f pid=4800
+    Local Activity 960d28d State:
+      mResumed=true mStopped=false mFinished=false
+      mChangingConfigurations=false
+      mCurrentConfig={1.0 ?mcc?mnc [en_US] ldltr sw411dp w411dp h659dp 420dpi nrml port finger qwerty/v/v -nav/h appBounds=Rect(0, 0 - 1080, 1794) s.5}
+      mLoadersStarted=true
+      FragmentManager misc state:
+        mHost=android.app.Activity$HostCallbacks@a58a7f9
+        mContainer=android.app.Activity$HostCallbacks@a58a7f9
+        mCurState=5 mStateSaved=false mDestroyed=false
+    ViewRoot:
+      mAdded=true mRemoved=false
+      mConsumeBatchedInputScheduled=false
+      mConsumeBatchedInputImmediatelyScheduled=false
+      mPendingInputEventCount=0
+      mProcessInputEventsScheduled=false
+      mTraversalScheduled=false      mIsAmbientMode=false
+      android.view.ViewRootImpl$NativePreImeInputStage: mQueueLength=0
+      android.view.ViewRootImpl$ImeInputStage: mQueueLength=0
+      android.view.ViewRootImpl$NativePostImeInputStage: mQueueLength=0
+    Choreographer:
+      mFrameScheduled=false
+      mLastFrameTime=1193006 (83580 ms ago)
+    View Hierarchy:
+      DecorView@e83933e[GameActivity]
+        android.widget.LinearLayout{4d6c59f V.E...... ........ 0,0-1080,1794}
+          android.view.ViewStub{7a2c6ec G.E...... ......I. 0,0-0,0 #1020186 android:id/action_mode_bar_stub}
+          android.widget.FrameLayout{f72cab5 V.E...... ........ 0,0-1080,1794}
+            android.support.v7.widget.FitWindowsLinearLayout{aa1a54a V.E...... ........ 0,0-1080,1794 #7f0c004a app:id/action_bar_root}
+              android.support.v7.widget.ViewStubCompat{86c1cbb G.E...... ......I. 0,0-0,0 #7f0c004b app:id/action_mode_bar_stub}
+              android.support.v7.widget.ContentFrameLayout{a6b65d8 V.E...... ........ 0,0-1080,1794 #1020002 android:id/content}
+                android.support.constraint.ConstraintLayout{5d25d31 V.E...... ........ 0,0-1080,1794}
+                  fr.wcs.battlegeek.ui.GameView{7dccc16 V.ED..... ........ 21,21-1059,1773 #7f0c0060 app:id/gameView}
+        android.view.View{e35c997 V.ED..... ........ 0,1794-1080,1920 #1020030 android:id/navigationBarBackground}
+    Looper (main, tid 2) {21d0784}
+      (Total messages: 0, polling=false, quitting=false)
+    Local FragmentActivity 960d28d State:
+      mCreated=truemResumed=true mStopped=false mReallyStopped=false
+      mLoadersStarted=true
+    FragmentManager misc state:
+      mHost=android.support.v4.app.FragmentActivity$HostCallbacks@2be9b6d
+      mContainer=android.support.v4.app.FragmentActivity$HostCallbacks@2be9b6d
+      mCurState=5 mStateSaved=false mDestroyed=false
+
+  ACTIVITY fr.wcs.battlegeek/.controller.CreateMapActivity 487b288 pid=4800
+    Local Activity 3b227f7 State:
+      mResumed=false mStopped=true mFinished=false
+      mChangingConfigurations=false
+      mCurrentConfig={1.0 ?mcc?mnc [en_US] ldltr sw411dp w411dp h659dp 420dpi nrml port finger qwerty/v/v -nav/h appBounds=Rect(0, 0 - 1080, 1794) s.5}
+      mLoadersStarted=true
+      FragmentManager misc state:
+        mHost=android.app.Activity$HostCallbacks@1d193a2
+        mContainer=android.app.Activity$HostCallbacks@1d193a2
+        mCurState=3 mStateSaved=true mDestroyed=false
+    ViewRoot:
+      mAdded=true mRemoved=false
+      mConsumeBatchedInputScheduled=false
+      mConsumeBatchedInputImmediatelyScheduled=false
+      mPendingInputEventCount=0
+      mProcessInputEventsScheduled=false
+      mTraversalScheduled=false      mIsAmbientMode=false
+      android.view.ViewRootImpl$NativePreImeInputStage: mQueueLength=0
+      android.view.ViewRootImpl$ImeInputStage: mQueueLength=0
+      android.view.ViewRootImpl$NativePostImeInputStage: mQueueLength=0
+    Choreographer:
+      mFrameScheduled=false
+      mLastFrameTime=1193006 (83591 ms ago)
+    View Hierarchy:
+      DecorView@2836833[CreateMapActivity]
+        android.widget.LinearLayout{62517f0 V.E...... .......D 0,0-1080,1794}
+          android.view.ViewStub{eb68169 G.E...... ......I. 0,0-0,0 #1020186 android:id/action_mode_bar_stub}
+          android.widget.FrameLayout{f5947ee V.E...... .......D 0,0-1080,1794}
+            android.support.v7.widget.FitWindowsLinearLayout{d02548f V.E...... .......D 0,0-1080,1794 #7f0c004a app:id/action_bar_root}
+              android.support.v7.widget.ViewStubCompat{55bc31c G.E...... ......I. 0,0-0,0 #7f0c004b app:id/action_mode_bar_stub}
+              android.support.v7.widget.ContentFrameLayout{12ccb25 V.E...... .......D 0,0-1080,1794 #1020002 android:id/content}
+                android.support.constraint.ConstraintLayout{995f4fa V.E...... .......D 0,0-1080,1794}
+                  fr.wcs.battlegeek.ui.MapView{8d9aaab V.ED..... ........ 21,21-1059,1773 #7f0c005e app:id/mapView}
+                  android.support.v7.widget.AppCompatButton{1eff508 VFED..C.. ......ID 414,1617-666,1743 #7f0c005f app:id/buttonLaunchGame}
+        android.view.View{c03f4a1 V.ED..... ......ID 0,1794-1080,1920 #1020030 android:id/navigationBarBackground}
+    Looper (main, tid 2) {21d0784}
+      (Total messages: 0, polling=false, quitting=false)
+    Local FragmentActivity 3b227f7 State:
+      mCreated=truemResumed=false mStopped=true mReallyStopped=true
+      mLoadersStarted=true
+    FragmentManager misc state:
+      mHost=android.support.v4.app.FragmentActivity$HostCallbacks@7be66c6
+      mContainer=android.support.v4.app.FragmentActivity$HostCallbacks@7be66c6
+      mCurState=2 mStateSaved=true mDestroyed=false
+
+  ACTIVITY fr.wcs.battlegeek/.MainMenuActivity 4ac1ca4 pid=(not running)

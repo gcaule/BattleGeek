@@ -2,8 +2,6 @@ package fr.wcs.battlegeek.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PointF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -12,11 +10,25 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import static fr.wcs.battlegeek.ui.MapView.Mode.CREATE;
+import static fr.wcs.battlegeek.ui.MapView.Mode.PLAY;
+import static fr.wcs.battlegeek.ui.Tetromino.Shape.I;
+import static fr.wcs.battlegeek.ui.Tetromino.Shape.J;
+import static fr.wcs.battlegeek.ui.Tetromino.Shape.S;
+
 /**
  * Created by adphi on 25/09/17.
  */
 
-public class CreateMapView extends View {
+public class MapView extends View {
+
+    public enum Mode {
+        PLAY, CREATE
+    }
+
+    private String TAG = "MapView";
+
+    private Mode mMode = CREATE;
 
     // Grid and Items Container Definition
     private Grid mGrid;
@@ -24,14 +36,11 @@ public class CreateMapView extends View {
 
     private Item mSelectedItem = null;
 
-    // Painting
-    private Paint mPaint = new Paint();
-
     /**
      * View Constructor
      * @param context
      */
-    public CreateMapView(Context context) {
+    public MapView(Context context) {
         super(context);
         init();
     }
@@ -41,7 +50,7 @@ public class CreateMapView extends View {
      * @param context
      * @param attrs
      */
-    public CreateMapView(Context context, @Nullable AttributeSet attrs) {
+    public MapView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -52,9 +61,13 @@ public class CreateMapView extends View {
      * @param attrs
      * @param defStyleAttr
      */
-    public CreateMapView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public MapView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
+    }
+
+    public void setMode(Mode mode) {
+        mMode = mode;
     }
 
     /**
@@ -70,12 +83,9 @@ public class CreateMapView extends View {
      * This is where the Blocks of the Item are defined
      */
     private void init() {
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setAntiAlias(true);
         mGrid = new Grid(10);
 
-        Tetromino tetromino1 = new Tetromino(this, mGrid, Tetromino.Shape.I, Tetromino.Colors.LTBLUE);
+        Tetromino tetromino1 = new Tetromino(this, mGrid, I, Tetromino.Colors.LTBLUE);
         tetromino1.setPosition(new PointF(0,0));
         mItems.add(tetromino1);
 
@@ -91,7 +101,7 @@ public class CreateMapView extends View {
         tetromino4.setPosition(new PointF(5, 2));
         mItems.add(tetromino4);
 
-        Tetromino tetromino5 = new Tetromino(this, mGrid, Tetromino.Shape.J, Tetromino.Colors.BLUE);
+        Tetromino tetromino5 = new Tetromino(this, mGrid, J, Tetromino.Colors.BLUE);
         tetromino5.setPosition(new PointF(6, 7));
         mItems.add(tetromino5);
 
@@ -99,10 +109,9 @@ public class CreateMapView extends View {
         tetromino6.setPosition(new PointF(1, 5));
         mItems.add(tetromino6);
 
-        Tetromino tetromino7 = new Tetromino(this, mGrid, Tetromino.Shape.S, Tetromino.Colors.GREEN);
+        Tetromino tetromino7 = new Tetromino(this, mGrid, S, Tetromino.Colors.GREEN);
         tetromino7.setPosition(new PointF(3, 6));
         mItems.add(tetromino7);
-
 
     }
 
@@ -140,6 +149,11 @@ public class CreateMapView extends View {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+        if(mMode == PLAY) {
+            return false;
+        }
+
         float x = event.getX();
         float y = event.getY();
         PointF pos = mGrid.mapToGrid(x, y);
@@ -147,6 +161,11 @@ public class CreateMapView extends View {
             case MotionEvent.ACTION_DOWN:
                 mSelectedItem = getItem(pos);
                 if (mSelectedItem != null) {
+                    // Move Selected Item at the end of the Item's List
+                    // Preventing it to be drawn under other Items
+                    mItems.remove(mSelectedItem);
+                    mItems.add(mSelectedItem);
+
                     mSelectedItem.onTouch(this, event);
                 }
                 break;
@@ -175,5 +194,51 @@ public class CreateMapView extends View {
             if (item.contains(point)) return item;
         }
         return null;
+    }
+
+    /**
+     * Method to dump edited map to map Model
+     * @return the map model
+     */
+    public char[][] getMapData(){
+        char[][] mapData = new char[10][10];
+        for (int row = 0; row < mapData.length; row++) {
+            for (int column = 0; column < mapData[row].length; column++) {
+                mapData[row][column] = ' ';
+            }
+        }
+        for(Item item : mItems) {
+            for(Block block : item.getBlocks()){
+                int x = (int)(block.getX() + item.getX());
+                int y = (int)(block.getY() + item.getY());
+                if(item instanceof Tetromino){
+                    Tetromino tetromino = (Tetromino) item;
+                    mapData[y][x] = tetromino.getShape().toString().charAt(0);
+                }
+                else {
+                    mapData[y][x] = 'X';
+                }
+            }
+        }
+        return mapData;
+    }
+
+    /**
+     * Method to set Play State on the Player Map
+     * @param x
+     * @param y
+     */
+    public void setDead(int x, int y) {
+        Item item = getItem(new PointF(x, y));
+        Block block = item.getBlock(x,y);
+        block.setState(Block.State.DEAD);
+        invalidate();
+    }
+
+    public void setPlouf(int x, int y) {
+        Item item = new Item(this, mGrid, x, y);
+        item.setBlock(new Block(0,0));
+        mItems.add(item);
+        invalidate();
     }
 }

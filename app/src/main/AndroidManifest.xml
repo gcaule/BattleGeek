@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.wcs.battlegeek">
+          package="fr.wcs.battlegeek">
 
     <application
         android:allowBackup="true"
@@ -9,19 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateMapActivity"/>
         <activity android:name=".ScreenLauncher">
+        </activity>
+        <activity android:name=".MainMenuActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".MainMenuActivity" />
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".SettingsActivity"/>
         <activity android:name=".RankingActivity">
-
+        </activity>
+        <activity android:name=".GameActivity">
         </activity>
     </application>
 
