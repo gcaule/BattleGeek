@@ -8,17 +8,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import fr.wcs.battlegeek.Model.Result;
 import fr.wcs.battlegeek.R;
 import fr.wcs.battlegeek.ui.GameView;
-import fr.wcs.battlegeek.ui.Tetromino;
 
-import static fr.wcs.battlegeek.Model.Result.Type.DROWN;
-import static fr.wcs.battlegeek.Model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.Model.Result.Type.VICTORY;
 
 public class GameActivity extends AppCompatActivity {
@@ -58,7 +54,7 @@ public class GameActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(alreadyPlayed(x, y)) {
+                if(mGameControler.alreadyPlayed(x, y)) {
                     showToast(R.string.alreadyPlayedMessage);
                     return;
                 }
@@ -66,44 +62,36 @@ public class GameActivity extends AppCompatActivity {
                 canPlay = false;
 
                 Result result = mAI.shot(x, y);
-                Result.Type resultType = result.getType();
-                Tetromino.Shape resultShape = result.getShape();
-
-                if(resultType == MISSED) {
-                    gameView.setPlouf(x, y);
-                    mStorageMap[y][x] = '_';
-                }
-                else {
-                    gameView.setTouch(x, y, resultShape);
-                    mStorageMap[y][x] = Character.toLowerCase(resultShape.toString().charAt(0));
-                    if(resultType == DROWN) {
+                mGameControler.setResult(x, y, result);
+                switch (result.getType()) {
+                    case MISSED:
+                        gameView.setPlouf(x, y);
+                        break;
+                    case TOUCHED:
+                        gameView.setTouch(x, y, result.getShape());
+                        break;
+                    case DROWN:
+                        gameView.setTouch(x, y, result.getShape());
                         showToast(R.string.itemDrownMessage);
-                    }
-
-                    if(resultType == VICTORY) {
+                        break;
+                    case VICTORY:
+                        gameView.setTouch(x, y, result.getShape());
                         showToast(R.string.victoryMessage);
-                        return;
-                    }
+                        break;
                 }
 
-                    // AI turn
-                    Point aiPlayCoordinates = mAI.play();
-                    Result iaResult = mGameControler.play(aiPlayCoordinates.x, aiPlayCoordinates.y);
-                    if(iaResult.getType() == VICTORY) {
-                        showToast(R.string.defeatMessage);
-                    }
-                    mAI.setResult(iaResult);
+                // AI turn
+                Point aiPlayCoordinates = mAI.play();
+                Result iaResult = mGameControler.play(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                if(iaResult.getType() == VICTORY) {
+                    showToast(R.string.defeatMessage);
+                }
+                mAI.setResult(iaResult);
 
                 canPlay = true;
             }
 
         });
-    }
-
-    public boolean alreadyPlayed(int x, int y) {
-        char symbol = mStorageMap[y][x];
-        Log.d(TAG, "alreadyPlayed() called with: x = [" + x + "], y = [" + y + "] symbol : " + symbol);
-        return symbol == '_' || Character.isLowerCase(symbol);
     }
 
     private void showToast(int stringResource) {

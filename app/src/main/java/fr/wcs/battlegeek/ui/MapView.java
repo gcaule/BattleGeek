@@ -10,6 +10,8 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import static fr.wcs.battlegeek.ui.MapView.Mode.CREATE;
+import static fr.wcs.battlegeek.ui.MapView.Mode.PLAY;
 import static fr.wcs.battlegeek.ui.Tetromino.Shape.I;
 import static fr.wcs.battlegeek.ui.Tetromino.Shape.J;
 import static fr.wcs.battlegeek.ui.Tetromino.Shape.S;
@@ -20,7 +22,14 @@ import static fr.wcs.battlegeek.ui.Tetromino.Shape.S;
 
 public class MapView extends View {
 
+    public enum Mode {
+        PLAY, CREATE
+    }
+
     private String TAG = "MapView";
+
+    private Mode mMode = CREATE;
+
     // Grid and Items Container Definition
     private Grid mGrid;
     private ArrayList<Item> mItems = new ArrayList<>();
@@ -137,6 +146,11 @@ public class MapView extends View {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+        if(mMode == PLAY) {
+            return false;
+        }
+
         float x = event.getX();
         float y = event.getY();
         PointF pos = mGrid.mapToGrid(x, y);
@@ -144,6 +158,11 @@ public class MapView extends View {
             case MotionEvent.ACTION_DOWN:
                 mSelectedItem = getItem(pos);
                 if (mSelectedItem != null) {
+                    // Move Selected Item at the end of the Item's List
+                    // Preventing it to be drawn under other Items
+                    mItems.remove(mSelectedItem);
+                    mItems.add(mSelectedItem);
+
                     mSelectedItem.onTouch(this, event);
                 }
                 break;

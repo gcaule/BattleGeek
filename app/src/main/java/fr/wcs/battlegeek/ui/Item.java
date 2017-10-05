@@ -170,7 +170,7 @@ public class Item implements View.OnTouchListener {
     public void setDead(int x, int y) {
         Block block = getBlock(x, y);
         if(block != null){
-            block.setState(Block.State.Dead);
+            block.setState(Block.State.DEAD);
         }
     }
 

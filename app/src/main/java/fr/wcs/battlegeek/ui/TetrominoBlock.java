@@ -65,7 +65,7 @@ public class TetrominoBlock extends Block {
                 break;
         }
         centerHSLColor = new float[] {mainHSLColorIndex, 1f, 0.65f};
-        topHSLColor = new float[] {mainHSLColorIndex, 1f, 0.9f};
+        topHSLColor = new float[] {mainHSLColorIndex, 1f, 0.7f};
         bottomHSLColor = new float[] {mainHSLColorIndex, 1f, 0.2f};
         sidesHSLColor = new float[] {mainHSLColorIndex, 1f, 0.45f};
     }
@@ -73,7 +73,7 @@ public class TetrominoBlock extends Block {
     @Override
     public void setState(State state) {
         super.setState(state);
-        if(state == State.Dead) {
+        if(state == State.DEAD) {
             centerHSLColor = new float[] {mainHSLColorIndex, 1f, 0.25f};
             topHSLColor = new float[] {mainHSLColorIndex, 1f, 0.5f};
             bottomHSLColor = new float[] {mainHSLColorIndex, 1f, 0.1f};
