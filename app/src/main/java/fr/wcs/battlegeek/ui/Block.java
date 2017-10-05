@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 
-import static fr.wcs.battlegeek.ui.Block.State.Alive;
+import static fr.wcs.battlegeek.ui.Block.State.ALIVE;
 
 /**
  * Created by adphi on 26/09/17.
@@ -14,7 +14,7 @@ import static fr.wcs.battlegeek.ui.Block.State.Alive;
 public class Block {
 
     // State
-    private State mState = Alive;
+    private State mState = ALIVE;
 
     // Geometry
     protected PointF mPosition;
@@ -99,7 +99,7 @@ public class Block {
         this.mPaintStroke.setAntiAlias(true);
 
         this.mPaintAliveFill.setStyle(Paint.Style.FILL);
-        this.mPaintAliveFill.setColor(Color.DKGRAY);
+        this.mPaintAliveFill.setColor(Color.GRAY);
 
         this.mPaintDeadFill.setStyle(Paint.Style.FILL);
         this.mPaintDeadFill.setColor(Color.BLACK);
@@ -161,10 +161,10 @@ public class Block {
         float x = (itemX + mX) * mBlockSize;
         float y = (itemY + mY) * mBlockSize;
         switch (mState) {
-            case Alive:
+            case ALIVE:
                 canvas.drawRect(x, y, x + mBlockSize, y + mBlockSize, mPaintAliveFill);
                 break;
-            case Dead:
+            case DEAD:
                 canvas.drawRect(x, y, x + mBlockSize, y + mBlockSize, mPaintDeadFill);
                 break;
         }
@@ -172,9 +172,9 @@ public class Block {
     }
 
     /**
-     * Enumeration Block's Stats : Alive (initial State), Dead (When the Block in the Item is Touch)
+     * Enumeration Block's Stats : ALIVE (initial State), DEAD (When the Block in the Item is Touch)
      */
     enum State {
-        Alive, Dead;
+        ALIVE, DEAD;
     }
 }

@@ -1,4 +1,4 @@
-package fr.wcs.battlegeek.Model;
+package fr.wcs.battlegeek.model;
 
 import fr.wcs.battlegeek.ui.Tetromino;
 

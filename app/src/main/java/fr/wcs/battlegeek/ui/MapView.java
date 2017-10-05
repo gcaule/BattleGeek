@@ -10,6 +10,8 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import static fr.wcs.battlegeek.ui.MapView.Mode.CREATE;
+import static fr.wcs.battlegeek.ui.MapView.Mode.PLAY;
 import static fr.wcs.battlegeek.ui.Tetromino.Shape.I;
 import static fr.wcs.battlegeek.ui.Tetromino.Shape.J;
 import static fr.wcs.battlegeek.ui.Tetromino.Shape.S;
@@ -20,7 +22,14 @@ import static fr.wcs.battlegeek.ui.Tetromino.Shape.S;
 
 public class MapView extends View {
 
+    public enum Mode {
+        PLAY, CREATE
+    }
+
     private String TAG = "MapView";
+
+    private Mode mMode = CREATE;
+
     // Grid and Items Container Definition
     private Grid mGrid;
     private ArrayList<Item> mItems = new ArrayList<>();
@@ -55,6 +64,10 @@ public class MapView extends View {
     public MapView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
+    }
+
+    public void setMode(Mode mode) {
+        mMode = mode;
     }
 
     /**
@@ -100,7 +113,6 @@ public class MapView extends View {
         tetromino7.setPosition(new PointF(3, 6));
         mItems.add(tetromino7);
 
-
     }
 
     /**
@@ -137,6 +149,11 @@ public class MapView extends View {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+        if(mMode == PLAY) {
+            return false;
+        }
+
         float x = event.getX();
         float y = event.getY();
         PointF pos = mGrid.mapToGrid(x, y);
@@ -144,6 +161,11 @@ public class MapView extends View {
             case MotionEvent.ACTION_DOWN:
                 mSelectedItem = getItem(pos);
                 if (mSelectedItem != null) {
+                    // Move Selected Item at the end of the Item's List
+                    // Preventing it to be drawn under other Items
+                    mItems.remove(mSelectedItem);
+                    mItems.add(mSelectedItem);
+
                     mSelectedItem.onTouch(this, event);
                 }
                 break;
@@ -207,10 +229,16 @@ public class MapView extends View {
      * @param y
      */
     public void setDead(int x, int y) {
-        for(Item item : mItems) {
-            if(item.contains(new PointF(x, y))){
-                item.setDead(x, y);
-            }
-        }
+        Item item = getItem(new PointF(x, y));
+        Block block = item.getBlock(x,y);
+        block.setState(Block.State.DEAD);
+        invalidate();
+    }
+
+    public void setPlouf(int x, int y) {
+        Item item = new Item(this, mGrid, x, y);
+        item.setBlock(new Block(0,0));
+        mItems.add(item);
+        invalidate();
     }
 }

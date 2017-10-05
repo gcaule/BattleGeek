@@ -1,12 +1,12 @@
 package fr.wcs.battlegeek.controller;
 
-import fr.wcs.battlegeek.Model.Result;
+import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.ui.Tetromino;
 
-import static fr.wcs.battlegeek.Model.Result.Type.DROWN;
-import static fr.wcs.battlegeek.Model.Result.Type.MISSED;
-import static fr.wcs.battlegeek.Model.Result.Type.TOUCHED;
-import static fr.wcs.battlegeek.Model.Result.Type.VICTORY;
+import static fr.wcs.battlegeek.model.Result.Type.DROWN;
+import static fr.wcs.battlegeek.model.Result.Type.MISSED;
+import static fr.wcs.battlegeek.model.Result.Type.TOUCHED;
+import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
 import static fr.wcs.battlegeek.ui.Tetromino.Shape.NONE;
 
 /**
@@ -16,6 +16,7 @@ import static fr.wcs.battlegeek.ui.Tetromino.Shape.NONE;
 public class GameController {
 
     private char[][] mMap;
+    private char[][] mStorageMap = new char[10][10];
 
     public GameController(char[][] map) {
         mMap = map;
@@ -44,6 +45,18 @@ public class GameController {
         return new Result(resultShape, resultType);
     }
 
+    public void setResult(int x, int y, Result result) {
+        Result.Type resultType = result.getType();
+        Tetromino.Shape resultShape = result.getShape();
+
+        if(resultType == MISSED) {
+            mStorageMap[y][x] = '_';
+        }
+        else {
+            mStorageMap[y][x] = Character.toLowerCase(resultShape.toString().charAt(0));
+        }
+    }
+
     private boolean isDrown(char symbol) {
         for(char[] row : mMap){
             for(char letter : row){
@@ -64,6 +77,11 @@ public class GameController {
             }
         }
         return true;
+    }
+
+    public boolean alreadyPlayed(int x, int y) {
+        char symbol = mStorageMap[y][x];
+        return symbol == '_' || Character.isLowerCase(symbol);
     }
 
 }
