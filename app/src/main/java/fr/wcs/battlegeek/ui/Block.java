@@ -99,7 +99,7 @@ public class Block {
         this.mPaintStroke.setAntiAlias(true);
 
         this.mPaintAliveFill.setStyle(Paint.Style.FILL);
-        this.mPaintAliveFill.setColor(Color.DKGRAY);
+        this.mPaintAliveFill.setColor(Color.GRAY);
 
         this.mPaintDeadFill.setStyle(Paint.Style.FILL);
         this.mPaintDeadFill.setColor(Color.BLACK);

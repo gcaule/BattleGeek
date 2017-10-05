@@ -1,7 +1,6 @@
 package fr.wcs.battlegeek.controller;
 
 import android.graphics.Point;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -31,13 +30,12 @@ public class AI {
     }
 
     public Point play() {
-        int index = (int) Math.random() * (mPlayablesCoordinates.size() - 1);
+        int index = (int) (Math.random() * (mPlayablesCoordinates.size() - 1));
         Point coordinates = mPlayablesCoordinates.get(index);
         mPlayablesCoordinates.remove(index);
         return coordinates;
     }
 
     public void setResult(Result result) {
-        Log.d(TAG, "setResult() called with: result = [" + result + "]");
     }
 }

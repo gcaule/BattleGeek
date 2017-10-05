@@ -66,6 +66,10 @@ public class MapView extends View {
         init();
     }
 
+    public void setMode(Mode mode) {
+        mMode = mode;
+    }
+
     /**
      * Get the Items
      * @return
@@ -108,7 +112,6 @@ public class MapView extends View {
         Tetromino tetromino7 = new Tetromino(this, mGrid, S, Tetromino.Colors.GREEN);
         tetromino7.setPosition(new PointF(3, 6));
         mItems.add(tetromino7);
-
 
     }
 
@@ -226,10 +229,16 @@ public class MapView extends View {
      * @param y
      */
     public void setDead(int x, int y) {
-        for(Item item : mItems) {
-            if(item.contains(new PointF(x, y))){
-                item.setDead(x, y);
-            }
-        }
+        Item item = getItem(new PointF(x, y));
+        Block block = item.getBlock(x,y);
+        block.setState(Block.State.DEAD);
+        invalidate();
+    }
+
+    public void setPlouf(int x, int y) {
+        Item item = new Item(this, mGrid, x, y);
+        item.setBlock(new Block(0,0));
+        mItems.add(item);
+        invalidate();
     }
 }

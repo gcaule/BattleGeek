@@ -1,11 +1,8 @@
 package fr.wcs.battlegeek.controller;
 
-import android.util.Log;
-
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.ui.Tetromino;
 
-import static android.content.ContentValues.TAG;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.model.Result.Type.TOUCHED;
@@ -84,7 +81,6 @@ public class GameController {
 
     public boolean alreadyPlayed(int x, int y) {
         char symbol = mStorageMap[y][x];
-        Log.d(TAG, "alreadyPlayed() called with: x = [" + x + "], y = [" + y + "] symbol : " + symbol);
         return symbol == '_' || Character.isLowerCase(symbol);
     }
 

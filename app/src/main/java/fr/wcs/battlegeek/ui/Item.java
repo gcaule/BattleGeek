@@ -155,23 +155,13 @@ public class Item implements View.OnTouchListener {
      */
     public Block getBlock(int x, int y) {
         for(Block block : mBlocks) {
-            if(mapToItem(block.getPosition()) == new PointF(x, y)) {
+            PointF mappedCoordinates = mapToItem(new PointF(x, y));
+            if(block.getPosition().x == mappedCoordinates.x
+                    && block.getPosition().y == mappedCoordinates.y) {
                 return block;
             }
         }
         return null;
-    }
-
-    /**
-     * Method to Set Block
-     * @param x Coordinate in Grid
-     * @param y Corrdinate in Grid
-     */
-    public void setDead(int x, int y) {
-        Block block = getBlock(x, y);
-        if(block != null){
-            block.setState(Block.State.DEAD);
-        }
     }
 
     /**

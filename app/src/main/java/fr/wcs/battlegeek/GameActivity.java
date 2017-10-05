@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -17,12 +19,15 @@ import fr.wcs.battlegeek.ui.GameView;
 import fr.wcs.battlegeek.ui.MapView;
 
 import static fr.wcs.battlegeek.R.id.viewFlipper;
+import static fr.wcs.battlegeek.model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
 
 public class GameActivity extends AppCompatActivity {
 
+    private final String TAG = "GameActivity";
+
     private AI mAI;
-    private GameController mGameControler;
+    private GameController mGameController;
     private boolean canPlay = true;
 
     private Toast mToast;
@@ -40,15 +45,17 @@ public class GameActivity extends AppCompatActivity {
 
         mContext = getApplicationContext();
         mViewFlipper = (ViewFlipper) findViewById(viewFlipper);
-        Button buttonLaunchGame = (Button) findViewById(R.id.buttonLaunchGame);
+        final Button buttonLaunchGame = (Button) findViewById(R.id.buttonLaunchGame);
 
         buttonLaunchGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mMapView = (MapView) findViewById(R.id.mapView);
                 char[][] mapData = mMapView.getMapData();
-                mGameControler = new GameController(mapData);
+                mGameController = new GameController(mapData);
+                mMapView.setMode(MapView.Mode.PLAY);
                 mAI = new AI();
+                buttonLaunchGame.setVisibility(View.GONE);
                 mViewFlipper.showNext();
             }
 
@@ -63,7 +70,7 @@ public class GameActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(mGameControler.alreadyPlayed(x, y)) {
+                if(mGameController.alreadyPlayed(x, y)) {
                     showToast(R.string.alreadyPlayedMessage);
                     return;
                 }
@@ -71,7 +78,7 @@ public class GameActivity extends AppCompatActivity {
                 canPlay = false;
 
                 Result result = mAI.shot(x, y);
-                mGameControler.setResult(x, y, result);
+                mGameController.setResult(x, y, result);
                 switch (result.getType()) {
                     case MISSED:
                         mGameView.setPlouf(x, y);
@@ -90,16 +97,41 @@ public class GameActivity extends AppCompatActivity {
                 }
 
                 // AI turn
-                Point aiPlayCoordinates = mAI.play();
-                Result iaResult = mGameControler.play(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                final Point aiPlayCoordinates = mAI.play();
+                final Result iaResult = mGameController.play(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                Log.d(TAG, "onPlayListener: " + aiPlayCoordinates + " " + iaResult);
+
                 if(iaResult.getType() == VICTORY) {
                     showToast(R.string.defeatMessage);
                 }
+
                 mAI.setResult(iaResult);
 
-                canPlay = true;
+                new CountDownTimer(1000, 1000) {
+                    public void onTick(long millisUntilFinished) {}
+                    public void onFinish() {
+                        mViewFlipper.showPrevious();
+                        new CountDownTimer(2500, 500) {
+                            @Override
+                            public void onTick(long l) {
+                                if(l > 1000 && l < 1500) {
+                                    if(iaResult.getType() == MISSED) {
+                                        mMapView.setPlouf(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                                    }
+                                    else {
+                                        mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                                    }
+                                }
+                            }
+                            @Override
+                            public void onFinish() {
+                                canPlay = true;
+                                mViewFlipper.showPrevious();
+                            }
+                        }.start();
+                    }
+                }.start();
             }
-
         });
     }
 
