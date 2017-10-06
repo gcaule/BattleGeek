@@ -3,6 +3,7 @@ package fr.wcs.battlegeek;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -52,6 +53,9 @@ public class GameActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
 
+        Intent intent = getIntent();
+        final String level = intent.getStringExtra("Level");
+
         mContext = getApplicationContext();
         mViewFlipper = (ViewFlipper) findViewById(viewFlipper);
         mTextViewPlayer = (TextView) findViewById(R.id.textViewPlayer);
@@ -68,6 +72,10 @@ public class GameActivity extends AppCompatActivity {
                 mGameController = new GameController(mapData);
                 mMapView.setMode(MapView.Mode.PLAY);
                 mAI = new AI();
+                if (level.equals("Impossible")) {
+                    mAI.setPlayerMap(mapData);
+                    mAI.setLevel(AI.Level.IMPOSSIBLE);
+                }
                 buttonLaunchGame.setVisibility(View.GONE);
                 mTextViewAI.setText(R.string.AITurn);
                 mViewFlipper.showNext();
@@ -149,6 +157,7 @@ public class GameActivity extends AppCompatActivity {
             EndGameDefeatFragment endGameDefeatFragment = new EndGameDefeatFragment();
             endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
             endGameDefeatFragment.setCancelable(false);
+            return;
         }
 
         mAI.setResult(iaResult);
@@ -179,7 +188,9 @@ public class GameActivity extends AppCompatActivity {
                     canPlay = true;
                     mViewFlipper.showPrevious();
                 }
-                else aiPlay();
+                else if (resultType != VICTORY) {
+                    aiPlay();
+                }
             }
         }.start();
     }

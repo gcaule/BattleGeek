@@ -66,6 +66,25 @@
         android:textSize="25sp"
         />
 
+    <Button
+        android:id="@+id/buttonImpossibleMode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/button_impossible"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        android:background="@drawable/buttonshapeimpossible"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="35dp"
+        app:layout_constraintTop_toBottomOf="@+id/buttonHardMode"
+        app:layout_constraintHorizontal_bias="0.0"/>
+
     <ImageButton
         android:id="@+id/buttonTrophy"
         android:layout_width="40dp"

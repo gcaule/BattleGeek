@@ -13,12 +13,16 @@ import fr.wcs.battlegeek.model.Result;
 
 public class AI {
     public enum Level {
-        I, II, III;
+        I, II, III, IMPOSSIBLE;
     }
 
     private final String TAG = "AI";
+    private Level mLevel;
+
+
     private GameController mGameControler;
     private ArrayList<Point> mPlayablesCoordinates;
+    private char[][] mPlayerMap;
 
     public AI(){
         mGameControler = new GameController(Maps.getMap());
@@ -37,5 +41,23 @@ public class AI {
     }
 
     public void setResult(Result result) {
+    }
+
+    public void setLevel(Level level) {
+        mLevel = level;
+        if (level == Level.IMPOSSIBLE && mPlayerMap != null) {
+            mPlayablesCoordinates.clear();
+            for (int i = 0; i < mPlayerMap.length; i++) {
+                for (int j = 0; j < mPlayerMap[i].length; j++) {
+                    if(mPlayerMap[i][j] != ' ') {
+                        mPlayablesCoordinates.add(new Point(j, i));
+                    }
+                }
+            }
+        }
+    }
+
+    public void setPlayerMap(char[][] playerMap) {
+        mPlayerMap = playerMap;
     }
 }

@@ -5,6 +5,7 @@
     <string name="player_name">Nom du joueur</string>
     <string name="alreadyPlayedMessage">Vous avez déjà joué cette case !</string>
     <string name="itemDrownMessage">Vous avez détruit cette pièce !</string>
+    <string name="button_impossible">Impossible</string>
     <string name="button_hard">Démentiel</string>
     <string name="button_medium">Difficile</string>
     <string name="button_easy">Normal</string>

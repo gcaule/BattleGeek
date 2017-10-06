@@ -21,6 +21,7 @@ public class MainMenuActivity extends AppCompatActivity {
         Button buttonEasyMode = (Button) findViewById(R.id.buttonEasyMode);
         Button buttonMediumMode = (Button) findViewById(R.id.buttonMediumMode);
         Button buttonHardMode = (Button) findViewById(R.id.buttonHardMode);
+        Button buttonImpossibleMode = (Button) findViewById(R.id.buttonImpossibleMode);
 
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +45,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, GameActivity.class);
+                intent.putExtra("Level", "Easy");
                 startActivity(intent);
             }
 
@@ -53,6 +55,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, GameActivity.class);
+                intent.putExtra("Level", "Medium");
                 startActivity(intent);
             }
 
@@ -62,9 +65,19 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, GameActivity.class);
+                intent.putExtra("Level", "Hard");
                 startActivity(intent);
             }
 
+        });
+
+        buttonImpossibleMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainMenuActivity.this, GameActivity.class);
+                intent.putExtra("Level", "Impossible");
+                startActivity(intent);
+            }
         });
 
     }
