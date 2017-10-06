@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "795280374276",
+    "firebase_url": "https://tetromino-88d4d.firebaseio.com",
+    "project_id": "tetromino-88d4d",
+    "storage_bucket": "tetromino-88d4d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795280374276:android:237179acaa40aeb6",
+        "android_client_info": {
+          "package_name": "fr.wcs.battlegeek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "795280374276-qn7nbhj3p8a1neqnqboqaf56n7gsloka.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.wcs.battlegeek",
+            "certificate_hash": "9d792ecb57db58468d110b82e4f0f5c33731fa01"
+          }
+        },
+        {
+          "client_id": "795280374276-dgvroqlore9vkvktt1fnhslu5bbg81dr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKjfFWy9eMU3v8SgnEhaoZcS-wtIzkGGE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "795280374276-dgvroqlore9vkvktt1fnhslu5bbg81dr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

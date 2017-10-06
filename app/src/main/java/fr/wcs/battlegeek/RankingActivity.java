@@ -28,9 +28,6 @@ public class RankingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Access Internal files, preferences and DB of the APP via Chrome : chrome://inspect/#devices
-        Stetho.initializeWithDefaults(this);
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_ranking);
 
