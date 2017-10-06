@@ -17,7 +17,7 @@
     <string name="ok_defeat">T\'as triché...</string>
     <string name="ok_victory">A l\'aise...</string>
     <string name="end_game_victory">Vous ressentez\nl\'ennivrante exaltation de la\nVICTOIRE !!</string>
-    <string name="place_pieces">Placez vos pièces\n(si possible avec stratégie et savoir-faire)</string>
+    <string name="place_pieces">Placez vos pièces\n(avec stratégie et savoir-faire)</string>
     <string name="touchedPlayAgain">Pièce touchée ! Rejouez !</string>
     <string name="drownPlayAgain">Pièce détruite ! Rejouez !</string>
     <string name="player_turn">A votre tour !</string>
