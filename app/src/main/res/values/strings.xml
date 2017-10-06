@@ -3,15 +3,20 @@
     <string name="launchGame">GO GO GO !</string>
     <string name="main_title">Bataille Navale</string>
     <string name="player_name">Nom du joueur</string>
-    <string name="alreadyPlayedMessage">Heu... Ca sert à rien ça ...</string>
-    <string name="itemDrownMessage">Hey!! Coulé!!</string>
+    <string name="alreadyPlayedMessage">Vous avez déjà joué cette case !</string>
+    <string name="itemDrownMessage">Vous avez détruit cette pièce !</string>
     <string name="victoryMessage">Wahooo ! Gagné !!</string>
     <string name="defeatMessage">Tu t\'es fait laminer par la stupide IA</string>
-    <string name="button_hard">Hardcore</string>
-    <string name="button_medium">Normal</string>
-    <string name="button_easy">Trop Sympa</string>
+    <string name="button_hard">Démentiel</string>
+    <string name="button_medium">Difficile</string>
+    <string name="button_easy">Normal</string>
     <string name="textViewSettings">Paramètres</string>
     <string name="buttonValidate">Enregistrer</string>
     <string name="titleRanking">Ranking</string>
     <string name="message_welcome">\"Prêt à jouer ?\"</string>
+    <string name="end_game_fragment_title">La partie est terminée !</string>
+    <string name="end_game_defeat">Vous avez en\nbouche le goût amer de la\nDEFAITE !!</string>
+    <string name="ok_defeat">T\'as triché...</string>
+    <string name="ok_victory">A l\'aise...</string>
+    <string name="end_game_victory">Vous ressentez\nl\'ennivrante exaltation de la\nVICTOIRE !!</string>
 </resources>

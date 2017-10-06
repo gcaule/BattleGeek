@@ -9,6 +9,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -43,6 +44,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
@@ -88,11 +90,13 @@ public class GameActivity extends AppCompatActivity {
                         break;
                     case TOUCHED:
                         mGameView.setTouch(x, y, result.getShape());
-                        break;
+                        canPlay = true;
+                        return;
                     case DROWN:
                         mGameView.setTouch(x, y, result.getShape());
                         showToast(R.string.itemDrownMessage);
-                        break;
+                        canPlay = true;
+                        return;
                     case VICTORY:
                         mGameView.setTouch(x, y, result.getShape());
                         FragmentManager fm = getFragmentManager();
@@ -116,14 +120,15 @@ public class GameActivity extends AppCompatActivity {
 
                 mAI.setResult(iaResult);
 
-                new CountDownTimer(1000, 1000) {
+                new CountDownTimer(650, 500) {
                     public void onTick(long millisUntilFinished) {}
                     public void onFinish() {
                         mViewFlipper.showPrevious();
-                        new CountDownTimer(2500, 500) {
+                        new CountDownTimer(1750, 350) {
+                            private int cursor = 0;
                             @Override
                             public void onTick(long l) {
-                                if(l > 1000 && l < 1500) {
+                                if(cursor == 1) {
                                     if(iaResult.getType() == MISSED) {
                                         mMapView.setPlouf(aiPlayCoordinates.x, aiPlayCoordinates.y);
                                     }
@@ -131,6 +136,7 @@ public class GameActivity extends AppCompatActivity {
                                         mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
                                     }
                                 }
+                                cursor++;
                             }
                             @Override
                             public void onFinish() {

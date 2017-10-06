@@ -25,8 +25,7 @@ public class EndGameDefeatFragment extends DialogFragment {
         builder.setMessage(R.string.end_game_defeat);
         builder.setPositiveButton(R.string.ok_defeat, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Intent victory = new Intent(getActivity(), MainMenuActivity.class);
-                startActivity(victory);
+                getActivity().finish();
             }
         });
 
