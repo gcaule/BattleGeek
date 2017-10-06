@@ -24,11 +24,12 @@ public class TetrominoBlock extends Block {
     private float[] mSidesHSLColor;
     private float mCenterMargin = 15;
 
+
     /**
      * TetrominoBlock is the smallest element of Tetrominos
-     * @param color The color of the Block
+     * @param position
+     * @param color
      */
-
     public TetrominoBlock(PointF position, Tetromino.Colors color) {
         super(position);
         this.setColor(color);

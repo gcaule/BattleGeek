@@ -11,11 +11,6 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static fr.wcs.battlegeek.ui.Tetromino.Shape.I;
-import static fr.wcs.battlegeek.ui.Tetromino.Shape.J;
-import static fr.wcs.battlegeek.ui.Tetromino.Shape.O;
-import static fr.wcs.battlegeek.ui.Tetromino.Shape.T;
-
 
 /**
  * Created by apprenti on 27/09/17.
@@ -110,27 +105,6 @@ public class GameView extends View{
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
-    private Tetromino.Shape getShape(char symbol){
-        switch (symbol) {
-            case 'T':
-                return T;
-            case 'Z':
-                return Tetromino.Shape.Z;
-            case 'S':
-                return Tetromino.Shape.S;
-            case 'O':
-                return O;
-            case 'I':
-                return I;
-            case 'L':
-                return Tetromino.Shape.L;
-            case 'J':
-                return J;
-            default:
-                return null;
-        }
     }
 
     public void setOnPlayListener(PlayListener listener) {
