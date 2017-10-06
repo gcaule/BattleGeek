@@ -2,9 +2,11 @@ package fr.wcs.battlegeek;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -189,5 +191,19 @@ public class GameActivity extends AppCompatActivity {
         mToast.setText(getString(stringResource));
         mToast.setDuration(Toast.LENGTH_SHORT);
         mToast.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+
+        builder.setMessage(R.string.quit_game_alert_message)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        GameActivity.super.onBackPressed();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null).show();
     }
 }

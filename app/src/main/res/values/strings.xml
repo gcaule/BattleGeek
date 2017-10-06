@@ -25,4 +25,6 @@
     <string name="missed">Raté !</string>
     <string name="AITouched">Touché ! L\'adversaire rejoue !</string>
     <string name="AIDrown">Coulé ! L\'adversaire rejoue !</string>
+    <string name="quit_game_alert_title">Exit</string>
+    <string name="quit_game_alert_message">Sérieusement ??!</string>
 </resources>
