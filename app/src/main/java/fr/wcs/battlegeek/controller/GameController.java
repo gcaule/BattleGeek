@@ -22,7 +22,7 @@ public class GameController {
         mMap = map;
     }
 
-    public Result play(int x, int y) {
+    public Result shot(int x, int y) {
         char symbol = mMap[y][x];
         Result.Type resultType;
         Tetromino.Shape resultShape;
@@ -45,7 +45,7 @@ public class GameController {
         return new Result(resultShape, resultType);
     }
 
-    public void setResult(int x, int y, Result result) {
+    public void setPlayResult(int x, int y, Result result) {
         Result.Type resultType = result.getType();
         Tetromino.Shape resultShape = result.getShape();
 
@@ -83,5 +83,7 @@ public class GameController {
         char symbol = mStorageMap[y][x];
         return symbol == '_' || Character.isLowerCase(symbol);
     }
+
+
 
 }

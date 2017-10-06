@@ -78,74 +78,89 @@ public class GameActivity extends AppCompatActivity {
                     return;
                 }
 
-                canPlay = false;
-
-                Result result = mAI.shot(x, y);
-                mGameController.setResult(x, y, result);
-                switch (result.getType()) {
-                    case MISSED:
-                        mGameView.setPlouf(x, y);
-                        break;
-                    case TOUCHED:
-                        mGameView.setTouch(x, y, result.getShape());
-                        canPlay = true;
-                        return;
-                    case DROWN:
-                        mGameView.setTouch(x, y, result.getShape());
-                        showToast(R.string.itemDrownMessage);
-                        canPlay = true;
-                        return;
-                    case VICTORY:
-                        mGameView.setTouch(x, y, result.getShape());
-                        FragmentManager fm = getFragmentManager();
-                        EndGameVictoryFragment endGameVictoryFragment = new EndGameVictoryFragment();
-                        endGameVictoryFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
-                        endGameVictoryFragment.setCancelable(false);
-                        break;
-                }
-
-                // AI turn
-                final Point aiPlayCoordinates = mAI.play();
-                final Result iaResult = mGameController.play(aiPlayCoordinates.x, aiPlayCoordinates.y);
-                Log.d(TAG, "onPlayListener: " + aiPlayCoordinates + " " + iaResult);
-
-                if(iaResult.getType() == VICTORY) {
-                    FragmentManager fm = getFragmentManager();
-                    EndGameDefeatFragment endGameDefeatFragment = new EndGameDefeatFragment();
-                    endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
-                    endGameDefeatFragment.setCancelable(false);
-                }
-
-                mAI.setResult(iaResult);
-
-                new CountDownTimer(650, 500) {
-                    public void onTick(long millisUntilFinished) {}
-                    public void onFinish() {
-                        mViewFlipper.showPrevious();
-                        new CountDownTimer(1750, 350) {
-                            private int cursor = 0;
-                            @Override
-                            public void onTick(long l) {
-                                if(cursor == 1) {
-                                    if(iaResult.getType() == MISSED) {
-                                        mMapView.setPlouf(aiPlayCoordinates.x, aiPlayCoordinates.y);
-                                    }
-                                    else {
-                                        mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
-                                    }
-                                }
-                                cursor++;
-                            }
-                            @Override
-                            public void onFinish() {
-                                canPlay = true;
-                                mViewFlipper.showPrevious();
-                            }
-                        }.start();
-                    }
-                }.start();
+                playerPlay(x, y);
             }
         });
+    }
+
+    private void playerPlay(int x, int y) {
+        canPlay = false;
+
+        Result result = mAI.shot(x, y);
+        mGameController.setPlayResult(x, y, result);
+        switch (result.getType()) {
+            case TOUCHED:
+                mGameView.setTouch(x, y, result.getShape());
+                canPlay = true;
+                return;
+            case DROWN:
+                mGameView.setTouch(x, y, result.getShape());
+                showToast(R.string.itemDrownMessage);
+                canPlay = true;
+                return;
+            case VICTORY:
+                mGameView.setTouch(x, y, result.getShape());
+                FragmentManager fm = getFragmentManager();
+                EndGameVictoryFragment endGameVictoryFragment = new EndGameVictoryFragment();
+                endGameVictoryFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
+                endGameVictoryFragment.setCancelable(false);
+                return;
+            case MISSED:
+                mGameView.setPlouf(x, y);
+                // Show the result
+                new CountDownTimer(650, 500) {
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    // Move to MapView and AI Turn
+                    public void onFinish() {
+                        mViewFlipper.showPrevious();
+                        aiPlay();
+                    }
+                }.start();
+
+                break;
+        }
+    }
+
+    private void aiPlay() {
+        final Point aiPlayCoordinates = mAI.play();
+        final Result iaResult = mGameController.shot(aiPlayCoordinates.x, aiPlayCoordinates.y);
+        final Result.Type resultType = iaResult.getType();
+        Log.d(TAG, "onPlayListener: " + aiPlayCoordinates + " " + iaResult);
+
+        if(resultType == VICTORY) {
+            FragmentManager fm = getFragmentManager();
+            EndGameDefeatFragment endGameDefeatFragment = new EndGameDefeatFragment();
+            endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
+            endGameDefeatFragment.setCancelable(false);
+        }
+
+        mAI.setResult(iaResult);
+
+        new CountDownTimer(1750, 350) {
+            private int cursor = 0;
+            @Override
+            public void onTick(long l) {
+                if(cursor == 1) {
+                    if(resultType == MISSED) {
+                        mMapView.setPlouf(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                    }
+                    else {
+                        mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                    }
+                }
+                cursor++;
+            }
+            @Override
+            public void onFinish() {
+                if(resultType == MISSED) {
+                    canPlay = true;
+                    mViewFlipper.showPrevious();
+                }
+                else aiPlay();
+            }
+        }.start();
     }
 
     private void showToast(int stringResource) {

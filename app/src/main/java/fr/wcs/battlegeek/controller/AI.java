@@ -26,7 +26,7 @@ public class AI {
     }
 
     public Result shot(int x, int y) {
-        return mGameControler.play(x, y);
+        return mGameControler.shot(x, y);
     }
 
     public Point play() {
