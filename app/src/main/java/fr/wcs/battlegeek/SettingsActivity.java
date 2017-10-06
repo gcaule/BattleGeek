@@ -34,7 +34,6 @@ public class SettingsActivity extends AppCompatActivity {
         final TextView seekBarValueMusic = (TextView) findViewById(R.id.seekBarValueMusic);
         final TextView seekBarValueEffects = (TextView) findViewById(R.id.seekBarValueEffects);
         final EditText inputPlayerName = (EditText) findViewById(R.id.inputPlayerName);
-        final TextView showPlayerName = (TextView) findViewById(R.id.showPlayerName);
         final ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
         final Button buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonSave.setVisibility(GONE);
@@ -54,7 +53,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         //Get Pref for Player Name
         String playerName = getPreferences(MODE_PRIVATE).getString("PlayerName", null);
-        showPlayerName.setText(playerName);
         inputPlayerName.setText(playerName);
 
         //Seekbar listener for music + Display value
@@ -133,7 +131,6 @@ public class SettingsActivity extends AppCompatActivity {
              @Override
            public void onClick(View v) {
                  mSharedPreferences.edit().putString("PlayerName", inputPlayerName.getText().toString()).apply();
-                 showPlayerName.setText(getPreferences(MODE_PRIVATE).getString("PlayerName", null));
                  Toast.makeText(SettingsActivity.this, "Paramètres enregistrés", Toast.LENGTH_SHORT).show();
              }
         });
