@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -55,12 +56,16 @@ public class GameActivity extends AppCompatActivity {
         buttonLaunchGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView playerTurn = (TextView) findViewById(R.id.playerTurn);
+                playerTurn.setText(R.string.player_turn);
                 mMapView = (MapView) findViewById(R.id.mapView);
                 char[][] mapData = mMapView.getMapData();
                 mGameController = new GameController(mapData);
                 mMapView.setMode(MapView.Mode.PLAY);
                 mAI = new AI();
                 buttonLaunchGame.setVisibility(View.GONE);
+                TextView IATurn = (TextView) findViewById(R.id.IATurn);
+                IATurn.setText(R.string.IA_turn);
                 mViewFlipper.showNext();
             }
 
@@ -87,13 +92,19 @@ public class GameActivity extends AppCompatActivity {
                 switch (result.getType()) {
                     case MISSED:
                         mGameView.setPlouf(x, y);
+                        TextView playerTurnMissed = (TextView) findViewById(R.id.playerTurn);
+                        playerTurnMissed.setText(R.string.missed);
                         break;
                     case TOUCHED:
                         mGameView.setTouch(x, y, result.getShape());
+                        TextView playerTurnTouched = (TextView) findViewById(R.id.playerTurn);
+                        playerTurnTouched.setText(R.string.touchedPlayAgain);
                         canPlay = true;
                         return;
                     case DROWN:
                         mGameView.setTouch(x, y, result.getShape());
+                        TextView playerTurnDrown = (TextView) findViewById(R.id.playerTurn);
+                        playerTurnDrown.setText(R.string.drownPlayAgain);
                         showToast(R.string.itemDrownMessage);
                         canPlay = true;
                         return;
@@ -123,6 +134,8 @@ public class GameActivity extends AppCompatActivity {
                 new CountDownTimer(650, 500) {
                     public void onTick(long millisUntilFinished) {}
                     public void onFinish() {
+                        TextView playerTurn = (TextView) findViewById(R.id.playerTurn);
+                        playerTurn.setText(R.string.player_turn);
                         mViewFlipper.showPrevious();
                         new CountDownTimer(1750, 350) {
                             private int cursor = 0;
@@ -131,9 +144,13 @@ public class GameActivity extends AppCompatActivity {
                                 if(cursor == 1) {
                                     if(iaResult.getType() == MISSED) {
                                         mMapView.setPlouf(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                                        TextView IATurnMissed = (TextView) findViewById(R.id.IATurn);
+                                        IATurnMissed.setText(R.string.missed);
                                     }
                                     else {
                                         mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                                        TextView IATurnTouched = (TextView) findViewById(R.id.IATurn);
+                                        IATurnTouched.setText(R.string.IATouched);
                                     }
                                 }
                                 cursor++;
@@ -141,6 +158,8 @@ public class GameActivity extends AppCompatActivity {
                             @Override
                             public void onFinish() {
                                 canPlay = true;
+                                TextView IATurn = (TextView) findViewById(R.id.IATurn);
+                                IATurn.setText(R.string.IA_turn);
                                 mViewFlipper.showPrevious();
                             }
                         }.start();
