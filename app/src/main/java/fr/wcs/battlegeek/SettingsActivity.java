@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -12,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import static android.view.View.GONE;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -33,6 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
         final TextView showPlayerName = (TextView) findViewById(R.id.showPlayerName);
         final ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
         final Button buttonSave = (Button) findViewById(R.id.buttonSave);
+        buttonSave.setVisibility(GONE);
 
         //Call SharedPref
         mSharedPreferences = getPreferences(MODE_PRIVATE);
@@ -48,7 +53,9 @@ public class SettingsActivity extends AppCompatActivity {
         seekBarValueEffects.setText(String.valueOf(ValueEffectsStart));
 
         //Get Pref for Player Name
-        showPlayerName.setText(getPreferences(MODE_PRIVATE).getString("PlayerName", null));
+        String playerName = getPreferences(MODE_PRIVATE).getString("PlayerName", null);
+        showPlayerName.setText(playerName);
+        inputPlayerName.setText(playerName);
 
         //Seekbar listener for music + Display value
         seekBarMusic.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -58,6 +65,7 @@ public class SettingsActivity extends AppCompatActivity {
                                           boolean fromUser) {
                 // TODO Auto-generated method stub
                 seekBarValueMusic.setText(String.valueOf(progress));
+                mSharedPreferences.edit().putInt("ValueMusic", seekBarMusic.getProgress()).apply();
             }
 
             @Override
@@ -79,6 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
                                           boolean fromUser) {
                 // TODO Auto-generated method stub
                 seekBarValueEffects.setText(String.valueOf(progress));
+                mSharedPreferences.edit().putInt("ValueEffects", seekBarEffects.getProgress()).apply();
             }
 
             @Override
@@ -92,6 +101,22 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        inputPlayerName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                buttonSave.setVisibility(View.VISIBLE);
+            }
+        });
 
         //Button to go to home menu
         buttonHome.setOnClickListener(new View.OnClickListener() {
@@ -107,8 +132,6 @@ public class SettingsActivity extends AppCompatActivity {
          buttonSave.setOnClickListener(new View.OnClickListener() {
              @Override
            public void onClick(View v) {
-                 mSharedPreferences.edit().putInt("ValueMusic", seekBarMusic.getProgress()).apply();
-                 mSharedPreferences.edit().putInt("ValueEffects", seekBarEffects.getProgress()).apply();
                  mSharedPreferences.edit().putString("PlayerName", inputPlayerName.getText().toString()).apply();
                  showPlayerName.setText(getPreferences(MODE_PRIVATE).getString("PlayerName", null));
                  Toast.makeText(SettingsActivity.this, "Paramètres enregistrés", Toast.LENGTH_SHORT).show();
