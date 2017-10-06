@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -39,6 +40,8 @@ public class GameActivity extends AppCompatActivity {
     private MapView mMapView;
     private GameView mGameView;
     private ViewFlipper mViewFlipper;
+    private TextView mTextViewPlayer;
+    private TextView mTextViewAI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +51,22 @@ public class GameActivity extends AppCompatActivity {
 
         mContext = getApplicationContext();
         mViewFlipper = (ViewFlipper) findViewById(viewFlipper);
+        mTextViewPlayer = (TextView) findViewById(R.id.textViewPlayer);
+        mTextViewAI = (TextView) findViewById(R.id.textViewAI);
+
         final Button buttonLaunchGame = (Button) findViewById(R.id.buttonLaunchGame);
 
         buttonLaunchGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mTextViewPlayer.setText(R.string.player_turn);
                 mMapView = (MapView) findViewById(R.id.mapView);
                 char[][] mapData = mMapView.getMapData();
                 mGameController = new GameController(mapData);
                 mMapView.setMode(MapView.Mode.PLAY);
                 mAI = new AI();
                 buttonLaunchGame.setVisibility(View.GONE);
+                mTextViewAI.setText(R.string.IA_turn);
                 mViewFlipper.showNext();
             }
 
@@ -91,10 +99,12 @@ public class GameActivity extends AppCompatActivity {
         switch (result.getType()) {
             case TOUCHED:
                 mGameView.setTouch(x, y, result.getShape());
+                mTextViewPlayer.setText(R.string.touchedPlayAgain);
                 canPlay = true;
                 return;
             case DROWN:
                 mGameView.setTouch(x, y, result.getShape());
+                mTextViewPlayer.setText(R.string.drownPlayAgain);
                 showToast(R.string.itemDrownMessage);
                 canPlay = true;
                 return;
@@ -107,6 +117,7 @@ public class GameActivity extends AppCompatActivity {
                 return;
             case MISSED:
                 mGameView.setPlouf(x, y);
+                mTextViewPlayer.setText(R.string.missed);
                 // Show the result
                 new CountDownTimer(650, 500) {
                     public void onTick(long millisUntilFinished) {
@@ -114,6 +125,7 @@ public class GameActivity extends AppCompatActivity {
 
                     // Move to MapView and AI Turn
                     public void onFinish() {
+                        mTextViewPlayer.setText(R.string.player_turn);
                         mViewFlipper.showPrevious();
                         aiPlay();
                     }
@@ -145,9 +157,11 @@ public class GameActivity extends AppCompatActivity {
                 if(cursor == 1) {
                     if(resultType == MISSED) {
                         mMapView.setPlouf(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                        mTextViewAI.setText(R.string.missed);
                     }
                     else {
                         mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                        mTextViewAI.setText(R.string.IATouched);
                     }
                 }
                 cursor++;
@@ -155,6 +169,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 if(resultType == MISSED) {
+                    mTextViewAI.setText(R.string.IA_turn);
                     canPlay = true;
                     mViewFlipper.showPrevious();
                 }

@@ -1,22 +1,28 @@
 <resources>
     <string name="app_name">BattleGeek</string>
-    <string name="launchGame">GO GO GO !</string>
+    <string name="launchGame">A l\'assaut !</string>
     <string name="main_title">Bataille Navale</string>
     <string name="player_name">Nom du joueur</string>
     <string name="alreadyPlayedMessage">Vous avez déjà joué cette case !</string>
     <string name="itemDrownMessage">Vous avez détruit cette pièce !</string>
-    <string name="victoryMessage">Wahooo ! Gagné !!</string>
-    <string name="defeatMessage">Tu t\'es fait laminer par la stupide IA</string>
     <string name="button_hard">Démentiel</string>
     <string name="button_medium">Difficile</string>
     <string name="button_easy">Normal</string>
     <string name="textViewSettings">Paramètres</string>
     <string name="buttonValidate">Enregistrer</string>
-    <string name="titleRanking">Ranking</string>
-    <string name="message_welcome">\"Prêt à jouer ?\"</string>
+    <string name="titleRanking">Classement</string>
+    <string name="message_welcome">Prêt à jouer ?</string>
     <string name="end_game_fragment_title">La partie est terminée !</string>
     <string name="end_game_defeat">Vous avez en\nbouche le goût amer de la\nDEFAITE !!</string>
     <string name="ok_defeat">T\'as triché...</string>
     <string name="ok_victory">A l\'aise...</string>
     <string name="end_game_victory">Vous ressentez\nl\'ennivrante exaltation de la\nVICTOIRE !!</string>
+    <string name="place_pieces">Placez vos pièces\n(si possible avec stratégie et savoir-faire)</string>
+    <string name="touchedPlayAgain">Pièce touchée ! Rejouez !</string>
+    <string name="drownPlayAgain">Pièce détruite ! Rejouez !</string>
+    <string name="player_turn">A votre tour !</string>
+    <string name="IA_turn">Au tour de l\'adversaire !</string>
+    <string name="missed">Raté !</string>
+    <string name="IATouched">Touché !</string>
+    <string name="IADrown">Coulé !</string>
 </resources>
