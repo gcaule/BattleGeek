@@ -1,13 +1,9 @@
 package fr.wcs.battlegeek;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,7 +15,6 @@ public class ScreenLauncher extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_screen_launcher);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         /*
         // ajout d'une custom font au titre

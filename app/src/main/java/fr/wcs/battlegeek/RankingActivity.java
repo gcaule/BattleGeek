@@ -1,24 +1,22 @@
 package fr.wcs.battlegeek;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.widget.ListView;
 
 import com.facebook.stetho.Stetho;
 
-import fr.wcs.battlegeek.adapterRanking.CustomListAdapter;
-import fr.wcs.battlegeek.modelRanking.Items;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.wcs.battlegeek.adapterRanking.CustomListAdapter;
+import fr.wcs.battlegeek.modelRanking.Items;
 
 public class RankingActivity extends AppCompatActivity {
 
@@ -35,7 +33,6 @@ public class RankingActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_ranking);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
 

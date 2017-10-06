@@ -2,7 +2,6 @@ package fr.wcs.battlegeek;
 
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -46,7 +45,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         mContext = getApplicationContext();
         mViewFlipper = (ViewFlipper) findViewById(viewFlipper);
