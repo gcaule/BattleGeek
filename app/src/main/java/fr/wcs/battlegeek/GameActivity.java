@@ -23,6 +23,7 @@ import fr.wcs.battlegeek.ui.GameView;
 import fr.wcs.battlegeek.ui.MapView;
 
 import static fr.wcs.battlegeek.R.id.viewFlipper;
+import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
 
@@ -66,7 +67,7 @@ public class GameActivity extends AppCompatActivity {
                 mMapView.setMode(MapView.Mode.PLAY);
                 mAI = new AI();
                 buttonLaunchGame.setVisibility(View.GONE);
-                mTextViewAI.setText(R.string.IA_turn);
+                mTextViewAI.setText(R.string.AITurn);
                 mViewFlipper.showNext();
             }
 
@@ -161,7 +162,10 @@ public class GameActivity extends AppCompatActivity {
                     }
                     else {
                         mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
-                        mTextViewAI.setText(R.string.IATouched);
+                        mTextViewAI.setText(R.string.AITouched);
+                        if (resultType == DROWN) {
+                            mTextViewAI.setText(R.string.AIDrown);
+                        }
                     }
                 }
                 cursor++;
@@ -169,7 +173,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 if(resultType == MISSED) {
-                    mTextViewAI.setText(R.string.IA_turn);
+                    mTextViewAI.setText(R.string.AITurn);
                     canPlay = true;
                     mViewFlipper.showPrevious();
                 }

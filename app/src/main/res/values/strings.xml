@@ -21,8 +21,8 @@
     <string name="touchedPlayAgain">Pièce touchée ! Rejouez !</string>
     <string name="drownPlayAgain">Pièce détruite ! Rejouez !</string>
     <string name="player_turn">A votre tour !</string>
-    <string name="IA_turn">Au tour de l\'adversaire !</string>
+    <string name="AITurn">Au tour de l\'adversaire !</string>
     <string name="missed">Raté !</string>
-    <string name="IATouched">Touché !</string>
-    <string name="IADrown">Coulé !</string>
+    <string name="AITouched">Touché ! L\'adversaire rejoue !</string>
+    <string name="AIDrown">Coulé ! L\'adversaire rejoue !</string>
 </resources>
