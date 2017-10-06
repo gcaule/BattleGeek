@@ -18,7 +18,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainMenuActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".FirstTimeUsernameScreen" android:screenOrientation="portrait"/>
+        <activity android:name=".FirstTimeUsernameScreen"
+                  android:screenOrientation="portrait"
+                  android:noHistory="true"/>
         <activity android:name=".SettingsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".RankingActivity" android:screenOrientation="portrait"/>
         <activity android:screenOrientation="portrait" android:name=".GameActivity"/>

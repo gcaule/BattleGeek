@@ -34,7 +34,7 @@ public class FirstTimeUsernameScreen extends AppCompatActivity {
 
         final EditText playerName = (EditText) findViewById(R.id.input_playername);
         Button button_save = (Button) findViewById(R.id.button_save);
-        
+
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
