@@ -15,14 +15,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static android.view.View.GONE;
 import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import fr.wcs.battlegeek.Model.Settings;
+
+import static android.view.View.GONE;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -74,7 +73,7 @@ public class SettingsActivity extends AppCompatActivity {
         seekBarValueEffects.setText(String.valueOf(ValueEffectsStart));
 
         //Get Pref for Player Name
-        String playerName = getPreferences(MODE_PRIVATE).getString("PlayerName", null);
+        String playerName = mSharedPreferences.getString("PlayerName", null);
         inputPlayerName.setText(playerName);
 
         //Seekbar listener for music + Display value
@@ -123,14 +122,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         inputPlayerName.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -152,14 +147,14 @@ public class SettingsActivity extends AppCompatActivity {
          buttonSave.setOnClickListener(new View.OnClickListener() {
              @Override
            public void onClick(View v) {
-                 if (inputPlayerName.getText().toString().trim().length() == 0){
+                 String name = inputPlayerName.getText().toString();
+                 if (name.isEmpty()){
                      Toast.makeText(SettingsActivity.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT).show();
                  }
                  else {
-
-                     mSharedPreferences.edit().putString("PlayerName", inputPlayerName.getText().toString()).commit();
+                     mSharedPreferences.edit().putString("PlayerName", name).commit();
+                     mUsersDatabaseReference.setValue(name);
                      Toast.makeText(SettingsActivity.this, "Paramètres enregistrés", Toast.LENGTH_SHORT).show();
-                     mUsersDatabaseReference.setValue(inputPlayerName.getText().toString());
                  }
              }
         });

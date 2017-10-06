@@ -2,9 +2,6 @@ package fr.wcs.battlegeek;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
@@ -47,16 +44,16 @@ public class ScreenLauncher extends AppCompatActivity {
             public void run() {
                 ScreenLauncher.this.runOnUiThread(new Runnable() {
                     public void run() {
- //                      if (playerName == null) {
+                       if (playerName == null) {
                             startActivity(new Intent(ScreenLauncher.this, FirstTimeUsernameScreen.class));
- /*                       } else {
+                        } else {
                             startActivity(new Intent(ScreenLauncher.this, MainMenuActivity.class));
                         }
-*/
+
                     }
                 });
             }
-        }, 1000);
+        }, 500);
 
     }
 }

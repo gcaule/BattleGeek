@@ -2,13 +2,11 @@ package fr.wcs.battlegeek;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -36,9 +34,7 @@ public class FirstTimeUsernameScreen extends AppCompatActivity {
 
         final EditText playerName = (EditText) findViewById(R.id.input_playername);
         Button button_save = (Button) findViewById(R.id.button_save);
-
-        final TextView DISPLAYKEY = (TextView) findViewById(R.id.DISPLAYKEY);
-
+        
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
