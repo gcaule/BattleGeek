@@ -152,14 +152,6 @@ public class GameActivity extends AppCompatActivity {
         final Result.Type resultType = iaResult.getType();
         Log.d(TAG, "onPlayListener: " + aiPlayCoordinates + " " + iaResult);
 
-        if(resultType == VICTORY) {
-            FragmentManager fm = getFragmentManager();
-            EndGameDefeatFragment endGameDefeatFragment = new EndGameDefeatFragment();
-            endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
-            endGameDefeatFragment.setCancelable(false);
-            return;
-        }
-
         mAI.setResult(iaResult);
 
         new CountDownTimer(1750, 350) {
@@ -188,7 +180,13 @@ public class GameActivity extends AppCompatActivity {
                     canPlay = true;
                     mViewFlipper.showPrevious();
                 }
-                else if (resultType != VICTORY) {
+                else if(resultType == VICTORY) {
+                    FragmentManager fm = getFragmentManager();
+                    EndGameDefeatFragment endGameDefeatFragment = new EndGameDefeatFragment();
+                    endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
+                    endGameDefeatFragment.setCancelable(false);
+                }
+                else {
                     aiPlay();
                 }
             }
