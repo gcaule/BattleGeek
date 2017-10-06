@@ -17,9 +17,20 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import fr.wcs.battlegeek.Model.Settings;
+
 public class SettingsActivity extends AppCompatActivity {
 
     SharedPreferences mSharedPreferences;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mUsersDatabaseReference;
+    private ChildEventListener mChildEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,22 +50,35 @@ public class SettingsActivity extends AppCompatActivity {
         final ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
         final Button buttonSave = (Button) findViewById(R.id.buttonSave);
 
+        //Initialize Firebase components
+        mDatabase = FirebaseDatabase.getInstance();
+
         //Call SharedPref
-        mSharedPreferences = getPreferences(MODE_PRIVATE);
+        mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
+
+        //Get User on SharedPref
+        String uidFirebase = mSharedPreferences.getString("uidFirebase", null);
+
+        final TextView DISPLAYKEY = (TextView) findViewById(R.id.DISPLAYKEY);
+        DISPLAYKEY.setText(uidFirebase);
+
+        //Get User on Firebase
+        mUsersDatabaseReference = mDatabase.getReference().child("Users").child(uidFirebase).child("playerName");
 
         //Get Pref for Music Volume
-        int ValueMusicStart = getPreferences(MODE_PRIVATE).getInt("ValueMusic",0);
+        int ValueMusicStart = mSharedPreferences.getInt("ValueMusic",0);
         seekBarMusic.setProgress(ValueMusicStart);
         seekBarValueMusic.setText(String.valueOf(ValueMusicStart));
 
         //Get Pref for Effects Volume
-        int ValueEffectsStart = getPreferences(MODE_PRIVATE).getInt("ValueEffects",0);
+        int ValueEffectsStart = mSharedPreferences.getInt("ValueEffects",0);
         seekBarEffects.setProgress(ValueEffectsStart);
         seekBarValueEffects.setText(String.valueOf(ValueEffectsStart));
 
         //Get Pref for Player Name
-        showPlayerName.setText(getPreferences(MODE_PRIVATE).getString("PlayerName", null));
-
+        String playerName = mSharedPreferences.getString("PlayerName", null);
+        showPlayerName.setText(playerName);
+        inputPlayerName.setText(playerName);
         //Seekbar listener for music + Display value
         seekBarMusic.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -112,12 +136,21 @@ public class SettingsActivity extends AppCompatActivity {
          buttonSave.setOnClickListener(new View.OnClickListener() {
              @Override
            public void onClick(View v) {
-                 mSharedPreferences.edit().putInt("ValueMusic", seekBarMusic.getProgress()).apply();
-                 mSharedPreferences.edit().putInt("ValueEffects", seekBarEffects.getProgress()).apply();
-                 mSharedPreferences.edit().putString("PlayerName", inputPlayerName.getText().toString()).apply();
-                 showPlayerName.setText(getPreferences(MODE_PRIVATE).getString("PlayerName", null));
-                 Toast.makeText(SettingsActivity.this, "Paramètres enregistrés", Toast.LENGTH_SHORT).show();
+                 if (inputPlayerName.getText().toString().trim().length() == 0){
+                     Toast.makeText(SettingsActivity.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT).show();
+                 }
+                 else {
+                     mSharedPreferences.edit().putInt("ValueMusic", seekBarMusic.getProgress()).commit();
+                     mSharedPreferences.edit().putInt("ValueEffects", seekBarEffects.getProgress()).commit();
+                     mSharedPreferences.edit().putString("PlayerName", inputPlayerName.getText().toString()).commit();
+                     showPlayerName.setText(mSharedPreferences.getString("PlayerName", null));
+                     Toast.makeText(SettingsActivity.this, "Paramètres enregistrés", Toast.LENGTH_SHORT).show();
+                     mUsersDatabaseReference.setValue(inputPlayerName.getText().toString());
+                 }
              }
         });
+
+        mUsersDatabaseReference.addChildEventListener(mChildEventListener);
+
     }
 }
