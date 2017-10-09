@@ -11,7 +11,7 @@ import static fr.wcs.battlegeek.ui.Block.State.ALIVE;
  * Created by adphi on 26/09/17.
  */
 
-public class Block {
+public class Block implements Cloneable{
 
     // State
     private State mState = ALIVE;
@@ -52,6 +52,29 @@ public class Block {
         init();
     }
 
+    public Block(Block other) {
+        mState = other.mState;
+        mPosition = other.mPosition;
+        mX = other.mX;
+        mY = other.mY;
+        mBlockSize = other.mBlockSize;
+
+        mPaintStroke = other.mPaintStroke;
+        mPaintAliveFill = other.mPaintAliveFill;
+        mPaintDeadFill = other.mPaintDeadFill;
+    }
+
+    @Override
+    public Block clone(){
+
+        try {
+            return (Block) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return this;
+        }
+
+    }
+
     /**
      * @return the State of the Block
      */
@@ -77,7 +100,7 @@ public class Block {
     public String toString() {
         return "Block{" +
                 "mPosition=" + mPosition +
-                '}';
+                "}\n";
     }
 
     /**
@@ -143,7 +166,7 @@ public class Block {
      */
     public boolean contains(PointF pointF) {
         if(this.mX <= pointF.x && pointF.x < this.mX + 1 &&
-           this.mY <= pointF.y && pointF.y < this.mY + 1)
+                this.mY <= pointF.y && pointF.y < this.mY + 1)
             return true;
         else return false;
     }

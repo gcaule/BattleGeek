@@ -6,4 +6,5 @@ package fr.wcs.battlegeek.Model;
 
 public class Settings {
     public static final String FILE_NAME = "Preferences";
+    public static final int GRID_SIZE = 10;
 }

@@ -2,12 +2,17 @@ package fr.wcs.battlegeek.Utils;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+
+import fr.wcs.battlegeek.ui.Block;
+
 /**
  * Created by adphi on 04/10/17.
  */
 
 public class Utils {
     private static final String TAG = "MAP";
+
     public static void printMap(char[][] map) {
         String line = "";
         for (int i = 0; i < map.length; i++) {
@@ -17,5 +22,22 @@ public class Utils {
             Log.d(TAG, line);
             line = "";
         }
+    }
+
+    /*public static <T> ArrayList<T> copy(Class<T> clazz, ArrayList<T> array) {
+        ArrayList<T> copy = new ArrayList<>();
+        for(Object object : array) {
+            T t = clazz.clone(object);
+            copy.add(t);
+        }
+        return copy;
+    }*/
+
+    public static ArrayList<Block> copyBlocks(ArrayList<Block> blocks) {
+        ArrayList<Block> copy = new ArrayList<>();
+        for(Block block : blocks) {
+            copy.add(block.clone());
+        }
+        return copy;
     }
 }

@@ -10,6 +10,8 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import fr.wcs.battlegeek.Model.Settings;
+
 import static fr.wcs.battlegeek.ui.MapView.Mode.CREATE;
 import static fr.wcs.battlegeek.ui.MapView.Mode.PLAY;
 import static fr.wcs.battlegeek.ui.Tetromino.Shape.I;
@@ -83,7 +85,7 @@ public class MapView extends View {
      * This is where the Blocks of the Item are defined
      */
     private void init() {
-        mGrid = new Grid(10);
+        mGrid = new Grid(Settings.GRID_SIZE);
 
         Tetromino tetromino1 = new Tetromino(this, mGrid, I, Tetromino.Colors.LTBLUE);
         tetromino1.setPosition(new PointF(0,0));

@@ -31,5 +31,6 @@
     <string name="message_title">Bienvenue sur Battle Geek</string>
     <string name="message_firstusername">Choisis ton pseudo. Tu pourras le changer plus tard.</string>
     <string name="message_error_emptyname">Veuillez saisir un pseudo</string>
->>>>>>> RankingFirebase
+    <string name="RotationImpossible">Nan... Pas la place</string>
+    >>>>>>> RankingFirebase
 </resources>

@@ -1,8 +1,11 @@
 package fr.wcs.battlegeek.model;
 
 import android.graphics.Point;
+import android.media.audiofx.BassBoost;
 
 import java.util.ArrayList;
+
+import fr.wcs.battlegeek.Model.Settings;
 
 /**
  * Created by apprenti on 27/09/17.
@@ -411,8 +414,8 @@ public class Maps {
 
     public static ArrayList<Point> getPlayableCorrdiantes(){
         ArrayList<Point> playableCoordianates = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < Settings.GRID_SIZE; i++) {
+            for (int j = 0; j < Settings.GRID_SIZE; j++) {
                 playableCoordianates.add(new Point(i, j));
             }
         }

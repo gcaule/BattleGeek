@@ -2,10 +2,16 @@ package fr.wcs.battlegeek.ui;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import fr.wcs.battlegeek.Model.Settings;
+import fr.wcs.battlegeek.R;
+import fr.wcs.battlegeek.Utils.Utils;
 
 /**
  * Created by adphi on 25/09/17.
@@ -41,7 +47,7 @@ public class Item implements View.OnTouchListener {
     private float dx = 0;
     private float dy = 0;
     private PointF mInitialPosition;
-
+    
     /**
      * Constructor of an Item
      *
@@ -66,6 +72,20 @@ public class Item implements View.OnTouchListener {
         this.mX = x;
         this.mY = y;
         this.mPosition.set(mX, mY);
+    }
+
+    public Item(Item item) {
+        this.mView = item.mView;
+        this.mGrid = item.mGrid;
+        this.mBlocks = item.mBlocks;
+        this.mWidth = item.mWidth;
+        this.mHeight = item.mHeight;
+        this.dx = item.dx;
+        this.dy = item.dy;
+        this.mX = item.mX;
+        this.mY = item.mY;
+        this.mPosition = item.mPosition;
+        this.mState = item.mState;
     }
 
     public State getState() {
@@ -134,6 +154,57 @@ public class Item implements View.OnTouchListener {
         this.mY = position.y;
         // Refresh the View
         this.mView.invalidate();
+    }
+
+    public void rotate() {
+        // Get the square's size in witch the piece rotate
+        int size = Math.max(getWidth(), getHeight());
+        PointF rotationCenter = new PointF(size / 2, size / 2);
+
+        // Initiate value to remove blocks offset
+        int minX = Settings.GRID_SIZE;
+        int minY = Settings.GRID_SIZE;
+
+        // Rotate Blocks
+        for(Block block : mBlocks) {
+            int x = (int) block.getX();
+            int y = (int) block.getY();
+            int x1 = (int)(rotationCenter.x + rotationCenter.y - y);
+            int y1 = (int)(rotationCenter.y - rotationCenter.x + x);
+            block.setX(x1);
+            block.setY(y1);
+
+            // Get Min offset
+            minX = Math.min(minX, x1);
+            minY = Math.min(minY, y1);
+        }
+
+        // Apply Offset
+        for(Block block : mBlocks) {
+            block.setX(block.getX() - minX);
+            block.setY(block.getY() - minY);
+        }
+
+        // Rotate width and height
+        int width = mWidth;
+        mWidth = mHeight;
+        mHeight = width;
+    }
+
+    private int getWidth() {
+        mWidth = 0;
+        for(Block block : mBlocks) {
+            if (block.getX() > mWidth) mWidth = (int) block.getX();
+        }
+        return mWidth;
+    }
+
+    private int getHeight() {
+        mHeight = 0;
+        for(Block block : mBlocks) {
+            if (block.getY() > mHeight) mHeight = (int) block.getY();
+        }
+        return mHeight;
     }
 
     /**
@@ -255,13 +326,24 @@ public class Item implements View.OnTouchListener {
                 break;
 
             case MotionEvent.ACTION_UP:
+
+                if(mInitialPosition.x == mX && mInitialPosition.y == mY) {
+                    //ArrayList<Block> blocks = Utils.copy(Block.class, mBlocks);
+                    ArrayList<Block> blocks = Utils.copyBlocks(mBlocks);
+                    rotate();
+                    if(isHoverItem(mInitialPosition)) {
+                        mBlocks = blocks;
+                        Toast.makeText(mView.getContext(), R.string.RotationImpossible, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                Log.d(TAG, "onTouch: " + this);
                 // Snap the Item to the Grid
                 pos.x = Math.round(mX);
                 pos.y = Math.round(mY);
                 // Limit position to the Grid's limits
                 pos = contrainsToGrid(pos);
                 // Check for Superposition
-                pos = avoidSuperposition(pos);
+                pos = isHoverItem(pos) ? mInitialPosition : pos;
                 // Apply the position change
                 setPosition(pos);
                 break;
@@ -292,7 +374,7 @@ public class Item implements View.OnTouchListener {
      * @param pointF The (Grid) Coordinates of the Item
      * @return the PointF if no superposition, the initial position otherwise
      */
-    private PointF avoidSuperposition(PointF pointF) {
+    private boolean isHoverItem(PointF pointF) {
         // In order to avoid superposition we need to iterate through each item
         // contained by the parent View
         for (Item item : mView.getItems()) {
@@ -309,12 +391,12 @@ public class Item implements View.OnTouchListener {
                 // and compared Item is on the same position
                 if (item != this && item.contains(blockPos)) {
                     // we return the initial Touch Sequence position
-                    return mInitialPosition;
+                    return true;
                 }
             }
         }
         // if we are here, everything is ok
-        return pointF;
+        return false;
     }
 
     /**
@@ -326,6 +408,6 @@ public class Item implements View.OnTouchListener {
     public String toString() {
         return "Item{" +
                 "mBlocks=" + mBlocks +
-                '}';
+                "}";
     }
 }
