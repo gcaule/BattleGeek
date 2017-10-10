@@ -1,11 +1,8 @@
 package fr.wcs.battlegeek.model;
 
 import android.graphics.Point;
-import android.media.audiofx.BassBoost;
 
 import java.util.ArrayList;
-
-import fr.wcs.battlegeek.Model.Settings;
 
 /**
  * Created by apprenti on 27/09/17.

@@ -11,7 +11,7 @@ import com.facebook.stetho.Stetho;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import fr.wcs.battlegeek.Model.Settings;
+import fr.wcs.battlegeek.model.Settings;
 
 public class ScreenLauncher extends AppCompatActivity {
 
@@ -36,7 +36,7 @@ public class ScreenLauncher extends AppCompatActivity {
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
-        //Get Pref for Player Name
+        //Get Pref for PlayerModel Name
         final String playerName = mSharedPreferences.getString("PlayerName", null);
 
         //Si Playername dans sharedpref vide, allez sur register. Sinon allez à MainActiv

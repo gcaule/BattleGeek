@@ -12,8 +12,8 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import fr.wcs.battlegeek.Model.Settings;
-import fr.wcs.battlegeek.Utils.Utils;
+import fr.wcs.battlegeek.model.Settings;
+import fr.wcs.battlegeek.utils.Utils;
 import fr.wcs.battlegeek.model.Maps;
 
 import static fr.wcs.battlegeek.ui.MapView.Mode.CREATE;
@@ -33,7 +33,7 @@ public class MapView extends View {
 
     private Mode mMode = CREATE;
 
-    // Grid and Items Container Definition
+    // Grid and PlayerModel Container Definition
     private Grid mGrid;
     private ArrayList<Item> mItems = new ArrayList<>();
 
@@ -74,7 +74,7 @@ public class MapView extends View {
     }
 
     /**
-     * Get the Items
+     * Get the PlayerModel
      * @return
      */
     public ArrayList<Item> getItems() {
@@ -105,7 +105,7 @@ public class MapView extends View {
     }
 
     /**
-     * Method Drawing the View Content : Grid and Items
+     * Method Drawing the View Content : Grid and PlayerModel
      * @param canvas
      */
     @Override
@@ -118,7 +118,7 @@ public class MapView extends View {
     }
 
     /**
-     * Method Handling Touch Event and transmitting Event to the Items
+     * Method Handling Touch Event and transmitting Event to the PlayerModel
      * @param event
      * @return
      */
@@ -137,7 +137,7 @@ public class MapView extends View {
                 mSelectedItem = getItem(pos);
                 if (mSelectedItem != null) {
                     // Move Selected Item at the end of the Item's List
-                    // Preventing it to be drawn under other Items
+                    // Preventing it to be drawn under other PlayerModel
                     mItems.remove(mSelectedItem);
                     mItems.add(mSelectedItem);
 
@@ -199,7 +199,7 @@ public class MapView extends View {
     }
 
     /**
-     * Method to set Play State on the Player Map
+     * Method to set Play State on the PlayerModel Map
      * @param x
      * @param y
      */
@@ -218,7 +218,7 @@ public class MapView extends View {
     }
 
     public void setRandomPositions() {
-        // Clear Items List
+        // Clear PlayerModel List
         mItems.clear();
 
         // Request random Map

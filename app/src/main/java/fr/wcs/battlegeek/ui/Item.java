@@ -8,9 +8,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import fr.wcs.battlegeek.Model.Settings;
+import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.R;
-import fr.wcs.battlegeek.Utils.Utils;
+import fr.wcs.battlegeek.utils.Utils;
 
 /**
  * Created by adphi on 25/09/17.

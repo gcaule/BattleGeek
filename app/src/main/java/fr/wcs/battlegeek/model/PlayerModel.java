@@ -1,13 +1,13 @@
-package fr.wcs.battlegeek.modelRanking;
+package fr.wcs.battlegeek.model;
 
-public class Items {
+public class PlayerModel {
 
     private String name, score;
 
-    public Items() {
+    public PlayerModel() {
     }
 
-    public Items(String name, String score) {
+    public PlayerModel(String name, String score) {
 
         this.name = name;
         this.score = score;

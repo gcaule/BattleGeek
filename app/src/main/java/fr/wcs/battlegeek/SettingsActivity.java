@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import fr.wcs.battlegeek.Model.Settings;
+import fr.wcs.battlegeek.model.Settings;
 
 import static android.view.View.GONE;
 
@@ -69,7 +69,7 @@ public class SettingsActivity extends AppCompatActivity {
         seekBarEffects.setProgress(ValueEffectsStart);
         seekBarValueEffects.setText(String.valueOf(ValueEffectsStart));
 
-        //Get Pref for Player Name
+        //Get Pref for PlayerModel Name
         String playerName = mSharedPreferences.getString("PlayerName", null);
         inputPlayerName.setText(playerName);
 

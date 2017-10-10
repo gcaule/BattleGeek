@@ -32,7 +32,7 @@ public class RankingFirebaseActivity extends AppCompatActivity {
         //Call SharedPref
         mSharedPreferences = getPreferences(MODE_PRIVATE);
 
-        //Get Pref for Player Name
+        //Get Pref for PlayerModel Name
         String PlayerName = getPreferences(MODE_PRIVATE).getString("PlayerName", null);
 
         // Initialize Firebase components
