@@ -74,13 +74,27 @@ public class SettingsActivity extends AppCompatActivity {
         seekBarMusic.setProgress(valueMusic);
         seekBarValueMusic.setText(String.valueOf(valueMusic));
 
+        final ImageView imageViewMusic = (ImageView) findViewById(R.id.imageViewMusic);
+        if(valueMusic > 66) {
+            imageViewMusic.setImageResource(R.drawable.music_loud);
+        }
+        else if(valueMusic > 33) {
+            imageViewMusic.setImageResource(R.drawable.music_medium);
+        }
+        else if(valueMusic > 0) {
+            imageViewMusic.setImageResource(R.drawable.music_low);
+        }
+        else {
+            imageViewMusic.setImageResource(R.drawable.no_music);
+        }
+
         //Get Pref for Effects Volume
         int valueEffects = mSharedPreferences.getInt("ValueEffects",0);
         seekBarEffects.setProgress(valueEffects);
         seekBarValueEffects.setText(String.valueOf(valueEffects));
 
         final ImageView imageViewEffects = (ImageView) findViewById(R.id.imageViewEffects);
-        if(valueEffects > 70) {
+        if(valueEffects > 66) {
             imageViewEffects.setImageResource(R.drawable.volume_up_interface_symbol);
         }
         else if(valueEffects > 33) {
@@ -132,6 +146,18 @@ public class SettingsActivity extends AppCompatActivity {
                 seekBarValueMusic.setText(String.valueOf(progress));
                 int valueMusic = seekBarMusic.getProgress();
                 mSharedPreferences.edit().putInt("ValueMusic", valueMusic).apply();
+                if(valueMusic > 66) {
+                    imageViewMusic.setImageResource(R.drawable.music_loud);
+                }
+                else if(valueMusic > 33) {
+                    imageViewMusic.setImageResource(R.drawable.music_medium);
+                }
+                else if(valueMusic > 0) {
+                    imageViewMusic.setImageResource(R.drawable.music_low);
+                }
+                else {
+                    imageViewMusic.setImageResource(R.drawable.no_music);
+                }
             }
 
             @Override
@@ -155,7 +181,7 @@ public class SettingsActivity extends AppCompatActivity {
                 seekBarValueEffects.setText(String.valueOf(progress));
                 int valueEffects = seekBarEffects.getProgress();
                 mSharedPreferences.edit().putInt("ValueEffects", valueEffects).apply();
-                if(valueEffects > 70) {
+                if(valueEffects > 66) {
                     imageViewEffects.setImageResource(R.drawable.volume_up_interface_symbol);
                 }
                 else if(valueEffects > 33) {

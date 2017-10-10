@@ -71,7 +71,6 @@ public class SoundController {
                 soundID = soundID_boom;
                 break;
         }
-
         soundPool.play(soundID, volume, volume, 0, 0, 1);
     }
 }
