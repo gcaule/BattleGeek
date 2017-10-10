@@ -114,10 +114,12 @@ public class GameActivity extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+                        mTextViewAI.setVisibility(View.GONE);
                         mViewFlipper.showPrevious();
                         break;
                     case MotionEvent.ACTION_UP:
                         mViewFlipper.showNext();
+                        mTextViewAI.setVisibility(View.VISIBLE);
                         break;
                 }
                 return true;
