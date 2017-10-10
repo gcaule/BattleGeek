@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -253,13 +255,19 @@ public class GameActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-
-        builder.setMessage(R.string.quit_game_alert_message)
+        TextView messageView = new TextView(this);
+        messageView.setText(R.string.quit_game_alert_message);
+        messageView.setGravity(Gravity.CENTER);
+        messageView.setTextColor(Color.BLACK);
+        messageView.setTextSize(18);
+        builder.setView(messageView)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         GameActivity.super.onBackPressed();
                     }
                 })
-                .setNegativeButton(android.R.string.no, null).show();
+                .setNegativeButton(android.R.string.no, null)
+                .setTitle(R.string.quit_game_alert_title)
+                .setIcon(R.drawable.smiley_defeat).show();
     }
 }
