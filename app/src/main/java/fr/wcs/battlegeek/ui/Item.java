@@ -2,7 +2,6 @@ package fr.wcs.battlegeek.ui;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -47,7 +46,7 @@ public class Item implements View.OnTouchListener {
     private float dx = 0;
     private float dy = 0;
     private PointF mInitialPosition;
-    
+
     /**
      * Constructor of an Item
      *
@@ -179,7 +178,7 @@ public class Item implements View.OnTouchListener {
             minY = Math.min(minY, y1);
         }
 
-        // Apply Offset
+        // Apply Offset On the Blocks
         for(Block block : mBlocks) {
             block.setX(block.getX() - minX);
             block.setY(block.getY() - minY);
@@ -335,8 +334,9 @@ public class Item implements View.OnTouchListener {
                         mBlocks = blocks;
                         Toast.makeText(mView.getContext(), R.string.RotationImpossible, Toast.LENGTH_SHORT).show();
                     }
+                    mView.invalidate();
+                    return true;
                 }
-                Log.d(TAG, "onTouch: " + this);
                 // Snap the Item to the Grid
                 pos.x = Math.round(mX);
                 pos.y = Math.round(mY);

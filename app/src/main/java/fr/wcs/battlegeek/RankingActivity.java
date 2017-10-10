@@ -10,8 +10,6 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import com.facebook.stetho.Stetho;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class RankingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_ranking);
 
         ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);

@@ -100,7 +100,7 @@ public class Block implements Cloneable{
     public String toString() {
         return "Block{" +
                 "mPosition=" + mPosition +
-                "}\n";
+                "}";
     }
 
     /**

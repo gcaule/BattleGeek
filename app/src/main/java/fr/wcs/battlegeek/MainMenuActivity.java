@@ -15,11 +15,13 @@ import fr.wcs.battlegeek.Model.Settings;
 public class MainMenuActivity extends AppCompatActivity {
 
     SharedPreferences mSharedPreferences;
+    TextView showPlayerName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main_menu);
 
         ImageButton buttonSettings = (ImageButton) findViewById(R.id.buttonSettings);
@@ -28,7 +30,7 @@ public class MainMenuActivity extends AppCompatActivity {
         Button buttonMediumMode = (Button) findViewById(R.id.buttonMediumMode);
         Button buttonHardMode = (Button) findViewById(R.id.buttonHardMode);
         Button buttonImpossibleMode = (Button) findViewById(R.id.buttonImpossibleMode);
-        TextView showPlayerName = (TextView) findViewById(R.id.show_playername);
+        showPlayerName = (TextView) findViewById(R.id.show_playername);
 
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
@@ -97,5 +99,12 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String playerName = mSharedPreferences.getString("PlayerName", null);
+        showPlayerName.setText(playerName);
     }
 }

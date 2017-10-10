@@ -1,6 +1,5 @@
 package fr.wcs.battlegeek;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +14,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -28,12 +26,11 @@ public class SettingsActivity extends AppCompatActivity {
     SharedPreferences mSharedPreferences;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mUsersDatabaseReference;
-    private ChildEventListener mChildEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_settings);
 
         //Affichage de la value pour la seekbox Music et seekbok Effects
@@ -137,8 +134,9 @@ public class SettingsActivity extends AppCompatActivity {
         buttonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this, MainMenuActivity.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(SettingsActivity.this, MainMenuActivity.class);
+                startActivity(intent);*/
+                onBackPressed();
             }
 
         });
