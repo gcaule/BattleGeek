@@ -23,6 +23,7 @@ import android.widget.ViewFlipper;
 
 import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.controller.GameController;
+import fr.wcs.battlegeek.controller.SoundController;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.ui.EndGameDefeatFragment;
@@ -57,6 +58,8 @@ public class GameActivity extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
     private int mAnimationsSpeed = Settings.ANIMATION_FAST;
 
+    private SoundController mSoundController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,9 @@ public class GameActivity extends AppCompatActivity {
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
         mContext = getApplicationContext();
+
+        mSoundController = new SoundController(mContext);
+
         mMapView = (MapView) findViewById(R.id.mapView);
         mViewFlipper = (ViewFlipper) findViewById(viewFlipper);
         mTextViewPlayer = (TextView) findViewById(R.id.textViewPlayer);
@@ -152,7 +158,9 @@ public class GameActivity extends AppCompatActivity {
 
         Result result = mAI.shot(x, y);
         mGameController.setPlayResult(x, y, result);
-        switch (result.getType()) {
+        Result.Type resutlType = result.getType();
+        mSoundController.playSound(resutlType);
+        switch (resutlType) {
             case TOUCHED:
                 mGameView.setTouch(x, y, result.getShape());
                 mTextViewPlayer.setText(R.string.touchedPlayAgain);
@@ -207,6 +215,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onTick(long l) {
                 if(cursor == 1) {
+                    mSoundController.playSound(resultType);
                     if(resultType == MISSED) {
                         mMapView.setPlouf(aiPlayCoordinates.x, aiPlayCoordinates.y);
                         mTextViewAI.setText(R.string.missed);
