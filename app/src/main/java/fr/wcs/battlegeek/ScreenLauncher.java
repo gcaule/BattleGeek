@@ -1,10 +1,17 @@
 package fr.wcs.battlegeek;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
 
@@ -23,12 +30,11 @@ public class ScreenLauncher extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_screen_launcher);
 
-        /*
-        // ajout d'une custom font au titre
-        TextView homeTitle = (TextView) findViewById(R.id.home_title);
-        Typeface policeTetris = Typeface.createFromAsset(getAssets(),"fonts/TETRIS.TTF");
-        homeTitle.setTypeface(policeTetris);
-        */
+        TextView myTextView = (TextView) findViewById(R.id.home_title);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/RockOn.otf");
+        myTextView.setTypeface(typeface);
+
+        RunAnimation();
 
         //Access Internal files, preferences and DB of the APP via Chrome : chrome://inspect/#devices
         Stetho.initializeWithDefaults(this);
@@ -44,7 +50,7 @@ public class ScreenLauncher extends AppCompatActivity {
             public void run() {
                 ScreenLauncher.this.runOnUiThread(new Runnable() {
                     public void run() {
-                       if (playerName == null) {
+                        if (playerName == null) {
                             startActivity(new Intent(ScreenLauncher.this, FirstTimeUsernameScreen.class));
                         } else {
                             startActivity(new Intent(ScreenLauncher.this, MainMenuActivity.class));
@@ -53,7 +59,16 @@ public class ScreenLauncher extends AppCompatActivity {
                     }
                 });
             }
-        }, 500);
-
+        }, 5000);
     }
+
+    private void RunAnimation()
+    {
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.scale);
+        a.reset();
+        TextView tv = (TextView) findViewById(R.id.home_title);
+        tv.clearAnimation();
+        tv.startAnimation(a);
+    }
+
 }
