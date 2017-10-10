@@ -5,18 +5,19 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import fr.wcs.battlegeek.Model.Settings;
+import fr.wcs.battlegeek.Utils.Utils;
+import fr.wcs.battlegeek.model.Maps;
 
 import static fr.wcs.battlegeek.ui.MapView.Mode.CREATE;
 import static fr.wcs.battlegeek.ui.MapView.Mode.PLAY;
-import static fr.wcs.battlegeek.ui.Tetromino.Shape.I;
-import static fr.wcs.battlegeek.ui.Tetromino.Shape.J;
-import static fr.wcs.battlegeek.ui.Tetromino.Shape.S;
 
 /**
  * Created by adphi on 25/09/17.
@@ -86,35 +87,7 @@ public class MapView extends View {
      */
     private void init() {
         mGrid = new Grid(Settings.GRID_SIZE);
-
-        Tetromino tetromino1 = new Tetromino(this, mGrid, I, Tetromino.Colors.LTBLUE);
-        tetromino1.setPosition(new PointF(0,0));
-        mItems.add(tetromino1);
-
-        Tetromino tetromino2 = new Tetromino(this, mGrid, Tetromino.Shape.T, Tetromino.Colors.PURPLE);
-        tetromino2.setPosition(new PointF(2, 1));
-        mItems.add(tetromino2);
-
-        Tetromino tetromino3 = new Tetromino(this, mGrid, Tetromino.Shape.Z, Tetromino.Colors.RED);
-        tetromino3.setPosition(new PointF(5, 5));
-        mItems.add(tetromino3);
-
-        Tetromino tetromino4 = new Tetromino(this, mGrid, Tetromino.Shape.O, Tetromino.Colors.YELLOW);
-        tetromino4.setPosition(new PointF(5, 2));
-        mItems.add(tetromino4);
-
-        Tetromino tetromino5 = new Tetromino(this, mGrid, J, Tetromino.Colors.BLUE);
-        tetromino5.setPosition(new PointF(6, 7));
-        mItems.add(tetromino5);
-
-        Tetromino tetromino6 = new Tetromino(this, mGrid, Tetromino.Shape.L, Tetromino.Colors.ORANGE);
-        tetromino6.setPosition(new PointF(1, 5));
-        mItems.add(tetromino6);
-
-        Tetromino tetromino7 = new Tetromino(this, mGrid, S, Tetromino.Colors.GREEN);
-        tetromino7.setPosition(new PointF(3, 6));
-        mItems.add(tetromino7);
-
+        setRandomPositions();
     }
 
     /**
@@ -242,6 +215,63 @@ public class MapView extends View {
         item.setBlock(new Block(0,0));
         mItems.add(item);
         invalidate();
+    }
+
+    public void setRandomPositions() {
+        // Clear Items List
+        mItems.clear();
+
+        // Request random Map
+        char[][] map = Maps.getMap();
+        Utils.printMap(map);
+
+        // Store Blocks in a HashMap;
+        HashMap<Tetromino.Shape, ArrayList<PointF> > dict = new HashMap<>();
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                PointF point = new PointF(j,i);
+                // Symbols (char) like ' ' through errors because they doesn't correspond to
+                // any Tetromino Shape, so ...
+                try {
+                    Tetromino.Shape shape = Tetromino.Shape.valueOf(String.valueOf(map[j][i]));
+                    if( shape != Tetromino.Shape.NONE) {
+                        // If the shape is not in the hashMap keys, we add it
+                        if(! dict.containsKey(shape)) {
+                            dict.put(shape, new ArrayList<PointF>());
+                        }
+
+                        // add the point to the ArrayList corresponding to the Shape
+                        dict.get(shape).add(point);
+                    }
+                }
+                catch (Exception e) {}
+            }
+        }
+
+        // Get Through the hashMap to create Tetromino
+        for (Tetromino.Shape shape : dict.keySet()) {
+            // min x and min y for offset
+            int minX = Settings.GRID_SIZE;
+            int minY = Settings.GRID_SIZE;
+
+            Tetromino.Colors color = Tetromino.getColorMap().get(shape);
+            Tetromino tetromino = new Tetromino(this, mGrid, shape, color);
+
+            // Find minimum min x and min y
+            for(PointF point : dict.get(shape)) {
+                minX = (int) Math.min(point.x, minX);
+                minY = (int) Math.min(point.y, minY);
+            }
+            // Now, we can add the block with right offset
+            for(PointF point : dict.get(shape)) {
+                tetromino.setBlock(new TetrominoBlock(point.x - minX, point.y - minY, color));
+            }
+
+            tetromino.setPosition(new PointF(minX, minY));
+            mItems.add(tetromino);
+
+            Log.d(TAG, "setRandomPositions: " + shape + " : " + dict.get(shape).size());
+        }
     }
 
     @Override

@@ -48,6 +48,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView mTextViewPlayer;
     private TextView mTextViewAI;
     private Button mButtonSwitchView;
+    private Button mButtonRandomPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,26 +62,18 @@ public class GameActivity extends AppCompatActivity {
         final String level = intent.getStringExtra("Level");
 
         mContext = getApplicationContext();
+        mMapView = (MapView) findViewById(R.id.mapView);
         mViewFlipper = (ViewFlipper) findViewById(viewFlipper);
         mTextViewPlayer = (TextView) findViewById(R.id.textViewPlayer);
         mTextViewAI = (TextView) findViewById(R.id.textViewAI);
-        mButtonSwitchView = (Button) findViewById(R.id.buttonSwitchView);
-        mButtonSwitchView.setVisibility(View.GONE);
-
-        mButtonSwitchView.setOnTouchListener(new View.OnTouchListener() {
+        mButtonRandomPosition = (Button) findViewById(R.id.buttonRandomPositions);
+        mButtonRandomPosition.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        mViewFlipper.showPrevious();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        mViewFlipper.showNext();
-                        break;
-                }
-                return true;
+            public void onClick(View view) {
+                mMapView.setRandomPositions();
             }
         });
+        mButtonSwitchView = (Button) findViewById(R.id.buttonSwitchView);
 
         final Button buttonLaunchGame = (Button) findViewById(R.id.buttonLaunchGame);
 
@@ -88,6 +81,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mButtonSwitchView.setVisibility(View.VISIBLE);
+                mButtonRandomPosition.setVisibility(View.GONE);
                 mTextViewPlayer.setText(R.string.player_turn);
                 mMapView = (MapView) findViewById(R.id.mapView);
                 char[][] mapData = mMapView.getMapData();
@@ -103,6 +97,23 @@ public class GameActivity extends AppCompatActivity {
                 mViewFlipper.showNext();
             }
 
+        });
+
+        mButtonSwitchView.setVisibility(View.GONE);
+
+        mButtonSwitchView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        mViewFlipper.showPrevious();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        mViewFlipper.showNext();
+                        break;
+                }
+                return true;
+            }
         });
 
         mGameView = (GameView) findViewById(R.id.gameView);
@@ -169,6 +180,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void aiPlay() {
+        mButtonSwitchView.setVisibility(View.GONE);
+
         final Point aiPlayCoordinates = mAI.play();
         final Result iaResult = mGameController.shot(aiPlayCoordinates.x, aiPlayCoordinates.y);
         final Result.Type resultType = iaResult.getType();
@@ -197,6 +210,7 @@ public class GameActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
+                mButtonSwitchView.setVisibility(View.VISIBLE);
                 if(resultType == MISSED) {
                     mTextViewAI.setText(R.string.AITurn);
                     canPlay = true;

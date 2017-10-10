@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 /**
@@ -31,7 +30,7 @@ public class GameView extends View{
     private Grid mGrid;
     private int mGridSize = 10;
 
-    private HashMap<Tetromino.Shape, Tetromino.Colors> mColorsMap = new HashMap<>();
+
 
     public GameView(Context context) {
         super(context);
@@ -51,14 +50,6 @@ public class GameView extends View{
     private void init() {
         this.listener = null;
         this.mGrid = new Grid(mGridSize);
-
-        mColorsMap.put(Tetromino.Shape.I, Tetromino.Colors.LTBLUE);
-        mColorsMap.put(Tetromino.Shape.T, Tetromino.Colors.PURPLE);
-        mColorsMap.put(Tetromino.Shape.Z, Tetromino.Colors.RED);
-        mColorsMap.put(Tetromino.Shape.O, Tetromino.Colors.YELLOW);
-        mColorsMap.put(Tetromino.Shape.J, Tetromino.Colors.BLUE);
-        mColorsMap.put(Tetromino.Shape.L, Tetromino.Colors.ORANGE);
-        mColorsMap.put(Tetromino.Shape.S, Tetromino.Colors.GREEN);
     }
 
     public void setPlouf(int x, int y) {
@@ -67,7 +58,7 @@ public class GameView extends View{
     }
 
     public void setTouch(int x, int y, Tetromino.Shape shape) {
-        Tetromino.Colors color = mColorsMap.get(shape);
+        Tetromino.Colors color = Tetromino.getColorMap().get(shape);
         mBlocks.add(new TetrominoBlock(new PointF(x, y), color));
         invalidate();
     }
