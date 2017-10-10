@@ -334,8 +334,6 @@ public class Item implements View.OnTouchListener {
                         mBlocks = blocks;
                         Toast.makeText(mView.getContext(), R.string.RotationImpossible, Toast.LENGTH_SHORT).show();
                     }
-                    mView.invalidate();
-                    return true;
                 }
                 // Snap the Item to the Grid
                 pos.x = Math.round(mX);
