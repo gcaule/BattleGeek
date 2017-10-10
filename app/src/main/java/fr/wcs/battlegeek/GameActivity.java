@@ -10,6 +10,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -46,6 +47,7 @@ public class GameActivity extends AppCompatActivity {
     private ViewFlipper mViewFlipper;
     private TextView mTextViewPlayer;
     private TextView mTextViewAI;
+    private Button mButtonSwitchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +64,30 @@ public class GameActivity extends AppCompatActivity {
         mViewFlipper = (ViewFlipper) findViewById(viewFlipper);
         mTextViewPlayer = (TextView) findViewById(R.id.textViewPlayer);
         mTextViewAI = (TextView) findViewById(R.id.textViewAI);
+        mButtonSwitchView = (Button) findViewById(R.id.buttonSwitchView);
+        mButtonSwitchView.setVisibility(View.GONE);
+
+        mButtonSwitchView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        mViewFlipper.showPrevious();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        mViewFlipper.showNext();
+                        break;
+                }
+                return true;
+            }
+        });
 
         final Button buttonLaunchGame = (Button) findViewById(R.id.buttonLaunchGame);
 
         buttonLaunchGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mButtonSwitchView.setVisibility(View.VISIBLE);
                 mTextViewPlayer.setText(R.string.player_turn);
                 mMapView = (MapView) findViewById(R.id.mapView);
                 char[][] mapData = mMapView.getMapData();

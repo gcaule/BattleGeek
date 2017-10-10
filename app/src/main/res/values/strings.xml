@@ -32,5 +32,6 @@
     <string name="message_firstusername">Choisis ton pseudo. Tu pourras le changer plus tard.</string>
     <string name="message_error_emptyname">Veuillez saisir un pseudo</string>
     <string name="RotationImpossible">Nan... Pas la place</string>
+    <string name="switch_view">Switch View</string>
     >>>>>>> RankingFirebase
 </resources>
