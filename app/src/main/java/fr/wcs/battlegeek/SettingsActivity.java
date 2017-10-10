@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,13 @@ public class SettingsActivity extends AppCompatActivity {
         final EditText inputPlayerName = (EditText) findViewById(R.id.inputPlayerName);
         final ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
         final Button buttonSave = (Button) findViewById(R.id.buttonSave);
+
+        // Radio Buttons
+        RadioButton mRadioButtonAnimationSlow = (RadioButton) findViewById(R.id.radioButtonAnimationSlow);
+        RadioButton mRadioButtonAnimationMedium = (RadioButton) findViewById(R.id.radioButtonAnimationMedium);
+        RadioButton mRadioButtonAnimationFast = (RadioButton) findViewById(R.id.radioButtonAnimationFast);
+
+
         buttonSave.setVisibility(GONE);
 
         //Initialize Firebase components
@@ -72,6 +80,31 @@ public class SettingsActivity extends AppCompatActivity {
         //Get Pref for PlayerModel Name
         String playerName = mSharedPreferences.getString("PlayerName", null);
         inputPlayerName.setText(playerName);
+
+        // Get Pref for Animations Speed
+        int valueAnimationSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, 0);
+        if (valueAnimationSpeed != 0) {
+            switch (valueAnimationSpeed) {
+                case Settings.ANIMATION_SLOW:
+                    mRadioButtonAnimationSlow.setChecked(true);
+                    mRadioButtonAnimationMedium.setChecked(false);
+                    mRadioButtonAnimationFast.setChecked(false);
+                    break;
+                case Settings.ANIMATION_MEDIUM:
+                    mRadioButtonAnimationSlow.setChecked(false);
+                    mRadioButtonAnimationMedium.setChecked(true);
+                    mRadioButtonAnimationFast.setChecked(false);
+                    break;
+                case Settings.ANIMATION_FAST:
+                    mRadioButtonAnimationSlow.setChecked(false);
+                    mRadioButtonAnimationMedium.setChecked(false);
+                    mRadioButtonAnimationFast.setChecked(true);
+                    break;
+            }
+        }
+        else {
+            mSharedPreferences.edit().putInt(Settings.ANIMATION_TAG, Settings.ANIMATION_MEDIUM).apply();
+        }
 
         //Seekbar listener for music + Display value
         seekBarMusic.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -142,19 +175,44 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         //Button to save user preferences
-         buttonSave.setOnClickListener(new View.OnClickListener() {
-             @Override
-           public void onClick(View v) {
-                 String name = inputPlayerName.getText().toString();
-                 if (name.isEmpty()){
-                     Toast.makeText(SettingsActivity.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT).show();
-                 }
-                 else {
-                     mSharedPreferences.edit().putString("PlayerName", name).commit();
-                     mUsersDatabaseReference.setValue(name);
-                     Toast.makeText(SettingsActivity.this, "Paramètres enregistrés", Toast.LENGTH_SHORT).show();
-                 }
-             }
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = inputPlayerName.getText().toString();
+                if (name.isEmpty()){
+                    Toast.makeText(SettingsActivity.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    mSharedPreferences.edit().putString("PlayerName", name).commit();
+                    mUsersDatabaseReference.setValue(name);
+                    Toast.makeText(SettingsActivity.this, "Paramètres enregistrés", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
+    }
+
+    // RadioButtons Listener
+    public void onRadioButtonAnimationSpeedClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radioButtonAnimationSlow:
+                if (checked) {
+                    mSharedPreferences.edit().putInt(Settings.ANIMATION_TAG, Settings.ANIMATION_SLOW).apply();
+                }
+                break;
+            case R.id.radioButtonAnimationMedium:
+                if (checked) {
+                    mSharedPreferences.edit().putInt(Settings.ANIMATION_TAG, Settings.ANIMATION_MEDIUM).apply();
+                }
+                break;
+            case R.id.radioButtonAnimationFast:
+                if(checked) {
+                    mSharedPreferences.edit().putInt(Settings.ANIMATION_TAG, Settings.ANIMATION_FAST).apply();
+                }
+                break;
+        }
     }
 }

@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,6 +22,7 @@ import android.widget.ViewFlipper;
 import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.controller.GameController;
 import fr.wcs.battlegeek.model.Result;
+import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.ui.EndGameDefeatFragment;
 import fr.wcs.battlegeek.ui.EndGameVictoryFragment;
 import fr.wcs.battlegeek.ui.GameView;
@@ -50,6 +52,9 @@ public class GameActivity extends AppCompatActivity {
     private Button mButtonSwitchView;
     private Button mButtonRandomPosition;
 
+    private SharedPreferences mSharedPreferences;
+    private int mAnimationsSpeed = Settings.ANIMATION_FAST;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +65,9 @@ public class GameActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String level = intent.getStringExtra("Level");
+
+        //Call SharedPref
+        mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
         mContext = getApplicationContext();
         mMapView = (MapView) findViewById(R.id.mapView);
@@ -163,7 +171,8 @@ public class GameActivity extends AppCompatActivity {
                 mGameView.setPlouf(x, y);
                 mTextViewPlayer.setText(R.string.missed);
                 // Show the result
-                new CountDownTimer(650, 500) {
+                mAnimationsSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, Settings.ANIMATION_FAST);
+                new CountDownTimer(mAnimationsSpeed, mAnimationsSpeed / 3) {
                     public void onTick(long millisUntilFinished) {
                     }
 
@@ -189,7 +198,7 @@ public class GameActivity extends AppCompatActivity {
 
         mAI.setResult(iaResult);
 
-        new CountDownTimer(1750, 350) {
+        new CountDownTimer(mAnimationsSpeed * 3, mAnimationsSpeed) {
             private int cursor = 0;
             @Override
             public void onTick(long l) {

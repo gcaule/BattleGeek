@@ -34,5 +34,9 @@
     <string name="RotationImpossible">Nan... Pas la place</string>
     <string name="switch_view">Switch View</string>
     <string name="randomize_positions">Random</string>
+    <string name="settingsAnimationSlowText">Mou</string>
+    <string name="settingsAnimationMedium">Moins Mou</string>
+    <string name="settingsAnnimationFast">Dynamique</string>
+    <string name="settingsAnimationsLabel">Animations</string>
     >>>>>>> RankingFirebase
 </resources>
