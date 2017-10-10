@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -58,6 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
+
         //Get User on SharedPref
         String uidFirebase = mSharedPreferences.getString("uidFirebase", null);
 
@@ -68,14 +70,28 @@ public class SettingsActivity extends AppCompatActivity {
         mUsersDatabaseReference = mDatabase.getReference().child("Users").child(uidFirebase).child("playerName");
 
         //Get Pref for Music Volume
-        int ValueMusicStart = mSharedPreferences.getInt("ValueMusic",0);
-        seekBarMusic.setProgress(ValueMusicStart);
-        seekBarValueMusic.setText(String.valueOf(ValueMusicStart));
+        int valueMusic = mSharedPreferences.getInt("ValueMusic",0);
+        seekBarMusic.setProgress(valueMusic);
+        seekBarValueMusic.setText(String.valueOf(valueMusic));
 
         //Get Pref for Effects Volume
-        int ValueEffectsStart = mSharedPreferences.getInt("ValueEffects",0);
-        seekBarEffects.setProgress(ValueEffectsStart);
-        seekBarValueEffects.setText(String.valueOf(ValueEffectsStart));
+        int valueEffects = mSharedPreferences.getInt("ValueEffects",0);
+        seekBarEffects.setProgress(valueEffects);
+        seekBarValueEffects.setText(String.valueOf(valueEffects));
+
+        final ImageView imageViewEffects = (ImageView) findViewById(R.id.imageViewEffects);
+        if(valueEffects > 70) {
+            imageViewEffects.setImageResource(R.drawable.volume_up_interface_symbol);
+        }
+        else if(valueEffects > 33) {
+            imageViewEffects.setImageResource(R.drawable.ic_volume_down_black_24dp);
+        }
+        else if(valueEffects > 0) {
+            imageViewEffects.setImageResource(R.drawable.ic_volume_mute_black_24dp);
+        }
+        else {
+            imageViewEffects.setImageResource(R.drawable.ic_volume_off_black_24dp);
+        }
 
         //Get Pref for PlayerModel Name
         String playerName = mSharedPreferences.getString("PlayerName", null);
@@ -114,7 +130,8 @@ public class SettingsActivity extends AppCompatActivity {
                                           boolean fromUser) {
                 // TODO Auto-generated method stub
                 seekBarValueMusic.setText(String.valueOf(progress));
-                mSharedPreferences.edit().putInt("ValueMusic", seekBarMusic.getProgress()).apply();
+                int valueMusic = seekBarMusic.getProgress();
+                mSharedPreferences.edit().putInt("ValueMusic", valueMusic).apply();
             }
 
             @Override
@@ -136,7 +153,20 @@ public class SettingsActivity extends AppCompatActivity {
                                           boolean fromUser) {
                 // TODO Auto-generated method stub
                 seekBarValueEffects.setText(String.valueOf(progress));
-                mSharedPreferences.edit().putInt("ValueEffects", seekBarEffects.getProgress()).apply();
+                int valueEffects = seekBarEffects.getProgress();
+                mSharedPreferences.edit().putInt("ValueEffects", valueEffects).apply();
+                if(valueEffects > 70) {
+                    imageViewEffects.setImageResource(R.drawable.volume_up_interface_symbol);
+                }
+                else if(valueEffects > 33) {
+                    imageViewEffects.setImageResource(R.drawable.ic_volume_down_black_24dp);
+                }
+                else if(valueEffects > 0) {
+                    imageViewEffects.setImageResource(R.drawable.ic_volume_mute_black_24dp);
+                }
+                else {
+                    imageViewEffects.setImageResource(R.drawable.ic_volume_off_black_24dp);
+                }
             }
 
             @Override

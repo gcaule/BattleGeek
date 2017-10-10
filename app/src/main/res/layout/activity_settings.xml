@@ -84,7 +84,7 @@
         app:srcCompat="@drawable/home_button"/>
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageViewMusic"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginLeft="16dp"
@@ -95,7 +95,7 @@
         app:srcCompat="@drawable/song_note128"/>
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imageViewEffects"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginLeft="16dp"
@@ -104,11 +104,11 @@
         android:background="@android:color/transparent"
         android:cropToPadding="false"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewMusic"
         app:srcCompat="@drawable/volume_up_interface_symbol"/>
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageViewUser"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginLeft="16dp"
@@ -117,7 +117,7 @@
         android:background="@android:color/transparent"
         android:cropToPadding="false"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewEffects"
         app:srcCompat="@drawable/user"/>
 
     <SeekBar
@@ -128,9 +128,9 @@
         android:layout_marginLeft="0dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="64dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewEffects"
         app:layout_constraintHorizontal_bias="0.353"
-        app:layout_constraintLeft_toRightOf="@+id/imageView3"
+        app:layout_constraintLeft_toRightOf="@+id/imageViewEffects"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBarMusic"
         app:layout_constraintVertical_bias="1.0"/>
@@ -145,9 +145,9 @@
         android:layout_marginTop="150dp"
         android:defaultFocusHighlightEnabled="false"
         android:focusedByDefault="false"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewMusic"
         app:layout_constraintHorizontal_bias="0.351"
-        app:layout_constraintLeft_toRightOf="@+id/imageView2"
+        app:layout_constraintLeft_toRightOf="@+id/imageViewMusic"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.75"/>
@@ -166,8 +166,8 @@
         android:imeOptions="actionSend"
         android:inputType="textPersonName"
         android:maxLines="1"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-        app:layout_constraintLeft_toRightOf="@+id/imageView5"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewUser"
+        app:layout_constraintLeft_toRightOf="@+id/imageViewUser"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBarEffects"
         app:layout_constraintVertical_bias="1.0"/>
