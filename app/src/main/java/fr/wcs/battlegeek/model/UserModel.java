@@ -1,4 +1,4 @@
-package fr.wcs.battlegeek;
+package fr.wcs.battlegeek.model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 

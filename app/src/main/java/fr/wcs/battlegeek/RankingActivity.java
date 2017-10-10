@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.wcs.battlegeek.adapterRanking.CustomListAdapter;
-import fr.wcs.battlegeek.modelRanking.Items;
+import fr.wcs.battlegeek.model.PlayerModel;
 
 public class RankingActivity extends AppCompatActivity {
 
-    private List<Items> itemsList = new ArrayList<Items>();
+    private List<PlayerModel> mPlayerModelList = new ArrayList<PlayerModel>();
     private ListView listView;
     private CustomListAdapter adapter;
 
@@ -77,30 +77,30 @@ public class RankingActivity extends AppCompatActivity {
             //Initialize and create a new adapter with layout named list found in activity_main layout
 
             listView = (ListView) findViewById(R.id.list);
-            adapter = new CustomListAdapter(this, itemsList);
+            adapter = new CustomListAdapter(this, mPlayerModelList);
             listView.setAdapter(adapter);
 
             Cursor cursor = myDB.rawQuery("SELECT * FROM scores", null);
 
             if (cursor.moveToFirst()) {
 
-                //read all rows from the database and add to the Items array
+                //read all rows from the database and add to the PlayerModel array
 
                 while (!cursor.isAfterLast()) {
 
-                    Items items = new Items();
+                    PlayerModel playerModel = new PlayerModel();
 
-                    items.setName(cursor.getString(0));
-                    items.setScore(cursor.getString(1));
+                    playerModel.setName(cursor.getString(0));
+                    playerModel.setScore(cursor.getString(1));
 
-                    itemsList.add(items);
+                    mPlayerModelList.add(playerModel);
                     cursor.moveToNext();
 
 
                 }
             }
 
-            //All done, so notify the adapter to populate the list using the Items Array
+            //All done, so notify the adapter to populate the list using the PlayerModel Array
 
             adapter.notifyDataSetChanged();
         }

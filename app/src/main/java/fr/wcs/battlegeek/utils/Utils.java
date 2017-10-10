@@ -1,4 +1,4 @@
-package fr.wcs.battlegeek.Utils;
+package fr.wcs.battlegeek.utils;
 
 import android.util.Log;
 

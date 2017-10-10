@@ -6,32 +6,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import fr.wcs.battlegeek.R;
-import fr.wcs.battlegeek.modelRanking.Items;
+
 import java.util.List;
+
+import fr.wcs.battlegeek.R;
+import fr.wcs.battlegeek.model.PlayerModel;
 
 public class CustomListAdapter extends BaseAdapter {
 
     private  Context mContext;
     private LayoutInflater inflater;
-    private List<Items> itemsItems;
+    private List<PlayerModel> mPlayerModelItems;
 
 
 
-    public CustomListAdapter(Context context, List<Items> itemsItems) {
+    public CustomListAdapter(Context context, List<PlayerModel> playerModelItems) {
         this.mContext = context;
-        this.itemsItems = itemsItems;
+        this.mPlayerModelItems = playerModelItems;
 
     }
 
     @Override
     public int getCount() {
-        return itemsItems.size();
+        return mPlayerModelItems.size();
     }
 
     @Override
     public Object getItem(int location) {
-        return itemsItems.get(location);
+        return mPlayerModelItems.get(location);
     }
 
     @Override
@@ -58,7 +60,7 @@ public class CustomListAdapter extends BaseAdapter {
             holder = (ViewHolder) scoreView.getTag();
         }
 
-        final Items m = itemsItems.get(position);
+        final PlayerModel m = mPlayerModelItems.get(position);
         holder.name.setText(m.getName());
         holder.score.setText(m.getScore());
 

@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import fr.wcs.battlegeek.Model.Settings;
+import fr.wcs.battlegeek.model.Settings;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -35,10 +35,10 @@ public class MainMenuActivity extends AppCompatActivity {
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
-        //Get Pref for Player Name
+        //Get Pref for PlayerModel Name
         final String playerName = mSharedPreferences.getString("PlayerName", null);
 
-        //Get Pref for Player Name
+        //Get Pref for PlayerModel Name
         showPlayerName.setText(playerName);
 
 

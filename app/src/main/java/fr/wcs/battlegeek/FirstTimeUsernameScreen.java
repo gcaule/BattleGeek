@@ -16,7 +16,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import fr.wcs.battlegeek.Model.Settings;
+import fr.wcs.battlegeek.model.Settings;
+import fr.wcs.battlegeek.model.UserModel;
 
 public class FirstTimeUsernameScreen extends AppCompatActivity {
 

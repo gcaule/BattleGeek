@@ -1,4 +1,4 @@
-package fr.wcs.battlegeek.Model;
+package fr.wcs.battlegeek.model;
 
 /**
  * Created by apprenti on 05/10/17.
