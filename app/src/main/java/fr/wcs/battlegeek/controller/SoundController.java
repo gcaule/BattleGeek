@@ -74,7 +74,7 @@ public class SoundController {
     public void playSound(Result.Type result){
         Log.d(TAG, "playSound() called with: result = [" + result + "]");
         // Get the preferred Volume
-        float volume = mSharedPreferences.getInt("ValueEffects", 1) / 100;
+        float volume = (float) mSharedPreferences.getInt(Settings.EFFECTS_TAG, 1) / 100;
         int soundID = -1;
         // Get the Sound ID according to the Result's Type
         // TODO : Round Robin (Not play two similar sounds right after)
