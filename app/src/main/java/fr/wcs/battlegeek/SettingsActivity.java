@@ -28,6 +28,8 @@ public class SettingsActivity extends AppCompatActivity {
     SharedPreferences mSharedPreferences;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mUsersDatabaseReference;
+    private ImageView mImageViewMusic;
+    private ImageView mImageViewEffects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,6 @@ public class SettingsActivity extends AppCompatActivity {
         RadioButton mRadioButtonAnimationMedium = (RadioButton) findViewById(R.id.radioButtonAnimationMedium);
         RadioButton mRadioButtonAnimationFast = (RadioButton) findViewById(R.id.radioButtonAnimationFast);
 
-
         buttonSave.setVisibility(GONE);
 
         //Initialize Firebase components
@@ -70,42 +71,20 @@ public class SettingsActivity extends AppCompatActivity {
         mUsersDatabaseReference = mDatabase.getReference().child("Users").child(uidFirebase).child("playerName");
 
         //Get Pref for Music Volume
-        int valueMusic = mSharedPreferences.getInt("ValueMusic",0);
+        int valueMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG,0);
         seekBarMusic.setProgress(valueMusic);
         seekBarValueMusic.setText(String.valueOf(valueMusic));
 
-        final ImageView imageViewMusic = (ImageView) findViewById(R.id.imageViewMusic);
-        if(valueMusic > 66) {
-            imageViewMusic.setImageResource(R.drawable.music_loud);
-        }
-        else if(valueMusic > 33) {
-            imageViewMusic.setImageResource(R.drawable.music_medium);
-        }
-        else if(valueMusic > 0) {
-            imageViewMusic.setImageResource(R.drawable.music_low);
-        }
-        else {
-            imageViewMusic.setImageResource(R.drawable.no_music);
-        }
+        mImageViewMusic = (ImageView) findViewById(R.id.imageViewMusic);
+        setMusicIcon(valueMusic);
 
         //Get Pref for Effects Volume
-        int valueEffects = mSharedPreferences.getInt("ValueEffects",0);
+        int valueEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG,0);
         seekBarEffects.setProgress(valueEffects);
         seekBarValueEffects.setText(String.valueOf(valueEffects));
 
-        final ImageView imageViewEffects = (ImageView) findViewById(R.id.imageViewEffects);
-        if(valueEffects > 66) {
-            imageViewEffects.setImageResource(R.drawable.volume_up_interface_symbol);
-        }
-        else if(valueEffects > 33) {
-            imageViewEffects.setImageResource(R.drawable.ic_volume_down_black_24dp);
-        }
-        else if(valueEffects > 0) {
-            imageViewEffects.setImageResource(R.drawable.ic_volume_mute_black_24dp);
-        }
-        else {
-            imageViewEffects.setImageResource(R.drawable.ic_volume_off_black_24dp);
-        }
+        mImageViewEffects = (ImageView) findViewById(R.id.imageViewEffects);
+        setEffectIcon(valueEffects);
 
         //Get Pref for PlayerModel Name
         String playerName = mSharedPreferences.getString("PlayerName", null);
@@ -145,19 +124,8 @@ public class SettingsActivity extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 seekBarValueMusic.setText(String.valueOf(progress));
                 int valueMusic = seekBarMusic.getProgress();
-                mSharedPreferences.edit().putInt("ValueMusic", valueMusic).apply();
-                if(valueMusic > 66) {
-                    imageViewMusic.setImageResource(R.drawable.music_loud);
-                }
-                else if(valueMusic > 33) {
-                    imageViewMusic.setImageResource(R.drawable.music_medium);
-                }
-                else if(valueMusic > 0) {
-                    imageViewMusic.setImageResource(R.drawable.music_low);
-                }
-                else {
-                    imageViewMusic.setImageResource(R.drawable.no_music);
-                }
+                mSharedPreferences.edit().putInt(Settings.MUSIC_TAG, valueMusic).apply();
+                setMusicIcon(valueMusic);
             }
 
             @Override
@@ -180,19 +148,8 @@ public class SettingsActivity extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 seekBarValueEffects.setText(String.valueOf(progress));
                 int valueEffects = seekBarEffects.getProgress();
-                mSharedPreferences.edit().putInt("ValueEffects", valueEffects).apply();
-                if(valueEffects > 66) {
-                    imageViewEffects.setImageResource(R.drawable.volume_up_interface_symbol);
-                }
-                else if(valueEffects > 33) {
-                    imageViewEffects.setImageResource(R.drawable.ic_volume_down_black_24dp);
-                }
-                else if(valueEffects > 0) {
-                    imageViewEffects.setImageResource(R.drawable.ic_volume_mute_black_24dp);
-                }
-                else {
-                    imageViewEffects.setImageResource(R.drawable.ic_volume_off_black_24dp);
-                }
+                mSharedPreferences.edit().putInt(Settings.EFFECTS_TAG, valueEffects).apply();
+                setEffectIcon(valueEffects);
             }
 
             @Override
@@ -269,6 +226,36 @@ public class SettingsActivity extends AppCompatActivity {
                     mSharedPreferences.edit().putInt(Settings.ANIMATION_TAG, Settings.ANIMATION_FAST).apply();
                 }
                 break;
+        }
+    }
+
+    private void setMusicIcon(int volume){
+        if(volume > 66) {
+            mImageViewMusic.setImageResource(R.drawable.music_loud);
+        }
+        else if(volume > 33) {
+            mImageViewMusic.setImageResource(R.drawable.music_medium);
+        }
+        else if(volume > 0) {
+            mImageViewMusic.setImageResource(R.drawable.music_low);
+        }
+        else {
+            mImageViewMusic.setImageResource(R.drawable.no_music);
+        }
+    }
+
+    private void setEffectIcon(int volume) {
+        if(volume > 66) {
+            mImageViewEffects.setImageResource(R.drawable.volume_up_interface_symbol);
+        }
+        else if(volume > 33) {
+            mImageViewEffects.setImageResource(R.drawable.ic_volume_down_black_24dp);
+        }
+        else if(volume > 0) {
+            mImageViewEffects.setImageResource(R.drawable.ic_volume_mute_black_24dp);
+        }
+        else {
+            mImageViewEffects.setImageResource(R.drawable.ic_volume_off_black_24dp);
         }
     }
 }

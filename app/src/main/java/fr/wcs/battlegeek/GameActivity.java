@@ -17,9 +17,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import java.util.Set;
 
 import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.controller.GameController;
@@ -57,11 +60,16 @@ public class GameActivity extends AppCompatActivity {
     private TextView mTextViewAI;
     private Button mButtonSwitchView;
     private Button mButtonRandomPosition;
+    private ImageButton mImageButtonSpeed;
+    private ImageButton mImageButtonMusic;
+    private ImageButton mImageButtonEffects;
 
     private SharedPreferences mSharedPreferences;
-    private int mAnimationsSpeed = Settings.ANIMATION_FAST;
+    private int mAnimationsSpeed;
 
     private SoundController mSoundController;
+    private int mVolumeMusic;
+    private int mVolumeEffects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +79,83 @@ public class GameActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_game);
 
+        mContext = getApplicationContext();
+
         Intent intent = getIntent();
         final String level = intent.getStringExtra("Level");
 
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
-        mContext = getApplicationContext();
+        // Settings
+        mImageButtonSpeed = (ImageButton) findViewById(R.id.imageButtonSpeed);
+        mAnimationsSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, Settings.ANIMATION_MEDIUM);
+        setAnimationIcon(mAnimationsSpeed);
+        mImageButtonSpeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mAnimationsSpeed == Settings.ANIMATION_SLOW) {
+                    mAnimationsSpeed = Settings.ANIMATION_MEDIUM;
+                }
+                else if(mAnimationsSpeed == Settings.ANIMATION_MEDIUM) {
+                    mAnimationsSpeed = Settings.ANIMATION_FAST;
+                }
+                else if(mAnimationsSpeed == Settings.ANIMATION_FAST) {
+                    mAnimationsSpeed = Settings.ANIMATION_SLOW;
+                }
+                mSharedPreferences.edit().putInt(Settings.ANIMATION_TAG, mAnimationsSpeed).apply();
+                setAnimationIcon(mAnimationsSpeed);
+            }
+        });
 
+        mImageButtonMusic = (ImageButton) findViewById(R.id.imageButtonMusic);
+        mVolumeMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, 50);
+        setMusicIcon(mVolumeMusic);
+        mImageButtonMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mVolumeMusic > 66) {
+                    mVolumeMusic = 0;
+                }
+                else if(mVolumeMusic > 33) {
+                    mVolumeMusic = 100;
+                }
+                else if(mVolumeMusic > 0) {
+                    mVolumeMusic = 66;
+                }
+                else {
+                    mVolumeMusic = 33;
+                }
+                mSharedPreferences.edit().putInt(Settings.MUSIC_TAG, mVolumeMusic).apply();
+                setMusicIcon(mVolumeMusic);
+            }
+        });
+
+        mImageButtonEffects = (ImageButton) findViewById(R.id.imageButtonEffects);
+        mVolumeEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG, 50);
+        setEffectsIcon(mVolumeEffects);
+        mImageButtonEffects.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mVolumeEffects > 66) {
+                    mVolumeEffects = 0;
+                }
+                else if(mVolumeEffects > 33) {
+                    mVolumeEffects = 100;
+                }
+                else if(mVolumeEffects > 0) {
+                    mVolumeEffects = 66;
+                }
+                else {
+                    mVolumeEffects = 33;
+                }
+                mSharedPreferences.edit().putInt(Settings.EFFECTS_TAG, mVolumeEffects).apply();
+                setEffectsIcon(mVolumeEffects);
+            }
+        });
+
+
+        // Sound
         mSoundController = new SoundController(mContext);
 
         mMapView = (MapView) findViewById(R.id.mapView);
@@ -191,7 +268,6 @@ public class GameActivity extends AppCompatActivity {
                 mGameView.setPlouf(x, y);
                 mTextViewPlayer.setText(R.string.missed);
                 // Show the result
-                mAnimationsSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, Settings.ANIMATION_FAST);
                 new CountDownTimer(mAnimationsSpeed, mAnimationsSpeed / 3) {
                     public void onTick(long millisUntilFinished) {
                     }
@@ -274,6 +350,49 @@ public class GameActivity extends AppCompatActivity {
         mToast.setDuration(Toast.LENGTH_SHORT);
         mToast.show();
     }
+
+    private void setAnimationIcon(int settingSpeed) {
+        if (settingSpeed == Settings.ANIMATION_SLOW) {
+            mImageButtonSpeed.setImageResource(R.drawable.snail);
+        }
+        else if (settingSpeed == Settings.ANIMATION_MEDIUM) {
+            mImageButtonSpeed.setImageResource(R.drawable.pigeon);
+        }
+        else if (settingSpeed == Settings.ANIMATION_FAST) {
+            mImageButtonSpeed.setImageResource(R.drawable.rabbit);
+        }
+    }
+
+    private void setMusicIcon(int volume) {
+        if(volume > 66) {
+            mImageButtonMusic.setImageResource(R.drawable.music_loud);
+        }
+        else if(volume > 33) {
+            mImageButtonMusic.setImageResource(R.drawable.music_medium);
+        }
+        else if(volume > 0) {
+            mImageButtonMusic.setImageResource(R.drawable.music_low);
+        }
+        else {
+            mImageButtonMusic.setImageResource(R.drawable.no_music);
+        }
+    }
+
+    private void setEffectsIcon(int volume) {
+        if(volume > 66) {
+            mImageButtonEffects.setImageResource(R.drawable.volume_up_interface_symbol);
+        }
+        else if(volume > 33) {
+            mImageButtonEffects.setImageResource(R.drawable.ic_volume_down_black_24dp);
+        }
+        else if(volume > 0) {
+            mImageButtonEffects.setImageResource(R.drawable.ic_volume_mute_black_24dp);
+        }
+        else {
+            mImageButtonEffects.setImageResource(R.drawable.ic_volume_off_black_24dp);
+        }
+    }
+
 
     /**
      * Method handling Back Button Pressed
