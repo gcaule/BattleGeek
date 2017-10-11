@@ -37,7 +37,7 @@ public class AI {
     private GameController mGameControler;
     private ArrayList<Point> mPlayablesCoordinates;
     private char[][] mPlayerMap;
-    private ArrayList<Point> mSurroudingCoordinates;
+    private ArrayList<Point> mSurroudingCoordinates = new ArrayList<>();
 
     /**
      * AI Constructor
@@ -124,13 +124,13 @@ public class AI {
     private Point playLevelII() {
         // Give the type of result (missed, touched ...)
         Result.Type resultType = mLastResult.getType();
-        if (mSurroudingCoordinates == null || (mSurroudingCoordinates.isEmpty() && resultType == MISSED)) {
+        if (mSurroudingCoordinates.isEmpty() && resultType == MISSED) {
             //Play randomly while nothing found
             return playLevelI();
         }
 
         //todo si touché , recup les coordonnées autour stockée dans le tableau mSurroundingshits
-        mSurroudingCoordinates = getSurroundingCoordinates(mLastPlayedCoordinates);
+        getSurroundingCoordinates(mLastPlayedCoordinates);
         int index = (int) (Math.random() * (mSurroudingCoordinates.size() - 1));
         Point coordinates = mSurroudingCoordinates.get(index);
         mSurroudingCoordinates.remove(index);
@@ -146,8 +146,7 @@ public class AI {
         return playLevelII();
     }
 
-    private ArrayList<Point> getSurroundingCoordinates(Point point) {
-        ArrayList<Point> surroundingCoordinates = new ArrayList<>();
+    private void getSurroundingCoordinates(Point point) {
         //todo récuperer les coordonnées des points autour
         int x = point.x;
         int y = point.y;
@@ -156,20 +155,19 @@ public class AI {
         int minY = Math.max(y - 1, 0);
         int maxY = Math.min(y + 1, Settings.GRID_SIZE - 1);
 
-        for (int i = minX; i <= maxX; i++) {
-            for (int j = minY; j <= maxY; j++) {
+        for (int row = minY; row <= maxY; row++) {
+            for (int column = minX; column <= maxX; column++) {
                 //todo vérifier qu'ils soient pas joués (utiliser la méthode mController , alreadyplayed)
-                if (!mGameControler.alreadyPlayed(j, i)) {
+                if (!mGameControler.alreadyPlayed(column, row)) {
                     //todo ne pas rajouter au tableau si deja dans le tableau
-                    Point p = getPointFromPlayableCoordinates(j, i);
+                    Point p = getPointFromPlayableCoordinates(column, row);
                     if (p != null) {
                         //todo rajouter au tableau les dispos
-                        surroundingCoordinates.add(p);
+                        mSurroudingCoordinates.add(p);
                     }
                 }
             }
         }
-        return surroundingCoordinates;
     }
 
     private Point getPointFromPlayableCoordinates(int x, int y) {

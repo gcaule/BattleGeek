@@ -1,6 +1,7 @@
 package fr.wcs.battlegeek.controller;
 
 import fr.wcs.battlegeek.model.Result;
+import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.ui.Tetromino;
 
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
@@ -27,7 +28,7 @@ public class GameController {
     private char[][] mMap;
 
     // The map storing the shots' results
-    private char[][] mStorageMap = new char[10][10];
+    private char[][] mStorageMap = new char[Settings.GRID_SIZE][Settings.GRID_SIZE];
 
     /**
      * Constructor
