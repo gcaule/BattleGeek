@@ -111,6 +111,9 @@ public class GameActivity extends AppCompatActivity {
                     mAI.setPlayerMap(mapData);
                     mAI.setLevel(AI.Level.IMPOSSIBLE);
                 }
+                else if (level.equals("Medium")){
+                    mAI.setLevel(AI.Level.II);
+                }
                 buttonLaunchGame.setVisibility(View.GONE);
                 mTextViewAI.setText(R.string.AITurn);
                 mViewFlipper.showNext();

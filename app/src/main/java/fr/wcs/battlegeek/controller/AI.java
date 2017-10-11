@@ -7,6 +7,13 @@ import java.util.ArrayList;
 
 import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.Result;
+import fr.wcs.battlegeek.model.Settings;
+import fr.wcs.battlegeek.ui.Tetromino;
+
+import static fr.wcs.battlegeek.model.Result.Type.DROWN;
+import static fr.wcs.battlegeek.model.Result.Type.MISSED;
+import static fr.wcs.battlegeek.model.Result.Type.TOUCHED;
+import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
 
 /**
  * Created by adphi on 03/10/17.
@@ -24,24 +31,28 @@ public class AI {
     private final String TAG = "AI";
     private Level mLevel;
     private Point mLastPlayedCoordinates;
+    private Result mLastResult = new Result(Tetromino.Shape.NONE, MISSED);
 
 
     private GameController mGameControler;
     private ArrayList<Point> mPlayablesCoordinates;
     private char[][] mPlayerMap;
+    private ArrayList<Point> mSurroudingCoordinates;
 
     /**
-     *  AI Constructor
+     * AI Constructor
      */
-    public AI(){
+    public AI() {
         // Create a Game Controller
         mGameControler = new GameController(Maps.getMap());
         // Get all Playables Coordinates
         mPlayablesCoordinates = Maps.getPlayableCoordinates();
+        mSurroudingCoordinates = new ArrayList<>();
     }
 
     /**
      * Method for the Player to Shot the AI
+     *
      * @param x
      * @param y
      * @return
@@ -53,32 +64,37 @@ public class AI {
 
     /**
      * Method for getting AI play Coordinates
+     *
      * @return the coordinates
      */
     public Point play() {
-        switch (mLevel){
-            case I :
+        switch (mLevel) {
+            case I:
                 return playLevelI();
-            case II :
+            case II:
                 return playLevelII();
-            case III :
+            case III:
                 return playLevelIII();
-            case IMPOSSIBLE :
+            case IMPOSSIBLE:
                 return playLevelI();
         }
+        return null;
     }
 
     /**
      * Method to call after the Player's game controller process the AI play method
      * this allow the AI'game processor to store the result in his Storage Map
+     *
      * @param result
      */
     public void setResult(Result result) {
         mGameControler.setPlayResult(mLastPlayedCoordinates.x, mLastPlayedCoordinates.y, result);
+        mLastResult = result;
     }
 
     /**
      * Method setting the AI Level
+     *
      * @param level
      */
     public void setLevel(Level level) {
@@ -89,7 +105,7 @@ public class AI {
             mPlayablesCoordinates.clear();
             for (int i = 0; i < mPlayerMap.length; i++) {
                 for (int j = 0; j < mPlayerMap[i].length; j++) {
-                    if(mPlayerMap[i][j] != ' ') {
+                    if (mPlayerMap[i][j] != ' ') {
                         mPlayablesCoordinates.add(new Point(j, i));
                     }
                 }
@@ -106,6 +122,23 @@ public class AI {
     }
 
     private Point playLevelII() {
+        // Give the type of result (missed, touched ...)
+        Result.Type resultType = mLastResult.getType();
+        if (mSurroudingCoordinates == null || (mSurroudingCoordinates.isEmpty() && resultType == MISSED)) {
+            //Play randomly while nothing found
+            return playLevelI();
+        }
+
+        //todo si touché , recup les coordonnées autour stockée dans le tableau mSurroundingshits
+        mSurroudingCoordinates = getSurroundingCoordinates(mLastPlayedCoordinates);
+        int index = (int) (Math.random() * (mSurroudingCoordinates.size() - 1));
+        Point coordinates = mSurroudingCoordinates.get(index);
+        mSurroudingCoordinates.remove(index);
+        return coordinates;
+
+        //todo jouer coordonnées du tableau
+        //todo supprimer coordonées du tableau en attente
+
 
     }
 
@@ -113,8 +146,46 @@ public class AI {
         return playLevelII();
     }
 
+    private ArrayList<Point> getSurroundingCoordinates(Point point) {
+        ArrayList<Point> surroundingCoordinates = new ArrayList<>();
+        //todo récuperer les coordonnées des points autour
+        int x = point.x;
+        int y = point.y;
+        int minX = Math.max(x - 1, 0);
+        int maxX = Math.min(x + 1, Settings.GRID_SIZE - 1);
+        int minY = Math.max(y - 1, 0);
+        int maxY = Math.min(y + 1, Settings.GRID_SIZE - 1);
+
+        for (int i = minX; i <= maxX; i++) {
+            for (int j = minY; j <= maxY; j++) {
+                //todo vérifier qu'ils soient pas joués (utiliser la méthode mController , alreadyplayed)
+                if (!mGameControler.alreadyPlayed(j, i)) {
+                    //todo ne pas rajouter au tableau si deja dans le tableau
+                    Point p = getPointFromPlayableCoordinates(j, i);
+                    if (p != null) {
+                        //todo rajouter au tableau les dispos
+                        surroundingCoordinates.add(p);
+                    }
+                }
+            }
+        }
+        return surroundingCoordinates;
+    }
+
+    private Point getPointFromPlayableCoordinates(int x, int y) {
+        Point point = new Point(x, y);
+        for(Point p : mPlayablesCoordinates) {
+            if (p.equals(point)) {
+                mPlayablesCoordinates.remove(p);
+                return p;
+            }
+        }
+        return null;
+    }
+
     /**
      * The Cheating Method: give the Player's Map to the AI
+     *
      * @param playerMap
      */
     public void setPlayerMap(char[][] playerMap) {

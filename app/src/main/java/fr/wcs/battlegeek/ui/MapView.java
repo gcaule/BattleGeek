@@ -236,7 +236,7 @@ public class MapView extends View {
                 // Symbols (char) like ' ' through errors because they doesn't correspond to
                 // any Tetromino Shape, so ...
                 try {
-                    Tetromino.Shape shape = Tetromino.Shape.valueOf(String.valueOf(map[j][i]));
+                    Tetromino.Shape shape = Tetromino.Shape.valueOf(String.valueOf(map[i][j]));
                     if( shape != Tetromino.Shape.NONE) {
                         // If the shape is not in the hashMap keys, we add it
                         if(! dict.containsKey(shape)) {
