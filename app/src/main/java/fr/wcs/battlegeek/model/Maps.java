@@ -8,8 +8,20 @@ import java.util.ArrayList;
  * Created by apprenti on 27/09/17.
  */
 
+/**
+ * Class storing Maps and Map related Methods
+ *
+ * The Maps are two dimentional characters Arrays
+ *
+ * Item's Storage Definition:
+ *  - ' ' : a space character is an empty cell
+ *  - '_' : an underscore character is an empty Shoted cell
+ *  - A LOWERCASE Tetromino Shape Symbol's character represent a Tetromino Block not Shoted (yet...)
+ *  - a lowercase Tetromino Shape symbol's character represent a Tetromino Block Shoted
+ */
 public class Maps {
 
+    // Pseudo Random Maps Definition
     private static char[][] map1 = new char[][]{
             {' ', ' ', ' ', 'T', 'T', 'T', ' ', ' ', ' ', ' '},
             {'Z', 'Z', ' ', ' ', 'T', ' ', ' ', ' ', ' ', 'I'},
@@ -400,23 +412,33 @@ public class Maps {
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
     };
 
+    // Store all the predefined Maps in an array
     private static char[][][] maps = new char [][][] {map1, map2, map3, map4, map5, map6, map7, map8, map9, map10,
             map11, map12, map13, map14, map15, map16, map17, map18, map19, map20,
             map21, map22, map23, map24, map25, map26, map27, map28, map29, map30};
 
+    /**
+     * Method to get a Random Predefined Map
+     * @return the Map as character two dimentional array
+     */
     public static char[][] getMap() {
-        int random = (int)(Math.random() * (29));
+        int random = (int)(Math.random() * (maps.length - 1));
         return maps[random];
     }
 
-    public static ArrayList<Point> getPlayableCorrdiantes(){
-        ArrayList<Point> playableCoordianates = new ArrayList<>();
+    /**
+     * Method return an ArrayList of the whole (100) Grid Coordinates
+     * from Point(0,0) to Point(9,9)
+     * @return
+     */
+    public static ArrayList<Point> getPlayableCoordinates(){
+        ArrayList<Point> playableCoordinates = new ArrayList<>();
         for (int i = 0; i < Settings.GRID_SIZE; i++) {
             for (int j = 0; j < Settings.GRID_SIZE; j++) {
-                playableCoordianates.add(new Point(i, j));
+                playableCoordinates.add(new Point(i, j));
             }
         }
-        return playableCoordianates;
+        return playableCoordinates;
     }
 
 }

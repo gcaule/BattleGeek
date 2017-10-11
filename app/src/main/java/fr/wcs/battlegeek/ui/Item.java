@@ -19,6 +19,9 @@ import fr.wcs.battlegeek.utils.Utils;
 public class Item implements View.OnTouchListener {
     private String TAG = "Item";
 
+    /**
+     * The State of the Item
+     */
     enum State {
         Alive,
         Hit,
@@ -73,6 +76,10 @@ public class Item implements View.OnTouchListener {
         this.mPosition.set(mX, mY);
     }
 
+    /**
+     * Copy Constructor
+     * @param item
+     */
     public Item(Item item) {
         this.mView = item.mView;
         this.mGrid = item.mGrid;
@@ -155,6 +162,9 @@ public class Item implements View.OnTouchListener {
         this.mView.invalidate();
     }
 
+    /**
+     * Method handling Item's Rotation (90°)
+     */
     public void rotate() {
         // Get the square's size in witch the piece rotate
         int size = Math.max(getWidth(), getHeight());
@@ -190,6 +200,10 @@ public class Item implements View.OnTouchListener {
         mHeight = width;
     }
 
+    /**
+     * Method returning the Width
+     * @return
+     */
     private int getWidth() {
         mWidth = 0;
         for(Block block : mBlocks) {
@@ -198,6 +212,10 @@ public class Item implements View.OnTouchListener {
         return mWidth;
     }
 
+    /**
+     * Method returning the Height
+     * @return
+     */
     private int getHeight() {
         mHeight = 0;
         for(Block block : mBlocks) {

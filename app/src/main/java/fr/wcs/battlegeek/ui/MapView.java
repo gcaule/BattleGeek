@@ -25,6 +25,9 @@ import static fr.wcs.battlegeek.ui.MapView.Mode.PLAY;
 
 public class MapView extends View {
 
+    /**
+     * The Map View Mode: Creating the Map, or Playing
+     */
     public enum Mode {
         PLAY, CREATE
     }

@@ -36,6 +36,9 @@ import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
 
+/**
+ * The Game Activity is handling the Game's Action and Views
+ */
 public class GameActivity extends AppCompatActivity {
 
     private final String TAG = "GameActivity";
@@ -153,6 +156,11 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method handling the Player's Game Part
+     * @param x
+     * @param y
+     */
     private void playerPlay(int x, int y) {
         canPlay = false;
 
@@ -200,6 +208,9 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method handling the AI's part
+     */
     private void aiPlay() {
         mButtonSwitchView.setVisibility(View.GONE);
 
@@ -251,6 +262,10 @@ public class GameActivity extends AppCompatActivity {
         }.start();
     }
 
+    /**
+     * Method Showing a Toast, avoiding Latency
+     * @param stringResource
+     */
     private void showToast(int stringResource) {
         if(mToast == null) {
             mToast = Toast.makeText(mContext, getString(stringResource), Toast.LENGTH_SHORT);
@@ -260,9 +275,11 @@ public class GameActivity extends AppCompatActivity {
         mToast.show();
     }
 
+    /**
+     * Method handling Back Button Pressed
+     */
     @Override
     public void onBackPressed() {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
         TextView messageView = new TextView(this);
         messageView.setText(R.string.quit_game_alert_message);

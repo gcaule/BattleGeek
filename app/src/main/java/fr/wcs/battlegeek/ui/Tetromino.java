@@ -11,21 +11,6 @@ import java.util.HashMap;
 public class Tetromino extends Item {
     private String TAG = "Tetromino";
 
-    public Shape getShape() {
-        return mShape;
-    }
-
-    public void setShape(Shape shape) {
-        mShape = shape;
-    }
-
-    public Colors getColor() {
-        return mColor;
-    }
-
-    public void setColor(Colors color) {
-        mColor = color;
-    }
 
     private Shape mShape;
     private Colors mColor;
@@ -52,6 +37,9 @@ public class Tetromino extends Item {
         }
     }
 
+    /**
+     * Tetromino's Shape's Symbols Enumeration
+     */
     public enum Shape {
         I ("I"),
         O ("O"),
@@ -73,10 +61,17 @@ public class Tetromino extends Item {
         }
     }
 
+    /**
+     * Tetromino Colors enumeration
+     */
     public enum Colors {
         YELLOW, ORANGE, RED, PURPLE, GREEN, BLUE, LTBLUE
     }
 
+    /**
+     * Static Method to get the color of a Tetromino according to its shape
+     * @return
+     */
     public static HashMap<Shape, Colors> getColorMap() {
         if(mColorsMap.isEmpty()) {
             mColorsMap.put(Tetromino.Shape.I, Tetromino.Colors.LTBLUE);
@@ -90,4 +85,19 @@ public class Tetromino extends Item {
         return mColorsMap;
     }
 
+    public Shape getShape() {
+        return mShape;
+    }
+
+    public void setShape(Shape shape) {
+        mShape = shape;
+    }
+
+    public Colors getColor() {
+        return mColor;
+    }
+
+    public void setColor(Colors color) {
+        mColor = color;
+    }
 }

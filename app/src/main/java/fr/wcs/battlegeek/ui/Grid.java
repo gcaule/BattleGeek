@@ -21,7 +21,7 @@ public class Grid {
     private Paint mBlackPaint = new Paint();
 
     /**
-     * Contructor of the Grid
+     * Constructor of the Grid
      * @param view the Parent View
      * @param mWidth the Width of the Grid (Global Coordinates System
      * @param mHeight the Height of the Grid (Global Coordinates System
@@ -35,7 +35,7 @@ public class Grid {
     }
 
     /**
-     * Contructor of the Grid
+     * Constructor of the Grid
      * @param size The number of Cells in a Row or in a Column
      */
     public Grid(int size) {
