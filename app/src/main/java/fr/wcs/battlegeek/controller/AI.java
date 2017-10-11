@@ -1,6 +1,7 @@
 package fr.wcs.battlegeek.controller;
 
 import android.graphics.Point;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class AI {
 
     private final String TAG = "AI";
     private Level mLevel;
+    private Point mLastPlayedCoordinates;
 
 
     private GameController mGameControler;
@@ -54,10 +56,16 @@ public class AI {
      * @return the coordinates
      */
     public Point play() {
-        int index = (int) (Math.random() * (mPlayablesCoordinates.size() - 1));
-        Point coordinates = mPlayablesCoordinates.get(index);
-        mPlayablesCoordinates.remove(index);
-        return coordinates;
+        switch (mLevel){
+            case I :
+                return playLevelI();
+            case II :
+                return playLevelII();
+            case III :
+                return playLevelIII();
+            case IMPOSSIBLE :
+                return playLevelI();
+        }
     }
 
     /**
@@ -66,6 +74,7 @@ public class AI {
      * @param result
      */
     public void setResult(Result result) {
+        mGameControler.setPlayResult(mLastPlayedCoordinates.x, mLastPlayedCoordinates.y, result);
     }
 
     /**
@@ -86,6 +95,22 @@ public class AI {
                 }
             }
         }
+    }
+
+    private Point playLevelI() {
+        int index = (int) (Math.random() * (mPlayablesCoordinates.size() - 1));
+        Point coordinates = mPlayablesCoordinates.get(index);
+        mPlayablesCoordinates.remove(index);
+        mLastPlayedCoordinates = coordinates;
+        return coordinates;
+    }
+
+    private Point playLevelII() {
+
+    }
+
+    private Point playLevelIII() {
+        return playLevelII();
     }
 
     /**
