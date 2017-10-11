@@ -220,12 +220,20 @@ public class MapView extends View {
         invalidate();
     }
 
+    // TODO: DELETE
+    int count = 0;
+    int[] mapsIndex = new int[] {8, 14, 19, 26, 27};
+
     public void setRandomPositions() {
         // Clear PlayerModel List
         mItems.clear();
 
         // Request random Map
-        char[][] map = Maps.getMap();
+        //char[][] map = Maps.getMap();
+        int index = count % mapsIndex.length;
+        char[][] map = Maps.getMapFromIndex(mapsIndex[index]);
+        Log.d(TAG, "setRandomPositions: Map number " + String.valueOf(index));
+        count ++;
         Utils.printMap(map);
 
         // Store Blocks in a HashMap;
@@ -236,7 +244,7 @@ public class MapView extends View {
                 // Symbols (char) like ' ' through errors because they doesn't correspond to
                 // any Tetromino Shape, so ...
                 try {
-                    Tetromino.Shape shape = Tetromino.Shape.valueOf(String.valueOf(map[j][i]));
+                    Tetromino.Shape shape = Tetromino.Shape.valueOf(String.valueOf(map[i][j]));
                     if( shape != Tetromino.Shape.NONE) {
                         // If the shape is not in the hashMap keys, we add it
                         if(! dict.containsKey(shape)) {

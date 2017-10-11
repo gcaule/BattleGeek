@@ -64,7 +64,7 @@ public class Maps {
     private static char[][] map4 = new char[][]{
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {' ', 'L', 'L', ' ', ' ', ' ', ' ', 'J', ' ', ' '},
-            {' ', ' ', 'l', ' ', ' ', ' ', ' ', 'J', 'J', 'J'},
+            {' ', ' ', 'L', ' ', ' ', ' ', ' ', 'J', 'J', 'J'},
             {' ', ' ', 'L', ' ', 'I', ' ', ' ', ' ', ' ', ' '},
             {'O', 'O', ' ', ' ', 'I', ' ', ' ', ' ', ' ', ' '},
             {'O', 'O', ' ', ' ', 'I', ' ', ' ', ' ', 'T', ' '},
@@ -439,6 +439,11 @@ public class Maps {
             }
         }
         return playableCoordinates;
+    }
+
+    // TODO DELETE
+    public static char[][] getMapFromIndex(int index) {
+        return maps[index];
     }
 
 }
