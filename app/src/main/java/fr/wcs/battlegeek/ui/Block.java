@@ -52,6 +52,10 @@ public class Block implements Cloneable{
         init();
     }
 
+    /**
+     * Copy Constructor
+     * @param other
+     */
     public Block(Block other) {
         mState = other.mState;
         mPosition = other.mPosition;
@@ -64,6 +68,10 @@ public class Block implements Cloneable{
         mPaintDeadFill = other.mPaintDeadFill;
     }
 
+    /**
+     * Clone Method
+     * @return
+     */
     @Override
     public Block clone(){
 

@@ -40,6 +40,10 @@ public class TetrominoBlock extends Block {
         this.setColor(color);
     }
 
+    /**
+     * method setting the Color of the Tetromino Block
+     * @param color
+     */
     public void setColor(Tetromino.Colors color) {
         this.mColor = color;
         switch (color) {
@@ -71,6 +75,10 @@ public class TetrominoBlock extends Block {
         mSidesHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.45f};
     }
 
+    /**
+     * Method setting the State of the Tetromino Block: Dead or Alive
+     * @param state
+     */
     @Override
     public void setState(State state) {
         super.setState(state);

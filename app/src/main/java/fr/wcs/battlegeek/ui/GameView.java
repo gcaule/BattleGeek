@@ -10,59 +10,103 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import fr.wcs.battlegeek.model.Settings;
+
 
 /**
  * Created by apprenti on 27/09/17.
  */
 
+/**
+ * The Game view is the View containing The Player Game's Map
+ */
 public class GameView extends View{
 
+    /**
+     * Player Played Listener
+     * Called when the Player Played
+     */
     public interface PlayListener {
         public void onPlayListener(int x, int y);
     }
 
     private PlayListener listener;
 
+    // The Blocks to be drawn on the Grid
     private ArrayList<Block> mBlocks = new ArrayList<>();
 
     private String TAG = "CustomView";
 
+
     private Grid mGrid;
-    private int mGridSize = 10;
+    private int mGridSize = Settings.GRID_SIZE;
 
 
-
+    /**
+     * Default Constructor of an View
+     * @param context
+     */
     public GameView(Context context) {
         super(context);
         init();
     }
 
+    /**
+     * Default constructor of any View
+     * @param context
+     * @param attrs
+     */
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
+    /**
+     * Default constructor of any View
+     * @param context
+     * @param attrs
+     * @param defStyleAttr
+     */
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
+    /**
+     * private method initialing the GameView Object called in all the different constructors
+     */
     private void init() {
         this.listener = null;
         this.mGrid = new Grid(mGridSize);
     }
 
+    /**
+     * Method setting MISSED on the Grid
+     * @param x the x coordinate in the Grid
+     * @param y the y coordinate in the Grid
+     */
     public void setPlouf(int x, int y) {
         mBlocks.add(new Block(new PointF(x, y)));
         invalidate();
     }
 
+    /**
+     * Method setting TOUCHED on the Grid
+     * @param x the x coordinate in the Grid
+     * @param y the y coordinate in the Grid
+     * @param shape the Shape of the Tetromino
+     */
     public void setTouch(int x, int y, Tetromino.Shape shape) {
         Tetromino.Colors color = Tetromino.getColorMap().get(shape);
         mBlocks.add(new TetrominoBlock(new PointF(x, y), color));
         invalidate();
     }
 
+    /**
+     * Method handling Player's Touched Events
+     * @param event
+     * @return
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
@@ -77,6 +121,13 @@ public class GameView extends View{
         return true;
     }
 
+    /**
+     * Method Called when the View is resized
+     * @param w
+     * @param h
+     * @param oldw
+     * @param oldh
+     */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -84,6 +135,10 @@ public class GameView extends View{
         mGrid.setHeight(w);
     }
 
+    /**
+     * Method called when the View needs to be re-drawn
+     * @param canvas
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -93,6 +148,11 @@ public class GameView extends View{
         }
     }
 
+    /**
+     * Method called when the layout give/ask size
+     * @param widthMeasureSpec
+     * @param heightMeasureSpec
+     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
@@ -118,6 +178,10 @@ public class GameView extends View{
         setMeasuredDimension(width, width);
     }
 
+    /**
+     * Method setting the OnPlayListener
+     * @param listener
+     */
     public void setOnPlayListener(PlayListener listener) {
         this.listener = listener;
     }
