@@ -2,6 +2,7 @@ package fr.wcs.battlegeek.controller;
 
 import android.graphics.Point;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -130,15 +131,18 @@ public class AI {
         }
 
         //todo si touché , recup les coordonnées autour stockée dans le tableau mSurroundingshits
-        getSurroundingCoordinates(mLastPlayedCoordinates);
+
+        if (resultType != MISSED){
+            getSurroundingCoordinates(mLastPlayedCoordinates);
+        }
+        Log.d(TAG, "playLevelII: " + resultType + " " + mSurroudingCoordinates.size() + " " + mSurroudingCoordinates);
         int index = (int) (Math.random() * (mSurroudingCoordinates.size() - 1));
         Point coordinates = mSurroudingCoordinates.get(index);
         mSurroudingCoordinates.remove(index);
+        mLastPlayedCoordinates = coordinates;
         return coordinates;
-
         //todo jouer coordonnées du tableau
         //todo supprimer coordonées du tableau en attente
-
 
     }
 
