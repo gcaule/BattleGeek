@@ -52,6 +52,7 @@ public class GameActivity extends AppCompatActivity {
 
     private Toast mToast;
     private Context mContext;
+    private boolean mExit = false;
 
     private MapView mMapView;
     private GameView mGameView;
@@ -334,7 +335,7 @@ public class GameActivity extends AppCompatActivity {
                     endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
                     endGameDefeatFragment.setCancelable(false);
                 }
-                else {
+                else if(!mExit){
                     aiPlay();
                 }
             }
@@ -411,7 +412,9 @@ public class GameActivity extends AppCompatActivity {
         builder.setView(messageView)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        mExit = true;
                         GameActivity.super.onBackPressed();
+                        GameActivity.this.finish();
                     }
                 })
                 .setNegativeButton(android.R.string.no, null)
