@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.Result;
@@ -39,6 +40,7 @@ public class AI {
     private ArrayList<Point> mPlayablesCoordinates;
     private char[][] mPlayerMap;
     private ArrayList<Point> mSurroudingCoordinates = new ArrayList<>();
+    private HashMap<Tetromino.Shape, ArrayList<Point>> mShapeMap = new HashMap<>();
 
     /**
      * AI Constructor
@@ -49,6 +51,7 @@ public class AI {
         // Get all Playables Coordinates
         mPlayablesCoordinates = Maps.getPlayableCoordinates();
         mSurroudingCoordinates = new ArrayList<>();
+
     }
 
     /**
@@ -114,6 +117,7 @@ public class AI {
         }
     }
 
+    //Level 1 : Play randomly
     private Point playLevelI() {
         int index = (int) (Math.random() * (mPlayablesCoordinates.size() - 1));
         Point coordinates = mPlayablesCoordinates.get(index);
@@ -122,27 +126,44 @@ public class AI {
         return coordinates;
     }
 
+    //Level 2 : Play randomly then play all around when TOUCHED a tetromino
     private Point playLevelII() {
         // Give the type of result (missed, touched ...)
         Result.Type resultType = mLastResult.getType();
+        Tetromino.Shape resultShape = mLastResult.getShape();
+
         if (mSurroudingCoordinates.isEmpty() && resultType == MISSED) {
             //Play randomly while nothing found
             return playLevelI();
         }
 
-        //todo si touché , recup les coordonnées autour stockée dans le tableau mSurroundingshits
+        if(resultType == DROWN) {
+            for(Point coordinates : mSurroudingCoordinates) {
+                mPlayablesCoordinates.add(coordinates);
+            }
+            mSurroudingCoordinates.clear();
+            Log.d(TAG, "playLevelII: Clear Surrounding : " + mSurroudingCoordinates.size());
+            // TODO supprimer key pour Hape drown
 
-        if (resultType != MISSED){
+            // TODO verifier si plusieur types touches
+
+            // TODO : Si plusieurs type
+            return playLevelI();
+        }
+
+        if (resultType != MISSED) {
+            if(!mShapeMap.containsKey(resultShape)) {
+                mShapeMap.put(resultShape, new ArrayList<Point>());
+            }
+            mShapeMap.get(resultShape).add(mLastPlayedCoordinates);
             getSurroundingCoordinates(mLastPlayedCoordinates);
         }
-        Log.d(TAG, "playLevelII: " + resultType + " " + mSurroudingCoordinates.size() + " " + mSurroudingCoordinates);
+
         int index = (int) (Math.random() * (mSurroudingCoordinates.size() - 1));
         Point coordinates = mSurroudingCoordinates.get(index);
         mSurroudingCoordinates.remove(index);
         mLastPlayedCoordinates = coordinates;
         return coordinates;
-        //todo jouer coordonnées du tableau
-        //todo supprimer coordonées du tableau en attente
 
     }
 
@@ -152,31 +173,62 @@ public class AI {
 
     private void getSurroundingCoordinates(Point point) {
         //todo récuperer les coordonnées des points autour
-        int x = point.x;
+   /*     int x = point.x;
         int y = point.y;
         int minX = Math.max(x - 1, 0);
         int maxX = Math.min(x + 1, Settings.GRID_SIZE - 1);
         int minY = Math.max(y - 1, 0);
         int maxY = Math.min(y + 1, Settings.GRID_SIZE - 1);
+*/
 
-        for (int row = minY; row <= maxY; row++) {
-            for (int column = minX; column <= maxX; column++) {
-                //todo vérifier qu'ils soient pas joués (utiliser la méthode mController , alreadyplayed)
-                if (!mGameControler.alreadyPlayed(column, row)) {
-                    //todo ne pas rajouter au tableau si deja dans le tableau
-                    Point p = getPointFromPlayableCoordinates(column, row);
-                    if (p != null) {
-                        //todo rajouter au tableau les dispos
-                        mSurroudingCoordinates.add(p);
-                    }
+        int[] tempX = new int[4];
+        int[] tempY = new int[4];
+
+        int nordX = point.x;
+        tempX[0] = nordX;
+
+        int nordY = Math.max(point.y - 1, 0);
+        tempY[0] = nordY;
+
+        int sudX = point.x;
+        tempX[1] = sudX;
+
+        int sudY = Math.min(point.y + 1, Settings.GRID_SIZE - 1);
+        tempY[1] = sudY;
+
+        int ouestX = Math.max(point.x - 1, 0);
+        tempX[2] = ouestX;
+
+        int ouestY = point.y;
+        tempY[2] = ouestY;
+
+        int estX = Math.min(point.x + 1, Settings.GRID_SIZE - 1);
+        tempX[3] = estX;
+
+        int estY = point.y;
+        tempY[3] = estY;
+
+        int row = 0;
+        int column = 0;
+
+        for (int i = 0; i < tempX.length; i++) {
+            //todo vérifier qu'ils soient pas joués (utiliser la méthode mController , alreadyplayed)
+            if (!mGameControler.alreadyPlayed(tempX[column], tempY[row])) {
+                //todo ne pas rajouter au tableau si deja dans le tableau
+                Point p = getPointFromPlayableCoordinates(tempX[column], tempY[row]);
+                if (p != null) {
+                    //todo rajouter au tableau les dispos
+                    mSurroudingCoordinates.add(p);
                 }
             }
+            row++;
+            column++;
         }
     }
 
     private Point getPointFromPlayableCoordinates(int x, int y) {
         Point point = new Point(x, y);
-        for(Point p : mPlayablesCoordinates) {
+        for (Point p : mPlayablesCoordinates) {
             if (p.equals(point)) {
                 mPlayablesCoordinates.remove(p);
                 return p;
