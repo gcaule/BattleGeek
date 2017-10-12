@@ -332,6 +332,7 @@ public class GameActivity extends AppCompatActivity {
                     EndGameDefeatFragment endGameDefeatFragment = new EndGameDefeatFragment();
                     endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
                     endGameDefeatFragment.setCancelable(false);
+                    // TODO: Set Player Defeated
                 }
                 else if(!mExit){
                     aiPlay();
