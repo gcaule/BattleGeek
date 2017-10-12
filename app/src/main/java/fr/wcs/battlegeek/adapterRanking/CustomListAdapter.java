@@ -62,7 +62,6 @@ public class CustomListAdapter extends BaseAdapter {
 
         final PlayerModel m = mPlayerModelItems.get(position);
         holder.name.setText(m.getName());
-        holder.score.setText(m.getScore());
 
         return scoreView;
     }

@@ -89,8 +89,6 @@ public class RankingActivity extends AppCompatActivity {
                     PlayerModel playerModel = new PlayerModel();
 
                     playerModel.setName(cursor.getString(0));
-                    playerModel.setScore(cursor.getString(1));
-
                     mPlayerModelList.add(playerModel);
                     cursor.moveToNext();
 

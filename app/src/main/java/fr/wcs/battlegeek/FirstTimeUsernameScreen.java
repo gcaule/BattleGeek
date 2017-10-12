@@ -16,8 +16,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Settings;
-import fr.wcs.battlegeek.model.UserModel;
 
 public class FirstTimeUsernameScreen extends AppCompatActivity {
 
@@ -51,10 +51,10 @@ public class FirstTimeUsernameScreen extends AppCompatActivity {
                 if (playerName.getText().toString().trim().length() == 0) {
                     Toast.makeText(FirstTimeUsernameScreen.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT);
                 } else {
-                    UserModel newUser = new UserModel(playerName.getText().toString(), 0);
+                    PlayerModel newPlayer = new PlayerModel(playerName.getText().toString());
                     // Write a message to the database
                     uid = mUsersDatabaseReference.child("Users").push().getKey();
-                    mUsersDatabaseReference.child(uid).setValue(newUser);
+                    mUsersDatabaseReference.child(uid).setValue(newPlayer);
                     SharedPreferences.Editor editor = mSharedPreferences.edit();
                     editor.putString("PlayerName", playerName.getText().toString());
                     editor.putString("uidFirebase", uid);

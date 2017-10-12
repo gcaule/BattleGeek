@@ -9,38 +9,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".ScreenLauncher"
-                  android:screenOrientation="portrait"
-                  android:noHistory="true">
-
+        <activity
+            android:name=".ScreenLauncher"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
-
-        <activity android:name=".MainMenuActivity"
-                  android:screenOrientation="portrait"/>
-
-        <activity android:name=".FirstTimeUsernameScreen"
-                  android:screenOrientation="portrait"
-                  android:noHistory="true"/>
-
-        <activity android:name=".SettingsActivity"
-                  android:screenOrientation="portrait"
-                  android:noHistory="true"/>
-
-        <activity android:name=".RankingActivity"
-                  android:screenOrientation="portrait"/>
-
-        <activity android:name=".GameActivity"
-                  android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".MainMenuActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".FirstTimeUsernameScreen"
+            android:noHistory="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".SettingsActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".RankingActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".GameActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".RankingFirebaseActivity"/>
+        <activity android:name=".StatisticsActivity">
+        </activity>
     </application>
 
 </manifest>

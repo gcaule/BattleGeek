@@ -32,6 +32,7 @@ import fr.wcs.battlegeek.ui.EndGameVictoryFragment;
 import fr.wcs.battlegeek.ui.GameView;
 import fr.wcs.battlegeek.ui.MapView;
 
+import static android.R.attr.level;
 import static fr.wcs.battlegeek.R.id.viewFlipper;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
@@ -43,6 +44,8 @@ import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
 public class GameActivity extends AppCompatActivity {
 
     private final String TAG = "GameActivity";
+
+    private AI.Level mLevel;
 
     private AI mAI;
     private GameController mGameController;
@@ -81,7 +84,7 @@ public class GameActivity extends AppCompatActivity {
         mContext = getApplicationContext();
 
         Intent intent = getIntent();
-        final String level = intent.getStringExtra("Level");
+        mLevel = (AI.Level) intent.getSerializableExtra("Level");
 
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
@@ -183,13 +186,10 @@ public class GameActivity extends AppCompatActivity {
                 mGameController = new GameController(mapData);
                 mMapView.setMode(MapView.Mode.PLAY);
                 mAI = new AI();
-                if (level.equals("Impossible")) {
+                if (mLevel == AI.Level.IMPOSSIBLE) {
                     mAI.setPlayerMap(mapData);
-                    mAI.setLevel(AI.Level.IMPOSSIBLE);
                 }
-                else if (level.equals("Medium")){
-                    mAI.setLevel(AI.Level.II);
-                }
+                mAI.setLevel(mLevel);
                 buttonLaunchGame.setVisibility(View.GONE);
                 mTextViewAI.setText(R.string.AITurn);
                 mViewFlipper.showNext();

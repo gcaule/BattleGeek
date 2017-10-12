@@ -62,7 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         //Get User on SharedPref
-        String uidFirebase = mSharedPreferences.getString("uidFirebase", null);
+        String uidFirebase = mSharedPreferences.getString(Settings.UID, null);
 
         final TextView DISPLAYKEY = (TextView) findViewById(R.id.DISPLAYKEY);
         DISPLAYKEY.setText(uidFirebase);

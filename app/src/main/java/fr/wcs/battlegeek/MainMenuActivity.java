@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.model.Settings;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -26,6 +27,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         ImageButton buttonSettings = (ImageButton) findViewById(R.id.buttonSettings);
         ImageButton buttonTrophy = (ImageButton) findViewById(R.id.buttonTrophy);
+        ImageButton buttonStats = (ImageButton) findViewById(R.id.imageButtonStats);
         Button buttonEasyMode = (Button) findViewById(R.id.buttonEasyMode);
         Button buttonMediumMode = (Button) findViewById(R.id.buttonMediumMode);
         Button buttonHardMode = (Button) findViewById(R.id.buttonHardMode);
@@ -60,11 +62,19 @@ public class MainMenuActivity extends AppCompatActivity {
 
         });
 
+        buttonStats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainMenuActivity.this, StatisticsActivity.class);
+                startActivity(intent);
+            }
+        });
+
         buttonEasyMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, GameActivity.class);
-                intent.putExtra("Level", "Easy");
+                intent.putExtra("Level", AI.Level.I);
                 startActivity(intent);
             }
 
@@ -74,7 +84,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, GameActivity.class);
-                intent.putExtra("Level", "Medium");
+                intent.putExtra("Level", AI.Level.II);
                 startActivity(intent);
             }
 
@@ -84,7 +94,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, GameActivity.class);
-                intent.putExtra("Level", "Hard");
+                intent.putExtra("Level", AI.Level.III);
                 startActivity(intent);
             }
 
@@ -94,7 +104,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainMenuActivity.this, GameActivity.class);
-                intent.putExtra("Level", "Impossible");
+                intent.putExtra("Level", AI.Level.IMPOSSIBLE);
                 startActivity(intent);
             }
         });
