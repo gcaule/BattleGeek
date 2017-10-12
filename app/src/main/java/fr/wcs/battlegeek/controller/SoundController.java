@@ -27,13 +27,16 @@ public class SoundController {
     private Context mContext;
 
     // Soundpool object that will handle the sound
-    private SoundPool soundPool;
+    private SoundPool mSoundPool;
 
     // Some sound IDs
     // TODO: Move all the sound in some lists
     private int soundID_boom = -1;
     private int soundID_plouf = -1;
     private int soundID_drown = -1;
+    private int soundID_boom2 = -1;
+
+    private int musicID = -1;
 
     // Preferences reference
     private SharedPreferences mSharedPreferences;
@@ -58,13 +61,18 @@ public class SoundController {
         // SoundPool initialisation through a Builder Object
         SoundPool.Builder soundPoolBuilder = new SoundPool.Builder();
         soundPoolBuilder.setAudioAttributes(attributes);
+        soundPoolBuilder.setMaxStreams(10);
         // Create the SoundPool
-        soundPool = soundPoolBuilder.build();
+        mSoundPool = soundPoolBuilder.build();
 
         // Sound's ID definition from the Raw Resources
-        soundID_boom = soundPool.load(mContext, R.raw.xplod1, 1);
-        soundID_plouf = soundPool.load(mContext, R.raw.ploof1, 1);
-        soundID_drown = soundPool.load(mContext, R.raw.wilhelm_scream, 1);
+        soundID_boom = mSoundPool.load(mContext, R.raw.xplod1, 1);
+        soundID_plouf = mSoundPool.load(mContext, R.raw.ploof1, 1);
+        soundID_boom2 = mSoundPool.load(mContext, R.raw.longbomb1, 1);
+        soundID_drown = mSoundPool.load(mContext, R.raw.wilhelm_scream, 1);
+
+        musicID = mSoundPool.load(mContext, R.raw.music_brahms, 1);
+
     }
 
     /**
@@ -72,9 +80,10 @@ public class SoundController {
      * @param result
      */
     public void playSound(Result.Type result){
-        Log.d(TAG, "playSound() called with: result = [" + result + "]");
         // Get the preferred Volume
-        float volume = (float) mSharedPreferences.getInt(Settings.EFFECTS_TAG, 1) / 100;
+        float volume = (float) (mSharedPreferences.getInt(Settings.EFFECTS_TAG, 1) - 1) / 100 ;
+        if (volume <= 0) return;
+        Log.d(TAG, "playSound() called with: result = [" + result + "]" + " Volume : " + volume);
         int soundID = -1;
         // Get the Sound ID according to the Result's Type
         // TODO : Round Robin (Not play two similar sounds right after)
@@ -83,9 +92,10 @@ public class SoundController {
                 soundID = soundID_plouf;
                 break;
             case TOUCHED:
-                soundID = soundID_boom;
+                soundID = soundID_boom2;
                 break;
             case DROWN:
+                mSoundPool.play(soundID_boom, volume, volume, 0, 0, 1);
                 soundID = soundID_drown;
                 break;
             case VICTORY:
@@ -94,6 +104,6 @@ public class SoundController {
         }
 
         // Play the sound
-        soundPool.play(soundID, volume, volume, 0, 0, 1);
+        mSoundPool.play(soundID, volume, volume, 0, 0, 1);
     }
 }

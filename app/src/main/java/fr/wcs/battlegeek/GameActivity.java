@@ -22,8 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import java.util.Set;
-
 import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.controller.GameController;
 import fr.wcs.battlegeek.controller.SoundController;
@@ -109,8 +107,12 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        // Sound
+        mSoundController = new SoundController(mContext);
+
         mImageButtonMusic = (ImageButton) findViewById(R.id.imageButtonMusic);
         mVolumeMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, 50);
+
         setMusicIcon(mVolumeMusic);
         mImageButtonMusic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,10 +156,6 @@ public class GameActivity extends AppCompatActivity {
                 setEffectsIcon(mVolumeEffects);
             }
         });
-
-
-        // Sound
-        mSoundController = new SoundController(mContext);
 
         mMapView = (MapView) findViewById(R.id.mapView);
         mViewFlipper = (ViewFlipper) findViewById(viewFlipper);
