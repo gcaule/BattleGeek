@@ -3,7 +3,10 @@ package fr.wcs.battlegeek;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -28,6 +31,8 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
+        ColorFilter filter = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
+
         Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
         Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/RaiderCrusaderHalf.ttf");
 
@@ -40,16 +45,20 @@ public class MainMenuActivity extends AppCompatActivity {
         Button buttonImpossibleMode = (Button) findViewById(R.id.buttonImpossibleMode);
         showPlayerName = (TextView) findViewById(R.id.show_playername);
 
+        buttonSettings.setColorFilter(filter);
+        buttonTrophy.setColorFilter(filter);
+        buttonStats.setColorFilter(filter);
+
         buttonEasyMode.setTypeface(buttonFont);
         buttonMediumMode.setTypeface(buttonFont);
         buttonHardMode.setTypeface(buttonFont);
         buttonImpossibleMode.setTypeface(buttonFont);
         showPlayerName.setTypeface(mainFont);
 
-        buttonEasyMode.setTextColor(Color.parseColor("#FFF825"));
-        buttonMediumMode.setTextColor(Color.parseColor("#FFF825"));
-        buttonHardMode.setTextColor(Color.parseColor("#FFF825"));
-        buttonImpossibleMode.setTextColor(Color.parseColor("#FFF825"));
+        buttonEasyMode.setTextColor(Color.parseColor("#FFEE00"));
+        buttonMediumMode.setTextColor(Color.parseColor("#FFEE00"));
+        buttonHardMode.setTextColor(Color.parseColor("#FFEE00"));
+        buttonImpossibleMode.setTextColor(Color.parseColor("#FFEE00"));
 
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +133,7 @@ public class MainMenuActivity extends AppCompatActivity {
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
         String playerName = mSharedPreferences.getString(Settings.PLAYER_NAME, null);
-        showPlayerName.setTextColor(Color.parseColor("#ff000000"));
+        showPlayerName.setTextColor(Color.parseColor("#FFEE00"));
         showPlayerName.setTextSize(26);
         showPlayerName.setText("Coucou " + playerName + " !");
     }

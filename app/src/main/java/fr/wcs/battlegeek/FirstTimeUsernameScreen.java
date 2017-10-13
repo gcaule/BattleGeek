@@ -2,7 +2,11 @@ package fr.wcs.battlegeek;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -39,21 +43,25 @@ public class FirstTimeUsernameScreen extends AppCompatActivity {
         Typeface titleHomeFont = Typeface.createFromAsset(getAssets(), "fonts/SomeTimeLater.otf");
         TextView messageTitle = (TextView) findViewById(R.id.message_title);
         messageTitle.setTypeface(titleHomeFont);
+        messageTitle.setTextColor(Color.parseColor("#FF960D"));
 
         Typeface welcomeMessageFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
         Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/DirtyClassicMachine.ttf");
 
         TextView welcomeMessage = (TextView) findViewById(R.id.message_welcome);
         welcomeMessage.setTypeface(welcomeMessageFont);
+        welcomeMessage.setTextColor(Color.parseColor("#FF960D"));
 
         TextView infoMessage = (TextView) findViewById(R.id.textView4);
         infoMessage.setTypeface(welcomeMessageFont);
+        infoMessage.setTextColor(Color.parseColor("#FF960D"));
 
         Button buttonSave = (Button) findViewById(R.id.button_save);
         buttonSave.setTypeface(buttonFont);
 
         final EditText playerName = (EditText) findViewById(R.id.input_playername);
         playerName.setTypeface(welcomeMessageFont);
+        playerName.setTextColor(Color.parseColor("#FF960D"));
 
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
