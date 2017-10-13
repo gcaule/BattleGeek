@@ -1,16 +1,10 @@
 package fr.wcs.battlegeek;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -29,6 +23,7 @@ import static android.view.View.GONE;
 public class ScreenLauncher extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
+    private Timer mTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +52,10 @@ public class ScreenLauncher extends AppCompatActivity {
         //Get Pref for PlayerModel Name
         final String uid = mSharedPreferences.getString(Settings.UID, null);
 
-        View screen = findViewById(R.id.layoutScreenLauncher);
-        screen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ScreenLauncher.this, MainMenuActivity.class));
-            }
-        });
 
         //Si Playername dans sharedpref vide, allez sur register. Sinon allez à MainActiv
-        new Timer().schedule(new TimerTask() {
+        mTimer = new Timer();
+        mTimer.schedule(new TimerTask() {
             public void run() {
                 ScreenLauncher.this.runOnUiThread(new Runnable() {
                     public void run() {
@@ -81,6 +70,15 @@ public class ScreenLauncher extends AppCompatActivity {
                 });
             }
         }, 6000);
+
+        View screen = findViewById(R.id.layoutScreenLauncher);
+        screen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ScreenLauncher.this, MainMenuActivity.class));
+                mTimer.cancel();
+            }
+        });
     }
 
     private void TitleAnimation() {
