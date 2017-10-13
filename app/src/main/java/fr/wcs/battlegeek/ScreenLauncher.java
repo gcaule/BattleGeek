@@ -69,7 +69,7 @@ public class ScreenLauncher extends AppCompatActivity {
                     }
                 });
             }
-        }, 6000);
+        }, 3000);
 
         View screen = findViewById(R.id.layoutScreenLauncher);
         screen.setOnClickListener(new View.OnClickListener() {

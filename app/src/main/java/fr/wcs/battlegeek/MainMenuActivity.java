@@ -28,8 +28,8 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
-        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/RaiderCrusaderHalf.ttf");
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
+        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
 
         ImageButton buttonSettings = (ImageButton) findViewById(R.id.buttonSettings);
         ImageButton buttonTrophy = (ImageButton) findViewById(R.id.buttonTrophy);
