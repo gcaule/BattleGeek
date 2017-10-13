@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="fr.wcs.battlegeek.RankingActivity">
+    <!--android:background="@drawable/ranking_background"-->
 
     <ImageButton
         android:id="@+id/buttonHome"
@@ -25,10 +26,8 @@
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="509dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
         android:cacheColorHint="#FFFFFF"
         android:clipToPadding="false"

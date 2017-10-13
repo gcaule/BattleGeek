@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
@@ -17,21 +19,31 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.google.gson.Gson;
+
+import java.util.concurrent.TimeUnit;
+
 import fr.wcs.battlegeek.controller.AI;
+import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.controller.GameController;
 import fr.wcs.battlegeek.controller.SoundController;
+import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.ui.EndGameDefeatFragment;
 import fr.wcs.battlegeek.ui.EndGameVictoryFragment;
 import fr.wcs.battlegeek.ui.GameView;
 import fr.wcs.battlegeek.ui.MapView;
+import fr.wcs.battlegeek.ui.QuitGameFragment;
 
+import static android.R.attr.start;
 import static fr.wcs.battlegeek.R.id.viewFlipper;
+import static fr.wcs.battlegeek.model.Result.Type.DEFEATED;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
@@ -43,12 +55,17 @@ public class GameActivity extends AppCompatActivity {
 
     private final String TAG = "GameActivity";
 
+    private AI.Level mLevel;
+    private PlayerModel mPlayer;
+    private DataController mDataController;
+
     private AI mAI;
     private GameController mGameController;
     private boolean canPlay = true;
 
     private Toast mToast;
     private Context mContext;
+    private boolean mExit = false;
 
     private MapView mMapView;
     private GameView mGameView;
@@ -57,29 +74,113 @@ public class GameActivity extends AppCompatActivity {
     private TextView mTextViewAI;
     private Button mButtonSwitchView;
     private Button mButtonRandomPosition;
+    private ImageButton mImageButtonSpeed;
+    private ImageButton mImageButtonMusic;
+    private ImageButton mImageButtonEffects;
 
     private SharedPreferences mSharedPreferences;
-    private int mAnimationsSpeed = Settings.ANIMATION_FAST;
+    private int mAnimationsSpeed;
 
     private SoundController mSoundController;
+    private int mVolumeMusic;
+    private int mVolumeEffects;
+    private long mStartTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
         setContentView(R.layout.activity_game);
 
+        mContext = getApplicationContext();
+
         Intent intent = getIntent();
-        final String level = intent.getStringExtra("Level");
+        mLevel = (AI.Level) intent.getSerializableExtra("Level");
 
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
-        mContext = getApplicationContext();
+        // Get Player
+        mDataController = new DataController(getApplicationContext());
+        mDataController.setDataReadyListener(new DataController.DataReadyListener() {
+            @Override
+            public void onDataReadyListener(PlayerModel player) {
+                mPlayer = player;
+                Log.d(TAG, "onCreate: " + mPlayer.toString());
+            }
+        });
 
+        // Settings
+        mImageButtonSpeed = (ImageButton) findViewById(R.id.imageButtonSpeed);
+        mAnimationsSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, Settings.ANIMATION_MEDIUM);
+        setAnimationIcon(mAnimationsSpeed);
+        mImageButtonSpeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mAnimationsSpeed == Settings.ANIMATION_SLOW) {
+                    mAnimationsSpeed = Settings.ANIMATION_MEDIUM;
+                }
+                else if(mAnimationsSpeed == Settings.ANIMATION_MEDIUM) {
+                    mAnimationsSpeed = Settings.ANIMATION_FAST;
+                }
+                else if(mAnimationsSpeed == Settings.ANIMATION_FAST) {
+                    mAnimationsSpeed = Settings.ANIMATION_SLOW;
+                }
+                mSharedPreferences.edit().putInt(Settings.ANIMATION_TAG, mAnimationsSpeed).apply();
+                setAnimationIcon(mAnimationsSpeed);
+            }
+        });
+
+        // Sound
         mSoundController = new SoundController(mContext);
+
+        mImageButtonMusic = (ImageButton) findViewById(R.id.imageButtonMusic);
+        mVolumeMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, 50);
+
+        setMusicIcon(mVolumeMusic);
+        mImageButtonMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mVolumeMusic > 66) {
+                    mVolumeMusic = 0;
+                }
+                else if(mVolumeMusic > 33) {
+                    mVolumeMusic = 100;
+                }
+                else if(mVolumeMusic > 0) {
+                    mVolumeMusic = 66;
+                }
+                else {
+                    mVolumeMusic = 33;
+                }
+                mSharedPreferences.edit().putInt(Settings.MUSIC_TAG, mVolumeMusic).apply();
+                setMusicIcon(mVolumeMusic);
+            }
+        });
+
+        mImageButtonEffects = (ImageButton) findViewById(R.id.imageButtonEffects);
+        mVolumeEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG, 50);
+        setEffectsIcon(mVolumeEffects);
+        mImageButtonEffects.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mVolumeEffects > 66) {
+                    mVolumeEffects = 0;
+                }
+                else if(mVolumeEffects > 33) {
+                    mVolumeEffects = 100;
+                }
+                else if(mVolumeEffects > 0) {
+                    mVolumeEffects = 66;
+                }
+                else {
+                    mVolumeEffects = 33;
+                }
+                mSharedPreferences.edit().putInt(Settings.EFFECTS_TAG, mVolumeEffects).apply();
+                setEffectsIcon(mVolumeEffects);
+            }
+        });
 
         mMapView = (MapView) findViewById(R.id.mapView);
         mViewFlipper = (ViewFlipper) findViewById(viewFlipper);
@@ -107,15 +208,15 @@ public class GameActivity extends AppCompatActivity {
                 mGameController = new GameController(mapData);
                 mMapView.setMode(MapView.Mode.PLAY);
                 mAI = new AI();
-                if (level.equals("Impossible")) {
+                if (mLevel == AI.Level.IMPOSSIBLE) {
                     mAI.setPlayerMap(mapData);
-                    mAI.setLevel(AI.Level.IMPOSSIBLE);
-                } else if (level.equals("Medium")) {
-                    mAI.setLevel(AI.Level.II);
                 }
+                mAI.setLevel(mLevel);
                 buttonLaunchGame.setVisibility(View.GONE);
+                mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
                 mTextViewAI.setText(R.string.AITurn);
                 mViewFlipper.showNext();
+                mStartTime = System.currentTimeMillis();
             }
 
         });
@@ -127,12 +228,17 @@ public class GameActivity extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        mTextViewAI.setVisibility(View.GONE);
+                        mButtonSwitchView.setPressed(true);
+                        mTextViewAI.setText(R.string.playermap_view);
+                        mTextViewAI.setTextColor(Color.parseColor("#FFEE00"));
                         mViewFlipper.showPrevious();
                         break;
                     case MotionEvent.ACTION_UP:
+                        mButtonSwitchView.setPressed(false);
                         mViewFlipper.showNext();
                         mTextViewAI.setVisibility(View.VISIBLE);
+                        mTextViewAI.setText(" ");
+                        mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
                         break;
                 }
                 return true;
@@ -156,6 +262,19 @@ public class GameActivity extends AppCompatActivity {
                 playerPlay(x, y);
             }
         });
+
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
+        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/DirtyClassicMachine.ttf");
+
+        TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
+
+        mTextViewAI.setTypeface(mainFont);
+        mTextViewPlayer.setTypeface(mainFont);
+
+        mButtonRandomPosition.setTypeface(buttonFont);
+        mButtonSwitchView.setTypeface(buttonFont);
+        buttonLaunchGame.setTypeface(buttonFont);
+
     }
 
     /**
@@ -185,6 +304,9 @@ public class GameActivity extends AppCompatActivity {
                 return;
             case VICTORY:
                 mGameView.setTouch(x, y, result.getShape());
+                mPlayer.addGameTime(mLevel, VICTORY, getPlayedTime());
+                mPlayer.addVictory(mLevel);
+                mDataController.updatePlayer(mPlayer);
                 FragmentManager fm = getFragmentManager();
                 EndGameVictoryFragment endGameVictoryFragment = new EndGameVictoryFragment();
                 endGameVictoryFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
@@ -194,7 +316,6 @@ public class GameActivity extends AppCompatActivity {
                 mGameView.setPlouf(x, y);
                 mTextViewPlayer.setText(R.string.missed);
                 // Show the result
-                mAnimationsSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, Settings.ANIMATION_FAST);
                 new CountDownTimer(mAnimationsSpeed, mAnimationsSpeed / 3) {
                     public void onTick(long millisUntilFinished) {
                     }
@@ -216,6 +337,8 @@ public class GameActivity extends AppCompatActivity {
      */
     private void aiPlay() {
         mButtonSwitchView.setVisibility(View.GONE);
+        mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
+        mTextViewAI.setText(R.string.AITurn);
 
         final Point aiPlayCoordinates = mAI.play();
         final Result iaResult = mGameController.shot(aiPlayCoordinates.x, aiPlayCoordinates.y);
@@ -224,7 +347,9 @@ public class GameActivity extends AppCompatActivity {
 
         mAI.setResult(iaResult);
 
+
         new CountDownTimer(mAnimationsSpeed * 3, mAnimationsSpeed) {
+
             private int cursor = 0;
 
             @Override
@@ -253,17 +378,29 @@ public class GameActivity extends AppCompatActivity {
                     mTextViewAI.setText(R.string.AITurn);
                     canPlay = true;
                     mViewFlipper.showPrevious();
-                } else if (resultType == VICTORY) {
+                }
+                else if(resultType == VICTORY){
+                    mPlayer.addGameTime(mLevel, DEFEATED, getPlayedTime());
+                    mPlayer.addDefeat(mLevel);
+                    mDataController.updatePlayer(mPlayer);
+
                     FragmentManager fm = getFragmentManager();
                     EndGameDefeatFragment endGameDefeatFragment = new EndGameDefeatFragment();
                     endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
                     endGameDefeatFragment.setCancelable(false);
-                } else {
+                }
+
+                else if(!mExit){
                     aiPlay();
                 }
 
             }
         }.start();
+    }
+
+    private int getPlayedTime() {
+        long time = System.currentTimeMillis() - mStartTime;
+        return (int) TimeUnit.MILLISECONDS.toSeconds(time);
     }
 
     /**
@@ -280,25 +417,60 @@ public class GameActivity extends AppCompatActivity {
         mToast.show();
     }
 
+    private void setAnimationIcon(int settingSpeed) {
+        if (settingSpeed == Settings.ANIMATION_SLOW) {
+            mImageButtonSpeed.setImageResource(R.drawable.snail);
+        }
+        else if (settingSpeed == Settings.ANIMATION_MEDIUM) {
+            mImageButtonSpeed.setImageResource(R.drawable.pigeon);
+        }
+        else if (settingSpeed == Settings.ANIMATION_FAST) {
+            mImageButtonSpeed.setImageResource(R.drawable.rabbit);
+        }
+    }
+
+    private void setMusicIcon(int volume) {
+        if(volume > 66) {
+            mImageButtonMusic.setImageResource(R.drawable.music_loud);
+        }
+        else if(volume > 33) {
+            mImageButtonMusic.setImageResource(R.drawable.music_medium);
+        }
+        else if(volume > 0) {
+            mImageButtonMusic.setImageResource(R.drawable.music_low);
+        }
+        else {
+            mImageButtonMusic.setImageResource(R.drawable.no_music);
+        }
+    }
+
+    private void setEffectsIcon(int volume) {
+        if(volume > 66) {
+            mImageButtonEffects.setImageResource(R.drawable.volume_up_interface_symbol);
+        }
+        else if(volume > 33) {
+            mImageButtonEffects.setImageResource(R.drawable.ic_volume_down_black_24dp);
+        }
+        else if(volume > 0) {
+            mImageButtonEffects.setImageResource(R.drawable.ic_volume_mute_black_24dp);
+        }
+        else {
+            mImageButtonEffects.setImageResource(R.drawable.ic_volume_off_black_24dp);
+        }
+    }
+
+
     /**
      * Method handling Back Button Pressed
      */
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-        TextView messageView = new TextView(this);
-        messageView.setText(R.string.quit_game_alert_message);
-        messageView.setGravity(Gravity.CENTER);
-        messageView.setTextColor(Color.BLACK);
-        messageView.setTextSize(18);
-        builder.setView(messageView)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        GameActivity.super.onBackPressed();
-                    }
-                })
-                .setNegativeButton(android.R.string.no, null)
-                .setTitle(R.string.quit_game_alert_title)
-                .setIcon(R.drawable.smiley_defeat).show();
+
+        FragmentManager fm = getFragmentManager();
+        QuitGameFragment quitGameFragment = new QuitGameFragment();
+        quitGameFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
+        quitGameFragment.setCancelable(false);
+        mExit = quitGameFragment.shouldExit();
+
     }
 }

@@ -1,7 +1,6 @@
 package fr.wcs.battlegeek.controller;
 
 import android.graphics.Point;
-import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -15,8 +14,6 @@ import fr.wcs.battlegeek.ui.Tetromino;
 
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
-import static fr.wcs.battlegeek.model.Result.Type.TOUCHED;
-import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
 
 /**
  * Created by adphi on 03/10/17.
@@ -28,7 +25,20 @@ public class AI {
      * Levels Enumerations
      */
     public enum Level {
-        I, II, III, IMPOSSIBLE;
+        I ("Level I"),
+        II ("Level II"),
+        III ("Level III"),
+        IMPOSSIBLE ("Level Impossible");
+
+        private String name = "";
+
+        Level(String level) {
+            this.name = level;
+        }
+
+        public String toString() {
+            return this.name;
+        }
     }
 
     private final String TAG = "AI";

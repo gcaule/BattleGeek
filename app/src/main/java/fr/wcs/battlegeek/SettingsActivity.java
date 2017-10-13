@@ -1,6 +1,8 @@
 package fr.wcs.battlegeek;
 
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -10,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -18,6 +21,8 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import fr.wcs.battlegeek.controller.DataController;
+import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Settings;
 
 import static android.view.View.GONE;
@@ -27,12 +32,20 @@ public class SettingsActivity extends AppCompatActivity {
     SharedPreferences mSharedPreferences;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mUsersDatabaseReference;
+    private ImageView mImageViewMusic;
+    private ImageView mImageViewEffects;
+
+    private PlayerModel mPlayerModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_settings);
+
+        View backgroundimage = findViewById(R.id.settingsBackgroundView);
+        Drawable backgroundView = backgroundimage.getBackground();
+        backgroundView.setAlpha(150);
 
         //Affichage de la value pour la seekbox Music et seekbok Effects
 
@@ -49,8 +62,20 @@ public class SettingsActivity extends AppCompatActivity {
         RadioButton mRadioButtonAnimationMedium = (RadioButton) findViewById(R.id.radioButtonAnimationMedium);
         RadioButton mRadioButtonAnimationFast = (RadioButton) findViewById(R.id.radioButtonAnimationFast);
 
-
         buttonSave.setVisibility(GONE);
+
+        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/SomeTimeLater.otf");
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
+        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/DirtyClassicMachine.ttf");
+
+        TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
+
+        titleMessage.setTypeface(titleFont);
+        inputPlayerName.setTypeface(mainFont);
+        buttonSave.setTypeface(buttonFont);
+
+        seekBarValueEffects.setTypeface(mainFont);
+        seekBarValueMusic.setTypeface(mainFont);
 
         //Initialize Firebase components
         mDatabase = FirebaseDatabase.getInstance();
@@ -58,8 +83,9 @@ public class SettingsActivity extends AppCompatActivity {
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
+
         //Get User on SharedPref
-        String uidFirebase = mSharedPreferences.getString("uidFirebase", null);
+        String uidFirebase = mSharedPreferences.getString(Settings.UID, null);
 
         final TextView DISPLAYKEY = (TextView) findViewById(R.id.DISPLAYKEY);
         DISPLAYKEY.setText(uidFirebase);
@@ -68,16 +94,30 @@ public class SettingsActivity extends AppCompatActivity {
         mUsersDatabaseReference = mDatabase.getReference().child("Users").child(uidFirebase).child("playerName");
 
         //Get Pref for Music Volume
-        int ValueMusicStart = mSharedPreferences.getInt("ValueMusic",0);
-        seekBarMusic.setProgress(ValueMusicStart);
-        seekBarValueMusic.setText(String.valueOf(ValueMusicStart));
+        int valueMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG,0);
+        seekBarMusic.setProgress(valueMusic);
+        seekBarValueMusic.setText(String.valueOf(valueMusic));
+
+        mImageViewMusic = (ImageView) findViewById(R.id.imageViewMusic);
+        setMusicIcon(valueMusic);
 
         //Get Pref for Effects Volume
-        int ValueEffectsStart = mSharedPreferences.getInt("ValueEffects",0);
-        seekBarEffects.setProgress(ValueEffectsStart);
-        seekBarValueEffects.setText(String.valueOf(ValueEffectsStart));
+        int valueEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG,0);
+        seekBarEffects.setProgress(valueEffects);
+        seekBarValueEffects.setText(String.valueOf(valueEffects));
+
+        mImageViewEffects = (ImageView) findViewById(R.id.imageViewEffects);
+        setEffectIcon(valueEffects);
 
         //Get Pref for PlayerModel Name
+        final DataController dataController = new DataController(getApplicationContext());
+
+        dataController.setDataReadyListener(new DataController.DataReadyListener() {
+            @Override
+            public void onDataReadyListener(PlayerModel player) {
+                mPlayerModel = player;
+            }
+        });
         String playerName = mSharedPreferences.getString("PlayerName", null);
         inputPlayerName.setText(playerName);
 
@@ -114,7 +154,9 @@ public class SettingsActivity extends AppCompatActivity {
                                           boolean fromUser) {
                 // TODO Auto-generated method stub
                 seekBarValueMusic.setText(String.valueOf(progress));
-                mSharedPreferences.edit().putInt("ValueMusic", seekBarMusic.getProgress()).apply();
+                int valueMusic = seekBarMusic.getProgress();
+                mSharedPreferences.edit().putInt(Settings.MUSIC_TAG, valueMusic).apply();
+                setMusicIcon(valueMusic);
             }
 
             @Override
@@ -136,7 +178,9 @@ public class SettingsActivity extends AppCompatActivity {
                                           boolean fromUser) {
                 // TODO Auto-generated method stub
                 seekBarValueEffects.setText(String.valueOf(progress));
-                mSharedPreferences.edit().putInt("ValueEffects", seekBarEffects.getProgress()).apply();
+                int valueEffects = seekBarEffects.getProgress();
+                mSharedPreferences.edit().putInt(Settings.EFFECTS_TAG, valueEffects).apply();
+                setEffectIcon(valueEffects);
             }
 
             @Override
@@ -167,27 +211,27 @@ public class SettingsActivity extends AppCompatActivity {
         buttonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(SettingsActivity.this, MainMenuActivity.class);
-                startActivity(intent);*/
                 onBackPressed();
             }
 
         });
 
         //Button to save user preferences
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = inputPlayerName.getText().toString();
-                if (name.isEmpty()){
-                    Toast.makeText(SettingsActivity.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    mSharedPreferences.edit().putString("PlayerName", name).commit();
-                    mUsersDatabaseReference.setValue(name);
-                    Toast.makeText(SettingsActivity.this, "Paramètres enregistrés", Toast.LENGTH_SHORT).show();
-                }
-            }
+         buttonSave.setOnClickListener(new View.OnClickListener() {
+             @Override
+           public void onClick(View v) {
+                 final String name = inputPlayerName.getText().toString();
+                 if (name.isEmpty()){
+                     Toast.makeText(SettingsActivity.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT).show();
+                 }
+                 else {
+                     mSharedPreferences.edit().putString(Settings.PLAYER_NAME, name).commit();
+                     mPlayerModel.setName(name);
+                     dataController.updatePlayer(mPlayerModel);
+                     buttonSave.setVisibility(GONE);
+                     Toast.makeText(SettingsActivity.this, R.string.saved_parameters, Toast.LENGTH_SHORT).show();
+                 }
+             }
         });
     }
 
@@ -213,6 +257,36 @@ public class SettingsActivity extends AppCompatActivity {
                     mSharedPreferences.edit().putInt(Settings.ANIMATION_TAG, Settings.ANIMATION_FAST).apply();
                 }
                 break;
+        }
+    }
+
+    private void setMusicIcon(int volume){
+        if(volume > 66) {
+            mImageViewMusic.setImageResource(R.drawable.music_loud);
+        }
+        else if(volume > 33) {
+            mImageViewMusic.setImageResource(R.drawable.music_medium);
+        }
+        else if(volume > 0) {
+            mImageViewMusic.setImageResource(R.drawable.music_low);
+        }
+        else {
+            mImageViewMusic.setImageResource(R.drawable.no_music);
+        }
+    }
+
+    private void setEffectIcon(int volume) {
+        if(volume > 66) {
+            mImageViewEffects.setImageResource(R.drawable.volume_up_interface_symbol);
+        }
+        else if(volume > 33) {
+            mImageViewEffects.setImageResource(R.drawable.ic_volume_down_black_24dp);
+        }
+        else if(volume > 0) {
+            mImageViewEffects.setImageResource(R.drawable.ic_volume_mute_black_24dp);
+        }
+        else {
+            mImageViewEffects.setImageResource(R.drawable.ic_volume_off_black_24dp);
         }
     }
 }

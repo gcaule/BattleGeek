@@ -8,8 +8,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.R;
+import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.utils.Utils;
 
 /**
@@ -160,44 +160,6 @@ public class Item implements View.OnTouchListener {
         this.mY = position.y;
         // Refresh the View
         this.mView.invalidate();
-    }
-
-    /**
-     * Method handling Item's Rotation (90°)
-     */
-    public void rotate() {
-        // Get the square's size in witch the piece rotate
-        int size = Math.max(getWidth(), getHeight());
-        PointF rotationCenter = new PointF(size / 2, size / 2);
-
-        // Initiate value to remove blocks offset
-        int minX = Settings.GRID_SIZE;
-        int minY = Settings.GRID_SIZE;
-
-        // Rotate Blocks
-        for(Block block : mBlocks) {
-            int x = (int) block.getX();
-            int y = (int) block.getY();
-            int x1 = (int)(rotationCenter.x + rotationCenter.y - y);
-            int y1 = (int)(rotationCenter.y - rotationCenter.x + x);
-            block.setX(x1);
-            block.setY(y1);
-
-            // Get Min offset
-            minX = Math.min(minX, x1);
-            minY = Math.min(minY, y1);
-        }
-
-        // Apply Offset On the Blocks
-        for(Block block : mBlocks) {
-            block.setX(block.getX() - minX);
-            block.setY(block.getY() - minY);
-        }
-
-        // Rotate width and height
-        int width = mWidth;
-        mWidth = mHeight;
-        mHeight = width;
     }
 
     /**
@@ -413,6 +375,43 @@ public class Item implements View.OnTouchListener {
         }
         // if we are here, everything is ok
         return false;
+    }
+
+    /**
+     * Method handling Item's Rotation (90°)
+     */
+    public void rotate() {
+        // Get the square's size in witch the piece rotate
+        int size = Math.max(getWidth(), getHeight());
+        PointF rotationCenter = new PointF(size / 2, size / 2);
+
+        // Initiate value to remove blocks offset
+        int minX = Settings.GRID_SIZE;
+        int minY = Settings.GRID_SIZE;
+
+        // Rotate Blocks
+        for(Block block : mBlocks) {
+            int x = (int) block.getX();
+            int y = (int) block.getY();
+            int x1 = (int)(rotationCenter.x + rotationCenter.y - y);
+            int y1 = (int)(rotationCenter.y - rotationCenter.x + x);
+            block.setX(x1);
+            block.setY(y1);
+
+            // Get Min offset
+            minX = Math.min(minX, x1);
+            minY = Math.min(minY, y1);
+        }
+
+        // Apply Offset On the Blocks
+        for(Block block : mBlocks) {
+            block.setX(block.getX() - minX);
+            block.setY(block.getY() - minY);
+        }
+
+        // Refresh width and height
+        mWidth = getWidth();
+        mHeight = getHeight();
     }
 
     /**

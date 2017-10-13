@@ -1,6 +1,5 @@
 package fr.wcs.battlegeek;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -34,8 +33,7 @@ public class RankingActivity extends AppCompatActivity {
         buttonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RankingActivity.this, MainMenuActivity.class);
-                startActivity(intent);
+                RankingActivity.super.onBackPressed();
             }
 
         });
@@ -91,8 +89,6 @@ public class RankingActivity extends AppCompatActivity {
                     PlayerModel playerModel = new PlayerModel();
 
                     playerModel.setName(cursor.getString(0));
-                    playerModel.setScore(cursor.getString(1));
-
                     mPlayerModelList.add(playerModel);
                     cursor.moveToNext();
 

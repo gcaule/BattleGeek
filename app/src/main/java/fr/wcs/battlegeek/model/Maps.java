@@ -441,4 +441,9 @@ public class Maps {
         return playableCoordinates;
     }
 
+    // TODO DELETE
+    public static char[][] getMapFromIndex(int index) {
+        return maps[index];
+    }
+
 }
