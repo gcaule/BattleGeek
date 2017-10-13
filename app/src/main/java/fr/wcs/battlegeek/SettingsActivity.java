@@ -1,6 +1,8 @@
 package fr.wcs.battlegeek;
 
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -19,6 +21,8 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import fr.wcs.battlegeek.controller.DataController;
+import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Settings;
 
 import static android.view.View.GONE;
@@ -37,6 +41,10 @@ public class SettingsActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_settings);
 
+        View backgroundimage = findViewById(R.id.settingsBackgroundView);
+        Drawable backgroundView = backgroundimage.getBackground();
+        backgroundView.setAlpha(150);
+
         //Affichage de la value pour la seekbox Music et seekbok Effects
 
         final SeekBar seekBarMusic = (SeekBar) findViewById(R.id.seekBarMusic);
@@ -53,6 +61,19 @@ public class SettingsActivity extends AppCompatActivity {
         RadioButton mRadioButtonAnimationFast = (RadioButton) findViewById(R.id.radioButtonAnimationFast);
 
         buttonSave.setVisibility(GONE);
+
+        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/SomeTimeLater.otf");
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
+        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/DirtyClassicMachine.ttf");
+
+        TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
+
+        titleMessage.setTypeface(titleFont);
+        inputPlayerName.setTypeface(mainFont);
+        buttonSave.setTypeface(buttonFont);
+
+        seekBarValueEffects.setTypeface(mainFont);
+        seekBarValueMusic.setTypeface(mainFont);
 
         //Initialize Firebase components
         mDatabase = FirebaseDatabase.getInstance();
@@ -188,19 +209,27 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         //Button to save user preferences
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = inputPlayerName.getText().toString();
-                if (name.isEmpty()){
-                    Toast.makeText(SettingsActivity.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    mSharedPreferences.edit().putString("PlayerName", name).commit();
-                    mUsersDatabaseReference.setValue(name);
-                    Toast.makeText(SettingsActivity.this, "Paramètres enregistrés", Toast.LENGTH_SHORT).show();
-                }
-            }
+         buttonSave.setOnClickListener(new View.OnClickListener() {
+             @Override
+           public void onClick(View v) {
+                 final String name = inputPlayerName.getText().toString();
+                 if (name.isEmpty()){
+                     Toast.makeText(SettingsActivity.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT).show();
+                 }
+                 else {
+                     mSharedPreferences.edit().putString("PlayerName", name).commit();
+                     final DataController dataController = new DataController(getApplicationContext());
+                     dataController.setDataReadyListener(new DataController.DataReadyListener() {
+                         @Override
+                         public void onDataReadyListener(PlayerModel player) {
+                             PlayerModel playerModel = player;
+                             playerModel.setName(name);
+                             dataController.updatePlayer(playerModel);
+                         }
+                     });
+                     Toast.makeText(SettingsActivity.this, R.string.saved_parameters, Toast.LENGTH_SHORT).show();
+                 }
+             }
         });
     }
 

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
@@ -37,6 +39,7 @@ import fr.wcs.battlegeek.ui.EndGameDefeatFragment;
 import fr.wcs.battlegeek.ui.EndGameVictoryFragment;
 import fr.wcs.battlegeek.ui.GameView;
 import fr.wcs.battlegeek.ui.MapView;
+import fr.wcs.battlegeek.ui.QuitGameFragment;
 
 import static android.R.attr.start;
 import static fr.wcs.battlegeek.R.id.viewFlipper;
@@ -88,7 +91,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
         setContentView(R.layout.activity_game);
 
         mContext = getApplicationContext();
@@ -211,6 +213,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 mAI.setLevel(mLevel);
                 buttonLaunchGame.setVisibility(View.GONE);
+                mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
                 mTextViewAI.setText(R.string.AITurn);
                 mViewFlipper.showNext();
                 mStartTime = System.currentTimeMillis();
@@ -225,12 +228,17 @@ public class GameActivity extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        mTextViewAI.setVisibility(View.GONE);
+                        mButtonSwitchView.setPressed(true);
+                        mTextViewAI.setText(R.string.playermap_view);
+                        mTextViewAI.setTextColor(Color.parseColor("#FFEE00"));
                         mViewFlipper.showPrevious();
                         break;
                     case MotionEvent.ACTION_UP:
+                        mButtonSwitchView.setPressed(false);
                         mViewFlipper.showNext();
                         mTextViewAI.setVisibility(View.VISIBLE);
+                        mTextViewAI.setText(" ");
+                        mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
                         break;
                 }
                 return true;
@@ -254,6 +262,19 @@ public class GameActivity extends AppCompatActivity {
                 playerPlay(x, y);
             }
         });
+
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
+        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/DirtyClassicMachine.ttf");
+
+        TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
+
+        mTextViewAI.setTypeface(mainFont);
+        mTextViewPlayer.setTypeface(mainFont);
+
+        mButtonRandomPosition.setTypeface(buttonFont);
+        mButtonSwitchView.setTypeface(buttonFont);
+        buttonLaunchGame.setTypeface(buttonFont);
+
     }
 
     /**
@@ -315,6 +336,8 @@ public class GameActivity extends AppCompatActivity {
      */
     private void aiPlay() {
         mButtonSwitchView.setVisibility(View.GONE);
+        mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
+        mTextViewAI.setText(R.string.AITurn);
 
         final Point aiPlayCoordinates = mAI.play();
         final Result iaResult = mGameController.shot(aiPlayCoordinates.x, aiPlayCoordinates.y);
@@ -437,22 +460,12 @@ public class GameActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-        TextView messageView = new TextView(this);
-        messageView.setText(R.string.quit_game_alert_message);
-        messageView.setGravity(Gravity.CENTER);
-        messageView.setTextColor(Color.BLACK);
-        messageView.setTextSize(18);
-        builder.setView(messageView)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        mExit = true;
-                        GameActivity.super.onBackPressed();
-                        GameActivity.this.finish();
-                    }
-                })
-                .setNegativeButton(android.R.string.no, null)
-                .setTitle(R.string.quit_game_alert_title)
-                .setIcon(R.drawable.smiley_defeat).show();
+
+        FragmentManager fm = getFragmentManager();
+        QuitGameFragment quitGameFragment = new QuitGameFragment();
+        quitGameFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
+        quitGameFragment.setCancelable(false);
+        mExit = quitGameFragment.shouldExit();
+
     }
 }

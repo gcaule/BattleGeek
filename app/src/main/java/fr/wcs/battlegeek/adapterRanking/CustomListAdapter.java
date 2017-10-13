@@ -18,12 +18,9 @@ public class CustomListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<PlayerModel> mPlayerModelItems;
 
-
-
     public CustomListAdapter(Context context, List<PlayerModel> playerModelItems) {
         this.mContext = context;
         this.mPlayerModelItems = playerModelItems;
-
     }
 
     @Override
@@ -53,7 +50,6 @@ public class CustomListAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.name = (TextView) scoreView.findViewById(R.id.name);
             holder.score = (TextView) scoreView.findViewById(R.id.score);
-
             scoreView.setTag(holder);
 
         } else {

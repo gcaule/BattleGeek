@@ -3,8 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/backgroundView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/battle_background"
     tools:context="fr.wcs.battlegeek.GameActivity">
 
     <ViewFlipper
@@ -33,8 +35,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="fill_vertical|center_horizontal"
                 android:text="@string/place_pieces"
-                android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/mapView"
+                android:textColor="@color/yellow"
+                android:textSize="22sp"
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -42,6 +45,7 @@
 
             <fr.wcs.battlegeek.ui.MapView
                 android:id="@+id/mapView"
+                android:background="#70ffffff"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -70,6 +74,7 @@
                 android:layout_marginStart="8dp"
                 android:elevation="6dp"
                 android:text="@string/launchGame"
+                android:background="@drawable/buttoningame"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -81,6 +86,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:text="@string/randomize_positions"
+                android:background="@drawable/buttoningame"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
         </android.support.constraint.ConstraintLayout>
@@ -97,6 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/place_pieces"
+                android:textColor="@color/yellow"
                 android:textSize="20sp"
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -107,6 +114,7 @@
 
             <fr.wcs.battlegeek.ui.GameView
                 android:id="@+id/gameView"
+                android:background="#70ffffff"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -136,6 +144,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/switch_view"
+        android:background="@drawable/buttoningame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 

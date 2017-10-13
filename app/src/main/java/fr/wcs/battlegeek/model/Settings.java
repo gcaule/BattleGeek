@@ -17,4 +17,5 @@ public class Settings {
     public static final String MUSIC_TAG = "ValueMusic";
     public static final String EFFECTS_TAG = "ValueEffects";
     public static final String UID = "uidFirebase";
+    public static final String PLAYER_NAME = "PlayerName";
 }
