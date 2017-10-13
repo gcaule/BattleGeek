@@ -60,11 +60,7 @@ public class DataController {
         mPlayerModel = player;
         mUsersDatabaseReference.setValue(player);
     }
-
-    public PlayerModel getPlayer() {
-        return mPlayerModel;
-    }
-
+    
     public void setDataReadyListener(DataReadyListener listener) {
         this.listener = listener;
     }

@@ -211,8 +211,6 @@ public class SettingsActivity extends AppCompatActivity {
         buttonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(SettingsActivity.this, MainMenuActivity.class);
-                startActivity(intent);*/
                 onBackPressed();
             }
 
@@ -230,7 +228,7 @@ public class SettingsActivity extends AppCompatActivity {
                      mSharedPreferences.edit().putString(Settings.PLAYER_NAME, name).commit();
                      mPlayerModel.setName(name);
                      dataController.updatePlayer(mPlayerModel);
-
+                     buttonSave.setVisibility(GONE);
                      Toast.makeText(SettingsActivity.this, R.string.saved_parameters, Toast.LENGTH_SHORT).show();
                  }
              }
