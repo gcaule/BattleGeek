@@ -37,14 +37,14 @@ public class ScreenLauncher extends AppCompatActivity {
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
         //Get Pref for PlayerModel Name
-        final String playerName = mSharedPreferences.getString("PlayerName", null);
+        final String uid = mSharedPreferences.getString(Settings.UID, null);
 
         //Si Playername dans sharedpref vide, allez sur register. Sinon allez à MainActiv
         new Timer().schedule(new TimerTask() {
             public void run() {
                 ScreenLauncher.this.runOnUiThread(new Runnable() {
                     public void run() {
-                       if (playerName == null) {
+                       if (uid == null) {
                             startActivity(new Intent(ScreenLauncher.this, FirstTimeUsernameScreen.class));
                         } else {
                             startActivity(new Intent(ScreenLauncher.this, MainMenuActivity.class));

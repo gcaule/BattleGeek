@@ -22,9 +22,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.google.gson.Gson;
+
+import java.util.concurrent.TimeUnit;
+
 import fr.wcs.battlegeek.controller.AI;
+import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.controller.GameController;
 import fr.wcs.battlegeek.controller.SoundController;
+import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.ui.EndGameDefeatFragment;
@@ -32,8 +38,9 @@ import fr.wcs.battlegeek.ui.EndGameVictoryFragment;
 import fr.wcs.battlegeek.ui.GameView;
 import fr.wcs.battlegeek.ui.MapView;
 
-import static android.R.attr.level;
+import static android.R.attr.start;
 import static fr.wcs.battlegeek.R.id.viewFlipper;
+import static fr.wcs.battlegeek.model.Result.Type.DEFEATED;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
@@ -46,6 +53,8 @@ public class GameActivity extends AppCompatActivity {
     private final String TAG = "GameActivity";
 
     private AI.Level mLevel;
+    private PlayerModel mPlayer;
+    private DataController mDataController;
 
     private AI mAI;
     private GameController mGameController;
@@ -72,6 +81,7 @@ public class GameActivity extends AppCompatActivity {
     private SoundController mSoundController;
     private int mVolumeMusic;
     private int mVolumeEffects;
+    private long mStartTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +98,16 @@ public class GameActivity extends AppCompatActivity {
 
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
+
+        // Get Player
+        mDataController = new DataController(getApplicationContext());
+        mDataController.setDataReadyListener(new DataController.DataReadyListener() {
+            @Override
+            public void onDataReadyListener(PlayerModel player) {
+                mPlayer = player;
+                Log.d(TAG, "onCreate: " + mPlayer.toString());
+            }
+        });
 
         // Settings
         mImageButtonSpeed = (ImageButton) findViewById(R.id.imageButtonSpeed);
@@ -193,6 +213,7 @@ public class GameActivity extends AppCompatActivity {
                 buttonLaunchGame.setVisibility(View.GONE);
                 mTextViewAI.setText(R.string.AITurn);
                 mViewFlipper.showNext();
+                mStartTime = System.currentTimeMillis();
             }
 
         });
@@ -261,6 +282,9 @@ public class GameActivity extends AppCompatActivity {
                 return;
             case VICTORY:
                 mGameView.setTouch(x, y, result.getShape());
+                mPlayer.addGameTime(mLevel, VICTORY, getPlayedTime());
+                mPlayer.addVictory(mLevel);
+                mDataController.updatePlayer(mPlayer);
                 FragmentManager fm = getFragmentManager();
                 EndGameVictoryFragment endGameVictoryFragment = new EndGameVictoryFragment();
                 endGameVictoryFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
@@ -299,7 +323,7 @@ public class GameActivity extends AppCompatActivity {
 
         mAI.setResult(iaResult);
 
-        new CountDownTimer(mAnimationsSpeed * 3, mAnimationsSpeed) {
+        new CountDownTimer(mAnimationsSpeed * 3 , mAnimationsSpeed) {
             private int cursor = 0;
             @Override
             public void onTick(long l) {
@@ -327,18 +351,26 @@ public class GameActivity extends AppCompatActivity {
                     canPlay = true;
                     mViewFlipper.showPrevious();
                 }
-                else if(resultType == VICTORY) {
+                else if(resultType == VICTORY){
+                    mPlayer.addGameTime(mLevel, DEFEATED, getPlayedTime());
+                    mPlayer.addDefeat(mLevel);
+                    mDataController.updatePlayer(mPlayer);
+
                     FragmentManager fm = getFragmentManager();
                     EndGameDefeatFragment endGameDefeatFragment = new EndGameDefeatFragment();
                     endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
                     endGameDefeatFragment.setCancelable(false);
-                    // TODO: Set Player Defeated
                 }
                 else if(!mExit){
                     aiPlay();
                 }
             }
         }.start();
+    }
+
+    private int getPlayedTime() {
+        long time = System.currentTimeMillis() - mStartTime;
+        return (int) TimeUnit.MILLISECONDS.toSeconds(time);
     }
 
     /**

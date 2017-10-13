@@ -31,7 +31,7 @@ public class PlayerModel {
         this.totalGameTime = 0;
         for(AI.Level level : AI.Level.values()) {
             this.gameTime.put(level.toString(), 0);
-            this.bestTime.put(level.toString(), 2_147_483_647);
+            this.bestTime.put(level.toString(), -1);
             this.gameParts.put(level.toString(), 0);
             this.victories.put(level.toString(), 0);
             this.defeats.put(level.toString(), 0);
@@ -46,15 +46,15 @@ public class PlayerModel {
     }
 
     public void addDefeat(AI.Level level) {
-        this.gameParts.put(level.toString(), gameParts.get(level) + 1);
-        this.defeats.put(level.toString(), defeats.get(level) + 1);
+        this.gameParts.put(level.toString(), gameParts.get(level.toString()) + 1);
+        this.defeats.put(level.toString(), defeats.get(level.toString()) + 1);
         this.updateRatio(level);
     }
 
-    public void addGameTime(AI.Level level, int time) {
+    public void addGameTime(AI.Level level, Result.Type result, int time) {
         this.totalGameTime += time;
         int lastBestTime = this.bestTime.get(level.toString());
-        this.bestTime.put(level.toString(), time < lastBestTime ? time : lastBestTime);
+        this.bestTime.put(level.toString(), time < lastBestTime && result == Result.Type.VICTORY ? time : lastBestTime);
         this.gameTime.put(level.toString(), gameTime.get(level.toString()) + time);
     }
 

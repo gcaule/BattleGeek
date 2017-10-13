@@ -11,8 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -41,9 +39,6 @@ public class FirstTimeUsernameScreen extends AppCompatActivity {
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
-        // Initialize Firebase components
-        mDatabase = FirebaseDatabase.getInstance();
-        mUsersDatabaseReference = mDatabase.getReference().child("Users");
 
         button_save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,46 +47,20 @@ public class FirstTimeUsernameScreen extends AppCompatActivity {
                     Toast.makeText(FirstTimeUsernameScreen.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT);
                 } else {
                     PlayerModel newPlayer = new PlayerModel(playerName.getText().toString());
-                    // Write a message to the database
+
+                    // Init Firebase User
+                    // Initialize Firebase components
+                    mDatabase = FirebaseDatabase.getInstance();
+                    mDatabase.setPersistenceEnabled(true);
+                    mUsersDatabaseReference = mDatabase.getReference().child("Users");
                     uid = mUsersDatabaseReference.child("Users").push().getKey();
                     mUsersDatabaseReference.child(uid).setValue(newPlayer);
-                    SharedPreferences.Editor editor = mSharedPreferences.edit();
-                    editor.putString("PlayerName", playerName.getText().toString());
-                    editor.putString("uidFirebase", uid);
-                    editor.commit();
+                    mSharedPreferences.edit().putString(Settings.UID, uid).apply();
+
                     startActivity(new Intent(FirstTimeUsernameScreen.this, MainMenuActivity.class));
                 }
             }
         });
-
-        mChildEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-
-        mUsersDatabaseReference.addChildEventListener(mChildEventListener);
-
     }
 }
 
