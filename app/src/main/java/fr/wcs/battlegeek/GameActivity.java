@@ -324,6 +324,7 @@ public class GameActivity extends AppCompatActivity {
         mAI.setResult(iaResult);
 
         new CountDownTimer(mAnimationsSpeed * 3 , mAnimationsSpeed) {
+
             private int cursor = 0;
             @Override
             public void onTick(long l) {
@@ -345,6 +346,7 @@ public class GameActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
+
                 mButtonSwitchView.setVisibility(View.VISIBLE);
                 if(resultType == MISSED) {
                     mTextViewAI.setText(R.string.AITurn);
@@ -364,6 +366,7 @@ public class GameActivity extends AppCompatActivity {
                 else if(!mExit){
                     aiPlay();
                 }
+
             }
         }.start();
     }
