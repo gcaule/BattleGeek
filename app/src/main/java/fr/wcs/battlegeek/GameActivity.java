@@ -224,7 +224,7 @@ public class GameActivity extends AppCompatActivity {
 
         mAI.setResult(iaResult);
 
-        new CountDownTimer(mAnimationsSpeed * 1, mAnimationsSpeed / 2) {
+        new CountDownTimer(mAnimationsSpeed * 2, mAnimationsSpeed) {
             private int cursor = 0;
             @Override
             public void onTick(long l) {

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.Result;
@@ -130,35 +131,50 @@ public class AI {
     private Point playLevelII() {
         // Give the type of result (missed, touched ...)
         Result.Type resultType = mLastResult.getType();
+        // Get the type of Tetromino shape
         Tetromino.Shape resultShape = mLastResult.getShape();
 
+        //Play randomly during hunt mode (nothing found and looking for tetromino)
         if (mSurroudingCoordinates.isEmpty() && resultType == MISSED) {
-            //Play randomly while nothing found
             return playLevelI();
         }
 
+        //When a boat is drown, clear SurroudingCoordinates to go back in hunt mode
         if(resultType == DROWN) {
             for(Point coordinates : mSurroudingCoordinates) {
                 mPlayablesCoordinates.add(coordinates);
             }
             mSurroudingCoordinates.clear();
-            Log.d(TAG, "playLevelII: Clear Surrounding : " + mSurroudingCoordinates.size());
-            // TODO supprimer key pour Hape drown
 
-            // TODO verifier si plusieur types touches
+            // TODO supprimer key pour Shape drown
+            mShapeMap.remove((mLastResult.getShape()));
+        //    Log.d(TAG, "delete pieces dans hashmap : " + mShapeMap);
+            // TODO verifier si plusieurs types touches
+
+            for (HashMap.Entry<Tetromino.Shape, ArrayList<Point>> entry : mShapeMap.entrySet()) {
+                Tetromino.Shape shape = entry.getKey();
+                ArrayList<Point> pointArrayList = entry.getValue();
+                for (Point currentPoint : pointArrayList){
+                   getSurroundingCoordinates(currentPoint);
+                }
+            }
 
             // TODO : Si plusieurs type
+
             return playLevelI();
         }
 
+        //When a result type is touched, go in target mode by creating a map of possible coordinates
         if (resultType != MISSED) {
             if(!mShapeMap.containsKey(resultShape)) {
                 mShapeMap.put(resultShape, new ArrayList<Point>());
             }
             mShapeMap.get(resultShape).add(mLastPlayedCoordinates);
             getSurroundingCoordinates(mLastPlayedCoordinates);
+     //       Log.d(TAG, "Apres ajout : " + mShapeMap + " Last played : " + mLastPlayedCoordinates);
         }
 
+        //Shot in the possible coordinates (target mode)
         int index = (int) (Math.random() * (mSurroudingCoordinates.size() - 1));
         Point coordinates = mSurroudingCoordinates.get(index);
         mSurroudingCoordinates.remove(index);
@@ -171,15 +187,8 @@ public class AI {
         return playLevelII();
     }
 
+    //When a tetromino is touched, get the surrounding coordinates
     private void getSurroundingCoordinates(Point point) {
-        //todo récuperer les coordonnées des points autour
-   /*     int x = point.x;
-        int y = point.y;
-        int minX = Math.max(x - 1, 0);
-        int maxX = Math.min(x + 1, Settings.GRID_SIZE - 1);
-        int minY = Math.max(y - 1, 0);
-        int maxY = Math.min(y + 1, Settings.GRID_SIZE - 1);
-*/
 
         int[] tempX = new int[4];
         int[] tempY = new int[4];
@@ -212,13 +221,14 @@ public class AI {
         int column = 0;
 
         for (int i = 0; i < tempX.length; i++) {
-            //todo vérifier qu'ils soient pas joués (utiliser la méthode mController , alreadyplayed)
+            //vérifier qu'ils soient pas joués (utiliser la méthode mController , alreadyplayed)
             if (!mGameControler.alreadyPlayed(tempX[column], tempY[row])) {
-                //todo ne pas rajouter au tableau si deja dans le tableau
+                //ne pas rajouter au tableau si deja dans le tableau
                 Point p = getPointFromPlayableCoordinates(tempX[column], tempY[row]);
                 if (p != null) {
-                    //todo rajouter au tableau les dispos
+                    //rajouter au tableau les dispos
                     mSurroudingCoordinates.add(p);
+                    Log.d(TAG, "mSurroundingcoord: " + " " + mSurroudingCoordinates + "last played coor " + mLastPlayedCoordinates);
                 }
             }
             row++;
