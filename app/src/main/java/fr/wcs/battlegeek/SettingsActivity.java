@@ -35,6 +35,8 @@ public class SettingsActivity extends AppCompatActivity {
     private ImageView mImageViewMusic;
     private ImageView mImageViewEffects;
 
+    private PlayerModel mPlayerModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +110,14 @@ public class SettingsActivity extends AppCompatActivity {
         setEffectIcon(valueEffects);
 
         //Get Pref for PlayerModel Name
+        final DataController dataController = new DataController(getApplicationContext());
+
+        dataController.setDataReadyListener(new DataController.DataReadyListener() {
+            @Override
+            public void onDataReadyListener(PlayerModel player) {
+                mPlayerModel = player;
+            }
+        });
         String playerName = mSharedPreferences.getString("PlayerName", null);
         inputPlayerName.setText(playerName);
 
@@ -217,16 +227,10 @@ public class SettingsActivity extends AppCompatActivity {
                      Toast.makeText(SettingsActivity.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT).show();
                  }
                  else {
-                     mSharedPreferences.edit().putString("PlayerName", name).commit();
-                     final DataController dataController = new DataController(getApplicationContext());
-                     dataController.setDataReadyListener(new DataController.DataReadyListener() {
-                         @Override
-                         public void onDataReadyListener(PlayerModel player) {
-                             PlayerModel playerModel = player;
-                             playerModel.setName(name);
-                             dataController.updatePlayer(playerModel);
-                         }
-                     });
+                     mSharedPreferences.edit().putString(Settings.PLAYER_NAME, name).commit();
+                     mPlayerModel.setName(name);
+                     dataController.updatePlayer(mPlayerModel);
+
                      Toast.makeText(SettingsActivity.this, R.string.saved_parameters, Toast.LENGTH_SHORT).show();
                  }
              }
