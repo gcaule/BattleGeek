@@ -43,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         View backgroundimage = findViewById(R.id.settingsBackgroundView);
         Drawable backgroundView = backgroundimage.getBackground();
-        backgroundView.setAlpha(150);
+        backgroundView.setAlpha(50);
 
         //Affichage de la value pour la seekbox Music et seekbok Effects
 

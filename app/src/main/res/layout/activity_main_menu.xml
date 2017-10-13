@@ -3,10 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainMenuBackgroundView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="fr.wcs.battlegeek.MainMenuActivity"
-    android:background="@drawable/menu_background"
+    android:background="@drawable/background"
     android:orientation="vertical">
 
     <Button
