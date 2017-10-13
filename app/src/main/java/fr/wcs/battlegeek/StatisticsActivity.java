@@ -67,13 +67,32 @@ public class StatisticsActivity extends AppCompatActivity {
         TextView textViewLevelRatio4 = (TextView) findViewById(R.id.textViewLevelRatio4);
         textViewLevelRatio4.setText(mPlayer.getRatio().get(String.valueOf(AI.Level.IMPOSSIBLE)).toString());
 
-        TextView textViewLevelestTime1 = (TextView) findViewById(R.id.textViewLevelBestTime1);
-        textViewLevelestTime1.setText(mPlayer.getBestTime().get(String.valueOf(AI.Level.I)).toString());
-        TextView textViewLevelestTime2 = (TextView) findViewById(R.id.textViewLevelBestTime2);
-        textViewLevelestTime2.setText(mPlayer.getBestTime().get(String.valueOf(AI.Level.II)).toString());
-        TextView textViewLevelestTime3 = (TextView) findViewById(R.id.textViewLevelBestTime3);
-        textViewLevelestTime3.setText(mPlayer.getBestTime().get(String.valueOf(AI.Level.III)).toString());
-        TextView textViewLevelestTime4 = (TextView) findViewById(R.id.textViewLevelBestTime4);
-        textViewLevelestTime4.setText(mPlayer.getBestTime().get(String.valueOf(AI.Level.IMPOSSIBLE)).toString());
+        // Best Time
+        TextView textViewLevelBestTime1 = (TextView) findViewById(R.id.textViewLevelBestTime1);
+        String time1 = mPlayer.getBestTime().get(String.valueOf(AI.Level.I)).toString();
+        textViewLevelBestTime1.setText(time1.equals("-1") ? "-" : time1);
+        TextView textViewLevelBestTime2 = (TextView) findViewById(R.id.textViewLevelBestTime2);
+        String time2 = mPlayer.getBestTime().get(String.valueOf(AI.Level.II)).toString();
+        textViewLevelBestTime2.setText(time1.equals("-1") ? "-" : time2);
+        TextView textViewLevelBestTime3 = (TextView) findViewById(R.id.textViewLevelBestTime3);
+        String time3 = mPlayer.getBestTime().get(String.valueOf(AI.Level.III)).toString();
+        textViewLevelBestTime3.setText(time1.equals("-1") ? "-" : time3);
+        TextView textViewLevelBestTime4 = (TextView) findViewById(R.id.textViewLevelBestTime4);
+        String time4 = mPlayer.getBestTime().get(String.valueOf(AI.Level.IMPOSSIBLE)).toString();
+        textViewLevelBestTime4.setText(time1.equals("-1") ? "-" : time4);
+
+        // Time
+        TextView textViewLevelTime1 = (TextView) findViewById(R.id.textViewLevelTime1);
+        textViewLevelTime1.setText(mPlayer.getGameTime().get(String.valueOf(AI.Level.I).toString()) + "s");
+        TextView textViewLevelTime2 = (TextView) findViewById(R.id.textViewLevelTime2);
+        textViewLevelTime2.setText(mPlayer.getGameTime().get(String.valueOf(AI.Level.II).toString()) + "s");
+        TextView textViewLevelTime3 = (TextView) findViewById(R.id.textViewLevelTime3);
+        textViewLevelTime3.setText(mPlayer.getGameTime().get(String.valueOf(AI.Level.III).toString()) + "s");
+        TextView textViewLevelTime4 = (TextView) findViewById(R.id.textViewLevelTime4);
+        textViewLevelTime4.setText(mPlayer.getGameTime().get(String.valueOf(AI.Level.IMPOSSIBLE).toString()) + "s");
+
+        // Total Time
+        TextView textViewTotalTime = (TextView) findViewById(R.id.textViewLeveTotalTime);
+        textViewTotalTime.setText(String.valueOf(mPlayer.getTotalGameTime()) + "s");
     }
 }
