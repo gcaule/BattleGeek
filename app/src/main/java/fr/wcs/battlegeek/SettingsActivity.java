@@ -1,6 +1,8 @@
 package fr.wcs.battlegeek;
 
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -33,6 +35,10 @@ public class SettingsActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_settings);
 
+        View backgroundimage = findViewById(R.id.settingsBackgroundView);
+        Drawable backgroundView = backgroundimage.getBackground();
+        backgroundView.setAlpha(150);
+
         //Affichage de la value pour la seekbox Music et seekbok Effects
 
         final SeekBar seekBarMusic = (SeekBar) findViewById(R.id.seekBarMusic);
@@ -43,6 +49,19 @@ public class SettingsActivity extends AppCompatActivity {
         final ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
         final Button buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonSave.setVisibility(GONE);
+
+        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/SomeTimeLater.otf");
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
+        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/DirtyClassicMachine.ttf");
+
+        TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
+
+        titleMessage.setTypeface(titleFont);
+        inputPlayerName.setTypeface(mainFont);
+        buttonSave.setTypeface(buttonFont);
+
+        seekBarValueEffects.setTypeface(mainFont);
+        seekBarValueMusic.setTypeface(mainFont);
 
         //Initialize Firebase components
         mDatabase = FirebaseDatabase.getInstance();
@@ -152,7 +171,7 @@ public class SettingsActivity extends AppCompatActivity {
                  else {
                      mSharedPreferences.edit().putString("PlayerName", name).commit();
                      mUsersDatabaseReference.setValue(name);
-                     Toast.makeText(SettingsActivity.this, "Paramètres enregistrés", Toast.LENGTH_SHORT).show();
+                     Toast.makeText(SettingsActivity.this, R.string.saved_parameters, Toast.LENGTH_SHORT).show();
                  }
              }
         });

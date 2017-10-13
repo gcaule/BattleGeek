@@ -4,12 +4,16 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,6 +29,7 @@ import fr.wcs.battlegeek.ui.EndGameDefeatFragment;
 import fr.wcs.battlegeek.ui.EndGameVictoryFragment;
 import fr.wcs.battlegeek.ui.GameView;
 import fr.wcs.battlegeek.ui.MapView;
+import fr.wcs.battlegeek.ui.QuitGameFragment;
 
 import static fr.wcs.battlegeek.R.id.viewFlipper;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
@@ -55,7 +60,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
         setContentView(R.layout.activity_game);
 
         Intent intent = getIntent();
@@ -93,6 +97,7 @@ public class GameActivity extends AppCompatActivity {
                     mAI.setLevel(AI.Level.IMPOSSIBLE);
                 }
                 buttonLaunchGame.setVisibility(View.GONE);
+                mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
                 mTextViewAI.setText(R.string.AITurn);
                 mViewFlipper.showNext();
             }
@@ -106,10 +111,16 @@ public class GameActivity extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+                        mButtonSwitchView.setPressed(true);
+                        mTextViewAI.setText(R.string.playermap_view);
+                        mTextViewAI.setTextColor(Color.parseColor("#FFEE00"));
                         mViewFlipper.showPrevious();
                         break;
                     case MotionEvent.ACTION_UP:
+                        mButtonSwitchView.setPressed(false);
                         mViewFlipper.showNext();
+                        mTextViewAI.setText(" ");
+                        mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
                         break;
                 }
                 return true;
@@ -133,6 +144,19 @@ public class GameActivity extends AppCompatActivity {
                 playerPlay(x, y);
             }
         });
+
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
+        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/DirtyClassicMachine.ttf");
+
+        TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
+
+        mTextViewAI.setTypeface(mainFont);
+        mTextViewPlayer.setTypeface(mainFont);
+
+        mButtonRandomPosition.setTypeface(buttonFont);
+        mButtonSwitchView.setTypeface(buttonFont);
+        buttonLaunchGame.setTypeface(buttonFont);
+
     }
 
     private void playerPlay(int x, int y) {
@@ -181,6 +205,8 @@ public class GameActivity extends AppCompatActivity {
 
     private void aiPlay() {
         mButtonSwitchView.setVisibility(View.GONE);
+        mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
+        mTextViewAI.setText(R.string.AITurn);
 
         final Point aiPlayCoordinates = mAI.play();
         final Result iaResult = mGameController.shot(aiPlayCoordinates.x, aiPlayCoordinates.y);
@@ -241,14 +267,10 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+        FragmentManager fm = getFragmentManager();
+        QuitGameFragment quitGameFragment = new QuitGameFragment();
+        quitGameFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
+        quitGameFragment.setCancelable(false);
 
-        builder.setMessage(R.string.quit_game_alert_message)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        GameActivity.super.onBackPressed();
-                    }
-                })
-                .setNegativeButton(android.R.string.no, null).show();
     }
 }

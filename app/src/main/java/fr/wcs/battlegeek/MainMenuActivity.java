@@ -2,6 +2,8 @@ package fr.wcs.battlegeek;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -23,6 +25,10 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main_menu);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
+        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/RaiderCrusaderHalf.ttf");
 
         ImageButton buttonSettings = (ImageButton) findViewById(R.id.buttonSettings);
         ImageButton buttonTrophy = (ImageButton) findViewById(R.id.buttonTrophy);
@@ -32,14 +38,22 @@ public class MainMenuActivity extends AppCompatActivity {
         Button buttonImpossibleMode = (Button) findViewById(R.id.buttonImpossibleMode);
         showPlayerName = (TextView) findViewById(R.id.show_playername);
 
+        buttonEasyMode.setTypeface(buttonFont);
+        buttonMediumMode.setTypeface(buttonFont);
+        buttonHardMode.setTypeface(buttonFont);
+        buttonImpossibleMode.setTypeface(buttonFont);
+        showPlayerName.setTypeface(mainFont);
+
+        buttonEasyMode.setTextColor(Color.parseColor("#FFF825"));
+        buttonMediumMode.setTextColor(Color.parseColor("#FFF825"));
+        buttonHardMode.setTextColor(Color.parseColor("#FFF825"));
+        buttonImpossibleMode.setTextColor(Color.parseColor("#FFF825"));
+
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
         //Get Pref for PlayerModel Name
         final String playerName = mSharedPreferences.getString("PlayerName", null);
-
-        //Get Pref for PlayerModel Name
-        showPlayerName.setText(playerName);
 
 
         buttonSettings.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +119,8 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         String playerName = mSharedPreferences.getString("PlayerName", null);
-        showPlayerName.setText(playerName);
+        showPlayerName.setTextColor(Color.parseColor("#ff000000"));
+        showPlayerName.setTextSize(26);
+        showPlayerName.setText("Coucou " + playerName + " !");
     }
 }
