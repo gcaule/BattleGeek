@@ -140,38 +140,32 @@ public class AI {
         }
 
         //When a boat is drown, clear SurroudingCoordinates to go back in hunt mode
-        if(resultType == DROWN) {
-            for(Point coordinates : mSurroudingCoordinates) {
+        if (resultType == DROWN) {
+            for (Point coordinates : mSurroudingCoordinates) {
                 mPlayablesCoordinates.add(coordinates);
             }
             mSurroudingCoordinates.clear();
 
-            // TODO supprimer key pour Shape drown
             mShapeMap.remove((mLastResult.getShape()));
-        //    Log.d(TAG, "delete pieces dans hashmap : " + mShapeMap);
-            // TODO verifier si plusieurs types touches
 
             for (HashMap.Entry<Tetromino.Shape, ArrayList<Point>> entry : mShapeMap.entrySet()) {
                 Tetromino.Shape shape = entry.getKey();
                 ArrayList<Point> pointArrayList = entry.getValue();
-                for (Point currentPoint : pointArrayList){
-                   getSurroundingCoordinates(currentPoint);
+                for (Point currentPoint : pointArrayList) {
+                    getSurroundingCoordinates(currentPoint);
                 }
             }
-
-            // TODO : Si plusieurs type
-
             return playLevelI();
         }
 
         //When a result type is touched, go in target mode by creating a map of possible coordinates
+
         if (resultType != MISSED) {
-            if(!mShapeMap.containsKey(resultShape)) {
+            if (!mShapeMap.containsKey(resultShape)) {
                 mShapeMap.put(resultShape, new ArrayList<Point>());
             }
             mShapeMap.get(resultShape).add(mLastPlayedCoordinates);
             getSurroundingCoordinates(mLastPlayedCoordinates);
-     //       Log.d(TAG, "Apres ajout : " + mShapeMap + " Last played : " + mLastPlayedCoordinates);
         }
 
         //Shot in the possible coordinates (target mode)
@@ -180,7 +174,6 @@ public class AI {
         mSurroudingCoordinates.remove(index);
         mLastPlayedCoordinates = coordinates;
         return coordinates;
-
     }
 
     private Point playLevelIII() {
@@ -228,7 +221,6 @@ public class AI {
                 if (p != null) {
                     //rajouter au tableau les dispos
                     mSurroudingCoordinates.add(p);
-                    Log.d(TAG, "mSurroundingcoord: " + " " + mSurroudingCoordinates + "last played coor " + mLastPlayedCoordinates);
                 }
             }
             row++;
