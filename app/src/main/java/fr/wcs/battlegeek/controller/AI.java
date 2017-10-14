@@ -1,11 +1,9 @@
 package fr.wcs.battlegeek.controller;
 
 import android.graphics.Point;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.Result;
@@ -91,7 +89,7 @@ public class AI {
             case III:
                 return playLevelIII();
             case IMPOSSIBLE:
-                return playLevelI();
+                return playLevelImpossible();
         }
         return null;
     }
@@ -121,7 +119,12 @@ public class AI {
             for (int i = 0; i < mPlayerMap.length; i++) {
                 for (int j = 0; j < mPlayerMap[i].length; j++) {
                     if (mPlayerMap[i][j] != ' ') {
-                        mPlayablesCoordinates.add(new Point(j, i));
+                        String symbol = String.valueOf(mPlayerMap[i][j]);
+                        Tetromino.Shape shape = Tetromino.Shape.valueOf(symbol);
+                        if(!mShapeMap.containsKey(shape)) {
+                            mShapeMap.put(shape, new ArrayList<Point>());
+                        }
+                        mShapeMap.get(shape).add(new Point(j,i));
                     }
                 }
             }
@@ -188,6 +191,19 @@ public class AI {
 
     private Point playLevelIII() {
         return playLevelII();
+    }
+
+    private Point playLevelImpossible() {
+        for (Tetromino.Shape shape : mShapeMap.keySet()) {
+            if(!mShapeMap.get(shape).isEmpty()) {
+                ArrayList<Point> shapeCoordinates = mShapeMap.get(shape);
+                Point coordinates = shapeCoordinates.get(0);
+                shapeCoordinates.remove(coordinates);
+                mLastPlayedCoordinates = coordinates;
+                return coordinates;
+            }
+        }
+        return null;
     }
 
     //When a tetromino is touched, get the surrounding coordinates
