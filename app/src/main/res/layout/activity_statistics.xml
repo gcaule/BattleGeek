@@ -37,6 +37,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/home_button"/>
 
+    <Spinner
+        android:id="@+id/spinnerLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewStatistics"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"/>
+
     <GridLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -51,7 +62,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/spinner">
+        app:layout_constraintTop_toBottomOf="@+id/spinnerLevel">
 
         <TextView
             android:id="@+id/textViewLevelGames"
@@ -162,15 +173,5 @@
             android:text="0"/>
 
     </GridLayout>
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/textViewStatistics"
-        app:layout_constraintRight_toRightOf="@+id/textViewStatistics"
-        tools:layout_editor_absoluteY="86dp"/>
 
 </android.support.constraint.ConstraintLayout>
