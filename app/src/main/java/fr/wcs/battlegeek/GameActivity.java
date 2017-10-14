@@ -37,6 +37,7 @@ import fr.wcs.battlegeek.ui.EndGameVictoryFragment;
 import fr.wcs.battlegeek.ui.GameView;
 import fr.wcs.battlegeek.ui.MapView;
 import fr.wcs.battlegeek.ui.QuitGameFragment;
+import fr.wcs.battlegeek.utils.Utils;
 
 import static fr.wcs.battlegeek.R.id.viewFlipper;
 import static fr.wcs.battlegeek.model.Result.Type.DEFEATED;
@@ -49,7 +50,7 @@ import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
  */
 public class GameActivity extends AppCompatActivity {
 
-    private final String TAG = "GameActivity";
+    private final String TAG = Settings.TAG;
 
     private AI.Level mLevel;
     private PlayerModel mPlayer;
@@ -359,6 +360,7 @@ public class GameActivity extends AppCompatActivity {
 
         final Point aiPlayCoordinates = mAI.play();
         final Result iaResult = mGameController.shot(aiPlayCoordinates.x, aiPlayCoordinates.y);
+        Utils.printMap(mGameController.getMap());
         final Result.Type resultType = iaResult.getType();
         Log.d(TAG, "onPlayListener: " + aiPlayCoordinates + " " + iaResult);
 

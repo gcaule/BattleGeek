@@ -45,7 +45,7 @@ public class Tetromino extends Item {
         O ("O"),
         T ("T"),
         J ("J"),
-        L ("J"),
+        L ("L"),
         S ("S"),
         Z ("Z"),
         NONE ("X");

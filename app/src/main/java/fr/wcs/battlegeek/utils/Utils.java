@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.ui.Block;
 
 /**
@@ -11,7 +12,7 @@ import fr.wcs.battlegeek.ui.Block;
  */
 
 public class Utils {
-    private static final String TAG = "MAP";
+    private static final String TAG = Settings.TAG;
 
     public static void printMap(char[][] map) {
         String line = "";

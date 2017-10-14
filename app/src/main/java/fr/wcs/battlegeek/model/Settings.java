@@ -8,6 +8,8 @@ package fr.wcs.battlegeek.model;
  * Utility Class Storing Setting's String Tags, and Globals Values
  */
 public class Settings {
+    public static final String TAG = "BattleGeekDebug";
+
     public static final String FILE_NAME = "Preferences";
     public static final int GRID_SIZE = 10;
     public static final int ANIMATION_FAST = 600;

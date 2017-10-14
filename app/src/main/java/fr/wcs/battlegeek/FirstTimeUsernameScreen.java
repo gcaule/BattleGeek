@@ -21,7 +21,7 @@ import fr.wcs.battlegeek.model.Settings;
 
 public class FirstTimeUsernameScreen extends AppCompatActivity {
 
-    private static final String TAG = "RankingFirebaseActivity";
+    private static final String TAG = Settings.TAG;
     // Firebase instance variables
     private FirebaseDatabase mDatabase;
     private DatabaseReference mUsersDatabaseReference;

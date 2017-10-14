@@ -15,12 +15,13 @@ import java.util.ArrayList;
 import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.model.PlayerModel;
+import fr.wcs.battlegeek.model.Settings;
 
 import static fr.wcs.battlegeek.R.id.textViewLevelGames1;
 import static fr.wcs.battlegeek.R.id.textViewLevelRatio1;
 
 public class StatisticsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private final String TAG = "Statistics";
+    private final String TAG = Settings.TAG;
 
     private PlayerModel mPlayer;
 

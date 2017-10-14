@@ -17,6 +17,7 @@ import fr.wcs.battlegeek.model.Settings;
 
 public class MainMenuActivity extends AppCompatActivity {
 
+    private final String TAG = Settings.TAG;
     SharedPreferences mSharedPreferences;
     TextView showPlayerName;
 

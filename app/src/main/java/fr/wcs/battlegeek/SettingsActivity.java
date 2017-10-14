@@ -29,7 +29,8 @@ import static android.view.View.GONE;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    SharedPreferences mSharedPreferences;
+    private final String TAG = Settings.TAG;
+    private SharedPreferences mSharedPreferences;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mUsersDatabaseReference;
     private ImageView mImageViewMusic;
