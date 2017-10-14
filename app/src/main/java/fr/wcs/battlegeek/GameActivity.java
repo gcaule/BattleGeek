@@ -250,11 +250,11 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onPlayListener(int x, int y) {
 
-                if(!canPlay) {
+                if (!canPlay) {
                     return;
                 }
 
-                if(mGameController.alreadyPlayed(x, y)) {
+                if (mGameController.alreadyPlayed(x, y)) {
                     showToast(R.string.alreadyPlayedMessage);
                     return;
                 }
@@ -279,6 +279,7 @@ public class GameActivity extends AppCompatActivity {
 
     /**
      * Method handling the Player's Game Part
+     *
      * @param x
      * @param y
      */
@@ -346,18 +347,19 @@ public class GameActivity extends AppCompatActivity {
 
         mAI.setResult(iaResult);
 
-        new CountDownTimer(mAnimationsSpeed * 3 , mAnimationsSpeed) {
+
+        new CountDownTimer(mAnimationsSpeed * 3, mAnimationsSpeed) {
 
             private int cursor = 0;
+
             @Override
             public void onTick(long l) {
-                if(cursor == 1) {
+                if (cursor == 1) {
                     mSoundController.playSound(resultType);
-                    if(resultType == MISSED) {
+                    if (resultType == MISSED) {
                         mMapView.setPlouf(aiPlayCoordinates.x, aiPlayCoordinates.y);
                         mTextViewAI.setText(R.string.missed);
-                    }
-                    else {
+                    } else {
                         mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
                         mTextViewAI.setText(R.string.AITouched);
                         if (resultType == DROWN) {
@@ -367,11 +369,12 @@ public class GameActivity extends AppCompatActivity {
                 }
                 cursor++;
             }
+
             @Override
             public void onFinish() {
 
                 mButtonSwitchView.setVisibility(View.VISIBLE);
-                if(resultType == MISSED) {
+                if (resultType == MISSED) {
                     mTextViewAI.setText(R.string.AITurn);
                     canPlay = true;
                     mViewFlipper.showPrevious();
@@ -386,6 +389,7 @@ public class GameActivity extends AppCompatActivity {
                     endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
                     endGameDefeatFragment.setCancelable(false);
                 }
+
                 else if(!mExit){
                     aiPlay();
                 }
@@ -401,10 +405,11 @@ public class GameActivity extends AppCompatActivity {
 
     /**
      * Method Showing a Toast, avoiding Latency
+     *
      * @param stringResource
      */
     private void showToast(int stringResource) {
-        if(mToast == null) {
+        if (mToast == null) {
             mToast = Toast.makeText(mContext, getString(stringResource), Toast.LENGTH_SHORT);
         }
         mToast.setText(getString(stringResource));
