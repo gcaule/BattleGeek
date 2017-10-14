@@ -3,6 +3,7 @@ package fr.wcs.battlegeek.controller;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -31,6 +32,9 @@ public class SoundController {
     // Soundpool object that will handle the sound
     private SoundPool mSoundPool;
 
+    // MediaPlayer for Music
+    private MediaPlayer mMediaPlayer;
+
     // Some sound IDs
     // TODO: Move all the sound in some lists
     private int soundID_boom = -1;
@@ -42,7 +46,6 @@ public class SoundController {
 
     // Audio Streams List
     private ArrayList<Integer> mEffectsStreams = new ArrayList<>();
-    private ArrayList<Integer> mMusicStreams = new ArrayList<>();
 
     // Preferences reference
     private SharedPreferences mSharedPreferences;
@@ -78,8 +81,11 @@ public class SoundController {
         soundID_boom2 = mSoundPool.load(mContext, R.raw.longbomb1, 1);
         soundID_drown = mSoundPool.load(mContext, R.raw.wilhelm_scream, 1);
 
-        musicID = mSoundPool.load(mContext, R.raw.music_brahms, 1);
+        musicID = R.raw.music_brahms;
 
+        // Music Player
+        mMediaPlayer = MediaPlayer.create(mContext, musicID);
+        mMediaPlayer.setLooping(true);
     }
 
     /**
@@ -125,7 +131,7 @@ public class SoundController {
     }
 
     public void setEffectsVolume(int volume) {
-        float vol = (float) mSharedPreferences.getInt(Settings.EFFECTS_TAG, 1) / 100 ;
+        float vol = (float) volume / 100 ;
         for(int stream : mEffectsStreams) {
             mSoundPool.setVolume(stream, vol, vol);
         }
@@ -133,28 +139,16 @@ public class SoundController {
 
     public void playMusic(){
         final float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, 1) / 100 ;
-        Log.d(TAG, "playMusic() called " + volume);
-        mSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            @Override
-            public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                int musicStream = mSoundPool.play(musicID, volume, volume, 1, -1, 1);
-                if( ! mMusicStreams.contains(musicStream)) mMusicStreams.add(musicStream);
-            }
-        });
+        mMediaPlayer.setVolume(volume, volume);
+        mMediaPlayer.start();
     }
 
     public void stopMusic(){
-        for(int stream : mMusicStreams) {
-            mSoundPool.stop(stream);
-        }
-        mMusicStreams.clear();
+        mMediaPlayer.stop();
     }
 
     public void setMusicVolume(int volume){
-        float vol = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, 1) / 100 ;
-        Log.d(TAG, "setMusicVolume() called with: volume = [" + volume + "] " + mMusicStreams);
-        for(int stream : mMusicStreams) {
-            mSoundPool.setVolume(stream, vol, vol);
-        }
+        float vol = (float) volume / 100 ;
+        mMediaPlayer.setVolume(vol, vol);
     }
 }
