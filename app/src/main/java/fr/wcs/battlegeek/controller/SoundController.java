@@ -42,6 +42,7 @@ public class SoundController {
     private int soundID_boom2 = -1;
 
     private int musicID = -1;
+    private float mMusicMixRatio = 0.09f;
 
     // Audio Streams List
     private ArrayList<Integer> mEffectsStreams = new ArrayList<>();
@@ -80,7 +81,8 @@ public class SoundController {
         soundID_boom2 = mSoundPool.load(mContext, R.raw.longbomb1, 1);
         soundID_drown = mSoundPool.load(mContext, R.raw.wilhelm_scream, 1);
 
-        musicID = R.raw.music_brahms;
+        //musicID = R.raw.music_brahms;
+        musicID = R.raw.stupid;
 
         // Music Player
         mMediaPlayer = MediaPlayer.create(mContext, musicID);
@@ -111,7 +113,7 @@ public class SoundController {
                 break;
             case VICTORY:
                 mSoundPool.play(soundID_boom, volume, volume, 0, 0, 1);
-                soundID = soundID_boom;
+                soundID = soundID_drown;
                 break;
             default:
                 soundID = -1;
@@ -130,14 +132,14 @@ public class SoundController {
     }
 
     public void setEffectsVolume(int volume) {
-        float vol = (float) volume / 100 ;
+        float vol = (float) volume / 100 * 0.7f;
         for(int stream : mEffectsStreams) {
             mSoundPool.setVolume(stream, vol, vol);
         }
     }
 
     public void playMusic(){
-        final float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, 50) / 100 ;
+        final float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, 50) / 100 * mMusicMixRatio;
         mMediaPlayer.setVolume(volume, volume);
         mMediaPlayer.start();
     }
@@ -147,7 +149,7 @@ public class SoundController {
     }
 
     public void setMusicVolume(int volume){
-        float vol = (float) volume / 100 ;
+        float vol = (float) volume / 100 * mMusicMixRatio;
         mMediaPlayer.setVolume(vol, vol);
     }
 }

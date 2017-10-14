@@ -53,4 +53,5 @@
     <string name="bestTime">Meilleur Temps</string>
     <string name="levelTime">Total Temps</string>
     <string name="totalTime">Temps Total</string>
+    <string name="AIVictory">Aie! Perdu !</string>
 </resources>

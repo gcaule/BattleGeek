@@ -2,19 +2,16 @@ package fr.wcs.battlegeek;
 
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v7.app.AlertDialog;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,8 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.google.gson.Gson;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import fr.wcs.battlegeek.controller.AI;
@@ -41,7 +38,6 @@ import fr.wcs.battlegeek.ui.GameView;
 import fr.wcs.battlegeek.ui.MapView;
 import fr.wcs.battlegeek.ui.QuitGameFragment;
 
-import static android.R.attr.start;
 import static fr.wcs.battlegeek.R.id.viewFlipper;
 import static fr.wcs.battlegeek.model.Result.Type.DEFEATED;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
@@ -77,6 +73,7 @@ public class GameActivity extends AppCompatActivity {
     private ImageButton mImageButtonSpeed;
     private ImageButton mImageButtonMusic;
     private ImageButton mImageButtonEffects;
+    private TextView mtextViewTimer;
 
     private SharedPreferences mSharedPreferences;
     private int mAnimationsSpeed;
@@ -233,6 +230,8 @@ public class GameActivity extends AppCompatActivity {
 
                 mTextViewAI.setText(R.string.AITurn);
                 mStartTime = System.currentTimeMillis();
+                // TODO : Set Timer
+                startTimer();
             }
 
         });
@@ -283,6 +282,8 @@ public class GameActivity extends AppCompatActivity {
         Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/DirtyClassicMachine.ttf");
 
         TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
+
+        mtextViewTimer = (TextView) findViewById(R.id.textViewTimer);
 
         mTextViewAI.setTypeface(mainFont);
         mTextViewPlayer.setTypeface(mainFont);
@@ -381,6 +382,9 @@ public class GameActivity extends AppCompatActivity {
                         if (resultType == DROWN) {
                             mTextViewAI.setText(R.string.AIDrown);
                         }
+                        if (resultType == VICTORY) {
+                            mTextViewAI.setText(R.string.AIVictory);
+                        }
                     }
                 }
                 cursor++;
@@ -417,6 +421,21 @@ public class GameActivity extends AppCompatActivity {
     private int getPlayedTime() {
         long time = System.currentTimeMillis() - mStartTime;
         return (int) TimeUnit.MILLISECONDS.toSeconds(time);
+    }
+
+    private void startTimer() {
+        /*mtextViewTimer.setVisibility(View.VISIBLE);
+        int counter = 0;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                long time = mStartTime - System.currentTimeMillis();
+                Date date = new Date(time * 1000L);
+                SimpleDateFormat df = new SimpleDateFormat("mm:ss"); // HH for 0-23
+                String stringTime = df.format(date);
+                mtextViewTimer.setText(stringTime);
+            }
+        }, 1000);*/
     }
 
     /**
