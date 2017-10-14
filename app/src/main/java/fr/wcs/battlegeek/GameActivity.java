@@ -211,7 +211,7 @@ public class GameActivity extends AppCompatActivity {
                 mGameController = new GameController(mapData);
                 mMapView.setMode(MapView.Mode.PLAY);
                 mAI = new AI();
-                if (mLevel == AI.Level.IMPOSSIBLE) {
+                if (mLevel == AI.Level.III || mLevel == AI.Level.IMPOSSIBLE) {
                     mAI.setPlayerMap(mapData);
                 }
                 mAI.setLevel(mLevel);

@@ -1,8 +1,10 @@
 package fr.wcs.battlegeek.controller;
 
 import android.graphics.Point;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import fr.wcs.battlegeek.model.Maps;
@@ -12,6 +14,7 @@ import fr.wcs.battlegeek.ui.Tetromino;
 
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
+import static fr.wcs.battlegeek.ui.Tetromino.Shape.NONE;
 
 /**
  * Created by adphi on 03/10/17.
@@ -39,10 +42,10 @@ public class AI {
         }
     }
 
-    private final String TAG = "AI";
+    private final String TAG = Settings.TAG;
     private Level mLevel;
     private Point mLastPlayedCoordinates;
-    private Result mLastResult = new Result(Tetromino.Shape.NONE, MISSED);
+    private Result mLastResult = new Result(NONE, MISSED);
 
 
     private GameController mGameControler;
@@ -50,6 +53,7 @@ public class AI {
     private char[][] mPlayerMap;
     private ArrayList<Point> mSurroudingCoordinates = new ArrayList<>();
     private HashMap<Tetromino.Shape, ArrayList<Point>> mShapeMap = new HashMap<>();
+    private Tetromino.Shape mLastTouchedShape;
 
     /**
      * AI Constructor
@@ -113,9 +117,8 @@ public class AI {
     public void setLevel(Level level) {
         mLevel = level;
         // Impossible Level Strategy
-        if (level == Level.IMPOSSIBLE && mPlayerMap != null) {
+        if ((level == Level.III || level == Level.IMPOSSIBLE) && mPlayerMap != null) {
             // We only need to get the coordinates of all the Items in the Player's Map
-            mPlayablesCoordinates.clear();
             for (int i = 0; i < mPlayerMap.length; i++) {
                 for (int j = 0; j < mPlayerMap[i].length; j++) {
                     if (mPlayerMap[i][j] != ' ') {
@@ -124,10 +127,12 @@ public class AI {
                         if(!mShapeMap.containsKey(shape)) {
                             mShapeMap.put(shape, new ArrayList<Point>());
                         }
-                        mShapeMap.get(shape).add(new Point(j,i));
+                        Point point = getPointFromPlayableCoordinates(j,i);
+                        mShapeMap.get(shape).add(point);
                     }
                 }
             }
+            Log.d(TAG, "setLevel: " + mShapeMap);
         }
     }
 
@@ -190,6 +195,59 @@ public class AI {
     }
 
     private Point playLevelIII() {
+        if(mLastPlayedCoordinates == null) {
+            return playLevelI();
+        }
+
+        int random = (int)(Math.random() * 100);
+        Tetromino.Shape lastShape = mLastResult.getShape();
+        Result.Type lastResultType = mLastResult.getType();
+
+        if(lastResultType == DROWN) {
+            mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+            mSurroudingCoordinates.clear();
+        }
+
+        if(lastShape != NONE && lastResultType != DROWN) {
+            mLastTouchedShape = lastShape;
+        }
+
+        if(lastResultType == DROWN) {
+            mLastTouchedShape = null;
+        }
+
+        if (random < Settings.LEVEL_III_PROBABILITY && mLastTouchedShape != null) {
+            ArrayList<Point> shapeCoordinates = mShapeMap.get(mLastTouchedShape);
+            mLastPlayedCoordinates = getRandomPoint(shapeCoordinates);
+            shapeCoordinates.remove(mLastPlayedCoordinates);
+            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+            Log.d(TAG, "playLevelIII: PlayableCoordinates Size : " + mPlayablesCoordinates.size());
+            return mLastPlayedCoordinates;
+        }
+        else if(random < Settings.LEVEL_III_PROBABILITY && mLastTouchedShape == null) {
+            Tetromino.Shape[] shapes = Tetromino.Shape.values();
+            shapes = Arrays.copyOf(shapes, shapes.length - 1);
+            int randomIndex = (int)(Math.random() * (shapes.length - 1));
+            Tetromino.Shape randomShape = shapes[randomIndex];
+            mLastPlayedCoordinates = getRandomPoint(mShapeMap.get(randomShape));
+            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+            return mLastPlayedCoordinates;
+        }
+
+        else if(mLastTouchedShape != NONE && mSurroudingCoordinates.isEmpty()){
+            getSurroundingCoordinates(mLastPlayedCoordinates);
+            mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
+            return mLastPlayedCoordinates;
+        }
+
+        else if (!mSurroudingCoordinates.isEmpty() && lastResultType != MISSED) {
+            mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
+            return mLastPlayedCoordinates;
+        }
+
+        else
+
+
         return playLevelII();
     }
 
@@ -197,10 +255,9 @@ public class AI {
         for (Tetromino.Shape shape : mShapeMap.keySet()) {
             if(!mShapeMap.get(shape).isEmpty()) {
                 ArrayList<Point> shapeCoordinates = mShapeMap.get(shape);
-                Point coordinates = shapeCoordinates.get(0);
-                shapeCoordinates.remove(coordinates);
-                mLastPlayedCoordinates = coordinates;
-                return coordinates;
+                mLastPlayedCoordinates = shapeCoordinates.get(0);
+                shapeCoordinates.remove(mLastPlayedCoordinates);
+                return mLastPlayedCoordinates;
             }
         }
         return null;
@@ -263,6 +320,13 @@ public class AI {
             }
         }
         return null;
+    }
+
+    private Point getRandomPoint(ArrayList<Point> array) {
+        int index = (int)(Math.random() * (array.size() - 1));
+        Point returnedPoint = array.get(index);
+        array.remove(index);
+        return returnedPoint;
     }
 
     /**

@@ -37,6 +37,7 @@ public class StatisticsActivity extends AppCompatActivity implements AdapterView
         spinnerLevels.add(getString(R.string.button_hard));
         spinnerLevels.add(getString(R.string.button_impossible));
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerLevels);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
         spinner.setOnItemSelectedListener(StatisticsActivity.this);
 

@@ -25,4 +25,6 @@ public class Settings {
 
     public static final String UID = "uidFirebase";
     public static final String PLAYER_NAME = "PlayerName";
+
+    public static final int LEVEL_III_PROBABILITY = 70;
 }
