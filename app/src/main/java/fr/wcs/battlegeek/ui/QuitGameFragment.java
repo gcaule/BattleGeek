@@ -16,8 +16,6 @@ import fr.wcs.battlegeek.R;
 
 public class QuitGameFragment extends DialogFragment {
 
-    private boolean mShouldExit = false;
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -27,7 +25,6 @@ public class QuitGameFragment extends DialogFragment {
         builder.setPositiveButton(R.string.ok_exit, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                mShouldExit = true;
                 getActivity().finish();
             }
         });
@@ -43,8 +40,5 @@ public class QuitGameFragment extends DialogFragment {
         quitGameMessage.setGravity(Gravity.CENTER);
 
         return dialog;
-    }
-    public boolean shouldExit() {
-        return mShouldExit;
     }
 }

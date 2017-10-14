@@ -8,6 +8,8 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import fr.wcs.battlegeek.R;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
@@ -38,6 +40,10 @@ public class SoundController {
 
     private int musicID = -1;
 
+    // Audio Streams List
+    private ArrayList<Integer> mEffectsStreams = new ArrayList<>();
+    private ArrayList<Integer> mMusicStreams = new ArrayList<>();
+
     // Preferences reference
     private SharedPreferences mSharedPreferences;
 
@@ -65,6 +71,7 @@ public class SoundController {
         // Create the SoundPool
         mSoundPool = soundPoolBuilder.build();
 
+
         // Sound's ID definition from the Raw Resources
         soundID_boom = mSoundPool.load(mContext, R.raw.xplod1, 1);
         soundID_plouf = mSoundPool.load(mContext, R.raw.ploof1, 1);
@@ -83,8 +90,7 @@ public class SoundController {
         // Get the preferred Volume
         float volume = (float) (mSharedPreferences.getInt(Settings.EFFECTS_TAG, 1) - 1) / 100 ;
         if (volume <= 0) return;
-        Log.d(TAG, "playSound() called with: result = [" + result + "]" + " Volume : " + volume);
-        int soundID = -1;
+        int soundID;
         // Get the Sound ID according to the Result's Type
         // TODO : Round Robin (Not play two similar sounds right after)
         switch (result) {
@@ -99,11 +105,56 @@ public class SoundController {
                 soundID = soundID_drown;
                 break;
             case VICTORY:
+                mSoundPool.play(soundID_boom, volume, volume, 0, 0, 1);
                 soundID = soundID_boom;
                 break;
+            default:
+                soundID = -1;
+                break;
         }
-
         // Play the sound
-        mSoundPool.play(soundID, volume, volume, 0, 0, 1);
+        int stream = mSoundPool.play(soundID, volume, volume, 0, 0, 1);
+        if(! mEffectsStreams.contains(stream)) mEffectsStreams.add(stream);
+    }
+
+    public void stopEffects() {
+        for(int stream : mEffectsStreams) {
+            mSoundPool.stop(stream);
+        }
+        mEffectsStreams.clear();
+    }
+
+    public void setEffectsVolume(int volume) {
+        float vol = (float) mSharedPreferences.getInt(Settings.EFFECTS_TAG, 1) / 100 ;
+        for(int stream : mEffectsStreams) {
+            mSoundPool.setVolume(stream, vol, vol);
+        }
+    }
+
+    public void playMusic(){
+        final float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, 1) / 100 ;
+        Log.d(TAG, "playMusic() called " + volume);
+        mSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                int musicStream = mSoundPool.play(musicID, volume, volume, 1, -1, 1);
+                if( ! mMusicStreams.contains(musicStream)) mMusicStreams.add(musicStream);
+            }
+        });
+    }
+
+    public void stopMusic(){
+        for(int stream : mMusicStreams) {
+            mSoundPool.stop(stream);
+        }
+        mMusicStreams.clear();
+    }
+
+    public void setMusicVolume(int volume){
+        float vol = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, 1) / 100 ;
+        Log.d(TAG, "setMusicVolume() called with: volume = [" + volume + "] " + mMusicStreams);
+        for(int stream : mMusicStreams) {
+            mSoundPool.setVolume(stream, vol, vol);
+        }
     }
 }

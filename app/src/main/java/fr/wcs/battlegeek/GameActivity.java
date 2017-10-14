@@ -138,6 +138,9 @@ public class GameActivity extends AppCompatActivity {
         mImageButtonMusic = (ImageButton) findViewById(R.id.imageButtonMusic);
         mVolumeMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, 50);
 
+        // Play Music
+        mSoundController.playMusic();
+
         setMusicIcon(mVolumeMusic);
         mImageButtonMusic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +159,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 mSharedPreferences.edit().putInt(Settings.MUSIC_TAG, mVolumeMusic).apply();
                 setMusicIcon(mVolumeMusic);
+                mSoundController.setMusicVolume(mVolumeMusic);
             }
         });
 
@@ -179,6 +183,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 mSharedPreferences.edit().putInt(Settings.EFFECTS_TAG, mVolumeEffects).apply();
                 setEffectsIcon(mVolumeEffects);
+                mSoundController.setEffectsVolume(mVolumeEffects);
             }
         });
 
@@ -481,7 +486,14 @@ public class GameActivity extends AppCompatActivity {
         QuitGameFragment quitGameFragment = new QuitGameFragment();
         quitGameFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
         quitGameFragment.setCancelable(false);
-        mExit = quitGameFragment.shouldExit();
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mSoundController.stopMusic();
+        mSoundController.stopEffects();
+        mExit = true;
     }
 }
