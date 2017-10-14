@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -94,7 +93,7 @@ public class SoundController {
      */
     public void playSound(Result.Type result){
         // Get the preferred Volume
-        float volume = (float) (mSharedPreferences.getInt(Settings.EFFECTS_TAG, 1) - 1) / 100 ;
+        float volume = (float) mSharedPreferences.getInt(Settings.EFFECTS_TAG, 1) / 100 ;
         if (volume <= 0) return;
         int soundID;
         // Get the Sound ID according to the Result's Type
@@ -138,7 +137,7 @@ public class SoundController {
     }
 
     public void playMusic(){
-        final float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, 1) / 100 ;
+        final float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, 50) / 100 ;
         mMediaPlayer.setVolume(volume, volume);
         mMediaPlayer.start();
     }

@@ -136,7 +136,7 @@ public class GameActivity extends AppCompatActivity {
         mSoundController = new SoundController(mContext);
 
         mImageButtonMusic = (ImageButton) findViewById(R.id.imageButtonMusic);
-        mVolumeMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, 50);
+        mVolumeMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT);
 
         // Play Music
         mSoundController.playMusic();
@@ -164,7 +164,7 @@ public class GameActivity extends AppCompatActivity {
         });
 
         mImageButtonEffects = (ImageButton) findViewById(R.id.imageButtonEffects);
-        mVolumeEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG, 50);
+        mVolumeEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG, Settings.EFFECTS_DEFAULT);
         setEffectsIcon(mVolumeEffects);
         mImageButtonEffects.setOnClickListener(new View.OnClickListener() {
             @Override

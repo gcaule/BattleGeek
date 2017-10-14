@@ -14,8 +14,13 @@ public class Settings {
     public static final int ANIMATION_MEDIUM = 1200;
     public static final int ANIMATION_SLOW = 1800;
     public static final String ANIMATION_TAG = "AnimationsSpeed";
+
     public static final String MUSIC_TAG = "ValueMusic";
+    public static final int MUSIC_DEFAULT = 50;
+
     public static final String EFFECTS_TAG = "ValueEffects";
+    public static final int EFFECTS_DEFAULT = 50;
+
     public static final String UID = "uidFirebase";
     public static final String PLAYER_NAME = "PlayerName";
 }

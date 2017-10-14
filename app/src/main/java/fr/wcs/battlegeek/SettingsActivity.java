@@ -94,7 +94,7 @@ public class SettingsActivity extends AppCompatActivity {
         mUsersDatabaseReference = mDatabase.getReference().child("Users").child(uidFirebase).child("playerName");
 
         //Get Pref for Music Volume
-        int valueMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG,0);
+        int valueMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT);
         seekBarMusic.setProgress(valueMusic);
         seekBarValueMusic.setText(String.valueOf(valueMusic));
 
@@ -102,7 +102,7 @@ public class SettingsActivity extends AppCompatActivity {
         setMusicIcon(valueMusic);
 
         //Get Pref for Effects Volume
-        int valueEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG,0);
+        int valueEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG, Settings.EFFECTS_DEFAULT);
         seekBarEffects.setProgress(valueEffects);
         seekBarValueEffects.setText(String.valueOf(valueEffects));
 
