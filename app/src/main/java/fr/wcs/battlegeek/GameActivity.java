@@ -113,7 +113,7 @@ public class GameActivity extends AppCompatActivity {
 
         // Settings
         mImageButtonSpeed = (ImageButton) findViewById(R.id.imageButtonSpeed);
-        mAnimationsSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, Settings.ANIMATION_MEDIUM);
+        mAnimationsSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, Settings.ANIMATION_DEFAULT);
         setAnimationIcon(mAnimationsSpeed);
         mImageButtonSpeed.setOnClickListener(new View.OnClickListener() {
             @Override

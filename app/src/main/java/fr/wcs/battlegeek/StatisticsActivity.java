@@ -2,7 +2,6 @@ package fr.wcs.battlegeek;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -62,7 +61,6 @@ public class StatisticsActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.d(TAG, "onItemSelected() called with: adapterView = [" + adapterView + "], view = [" + view + "], i = [" + i + "], l = [" + l + "]");
         AI.Level[] levels = new AI.Level[] {AI.Level.I, AI.Level.II, AI.Level.III, AI.Level.IMPOSSIBLE};
 
         // Game Parts

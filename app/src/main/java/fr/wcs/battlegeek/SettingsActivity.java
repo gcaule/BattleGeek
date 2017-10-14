@@ -123,118 +123,115 @@ public class SettingsActivity extends AppCompatActivity {
         inputPlayerName.setText(playerName);
 
         // Get Pref for Animations Speed
-        int valueAnimationSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, 0);
-        if (valueAnimationSpeed != 0) {
-            switch (valueAnimationSpeed) {
-                case Settings.ANIMATION_SLOW:
-                    mRadioButtonAnimationSlow.setChecked(true);
-                    mRadioButtonAnimationMedium.setChecked(false);
-                    mRadioButtonAnimationFast.setChecked(false);
-                    break;
-                case Settings.ANIMATION_MEDIUM:
-                    mRadioButtonAnimationSlow.setChecked(false);
-                    mRadioButtonAnimationMedium.setChecked(true);
-                    mRadioButtonAnimationFast.setChecked(false);
-                    break;
-                case Settings.ANIMATION_FAST:
-                    mRadioButtonAnimationSlow.setChecked(false);
-                    mRadioButtonAnimationMedium.setChecked(false);
-                    mRadioButtonAnimationFast.setChecked(true);
-                    break;
-            }
-        }
-        else {
-            mSharedPreferences.edit().putInt(Settings.ANIMATION_TAG, Settings.ANIMATION_MEDIUM).apply();
+        int valueAnimationSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, Settings.ANIMATION_DEFAULT);
+
+        switch (valueAnimationSpeed) {
+            case Settings.ANIMATION_SLOW:
+                mRadioButtonAnimationSlow.setChecked(true);
+                mRadioButtonAnimationMedium.setChecked(false);
+                mRadioButtonAnimationFast.setChecked(false);
+                break;
+            case Settings.ANIMATION_MEDIUM:
+                mRadioButtonAnimationSlow.setChecked(false);
+                mRadioButtonAnimationMedium.setChecked(true);
+                mRadioButtonAnimationFast.setChecked(false);
+                break;
+            case Settings.ANIMATION_FAST:
+                mRadioButtonAnimationSlow.setChecked(false);
+                mRadioButtonAnimationMedium.setChecked(false);
+                mRadioButtonAnimationFast.setChecked(true);
+                break;
         }
 
-        //Seekbar listener for music + Display value
+
+    //Seekbar listener for music + Display value
         seekBarMusic.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
-                // TODO Auto-generated method stub
-                seekBarValueMusic.setText(String.valueOf(progress));
-                int valueMusic = seekBarMusic.getProgress();
-                mSharedPreferences.edit().putInt(Settings.MUSIC_TAG, valueMusic).apply();
-                setMusicIcon(valueMusic);
-            }
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress,
+        boolean fromUser) {
+            // TODO Auto-generated method stub
+            seekBarValueMusic.setText(String.valueOf(progress));
+            int valueMusic = seekBarMusic.getProgress();
+            mSharedPreferences.edit().putInt(Settings.MUSIC_TAG, valueMusic).apply();
+            setMusicIcon(valueMusic);
+        }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-            }
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+            // TODO Auto-generated method stub
+        }
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-            }
-        });
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            // TODO Auto-generated method stub
+        }
+    });
 
-        //Seekbar listener for effects + display value
+    //Seekbar listener for effects + display value
         seekBarEffects.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
-                // TODO Auto-generated method stub
-                seekBarValueEffects.setText(String.valueOf(progress));
-                int valueEffects = seekBarEffects.getProgress();
-                mSharedPreferences.edit().putInt(Settings.EFFECTS_TAG, valueEffects).apply();
-                setEffectIcon(valueEffects);
-            }
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress,
+        boolean fromUser) {
+            // TODO Auto-generated method stub
+            seekBarValueEffects.setText(String.valueOf(progress));
+            int valueEffects = seekBarEffects.getProgress();
+            mSharedPreferences.edit().putInt(Settings.EFFECTS_TAG, valueEffects).apply();
+            setEffectIcon(valueEffects);
+        }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-            }
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+            // TODO Auto-generated method stub
+        }
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-            }
-        });
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            // TODO Auto-generated method stub
+        }
+    });
 
         inputPlayerName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
-            @Override
-            public void afterTextChanged(Editable editable) {
-                buttonSave.setVisibility(View.VISIBLE);
-            }
-        });
+        @Override
+        public void afterTextChanged(Editable editable) {
+            buttonSave.setVisibility(View.VISIBLE);
+        }
+    });
 
-        //Button to go to home menu
+    //Button to go to home menu
         buttonHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
+        @Override
+        public void onClick(View v) {
+            onBackPressed();
+        }
 
-        });
+    });
 
-        //Button to save user preferences
+    //Button to save user preferences
          buttonSave.setOnClickListener(new View.OnClickListener() {
-             @Override
-           public void onClick(View v) {
-                 final String name = inputPlayerName.getText().toString();
-                 if (name.isEmpty()){
-                     Toast.makeText(SettingsActivity.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT).show();
-                 }
-                 else {
-                     mSharedPreferences.edit().putString(Settings.PLAYER_NAME, name).commit();
-                     mPlayerModel.setName(name);
-                     dataController.updatePlayer(mPlayerModel);
-                     buttonSave.setVisibility(GONE);
-                     Toast.makeText(SettingsActivity.this, R.string.saved_parameters, Toast.LENGTH_SHORT).show();
-                 }
-             }
-        });
-    }
+        @Override
+        public void onClick(View v) {
+            final String name = inputPlayerName.getText().toString();
+            if (name.isEmpty()){
+                Toast.makeText(SettingsActivity.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                mSharedPreferences.edit().putString(Settings.PLAYER_NAME, name).commit();
+                mPlayerModel.setName(name);
+                dataController.updatePlayer(mPlayerModel);
+                buttonSave.setVisibility(GONE);
+                Toast.makeText(SettingsActivity.this, R.string.saved_parameters, Toast.LENGTH_SHORT).show();
+            }
+        }
+    });
+}
 
     // RadioButtons Listener
     public void onRadioButtonAnimationSpeedClicked(View view) {
