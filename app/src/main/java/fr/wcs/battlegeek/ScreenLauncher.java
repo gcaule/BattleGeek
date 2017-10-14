@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -53,6 +54,9 @@ public class ScreenLauncher extends AppCompatActivity {
         //Get Pref for PlayerModel Name
         final String uid = mSharedPreferences.getString(Settings.UID, null);
         shouldRegister = uid == null;
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.setPersistenceEnabled(true);
 
         //Si Playername dans sharedpref vide, allez sur register. Sinon allez à MainActiv
         mTimer = new Timer();

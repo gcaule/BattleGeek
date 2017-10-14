@@ -68,7 +68,6 @@ public class FirstTimeUsernameScreen extends AppCompatActivity {
                     PlayerModel newPlayer = new PlayerModel(playerName.getText().toString());
 
                     mDatabase = FirebaseDatabase.getInstance();
-                    mDatabase.setPersistenceEnabled(true);
                     mUsersDatabaseReference = mDatabase.getReference().child("Users");
                     uid = mUsersDatabaseReference.child("Users").push().getKey();
                     mUsersDatabaseReference.child(uid).setValue(newPlayer);
