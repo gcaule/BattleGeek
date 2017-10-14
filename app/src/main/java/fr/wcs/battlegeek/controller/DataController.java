@@ -38,6 +38,7 @@ public class DataController {
         // FireBase
         mDatabase = FirebaseDatabase.getInstance();
         mUsersDatabaseReference = mDatabase.getReference().child("Users").child(mPlayerUID);
+        mUsersDatabaseReference.keepSynced(true);
 
         mUsersDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override

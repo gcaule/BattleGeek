@@ -51,7 +51,7 @@
     <string name="victory_defeats">Victoires/Defaites</string>
     <string name="ratio">Ratio</string>
     <string name="bestTime">Meilleur Temps</string>
-    <string name="levelTime">Total Temps</string>
+    <string name="levelTime">Temps Level</string>
     <string name="totalTime">Temps Total</string>
     <string name="AIVictory">Aie! Perdu !</string>
 </resources>

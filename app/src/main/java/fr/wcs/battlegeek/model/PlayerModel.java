@@ -10,10 +10,10 @@ import fr.wcs.battlegeek.controller.AI;
 public class PlayerModel {
 
     private String name;
-    private int totalGameTime = 0;
+    private long totalGameTime = 0;
 
-    private HashMap<String, Integer> gameTime = new HashMap<>();
-    private HashMap<String, Integer> bestTime = new HashMap<>();
+    private HashMap<String, Long> gameTime = new HashMap<>();
+    private HashMap<String, Long> bestTime = new HashMap<>();
     private HashMap<String, Integer> gameParts = new HashMap<>();
     private HashMap<String, Integer> victories = new HashMap<>();
     private HashMap<String, Integer> defeats = new HashMap<>();
@@ -30,8 +30,8 @@ public class PlayerModel {
     private void init() {
         this.totalGameTime = 0;
         for(AI.Level level : AI.Level.values()) {
-            this.gameTime.put(level.toString(), 0);
-            this.bestTime.put(level.toString(), 2_147_483_647);
+            this.gameTime.put(level.toString(), 0L);
+            this.bestTime.put(level.toString(), 2_147_483_647L);
             this.gameParts.put(level.toString(), 0);
             this.victories.put(level.toString(), 0);
             this.defeats.put(level.toString(), 0);
@@ -51,9 +51,9 @@ public class PlayerModel {
         this.updateRatio(level);
     }
 
-    public void addGameTime(AI.Level level, Result.Type result, int time) {
+    public void addGameTime(AI.Level level, Result.Type result, long time) {
         this.totalGameTime += time;
-        int lastBestTime = this.bestTime.get(level.toString());
+        long lastBestTime = this.bestTime.get(level.toString());
         this.bestTime.put(level.toString(), time < lastBestTime && result == Result.Type.VICTORY ? time : lastBestTime);
         this.gameTime.put(level.toString(), gameTime.get(level.toString()) + time);
     }
@@ -71,7 +71,7 @@ public class PlayerModel {
         this.name = name;
     }
 
-    public int getTotalGameTime() {
+    public long getTotalGameTime() {
         return totalGameTime;
     }
 
@@ -79,19 +79,19 @@ public class PlayerModel {
         this.totalGameTime = totalGameTime;
     }
 
-    public HashMap<String, Integer> getGameTime() {
+    public HashMap<String, Long> getGameTime() {
         return gameTime;
     }
 
-    public void setGameTime(HashMap<String, Integer> gameTime) {
+    public void setGameTime(HashMap<String, Long> gameTime) {
         this.gameTime = gameTime;
     }
 
-    public HashMap<String, Integer> getBestTime() {
+    public HashMap<String, Long> getBestTime() {
         return bestTime;
     }
 
-    public void setBestTime(HashMap<String, Integer> bestTime) {
+    public void setBestTime(HashMap<String, Long> bestTime) {
         this.bestTime = bestTime;
     }
 

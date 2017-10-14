@@ -16,6 +16,7 @@ import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Settings;
+import fr.wcs.battlegeek.utils.Utils;
 
 import static fr.wcs.battlegeek.R.id.textViewLevelGames1;
 import static fr.wcs.battlegeek.R.id.textViewLevelRatio1;
@@ -79,16 +80,18 @@ public class StatisticsActivity extends AppCompatActivity implements AdapterView
 
         // Best Time
         TextView textViewLevelBestTime = (TextView) findViewById(R.id.textViewLevelBestTime1);
-        String time1 = mPlayer.getBestTime().get(String.valueOf(levels[i])).toString();
-        textViewLevelBestTime.setText(time1.equals("2147483647") ? "-" : time1 + "s");
+        long bestTime = mPlayer.getBestTime().get(String.valueOf(levels[i]));
+        textViewLevelBestTime.setText( bestTime == 2147483647 ? "-" : Utils.timeFormat(bestTime));
 
         // Time
         TextView textViewLevelTime = (TextView) findViewById(R.id.textViewLevelTime1);
-        textViewLevelTime.setText(mPlayer.getGameTime().get(String.valueOf(levels[i]).toString()) + "s");
+        long levelTime = mPlayer.getGameTime().get(String.valueOf(levels[i]));
+        textViewLevelTime.setText(Utils.timeFormat(levelTime));
 
         // Total Time
         TextView textViewTotalTime = (TextView) findViewById(R.id.textViewLeveTotalTime);
-        textViewTotalTime.setText(String.valueOf(mPlayer.getTotalGameTime()) + "s");
+        long totalTime = mPlayer.getTotalGameTime();
+        textViewTotalTime.setText(Utils.timeFormat(totalTime));
     }
 
     @Override

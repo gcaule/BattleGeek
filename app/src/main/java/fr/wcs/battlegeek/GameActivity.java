@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -21,8 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import fr.wcs.battlegeek.controller.AI;
@@ -83,6 +84,7 @@ public class GameActivity extends AppCompatActivity {
     private int mVolumeMusic;
     private int mVolumeEffects;
     private long mStartTime;
+    private Timer mTimer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -324,6 +326,7 @@ public class GameActivity extends AppCompatActivity {
                 mGameView.setTouch(x, y, result.getShape());
                 mPlayer.addGameTime(mLevel, VICTORY, getPlayedTime());
                 mPlayer.addVictory(mLevel);
+                mTimer.cancel();
                 mDataController.updatePlayer(mPlayer);
                 FragmentManager fm = getFragmentManager();
                 EndGameVictoryFragment endGameVictoryFragment = new EndGameVictoryFragment();
@@ -405,7 +408,7 @@ public class GameActivity extends AppCompatActivity {
                     mPlayer.addGameTime(mLevel, DEFEATED, getPlayedTime());
                     mPlayer.addDefeat(mLevel);
                     mDataController.updatePlayer(mPlayer);
-
+                    mTimer.cancel();
                     FragmentManager fm = getFragmentManager();
                     EndGameDefeatFragment endGameDefeatFragment = new EndGameDefeatFragment();
                     endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
@@ -420,24 +423,26 @@ public class GameActivity extends AppCompatActivity {
         }.start();
     }
 
-    private int getPlayedTime() {
-        long time = System.currentTimeMillis() - mStartTime;
-        return (int) TimeUnit.MILLISECONDS.toSeconds(time);
+    private long getPlayedTime() {
+        return System.currentTimeMillis() - mStartTime;
     }
 
     private void startTimer() {
-        /*mtextViewTimer.setVisibility(View.VISIBLE);
-        int counter = 0;
-        new Handler().postDelayed(new Runnable() {
+        mtextViewTimer.setVisibility(View.VISIBLE);
+        mtextViewTimer.setText("00:00");
+        mTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                long time = mStartTime - System.currentTimeMillis();
-                Date date = new Date(time * 1000L);
-                SimpleDateFormat df = new SimpleDateFormat("mm:ss"); // HH for 0-23
-                String stringTime = df.format(date);
-                mtextViewTimer.setText(stringTime);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        long time = System.currentTimeMillis() - mStartTime;
+                        mtextViewTimer.setText(Utils.timeFormat(time));
+                    }
+                });
             }
-        }, 1000);*/
+        }, 1000, 1000);
+
     }
 
     /**

@@ -41,4 +41,11 @@ public class Utils {
         }
         return copy;
     }
+
+    public static String timeFormat(long milliseconds) {
+        int seconds = (int) (milliseconds / 1000);
+        int minutes = seconds / 60;
+        seconds = seconds % 60;
+        return String.format("%d:%02d", minutes, seconds);
+    }
 }
