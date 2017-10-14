@@ -214,8 +214,19 @@ public class GameActivity extends AppCompatActivity {
                 mAI.setLevel(mLevel);
                 buttonLaunchGame.setVisibility(View.GONE);
                 mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
+
+                // Randomize first Player
+                int player = (int)(Math.random() * 2);
+                if(player % 2 == 0) {
+                    canPlay = false;
+                    aiPlay();
+                }
+                else {
+                    mViewFlipper.showNext();
+
+                }
+
                 mTextViewAI.setText(R.string.AITurn);
-                mViewFlipper.showNext();
                 mStartTime = System.currentTimeMillis();
             }
 
