@@ -73,12 +73,12 @@ public class StatisticsActivity extends AppCompatActivity implements AdapterView
 
         // Ratio
         TextView textViewLevelRatio = (TextView) findViewById(textViewLevelRatio1);
-        textViewLevelRatio.setText(mPlayer.getRatio().get(String.valueOf(levels[i])).toString());
+        textViewLevelRatio.setText(mPlayer.getRatio().get(String.valueOf(levels[i])).toString() + "%");
 
         // Best Time
         TextView textViewLevelBestTime = (TextView) findViewById(R.id.textViewLevelBestTime1);
         String time1 = mPlayer.getBestTime().get(String.valueOf(levels[i])).toString();
-        textViewLevelBestTime.setText(time1.equals("2147483647") ? "-" : time1);
+        textViewLevelBestTime.setText(time1.equals("2147483647") ? "-" : time1 + "s");
 
         // Time
         TextView textViewLevelTime = (TextView) findViewById(R.id.textViewLevelTime1);
