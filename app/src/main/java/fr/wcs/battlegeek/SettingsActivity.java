@@ -1,6 +1,7 @@
 package fr.wcs.battlegeek;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -30,8 +31,6 @@ import static android.view.View.GONE;
 public class SettingsActivity extends AppCompatActivity {
 
     SharedPreferences mSharedPreferences;
-    private FirebaseDatabase mDatabase;
-    private DatabaseReference mUsersDatabaseReference;
     private ImageView mImageViewMusic;
     private ImageView mImageViewEffects;
 
@@ -51,6 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         final SeekBar seekBarMusic = (SeekBar) findViewById(R.id.seekBarMusic);
         final SeekBar seekBarEffects = (SeekBar) findViewById(R.id.seekBarEffects);
+        final TextView textViewSettingdsAnimation = (TextView) findViewById(R.id.textViewSettingsAnimation);
         final TextView seekBarValueMusic = (TextView) findViewById(R.id.seekBarValueMusic);
         final TextView seekBarValueEffects = (TextView) findViewById(R.id.seekBarValueEffects);
         final EditText inputPlayerName = (EditText) findViewById(R.id.inputPlayerName);
@@ -72,13 +72,18 @@ public class SettingsActivity extends AppCompatActivity {
 
         titleMessage.setTypeface(titleFont);
         inputPlayerName.setTypeface(mainFont);
+        textViewSettingdsAnimation.setTypeface(titleFont);
+        textViewSettingdsAnimation.setTextColor(Color.parseColor("#FF000000"));
         buttonSave.setTypeface(buttonFont);
+        mRadioButtonAnimationSlow.setTypeface(mainFont);
+        mRadioButtonAnimationMedium.setTypeface(mainFont);
+        mRadioButtonAnimationFast.setTypeface(mainFont);
 
         seekBarValueEffects.setTypeface(mainFont);
         seekBarValueMusic.setTypeface(mainFont);
 
         //Initialize Firebase components
-        mDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
 
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
@@ -88,10 +93,11 @@ public class SettingsActivity extends AppCompatActivity {
         String uidFirebase = mSharedPreferences.getString(Settings.UID, null);
 
         final TextView DISPLAYKEY = (TextView) findViewById(R.id.DISPLAYKEY);
-        DISPLAYKEY.setText(uidFirebase);
+        DISPLAYKEY.setVisibility(GONE);
+        //DISPLAYKEY.setText(uidFirebase);
 
         //Get User on Firebase
-        mUsersDatabaseReference = mDatabase.getReference().child("Users").child(uidFirebase).child("playerName");
+        DatabaseReference mUsersDatabaseReference = mDatabase.getReference().child("Users").child(uidFirebase).child("playerName");
 
         //Get Pref for Music Volume
         int valueMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG,0);
@@ -225,7 +231,7 @@ public class SettingsActivity extends AppCompatActivity {
                      Toast.makeText(SettingsActivity.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT).show();
                  }
                  else {
-                     mSharedPreferences.edit().putString(Settings.PLAYER_NAME, name).commit();
+                     mSharedPreferences.edit().putString(Settings.PLAYER_NAME, name).apply();
                      mPlayerModel.setName(name);
                      dataController.updatePlayer(mPlayerModel);
                      buttonSave.setVisibility(GONE);
