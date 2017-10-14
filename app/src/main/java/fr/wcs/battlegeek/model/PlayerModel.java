@@ -31,7 +31,7 @@ public class PlayerModel {
         this.totalGameTime = 0;
         for(AI.Level level : AI.Level.values()) {
             this.gameTime.put(level.toString(), 0);
-            this.bestTime.put(level.toString(), -1);
+            this.bestTime.put(level.toString(), 2_147_483_647);
             this.gameParts.put(level.toString(), 0);
             this.victories.put(level.toString(), 0);
             this.defeats.put(level.toString(), 0);

@@ -1,4 +1,4 @@
-package fr.wcs.battlegeek.adapterRanking;
+package fr.wcs.battlegeek.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,7 +15,7 @@ import fr.wcs.battlegeek.model.PlayerModel;
 public class CustomListAdapter extends BaseAdapter {
 
     private  Context mContext;
-    private LayoutInflater inflater;
+    private LayoutInflater  inflater;
     private List<PlayerModel> mPlayerModelItems;
 
     public CustomListAdapter(Context context, List<PlayerModel> playerModelItems) {

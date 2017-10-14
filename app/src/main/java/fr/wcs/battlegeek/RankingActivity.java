@@ -12,7 +12,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.wcs.battlegeek.adapterRanking.CustomListAdapter;
+import fr.wcs.battlegeek.adapter.CustomListAdapter;
 import fr.wcs.battlegeek.model.PlayerModel;
 
 public class RankingActivity extends AppCompatActivity {
