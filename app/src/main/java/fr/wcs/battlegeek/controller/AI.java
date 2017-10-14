@@ -4,7 +4,6 @@ import android.graphics.Point;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import fr.wcs.battlegeek.model.Maps;
@@ -195,7 +194,7 @@ public class AI {
     }
 
     private Point playLevelIII() {
-        if(mLastPlayedCoordinates == null) {
+        /*if(mLastPlayedCoordinates == null) {
             return playLevelI();
         }
 
@@ -243,10 +242,7 @@ public class AI {
         else if (!mSurroudingCoordinates.isEmpty() && lastResultType != MISSED) {
             mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
             return mLastPlayedCoordinates;
-        }
-
-        else
-
+        }*/
 
         return playLevelII();
     }
