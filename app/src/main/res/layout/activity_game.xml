@@ -18,7 +18,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
@@ -38,10 +38,11 @@
                 app:layout_constraintBottom_toTopOf="@+id/mapView"
                 android:textColor="@color/yellow"
                 android:textSize="22sp"
-                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintHorizontal_bias="0.483"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="32dp" />
 
             <fr.wcs.battlegeek.ui.MapView
                 android:id="@+id/mapView"
@@ -64,14 +65,10 @@
             <Button
                 android:id="@+id/buttonLaunchGame"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
                 android:background="@drawable/buttoningame"
                 android:elevation="6dp"
                 android:padding="10dp"
@@ -79,22 +76,22 @@
                 android:paddingVertical="5dp"
                 android:text="@string/launchGame"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
+                app:layout_constraintLeft_toRightOf="@+id/buttonRandomPositions"
+                android:layout_marginLeft="16dp" />
 
             <Button
                 android:id="@+id/buttonRandomPositions"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="8dp"
                 android:background="@drawable/buttoningame"
                 android:padding="10dp"
                 android:paddingHorizontal="5dp"
                 android:paddingVertical="5dp"
                 android:text="@string/randomize_positions"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                app:layout_constraintLeft_toLeftOf="parent" />
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
@@ -116,7 +113,8 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/gameView"/>
+                app:layout_constraintBottom_toTopOf="@+id/gameView"
+                android:layout_marginTop="32dp" />
 
             <fr.wcs.battlegeek.ui.GameView
                 android:id="@+id/gameView"
@@ -146,7 +144,7 @@
     <Button
         android:id="@+id/buttonSwitchView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/buttoningame"
@@ -155,7 +153,7 @@
         android:paddingVertical="5dp"
         android:text="@string/switch_view"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButtonSpeed"

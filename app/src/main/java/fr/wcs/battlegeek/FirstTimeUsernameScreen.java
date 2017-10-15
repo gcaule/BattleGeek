@@ -43,25 +43,25 @@ public class FirstTimeUsernameScreen extends AppCompatActivity {
         Typeface titleHomeFont = Typeface.createFromAsset(getAssets(), "fonts/SomeTimeLater.otf");
         TextView messageTitle = (TextView) findViewById(R.id.message_title);
         messageTitle.setTypeface(titleHomeFont);
-        messageTitle.setTextColor(Color.parseColor("#FF960D"));
+        messageTitle.setTextColor(Color.parseColor("#FFEE00"));
 
         Typeface welcomeMessageFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
         Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/DirtyClassicMachine.ttf");
 
         TextView welcomeMessage = (TextView) findViewById(R.id.message_welcome);
         welcomeMessage.setTypeface(welcomeMessageFont);
-        welcomeMessage.setTextColor(Color.parseColor("#FF960D"));
+        welcomeMessage.setTextColor(Color.parseColor("#FFEE00"));
 
         TextView infoMessage = (TextView) findViewById(R.id.textView4);
         infoMessage.setTypeface(welcomeMessageFont);
-        infoMessage.setTextColor(Color.parseColor("#FF960D"));
+        infoMessage.setTextColor(Color.parseColor("#FFEE00"));
 
         Button buttonSave = (Button) findViewById(R.id.button_save);
         buttonSave.setTypeface(buttonFont);
 
         final EditText playerName = (EditText) findViewById(R.id.input_playername);
         playerName.setTypeface(welcomeMessageFont);
-        playerName.setTextColor(Color.parseColor("#FF960D"));
+        playerName.setTextColor(Color.parseColor("#FFEE00"));
 
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
