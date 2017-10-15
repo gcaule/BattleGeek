@@ -124,7 +124,7 @@ public class MainMenuActivity extends AppCompatActivity {
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
         String playerName = mSharedPreferences.getString(Settings.PLAYER_NAME, null);
-        showPlayerName.setTextColor(Color.parseColor("#ff000000"));
+        showPlayerName.setTextColor(Color.parseColor("#FFF825"));
         showPlayerName.setTextSize(26);
         showPlayerName.setText("Coucou " + playerName + " !");
     }
