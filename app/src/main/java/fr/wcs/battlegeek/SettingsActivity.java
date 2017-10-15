@@ -64,15 +64,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         buttonSave.setVisibility(GONE);
 
-        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/SomeTimeLater.otf");
-        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
-        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/DirtyClassicMachine.ttf");
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
 
         TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
 
-        titleMessage.setTypeface(titleFont);
+        titleMessage.setTypeface(mainFont);
         inputPlayerName.setTypeface(mainFont);
-        buttonSave.setTypeface(buttonFont);
+        buttonSave.setTypeface(mainFont);
 
         seekBarValueEffects.setTypeface(mainFont);
         seekBarValueMusic.setTypeface(mainFont);
@@ -86,9 +84,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         //Get User on SharedPref
         String uidFirebase = mSharedPreferences.getString(Settings.UID, null);
-
-        final TextView DISPLAYKEY = (TextView) findViewById(R.id.DISPLAYKEY);
-        DISPLAYKEY.setText(uidFirebase);
 
         //Get User on Firebase
         mUsersDatabaseReference = mDatabase.getReference().child("Users").child(uidFirebase).child("playerName");

@@ -9,7 +9,7 @@
     <string name="button_hard">DemEntieL</string>
     <string name="button_medium">DiffIcilE</string>
     <string name="button_easy">NoRmaL</string>
-    <string name="textViewSettings">ParaMètreS</string>
+    <string name="textViewSettings">ParaMetreS</string>
     <string name="buttonValidate">C\'est parti !</string>
     <string name="titleRanking">ClasSemenT</string>
     <string name="message_welcome">Hey, je te connais pas toi !</string>
@@ -44,7 +44,7 @@
     <string name="playermap_view">Tes pièces t\'attendent sagement !</string>
     <string name="ok_exit">Oui, j\'ai piscine</string>
     <string name="no_exit">Non, certainement pas !</string>
-    <string name="save_settings">Sauvegarder !</string>
+    <string name="save_settings">Sauvegarder</string>
     <string name="saved_parameters">Paramètres enregistrés !</string>
     <string name="statistics">Statistiques</string>
     <string name="gamesParts">Parties Jouées</string>
