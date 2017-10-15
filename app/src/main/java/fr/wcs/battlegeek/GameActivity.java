@@ -7,24 +7,27 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Message;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.controller.DataController;
@@ -76,9 +79,13 @@ public class GameActivity extends AppCompatActivity {
     private ImageButton mImageButtonMusic;
     private ImageButton mImageButtonEffects;
     private TextView mtextViewTimer;
+    private ImageView mImageViewBlink;
+    private AlphaAnimation mBlinkAnimation;
+    private Vibrator mVibrator;
 
     private SharedPreferences mSharedPreferences;
     private int mAnimationsSpeed;
+
 
     private SoundController mSoundController;
     private int mVolumeMusic;
@@ -291,6 +298,32 @@ public class GameActivity extends AppCompatActivity {
 
         mtextViewTimer = (TextView) findViewById(R.id.textViewTimer);
 
+        //Vibrator
+        mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        // Blink
+        mImageViewBlink = (ImageView) findViewById(R.id.imageViewBlink);
+        mBlinkAnimation= new AlphaAnimation(0f, 0.7f);
+        mBlinkAnimation.setDuration(70);
+        mBlinkAnimation.setRepeatMode(Animation.RESTART);
+
+        mBlinkAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                mImageViewBlink.setAlpha(1f);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mImageViewBlink.setAlpha(0f);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
         mTextViewAI.setTypeface(mainFont);
         mTextViewPlayer.setTypeface(mainFont);
 
@@ -388,8 +421,10 @@ public class GameActivity extends AppCompatActivity {
                     } else {
                         mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
                         mTextViewAI.setText(R.string.AITouched);
+                        blink(0);
                         if (resultType == DROWN) {
                             mTextViewAI.setText(R.string.AIDrown);
+                            blink(5);
                         }
                         if (resultType == VICTORY) {
                             mTextViewAI.setText(R.string.AIVictory);
@@ -505,6 +540,18 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    private void blink(int repetitions) {
+        mBlinkAnimation.setRepeatCount(repetitions);
+        mImageViewBlink.startAnimation(mBlinkAnimation);
+        //long[] timing = new long[] {70};
+        //int[] amplitude = new int[] {VibrationEffect.DEFAULT_AMPLITUDE};
+        //mVibrator.vibrate(VibrationEffect.createWaveform(timing, amplitude, repetitions));
+        if (Build.VERSION.SDK_INT >= 26) {
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(70L, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(70L);
+        }
+    }
 
     /**
      * Method handling Back Button Pressed
