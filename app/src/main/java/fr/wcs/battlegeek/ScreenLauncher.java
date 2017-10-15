@@ -33,7 +33,7 @@ public class ScreenLauncher extends AppCompatActivity {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         Typeface homeFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
-        Typeface sloganFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
+        Typeface sloganFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
 
         TextView homeTitle = (TextView) findViewById(R.id.home_title);
         TextView homeSlogan = (TextView) findViewById(R.id.home_slogan);

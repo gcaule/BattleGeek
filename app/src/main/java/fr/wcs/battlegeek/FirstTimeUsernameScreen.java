@@ -36,12 +36,12 @@ public class FirstTimeUsernameScreen extends AppCompatActivity {
         setContentView(R.layout.activity_first_time_username_screen);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-        Typeface titleHomeFont = Typeface.createFromAsset(getAssets(), "fonts/SomeTimeLater.otf");
+        Typeface titleHomeFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
         TextView messageTitle = (TextView) findViewById(R.id.message_title);
         messageTitle.setTypeface(titleHomeFont);
 
-        Typeface welcomeMessageFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
-        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/DirtyClassicMachine.ttf");
+        Typeface welcomeMessageFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
+        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
 
         TextView welcomeMessage = (TextView) findViewById(R.id.message_welcome);
         welcomeMessage.setTypeface(welcomeMessageFont);
