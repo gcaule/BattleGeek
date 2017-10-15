@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import fr.wcs.battlegeek.adapter.CustomListAdapter;
+import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Settings;
 
@@ -56,7 +57,7 @@ public class RankingActivity extends AppCompatActivity {
         playersReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot data : dataSnapshot.getChildren()) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     mPlayerModelList.add(data.getValue(PlayerModel.class));
                 }
 
@@ -70,69 +71,29 @@ public class RankingActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-        /*SQLiteDatabase myDB = null;
+    private void sortByBestTime(AI.Level level) {
+        PlayerModel.setComparatorLevel(level);
+        Collections.sort(mPlayerModelList, PlayerModel.BestTimeComparator);
+        adapter.notifyDataSetChanged();
+    }
 
-        try {
+    private void sortByRatio(AI.Level level) {
+        PlayerModel.setComparatorLevel(level);
+        Collections.sort(mPlayerModelList, PlayerModel.RatioComparator);
+        adapter.notifyDataSetChanged();
+    }
 
-            //Create a Database if doesnt exist otherwise Open It
+    private void sortByVictories(AI.Level level) {
+        PlayerModel.setComparatorLevel(level);
+        Collections.sort(mPlayerModelList, PlayerModel.VictoriesComparator);
+        adapter.notifyDataSetChanged();
+    }
 
-            myDB = this.openOrCreateDatabase("leaderboard", MODE_PRIVATE, null);
-
-            //Create table in database if it doesnt exist allready
-
-            myDB.execSQL("CREATE TABLE IF NOT EXISTS scores (name TEXT, score TEXT);");
-
-            //Select all rows from the table
-
-            Cursor cursor = myDB.rawQuery("SELECT * FROM scores", null);
-
-            //If there are no rows (data) then insert some in the table
-
-            if (cursor != null) {
-                if (cursor.getCount() == 0) {
-
-                    myDB.execSQL("INSERT INTO scores (name, score) VALUES ('Andy', '7');");
-                    myDB.execSQL("INSERT INTO scores (name, score) VALUES ('Marie', '4');");
-                    myDB.execSQL("INSERT INTO scores (name, score) VALUES ('George', '1');");
-
-                }
-
-            }
-
-
-        } catch (Exception e) {
-
-        } finally {
-
-            //Initialize and create a new adapter with layout named list found in activity_main layout
-
-            listView = (ListView) findViewById(R.id.list);
-            adapter = new CustomListAdapter(this, mPlayerModelList);
-            listView.setAdapter(adapter);
-
-            Cursor cursor = myDB.rawQuery("SELECT * FROM scores", null);
-
-            if (cursor.moveToFirst()) {
-
-                //read all rows from the database and add to the PlayerModel array
-
-                while (!cursor.isAfterLast()) {
-
-                    PlayerModel playerModel = new PlayerModel();
-
-                    playerModel.setName(cursor.getString(0));
-                    mPlayerModelList.add(playerModel);
-                    cursor.moveToNext();
-
-
-                }
-            }
-
-            //All done, so notify the adapter to populate the list using the PlayerModel Array
-
-            adapter.notifyDataSetChanged();
-        }*/
-
+    private void sortByShotCount(AI.Level level) {
+        PlayerModel.setComparatorLevel(level);
+        Collections.sort(mPlayerModelList, PlayerModel.BestShotsCountComparator);
+        adapter.notifyDataSetChanged();
     }
 }
