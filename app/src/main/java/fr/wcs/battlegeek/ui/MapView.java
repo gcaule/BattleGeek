@@ -218,22 +218,15 @@ public class MapView extends View {
         invalidate();
     }
 
-
-    // TODO: DELETE
-    int count = 0;
-    int[] mapsIndex = new int[] {8, 14, 19, 26, 27};
-
+    /**
+     * Set (Fake) Random Items on Map
+     */
     public void setRandomPositions() {
         // Clear PlayerModel List
         mItems.clear();
 
         // Request random Map
-        //char[][] map = Maps.getMap();
-        int index = count % mapsIndex.length;
-        char[][] map = Maps.getMapFromIndex(mapsIndex[index]);
-        //Log.d(TAG, "setRandomPositions: Map number " + String.valueOf(index));
-        count ++;
-        //Utils.printMap(map);
+        char[][] map = Maps.getMap();
 
         // Store Blocks in a HashMap;
         HashMap<Tetromino.Shape, ArrayList<PointF> > dict = new HashMap<>();
