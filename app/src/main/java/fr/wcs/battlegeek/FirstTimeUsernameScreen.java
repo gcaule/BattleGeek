@@ -16,6 +16,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Settings;
 
@@ -67,7 +68,7 @@ public class FirstTimeUsernameScreen extends AppCompatActivity {
                 } else {
                     PlayerModel newPlayer = new PlayerModel(playerName.getText().toString());
 
-                    mDatabase = FirebaseDatabase.getInstance();
+                    mDatabase = DataController.getDatabase();
                     mUsersDatabaseReference = mDatabase.getReference().child("Users");
                     uid = mUsersDatabaseReference.child("Users").push().getKey();
                     mUsersDatabaseReference.child(uid).setValue(newPlayer);

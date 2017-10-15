@@ -22,7 +22,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class DataController {
     private final String TAG = "DataController";
     private SharedPreferences mSharedPreferences;
-    private FirebaseDatabase mDatabase;
+    private static FirebaseDatabase mDatabase;
     private DatabaseReference mUsersDatabaseReference;
     private String mPlayerUID;
 
@@ -36,7 +36,7 @@ public class DataController {
         mPlayerUID = mSharedPreferences.getString(Settings.UID, null);
 
         // FireBase
-        mDatabase = FirebaseDatabase.getInstance();
+        mDatabase = getDatabase();
         mUsersDatabaseReference = mDatabase.getReference().child("Users").child(mPlayerUID);
         mUsersDatabaseReference.keepSynced(true);
 
@@ -60,6 +60,14 @@ public class DataController {
     public void updatePlayer(PlayerModel player) {
         mPlayerModel = player;
         mUsersDatabaseReference.setValue(player);
+    }
+
+    public static FirebaseDatabase getDatabase(){
+        if (mDatabase == null) {
+            mDatabase = FirebaseDatabase.getInstance();
+            mDatabase.setPersistenceEnabled(true);
+        }
+        return mDatabase;
     }
     
     public void setDataReadyListener(DataReadyListener listener) {

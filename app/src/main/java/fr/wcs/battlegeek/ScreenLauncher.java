@@ -24,6 +24,7 @@ import static android.view.View.GONE;
 public class ScreenLauncher extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
+    private FirebaseDatabase mDatabase;
     private Timer mTimer;
     private boolean shouldRegister;
 
@@ -54,9 +55,6 @@ public class ScreenLauncher extends AppCompatActivity {
         //Get Pref for PlayerModel Name
         final String uid = mSharedPreferences.getString(Settings.UID, null);
         shouldRegister = uid == null;
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        database.setPersistenceEnabled(true);
 
         //Si Playername dans sharedpref vide, allez sur register. Sinon allez à MainActiv
         mTimer = new Timer();
