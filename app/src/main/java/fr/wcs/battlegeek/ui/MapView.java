@@ -5,16 +5,14 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import fr.wcs.battlegeek.model.Settings;
-import fr.wcs.battlegeek.utils.Utils;
 import fr.wcs.battlegeek.model.Maps;
+import fr.wcs.battlegeek.model.Settings;
 
 import static fr.wcs.battlegeek.ui.MapView.Mode.CREATE;
 import static fr.wcs.battlegeek.ui.MapView.Mode.PLAY;
@@ -32,7 +30,7 @@ public class MapView extends View {
         PLAY, CREATE
     }
 
-    private String TAG = "MapView";
+    private String TAG = Settings.TAG;
 
     private Mode mMode = CREATE;
 
@@ -220,22 +218,22 @@ public class MapView extends View {
         invalidate();
     }
 
-    /*
+
     // TODO: DELETE
     int count = 0;
     int[] mapsIndex = new int[] {8, 14, 19, 26, 27};
-*/
+
     public void setRandomPositions() {
         // Clear PlayerModel List
         mItems.clear();
 
         // Request random Map
-        char[][] map = Maps.getMap();
-        /*int index = count % mapsIndex.length;
+        //char[][] map = Maps.getMap();
+        int index = count % mapsIndex.length;
         char[][] map = Maps.getMapFromIndex(mapsIndex[index]);
-        Log.d(TAG, "setRandomPositions: Map number " + String.valueOf(index));
-        count ++;*/
-        Utils.printMap(map);
+        //Log.d(TAG, "setRandomPositions: Map number " + String.valueOf(index));
+        count ++;
+        //Utils.printMap(map);
 
         // Store Blocks in a HashMap;
         HashMap<Tetromino.Shape, ArrayList<PointF> > dict = new HashMap<>();
@@ -282,7 +280,7 @@ public class MapView extends View {
             tetromino.setPosition(new PointF(minX, minY));
             mItems.add(tetromino);
 
-            Log.d(TAG, "setRandomPositions: " + shape + " : " + dict.get(shape).size());
+            //Log.d(TAG, "setRandomPositions: " + shape + " : " + dict.get(shape).size());
         }
     }
 

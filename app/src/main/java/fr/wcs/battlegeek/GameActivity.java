@@ -213,11 +213,13 @@ public class GameActivity extends AppCompatActivity {
                 char[][] mapData = mMapView.getMapData();
                 mGameController = new GameController(mapData);
                 mMapView.setMode(MapView.Mode.PLAY);
+
                 mAI = new AI();
                 if (mLevel == AI.Level.III || mLevel == AI.Level.IMPOSSIBLE) {
                     mAI.setPlayerMap(mapData);
                 }
                 mAI.setLevel(mLevel);
+
                 buttonLaunchGame.setVisibility(View.GONE);
                 mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
 
@@ -234,7 +236,6 @@ public class GameActivity extends AppCompatActivity {
 
                 mTextViewAI.setText(R.string.AITurn);
                 mStartTime = System.currentTimeMillis();
-                // TODO : Set Timer
                 startTimer();
             }
 
@@ -366,7 +367,7 @@ public class GameActivity extends AppCompatActivity {
 
         final Point aiPlayCoordinates = mAI.play();
         final Result iaResult = mGameController.shot(aiPlayCoordinates.x, aiPlayCoordinates.y);
-        Utils.printMap(mGameController.getMap());
+        //Utils.printMap(mGameController.getMap());
         final Result.Type resultType = iaResult.getType();
         Log.d(TAG, "onPlayListener: " + aiPlayCoordinates + " " + iaResult);
 

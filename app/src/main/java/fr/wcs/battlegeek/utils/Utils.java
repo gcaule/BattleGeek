@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.ui.Block;
+import fr.wcs.battlegeek.ui.Item;
 
 /**
  * Created by adphi on 04/10/17.
@@ -42,10 +43,39 @@ public class Utils {
         return copy;
     }
 
+    /**
+     * Format time from millisecond to String
+     * @param milliseconds
+     * @return
+     */
     public static String timeFormat(long milliseconds) {
         int seconds = (int) (milliseconds / 1000);
         int minutes = seconds / 60;
+        int hours = minutes / 60;
+        minutes =minutes % 60;
         seconds = seconds % 60;
-        return String.format("%d:%02d", minutes, seconds);
+        String time = hours == 0 ? String.format("%d:%02d", minutes, seconds)
+                : String.format("%d:%d:%02d",hours, minutes, seconds);
+        return time;
+    }
+
+    /**
+     * Method Printing An Item as a two dimensional array
+     * @param item
+     */
+    public static void printItem(Item item) {
+        int size = Math.max(item.getWidth(), item.getHeight());
+        int[][] matrix = new int[size + 1][size + 1];
+        for (Block block : item.getBlocks()) {
+            matrix[(int)block.getY()][(int)block.getX()] = 1;
+        }
+        String print = "";
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                print += String.valueOf(matrix[i][j]);
+            }
+            print += "\n";
+        }
+        Log.d(TAG, "printItem: \n" + print);
     }
 }
