@@ -18,6 +18,7 @@ public class PlayerModel {
     private HashMap<String, Integer> victories = new HashMap<>();
     private HashMap<String, Integer> defeats = new HashMap<>();
     private HashMap<String, Integer> ratio = new HashMap<>();
+    private HashMap<String, Integer> bestShotsCount = new HashMap<>();
 
     public PlayerModel() {
     }
@@ -36,6 +37,7 @@ public class PlayerModel {
             this.victories.put(level.toString(), 0);
             this.defeats.put(level.toString(), 0);
             this.ratio.put(level.toString(), 0);
+            this.bestShotsCount.put(level.toString(), 2_147_483_647);
         }
     }
 
@@ -49,6 +51,11 @@ public class PlayerModel {
         this.gameParts.put(level.toString(), gameParts.get(level.toString()) + 1);
         this.defeats.put(level.toString(), defeats.get(level.toString()) + 1);
         this.updateRatio(level);
+    }
+
+    public void addShotsCount(AI.Level level, int shotsCount) {
+        int lastBestShotsCount = this.bestShotsCount.get(level.toString());
+        this.bestShotsCount.put(level.toString(), shotsCount < lastBestShotsCount ? shotsCount : lastBestShotsCount);
     }
 
     public void addGameTime(AI.Level level, Result.Type result, long time) {
@@ -75,7 +82,7 @@ public class PlayerModel {
         return totalGameTime;
     }
 
-    public void setTotalGameTime(int totalGameTime) {
+    public void setTotalGameTime(long totalGameTime) {
         this.totalGameTime = totalGameTime;
     }
 
@@ -125,6 +132,14 @@ public class PlayerModel {
 
     public void setRatio(HashMap<String, Integer> ratio) {
         this.ratio = ratio;
+    }
+
+    public HashMap<String, Integer> getBestShotsCount() {
+        return bestShotsCount;
+    }
+
+    public void setBestShotsCount(HashMap<String, Integer> bestShotsCount) {
+        this.bestShotsCount = bestShotsCount;
     }
 
     @Override

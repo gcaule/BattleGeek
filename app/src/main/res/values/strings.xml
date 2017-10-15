@@ -5,10 +5,12 @@
     <string name="player_name">Ton blase ici</string>
     <string name="alreadyPlayedMessage">Tu as déjà joué cette case !</string>
     <string name="itemDrownMessage">Tu as détruit cette pièce !</string>
-    <string name="button_impossible">ImpoSsiblE</string>
-    <string name="button_hard">DemEntieL</string>
-    <string name="button_medium">DiffIcilE</string>
-    <string name="button_easy">NoRmaL</string>
+
+    <string name="button_easy">Gentil</string>
+    <string name="button_medium">Moins Gentil</string>
+    <string name="button_hard">Pas Cool</string>
+    <string name="button_impossible">Impossible</string>
+
     <string name="textViewSettings">ParaMètreS</string>
     <string name="buttonValidate">C\'est parti !</string>
     <string name="titleRanking">ClasSemenT</string>
@@ -54,4 +56,5 @@
     <string name="levelTime">Temps Level</string>
     <string name="totalTime">Temps Total</string>
     <string name="AIVictory">Aie! Perdu !</string>
+    <string name="bestShotsCountLabel">Meilleur nombre de tirs</string>
 </resources>

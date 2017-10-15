@@ -95,7 +95,7 @@ public class SoundController {
      */
     public void playSound(Result.Type result){
         // Get the preferred Volume
-        float volume = (float) mSharedPreferences.getInt(Settings.EFFECTS_TAG, 1) / 100 ;
+        float volume = (float) mSharedPreferences.getInt(Settings.EFFECTS_TAG, Settings.EFFECTS_DEFAULT) / 100 ;
         if (volume <= 0) return;
         int soundID;
         // Get the Sound ID according to the Result's Type

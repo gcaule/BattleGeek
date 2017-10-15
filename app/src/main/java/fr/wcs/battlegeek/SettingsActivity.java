@@ -78,21 +78,8 @@ public class SettingsActivity extends AppCompatActivity {
         seekBarValueEffects.setTypeface(mainFont);
         seekBarValueMusic.setTypeface(mainFont);
 
-        //Initialize Firebase components
-        mDatabase = FirebaseDatabase.getInstance();
-
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
-
-
-        //Get User on SharedPref
-        String uidFirebase = mSharedPreferences.getString(Settings.UID, null);
-
-        final TextView DISPLAYKEY = (TextView) findViewById(R.id.DISPLAYKEY);
-        DISPLAYKEY.setText(uidFirebase);
-
-        //Get User on Firebase
-        mUsersDatabaseReference = mDatabase.getReference().child("Users").child(uidFirebase).child("playerName");
 
         //Get Pref for Music Volume
         int valueMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT);

@@ -84,6 +84,7 @@ public class GameActivity extends AppCompatActivity {
     private int mVolumeMusic;
     private int mVolumeEffects;
     private long mStartTime;
+    private int mShotsCounter = 0;
     private Timer mTimer = new Timer();
 
     @Override
@@ -278,6 +279,7 @@ public class GameActivity extends AppCompatActivity {
                 }
 
                 playerPlay(x, y);
+                mShotsCounter++;
             }
         });
 
@@ -326,6 +328,7 @@ public class GameActivity extends AppCompatActivity {
                 mGameView.setTouch(x, y, result.getShape());
                 mPlayer.addGameTime(mLevel, VICTORY, getPlayedTime());
                 mPlayer.addVictory(mLevel);
+                mPlayer.addShotsCount(mLevel, mShotsCounter);
                 mTimer.cancel();
                 mDataController.updatePlayer(mPlayer);
                 FragmentManager fm = getFragmentManager();

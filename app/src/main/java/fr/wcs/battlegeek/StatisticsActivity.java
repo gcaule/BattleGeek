@@ -76,6 +76,11 @@ public class StatisticsActivity extends AppCompatActivity implements AdapterView
         TextView textViewLevelRatio = (TextView) findViewById(textViewLevelRatio1);
         textViewLevelRatio.setText(mPlayer.getRatio().get(String.valueOf(levels[i])).toString() + "%");
 
+        // Best Shots Count
+        TextView textViewBestShotsCount = (TextView) findViewById(R.id.textViewLevelBestShotsCountValue);
+        int bestShotsCount = mPlayer.getBestShotsCount().get(String.valueOf(levels[i]));
+        textViewBestShotsCount.setText(bestShotsCount == 2_147_483_647 ? "-" : String.valueOf(bestShotsCount));
+
         // Best Time
         TextView textViewLevelBestTime = (TextView) findViewById(R.id.textViewLevelBestTime1);
         long bestTime = mPlayer.getBestTime().get(String.valueOf(levels[i]));
