@@ -11,6 +11,7 @@ import java.util.List;
 
 import fr.wcs.battlegeek.R;
 import fr.wcs.battlegeek.model.PlayerModel;
+import fr.wcs.battlegeek.utils.Utils;
 
 public class CustomListAdapter extends BaseAdapter {
 
@@ -48,8 +49,12 @@ public class CustomListAdapter extends BaseAdapter {
 
             scoreView = inflater.inflate(R.layout.list_row, parent, false);
             holder = new ViewHolder();
-            holder.name = (TextView) scoreView.findViewById(R.id.name);
-            holder.score = (TextView) scoreView.findViewById(R.id.score);
+            holder.name = (TextView) scoreView.findViewById(R.id.textViewName);
+            holder.ratio = (TextView) scoreView.findViewById(R.id.textViewRatio);
+            holder.bestTime = (TextView) scoreView.findViewById(R.id.textViewBestTime);
+            holder.shotsCount = (TextView) scoreView.findViewById(R.id.textViewShotsCount);
+            holder.levelGames = (TextView) scoreView.findViewById(R.id.textViewLevelGames);
+
             scoreView.setTag(holder);
 
         } else {
@@ -57,7 +62,14 @@ public class CustomListAdapter extends BaseAdapter {
         }
 
         final PlayerModel m = mPlayerModelItems.get(position);
+        String level = PlayerModel.getComparatorLevel().toString();
         holder.name.setText(m.getName());
+        holder.ratio.setText(m.getRatio().get(level).toString() + "%");
+        long bestTime = m.getBestTime().get(level);
+        holder.bestTime.setText(bestTime != 2_147_483_647L ? Utils.timeFormat(bestTime) : "-");
+        int shotsCount = m.getBestShotsCount().get(level);
+        holder.shotsCount.setText(shotsCount != 2_147_483_647 ? String.valueOf(shotsCount) : "-");
+        holder.levelGames.setText(m.getGameParts().get(level).toString());
 
         return scoreView;
     }
@@ -65,8 +77,10 @@ public class CustomListAdapter extends BaseAdapter {
     static class ViewHolder {
 
         TextView name;
-        TextView score;
-
+        TextView ratio;
+        TextView bestTime;
+        TextView shotsCount;
+        TextView levelGames;
     }
 
 }

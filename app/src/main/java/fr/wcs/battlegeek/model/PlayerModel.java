@@ -2,12 +2,17 @@ package fr.wcs.battlegeek.model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.Comparator;
 import java.util.HashMap;
 
 import fr.wcs.battlegeek.controller.AI;
 
 @IgnoreExtraProperties
 public class PlayerModel {
+
+    public enum ComparatorFactor {
+        BEST_TIME, VICTORIES, RATIO, SHOTS_COUNT;
+    }
 
     private String name;
     private long totalGameTime = 0;
@@ -19,6 +24,8 @@ public class PlayerModel {
     private HashMap<String, Integer> defeats = new HashMap<>();
     private HashMap<String, Integer> ratio = new HashMap<>();
     private HashMap<String, Integer> bestShotsCount = new HashMap<>();
+
+    private static AI.Level comparatorLevel = AI.Level.II;
 
     public PlayerModel() {
     }
@@ -55,18 +62,21 @@ public class PlayerModel {
 
     public void addShotsCount(AI.Level level, int shotsCount) {
         int lastBestShotsCount = this.bestShotsCount.get(level.toString());
-        this.bestShotsCount.put(level.toString(), shotsCount < lastBestShotsCount ? shotsCount : lastBestShotsCount);
+        this.bestShotsCount.put(level.toString(),
+                shotsCount < lastBestShotsCount ? shotsCount : lastBestShotsCount);
     }
 
     public void addGameTime(AI.Level level, Result.Type result, long time) {
         this.totalGameTime += time;
         long lastBestTime = this.bestTime.get(level.toString());
-        this.bestTime.put(level.toString(), time < lastBestTime && result == Result.Type.VICTORY ? time : lastBestTime);
+        this.bestTime.put(level.toString(),
+                time < lastBestTime && result == Result.Type.VICTORY ? time : lastBestTime);
         this.gameTime.put(level.toString(), gameTime.get(level.toString()) + time);
     }
 
     private void updateRatio(AI.Level level) {
-        int newRatio = (int)((float) victories.get(level.toString()) / (float) gameParts.get(level.toString()) * 100);
+        int newRatio = (int)((float) victories.get(level.toString())
+                / (float) gameParts.get(level.toString()) * 100);
         ratio.put(level.toString(), newRatio);
     }
 
@@ -142,6 +152,14 @@ public class PlayerModel {
         this.bestShotsCount = bestShotsCount;
     }
 
+    public static AI.Level getComparatorLevel() {
+        return comparatorLevel;
+    }
+
+    public static void setComparatorLevel(AI.Level level) {
+        PlayerModel.comparatorLevel = level;
+    }
+
     @Override
     public String toString() {
         return "PlayerModel{" +
@@ -155,4 +173,36 @@ public class PlayerModel {
                 ", ratio=" + ratio +
                 '}';
     }
+
+    public static Comparator<PlayerModel> BestTimeComparator = new Comparator<PlayerModel>() {
+        @Override
+        public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
+            return (int)(playerModel.bestTime.get(comparatorLevel.toString())
+                    - comparedPlayerModel.bestTime.get(comparatorLevel.toString()));
+        }
+    };
+
+    public static Comparator<PlayerModel> VictoriesComparator = new Comparator<PlayerModel>() {
+        @Override
+        public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
+            return playerModel.victories.get(comparatorLevel.toString())
+                    - comparedPlayerModel.victories.get(comparatorLevel.toString());
+        }
+    };
+
+    public static Comparator<PlayerModel> RatioComparator = new Comparator<PlayerModel>() {
+        @Override
+        public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
+            return playerModel.victories.get(comparatorLevel.toString())
+                    - comparedPlayerModel.victories.get(comparatorLevel.toString());
+        }
+    };
+
+    public static Comparator<PlayerModel> BestShotsCountComparator = new Comparator<PlayerModel>() {
+        @Override
+        public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
+            return playerModel.bestShotsCount.get(comparatorLevel.toString())
+                    - comparedPlayerModel.bestShotsCount.get(comparatorLevel.toString());
+        }
+    };
 }
