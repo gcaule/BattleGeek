@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import fr.wcs.battlegeek.adapter.CustomListAdapter;
-import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Settings;
 
@@ -28,8 +27,6 @@ public class RankingActivity extends AppCompatActivity {
     private ArrayList<PlayerModel> mPlayerModelList = new ArrayList<PlayerModel>();
     private ListView listView;
     private CustomListAdapter adapter;
-
-    private PlayerModel.ComparatorFactor mComparatorFactor = PlayerModel.ComparatorFactor.BEST_TIME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +51,7 @@ public class RankingActivity extends AppCompatActivity {
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference playersReference = firebaseDatabase.getReference("Users");
+        playersReference.keepSynced(true);
         playersReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -61,39 +59,50 @@ public class RankingActivity extends AppCompatActivity {
                     mPlayerModelList.add(data.getValue(PlayerModel.class));
                 }
 
-                Collections.sort(mPlayerModelList, PlayerModel.BestTimeComparator);
+                Collections.sort(mPlayerModelList, PlayerModel.bestTimeComparator);
                 Log.d(TAG, "onDataChange: " + mPlayerModelList);
                 adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 
-    private void sortByBestTime(AI.Level level) {
-        PlayerModel.setComparatorLevel(level);
-        Collections.sort(mPlayerModelList, PlayerModel.BestTimeComparator);
+    /**
+     * Sort the PlayerModel List by Best Time
+     */
+    private void sortByBestTime() {
+        Collections.sort(mPlayerModelList, PlayerModel.bestTimeComparator);
         adapter.notifyDataSetChanged();
     }
 
-    private void sortByRatio(AI.Level level) {
-        PlayerModel.setComparatorLevel(level);
-        Collections.sort(mPlayerModelList, PlayerModel.RatioComparator);
+    /**
+     * Sort the PlayerModel List by Ratio
+     */
+    private void sortByRatio() {
+        Collections.sort(mPlayerModelList, PlayerModel.ratioComparator);
         adapter.notifyDataSetChanged();
     }
 
-    private void sortByVictories(AI.Level level) {
-        PlayerModel.setComparatorLevel(level);
-        Collections.sort(mPlayerModelList, PlayerModel.VictoriesComparator);
+    /**
+     * Sort the PlayerModel List by Victories
+     */
+    private void sortByVictories() {
+        Collections.sort(mPlayerModelList, PlayerModel.victoriesComparator);
         adapter.notifyDataSetChanged();
     }
 
-    private void sortByShotCount(AI.Level level) {
-        PlayerModel.setComparatorLevel(level);
-        Collections.sort(mPlayerModelList, PlayerModel.BestShotsCountComparator);
+    /**
+     * Sort the PlayerModel List by Shots Count
+     */
+    private void sortByShotCount() {
+        Collections.sort(mPlayerModelList, PlayerModel.bestShotsCountComparator);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void sortByName() {
+        Collections.sort(mPlayerModelList, PlayerModel.nameComparator);
         adapter.notifyDataSetChanged();
     }
 }
