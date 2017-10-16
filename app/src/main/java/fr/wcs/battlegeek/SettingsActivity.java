@@ -19,7 +19,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import fr.wcs.battlegeek.controller.DataController;
@@ -87,17 +86,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
-
-
-        //Get User on SharedPref
-        String uidFirebase = mSharedPreferences.getString(Settings.UID, null);
-
-        final TextView DISPLAYKEY = (TextView) findViewById(R.id.DISPLAYKEY);
-        DISPLAYKEY.setVisibility(GONE);
-        //DISPLAYKEY.setText(uidFirebase);
-
-        //Get User on Firebase
-        DatabaseReference mUsersDatabaseReference = mDatabase.getReference().child("Users").child(uidFirebase).child("playerName");
 
         //Get Pref for Music Volume
         int valueMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG,0);

@@ -55,7 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/settingsAnimationMediumText"
+            android:text="@string/settingsAnimationMedium"
             android:onClick="onRadioButtonAnimationSpeedClicked"/>
 
         <RadioButton
@@ -63,7 +63,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/settingsAnnimationFastText"
+            android:text="@string/settingsAnnimationFast"
             android:checked="true"
             android:onClick="onRadioButtonAnimationSpeedClicked"/>
 

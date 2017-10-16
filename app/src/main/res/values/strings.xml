@@ -29,9 +29,9 @@
     <string name="AITouched">Touché ! L\'adversaire rejoue !</string>
     <string name="AIDrown">Coulé ! L\'adversaire rejoue !</string>
 
-    <string name="settingsAnimationSlowText">Mou comme un escargot</string>
-    <string name="settingsAnimationMediumText">Tranquille comme un pigeon</string>
-    <string name="settingsAnnimationFastText">Furieux comme un lièvre</string>
+    <string name="settingsAnimationSlowText">Mou</string>
+    <string name="settingsAnimationMedium">Moins Mou</string>
+    <string name="settingsAnnimationFast">Dynamique</string>
     <string name="settingsAnimationsLabel">ViteSse dE jeU</string>
 
     <string name="quit_game_alert_title">Honte et déshonneur !</string>
