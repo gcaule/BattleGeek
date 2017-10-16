@@ -15,7 +15,7 @@ public class PlayerModel {
         BEST_TIME, VICTORIES, RATIO, SHOTS_COUNT;
     }
     // Level for Sorting
-    private static AI.Level comparatorLevel = AI.Level.II;
+    private static AI.Level comparatorLevel = AI.Level.I;
 
     private String name;
     private long totalGameTime = 0;

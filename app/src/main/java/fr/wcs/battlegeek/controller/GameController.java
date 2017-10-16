@@ -1,9 +1,16 @@
 package fr.wcs.battlegeek.controller;
 
+import android.graphics.Point;
+
+import java.util.ArrayList;
+
+import fr.wcs.battlegeek.model.Bonus;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.ui.Tetromino;
+import fr.wcs.battlegeek.utils.Utils;
 
+import static fr.wcs.battlegeek.model.Result.Type.BONUS;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.model.Result.Type.TOUCHED;
@@ -51,6 +58,7 @@ public class GameController {
         // Declaration of the two attributes of the resulting Result Object
         Result.Type resultType;
         Tetromino.Shape resultShape;
+        Bonus.Type resultBonus = null;
 
         // Map's symbol analysis
 
@@ -60,6 +68,13 @@ public class GameController {
             resultType = MISSED;
             // Since there is no Item, there also is no Shape
             resultShape = NONE;
+        }
+        // If Bonus
+        else if (symbol == '-' || symbol == '=' || symbol == '+') {
+            mMap[y][x] = '_';
+            resultType = BONUS;
+            resultShape = NONE;
+            resultBonus = Bonus.getBonus(symbol);
         }
         // If the symbol is not a space, it did touched something
         else {
@@ -79,7 +94,7 @@ public class GameController {
                 resultType = VICTORY;
             }
         }
-        return new Result(resultShape, resultType);
+        return new Result(resultShape, resultType, resultBonus);
     }
 
     /**
@@ -94,7 +109,7 @@ public class GameController {
         Tetromino.Shape resultShape = result.getShape();
 
         // If result is Missed, we store it as a underscore character
-        if(resultType == MISSED) {
+        if(resultType == MISSED || resultType == BONUS) {
             mStorageMap[y][x] = '_';
         }
         // If it Touched something, we store it as the symbol of its shape as lowercase
@@ -130,7 +145,8 @@ public class GameController {
             for(char symbol: row) {
                 // As the Items are stored as Item's shape symbol to Lowercase character
                 // if we found a lowercase character, the game is not win
-                if(Character.isUpperCase(symbol)) {
+                // but as Bonus'symbol are neither lower or upper case, we use "not lowerCase"
+                if(!Character.isLowerCase(symbol)) {
                     return false;
                 }
             }
@@ -152,6 +168,30 @@ public class GameController {
         // If the character is and underscore (Missed Symbol) or a lowercase character (touched symbol)
         // the coordinates were already played, else, everything is ok.
         return symbol == '_' || Character.isLowerCase(symbol);
+    }
+
+    public void setBonus(){
+        // Get Empty Coordinates
+        ArrayList<Point> emptyCells = new ArrayList<>();
+        for (int i = 0; i < mMap.length; i++) {
+            for (int j = 0; j < mMap[i].length; j++) {
+                if(mMap[i][j] == ' ') {
+                    emptyCells.add(new Point(j, i));
+                }
+            }
+        }
+        // Get the bonus
+        Bonus.Type[] bonus = Bonus.Type.values();
+
+        // Set Bonus in the Map
+        for (int i = 0; i < bonus.length; i++) {
+            int index = (int)(Math.random() * (emptyCells.size() - 1));
+            Point position = emptyCells.get(index);
+            emptyCells.remove(index);
+            mMap[position.y][position.x] = bonus[i].toString().charAt(0);
+        }
+
+        Utils.printMap(mMap);
     }
 
     public char[][] getMap() {

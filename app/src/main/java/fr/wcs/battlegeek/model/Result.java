@@ -1,5 +1,7 @@
 package fr.wcs.battlegeek.model;
 
+import android.support.annotation.Nullable;
+
 import fr.wcs.battlegeek.ui.Tetromino;
 
 /**
@@ -15,21 +17,23 @@ public class Result {
      * The Result Types
      */
     public enum Type {
-        TOUCHED, MISSED, DROWN, VICTORY, DEFEATED, ALREADY_PLAYED;
+        TOUCHED, MISSED, DROWN, VICTORY, DEFEATED, BONUS;
     }
 
     // Shape and Type attributes
     private Tetromino.Shape mShape;
     private Type mType;
+    private Bonus.Type mBonusType = null;
 
     /**
      * Constructor of a Result Object
      * @param shape the Shape of the Touched Tetromino (NONE if Missed)
      * @param type the Result Type
      */
-    public Result(Tetromino.Shape shape, Type type) {
+    public Result(Tetromino.Shape shape, Type type, @Nullable Bonus.Type bonusType) {
         mShape = shape;
         mType = type;
+        mBonusType = bonusType;
     }
 
     /**
@@ -46,6 +50,14 @@ public class Result {
      */
     public Type getType() {
         return mType;
+    }
+
+    /**
+     * Bonus type getter (if Bonus else Null)
+     * @return
+     */
+    public Bonus.Type getBonusType() {
+        return mBonusType;
     }
 
     /**

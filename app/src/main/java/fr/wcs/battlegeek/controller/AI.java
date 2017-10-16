@@ -11,6 +11,7 @@ import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.ui.Tetromino;
 
+import static fr.wcs.battlegeek.model.Result.Type.BONUS;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.ui.Tetromino.Shape.NONE;
@@ -44,7 +45,7 @@ public class AI {
     private final String TAG = Settings.TAG;
     private Level mLevel;
     private Point mLastPlayedCoordinates;
-    private Result mLastResult = new Result(NONE, MISSED);
+    private Result mLastResult = new Result(NONE, MISSED, null);
 
 
     private GameController mGameControler;
@@ -60,6 +61,7 @@ public class AI {
     public AI() {
         // Create a Game Controller
         mGameControler = new GameController(Maps.getMap());
+        mGameControler.setBonus();
         // Get all Playables Coordinates
         mPlayablesCoordinates = Maps.getPlayableCoordinates();
         mSurroudingCoordinates = new ArrayList<>();
@@ -120,14 +122,17 @@ public class AI {
             // We only need to get the coordinates of all the Items in the Player's Map
             for (int i = 0; i < mPlayerMap.length; i++) {
                 for (int j = 0; j < mPlayerMap[i].length; j++) {
-                    if (mPlayerMap[i][j] != ' ') {
+                    // If not a Bonus or Empty
+                    if (mPlayerMap[i][j] != ' ' && mPlayerMap[i][j] != '+'
+                            && mPlayerMap[i][j] != '-' && mPlayerMap[i][j] != '=') {
                         String symbol = String.valueOf(mPlayerMap[i][j]);
                         Tetromino.Shape shape = Tetromino.Shape.valueOf(symbol);
-                        if(!mShapeMap.containsKey(shape)) {
+                        if (!mShapeMap.containsKey(shape)) {
                             mShapeMap.put(shape, new ArrayList<Point>());
                         }
-                        Point point = getPointFromPlayableCoordinates(j,i);
+                        Point point = getPointFromPlayableCoordinates(j, i);
                         mShapeMap.get(shape).add(point);
+
                     }
                 }
             }
@@ -152,7 +157,7 @@ public class AI {
         Tetromino.Shape resultShape = mLastResult.getShape();
 
         //Play randomly during hunt mode (nothing found and looking for tetromino)
-        if (mSurroudingCoordinates.isEmpty() && resultType == MISSED) {
+        if (mSurroudingCoordinates.isEmpty() && (resultType == MISSED || resultType == BONUS)) {
             return playLevelI();
         }
 
@@ -177,7 +182,7 @@ public class AI {
 
         //When a result type is touched, go in target mode by creating a map of possible coordinates
 
-        if (resultType != MISSED) {
+        if (resultType != MISSED && resultType != BONUS) {
             if (!mShapeMap.containsKey(resultShape)) {
                 mShapeMap.put(resultShape, new ArrayList<Point>());
             }

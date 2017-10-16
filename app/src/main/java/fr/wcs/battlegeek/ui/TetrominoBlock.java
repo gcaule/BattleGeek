@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 
 /**
@@ -18,11 +19,11 @@ public class TetrominoBlock extends Block {
     private Path mPath = new Path();
 
 
-    private float mMainHSLColorIndex;
-    private float[] mCenterHSLColor;
-    private float[] mTopHSLColor;
-    private float[] mBottomHSLColor;
-    private float[] mSidesHSLColor;
+    protected float mMainHSLColorIndex;
+    protected float[] mCenterHSLColor;
+    protected float[] mTopHSLColor;
+    protected float[] mBottomHSLColor;
+    protected float[] mSidesHSLColor;
     private float mCenterMargin = 15;
 
 
@@ -31,12 +32,12 @@ public class TetrominoBlock extends Block {
      * @param position
      * @param color
      */
-    public TetrominoBlock(PointF position, Tetromino.Colors color) {
+    public TetrominoBlock(PointF position, @Nullable Tetromino.Colors color) {
         super(position);
         this.setColor(color);
     }
 
-    public TetrominoBlock(float x, float y, Tetromino.Colors color) {
+    public TetrominoBlock(float x, float y, @Nullable Tetromino.Colors color) {
         super(x, y);
         this.setColor(color);
     }
@@ -48,39 +49,48 @@ public class TetrominoBlock extends Block {
     public void setColor(Tetromino.Colors color) {
         this.mColor = color;
         float[] hsl = new float[3];
-        switch (color) {
-            case YELLOW :
-                ColorUtils.colorToHSL(Color.YELLOW, hsl);
-                //mMainHSLColorIndex = 60;
-                break;
-            case ORANGE :
-                hsl[0] = 40;
-                break;
-            case RED :
-                ColorUtils.colorToHSL(Color.RED, hsl);
-                //mMainHSLColorIndex = 360;
-                break;
-            case PURPLE:
-                ColorUtils.colorToHSL(Color.MAGENTA, hsl);
-                mMainHSLColorIndex = 290;
-                break;
-            case GREEN :
-                ColorUtils.colorToHSL(Color.GREEN, hsl);
-                //mMainHSLColorIndex = 130;
-                break;
-            case BLUE :
-                ColorUtils.colorToHSL(Color.BLUE, hsl);
-                //mMainHSLColorIndex = 260;
-                break;
-            case LTBLUE:ColorUtils.colorToHSL(Color.CYAN, hsl);
-                //mMainHSLColorIndex = 180;
-                break;
+        if (color != null) {
+            switch (color) {
+                case YELLOW:
+                    ColorUtils.colorToHSL(Color.YELLOW, hsl);
+                    //mMainHSLColorIndex = 60;
+                    break;
+                case ORANGE:
+                    hsl[0] = 40;
+                    break;
+                case RED:
+                    ColorUtils.colorToHSL(Color.RED, hsl);
+                    //mMainHSLColorIndex = 360;
+                    break;
+                case PURPLE:
+                    ColorUtils.colorToHSL(Color.MAGENTA, hsl);
+                    mMainHSLColorIndex = 290;
+                    break;
+                case GREEN:
+                    ColorUtils.colorToHSL(Color.GREEN, hsl);
+                    //mMainHSLColorIndex = 130;
+                    break;
+                case BLUE:
+                    ColorUtils.colorToHSL(Color.BLUE, hsl);
+                    //mMainHSLColorIndex = 260;
+                    break;
+                case LTBLUE:
+                    ColorUtils.colorToHSL(Color.CYAN, hsl);
+                    //mMainHSLColorIndex = 180;
+                    break;
+            }
+            mMainHSLColorIndex = hsl[0];
+            mCenterHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.5f};
+            mTopHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.7f};
+            mBottomHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.2f};
+            mSidesHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.45f};
         }
-        mMainHSLColorIndex = hsl[0];
-        mCenterHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.5f};
-        mTopHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.7f};
-        mBottomHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.2f};
-        mSidesHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.45f};
+        else {
+            mCenterHSLColor = new float[] {0f, 0f, 0.75f};
+            mTopHSLColor = new float[] {0f, 0f, 0.85f};
+            mBottomHSLColor = new float[] {0f, 0f, 0.5f};
+            mSidesHSLColor = new float[] {0f, 0f, 0.65f};
+        }
     }
 
     /**

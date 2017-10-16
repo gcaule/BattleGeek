@@ -219,6 +219,8 @@ public class GameActivity extends AppCompatActivity {
                 mMapView = (MapView) findViewById(R.id.mapView);
                 char[][] mapData = mMapView.getMapData();
                 mGameController = new GameController(mapData);
+                mGameController.setBonus();
+                mMapView.setMap(mGameController.getMap());
                 mMapView.setMode(MapView.Mode.PLAY);
 
                 mAI = new AI();
