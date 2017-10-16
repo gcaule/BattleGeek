@@ -225,6 +225,10 @@ public class GameActivity extends AppCompatActivity {
                 if (mLevel == AI.Level.III || mLevel == AI.Level.IMPOSSIBLE) {
                     mAI.setPlayerMap(mapData);
                 }
+
+                if (mLevel == AI.Level.II || mLevel == AI.Level.III) {
+                    mGameView.setRandomColor(true);
+                }
                 mAI.setLevel(mLevel);
 
                 buttonLaunchGame.setVisibility(View.GONE);

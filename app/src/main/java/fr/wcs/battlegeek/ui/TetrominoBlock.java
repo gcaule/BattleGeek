@@ -1,6 +1,7 @@
 package fr.wcs.battlegeek.ui;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
@@ -46,30 +47,37 @@ public class TetrominoBlock extends Block {
      */
     public void setColor(Tetromino.Colors color) {
         this.mColor = color;
+        float[] hsl = new float[3];
         switch (color) {
             case YELLOW :
-                mMainHSLColorIndex = 60;
+                ColorUtils.colorToHSL(Color.YELLOW, hsl);
+                //mMainHSLColorIndex = 60;
                 break;
             case ORANGE :
-                mMainHSLColorIndex = 40;
+                hsl[0] = 40;
                 break;
             case RED :
-                mMainHSLColorIndex = 360;
+                ColorUtils.colorToHSL(Color.RED, hsl);
+                //mMainHSLColorIndex = 360;
                 break;
             case PURPLE:
+                ColorUtils.colorToHSL(Color.MAGENTA, hsl);
                 mMainHSLColorIndex = 290;
                 break;
             case GREEN :
-                mMainHSLColorIndex = 130;
+                ColorUtils.colorToHSL(Color.GREEN, hsl);
+                //mMainHSLColorIndex = 130;
                 break;
             case BLUE :
-                mMainHSLColorIndex = 260;
+                ColorUtils.colorToHSL(Color.BLUE, hsl);
+                //mMainHSLColorIndex = 260;
                 break;
-            case LTBLUE:
-                mMainHSLColorIndex = 180;
+            case LTBLUE:ColorUtils.colorToHSL(Color.CYAN, hsl);
+                //mMainHSLColorIndex = 180;
                 break;
         }
-        mCenterHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.65f};
+        mMainHSLColorIndex = hsl[0];
+        mCenterHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.5f};
         mTopHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.7f};
         mBottomHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.2f};
         mSidesHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.45f};

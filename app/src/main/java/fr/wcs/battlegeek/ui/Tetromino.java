@@ -2,6 +2,8 @@ package fr.wcs.battlegeek.ui;
 
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -15,6 +17,7 @@ public class Tetromino extends Item {
     private Shape mShape;
     private Colors mColor;
     private static HashMap<Shape, Colors> mColorsMap = new HashMap<>();
+    private static HashMap<Shape, Colors> mRandomColorsMap = new HashMap<>();
 
     public Tetromino(MapView view, Grid grid, Shape shape, @Nullable Colors color) {
         super(view, grid);
@@ -83,6 +86,20 @@ public class Tetromino extends Item {
             mColorsMap.put(Tetromino.Shape.S, Tetromino.Colors.GREEN);
         }
         return mColorsMap;
+    }
+
+    public static HashMap<Shape, Colors> getRandomColorMap() {
+        if(mRandomColorsMap.isEmpty()) {
+            Shape[] shapes = Shape.values();
+            ArrayList<Colors> colors = new ArrayList<>(Arrays.asList(Colors.values()));
+            // Iterate through all shapes except the None one
+            for (int i = 0; i < shapes.length - 1; i++) {
+                int index = (int)(Math.random() * (colors.size() -1));
+                mRandomColorsMap.put(shapes[i], colors.get(index));
+                colors.remove(index);
+            }
+        }
+        return mRandomColorsMap;
     }
 
     public Shape getShape() {
