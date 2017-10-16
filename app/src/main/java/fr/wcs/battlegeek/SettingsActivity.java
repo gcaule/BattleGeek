@@ -2,6 +2,8 @@ package fr.wcs.battlegeek;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -45,6 +47,8 @@ public class SettingsActivity extends AppCompatActivity {
         Drawable backgroundView = backgroundimage.getBackground();
         backgroundView.setAlpha(50);
 
+        ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
+
         //Affichage de la value pour la seekbox Music et seekbok Effects
 
         final SeekBar seekBarMusic = (SeekBar) findViewById(R.id.seekBarMusic);
@@ -54,6 +58,9 @@ public class SettingsActivity extends AppCompatActivity {
         final TextView seekBarValueEffects = (TextView) findViewById(R.id.seekBarValueEffects);
         final EditText inputPlayerName = (EditText) findViewById(R.id.inputPlayerName);
         final ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
+        buttonHome.setColorFilter(filterYellow);
+        final ImageView imageViewUser = (ImageView) findViewById(R.id.imageViewUser);
+        imageViewUser.setColorFilter(filterYellow);
         final Button buttonSave = (Button) findViewById(R.id.buttonSave);
 
         // Radio Buttons
@@ -70,16 +77,23 @@ public class SettingsActivity extends AppCompatActivity {
         TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
 
         titleMessage.setTypeface(titleFont);
+        titleMessage.setTextColor(Color.parseColor("#FFEE00"));
         inputPlayerName.setTypeface(mainFont);
+        inputPlayerName.setTextColor(Color.parseColor("#FFEE00"));
         textViewSettingdsAnimation.setTypeface(titleFont);
-        textViewSettingdsAnimation.setTextColor(Color.parseColor("#FF000000"));
+        textViewSettingdsAnimation.setTextColor(Color.parseColor("#FFEE00"));
         buttonSave.setTypeface(buttonFont);
         mRadioButtonAnimationSlow.setTypeface(mainFont);
+        mRadioButtonAnimationSlow.setTextColor(Color.parseColor("#FFEE00"));
         mRadioButtonAnimationMedium.setTypeface(mainFont);
+        mRadioButtonAnimationMedium.setTextColor(Color.parseColor("#FFEE00"));
         mRadioButtonAnimationFast.setTypeface(mainFont);
+        mRadioButtonAnimationFast.setTextColor(Color.parseColor("#FFEE00"));
 
         seekBarValueEffects.setTypeface(mainFont);
+        seekBarValueEffects.setTextColor(Color.parseColor("#FFEE00"));
         seekBarValueMusic.setTypeface(mainFont);
+        seekBarValueMusic.setTextColor(Color.parseColor("#FFEE00"));
 
         //Initialize Firebase components
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
@@ -93,6 +107,7 @@ public class SettingsActivity extends AppCompatActivity {
         seekBarValueMusic.setText(String.valueOf(valueMusic));
 
         mImageViewMusic = (ImageView) findViewById(R.id.imageViewMusic);
+        mImageViewMusic.setColorFilter(filterYellow);
         setMusicIcon(valueMusic);
 
         //Get Pref for Effects Volume
@@ -101,6 +116,7 @@ public class SettingsActivity extends AppCompatActivity {
         seekBarValueEffects.setText(String.valueOf(valueEffects));
 
         mImageViewEffects = (ImageView) findViewById(R.id.imageViewEffects);
+        mImageViewEffects.setColorFilter(filterYellow);
         setEffectIcon(valueEffects);
 
         //Get Pref for PlayerModel Name

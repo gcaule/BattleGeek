@@ -1,8 +1,12 @@
 package fr.wcs.battlegeek;
 
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -28,7 +32,10 @@ public class StatisticsActivity extends AppCompatActivity implements AdapterView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_statistics);
+
+        ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerLevel);
         ArrayList<String> spinnerLevels = new ArrayList<>();
@@ -51,6 +58,7 @@ public class StatisticsActivity extends AppCompatActivity implements AdapterView
         });
 
         ImageButton buttonHome = (ImageButton) findViewById(R.id.imageButtonHome);
+        buttonHome.setColorFilter(filterYellow);
         buttonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

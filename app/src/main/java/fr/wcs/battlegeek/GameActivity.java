@@ -105,7 +105,7 @@ public class GameActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_game);
 
-        ColorFilter filter = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
+        ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
 
         mContext = getApplicationContext();
 
@@ -127,7 +127,7 @@ public class GameActivity extends AppCompatActivity {
 
         // Settings
         mImageButtonSpeed = (ImageButton) findViewById(R.id.imageButtonSpeed);
-        mImageButtonSpeed.setColorFilter(filter);
+        mImageButtonSpeed.setColorFilter(filterYellow);
         mAnimationsSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, Settings.ANIMATION_DEFAULT);
         setAnimationIcon(mAnimationsSpeed);
         mImageButtonSpeed.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +151,7 @@ public class GameActivity extends AppCompatActivity {
         mSoundController = new SoundController(mContext);
 
         mImageButtonMusic = (ImageButton) findViewById(R.id.imageButtonMusic);
-        mImageButtonMusic.setColorFilter(filter);
+        mImageButtonMusic.setColorFilter(filterYellow);
         mVolumeMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT);
 
         // Play Music
@@ -180,7 +180,7 @@ public class GameActivity extends AppCompatActivity {
         });
 
         mImageButtonEffects = (ImageButton) findViewById(R.id.imageButtonEffects);
-        mImageButtonEffects.setColorFilter(filter);
+        mImageButtonEffects.setColorFilter(filterYellow);
         mVolumeEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG, Settings.EFFECTS_DEFAULT);
         setEffectsIcon(mVolumeEffects);
         mImageButtonEffects.setOnClickListener(new View.OnClickListener() {

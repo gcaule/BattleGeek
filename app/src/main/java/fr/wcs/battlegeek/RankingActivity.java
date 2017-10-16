@@ -1,5 +1,8 @@
 package fr.wcs.battlegeek;
 
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,6 +22,7 @@ import java.util.Collections;
 
 import fr.wcs.battlegeek.adapter.CustomListAdapter;
 import fr.wcs.battlegeek.controller.AI;
+import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Settings;
 
@@ -34,11 +38,13 @@ public class RankingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_ranking);
 
+        ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
+
         ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
+        buttonHome.setColorFilter(filterYellow);
 
         buttonHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,11 +58,13 @@ public class RankingActivity extends AppCompatActivity {
         adapter = new CustomListAdapter(this, mPlayerModelList);
         listView.setAdapter(adapter);
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase firebaseDatabase = DataController.getDatabase();
         DatabaseReference playersReference = firebaseDatabase.getReference("Users");
+        playersReference.keepSynced(true);
         playersReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                mPlayerModelList.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     mPlayerModelList.add(data.getValue(PlayerModel.class));
                 }

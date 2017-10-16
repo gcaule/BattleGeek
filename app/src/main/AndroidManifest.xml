@@ -35,7 +35,6 @@
         <activity
             android:name=".GameActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".RankingFirebaseActivity"/>
         <activity android:name=".StatisticsActivity">
         </activity>
     </application>

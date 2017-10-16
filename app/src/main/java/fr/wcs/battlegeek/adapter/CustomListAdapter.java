@@ -1,6 +1,7 @@
 package fr.wcs.battlegeek.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,10 +51,15 @@ public class CustomListAdapter extends BaseAdapter {
             scoreView = inflater.inflate(R.layout.list_row, parent, false);
             holder = new ViewHolder();
             holder.name = (TextView) scoreView.findViewById(R.id.textViewName);
+            holder.name.setTextColor(Color.parseColor("#FFEE00"));
             holder.ratio = (TextView) scoreView.findViewById(R.id.textViewRatio);
+            holder.ratio.setTextColor(Color.parseColor("#FFEE00"));
             holder.bestTime = (TextView) scoreView.findViewById(R.id.textViewBestTime);
+            holder.bestTime.setTextColor(Color.parseColor("#FFEE00"));
             holder.shotsCount = (TextView) scoreView.findViewById(R.id.textViewShotsCount);
+            holder.shotsCount.setTextColor(Color.parseColor("#FFEE00"));
             holder.levelGames = (TextView) scoreView.findViewById(R.id.textViewLevelGames);
+            holder.levelGames.setTextColor(Color.parseColor("#FFEE00"));
 
             scoreView.setTag(holder);
 

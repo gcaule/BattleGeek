@@ -48,6 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/settingsAnimationSlowText"
+            android:buttonTint="@color/yellow"
             android:onClick="onRadioButtonAnimationSpeedClicked"/>
 
         <RadioButton
@@ -56,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/settingsAnimationMedium"
+            android:buttonTint="@color/yellow"
             android:onClick="onRadioButtonAnimationSpeedClicked"/>
 
         <RadioButton
@@ -65,6 +67,7 @@
             android:layout_weight="1"
             android:text="@string/settingsAnnimationFast"
             android:checked="true"
+            android:buttonTint="@color/yellow"
             android:onClick="onRadioButtonAnimationSpeedClicked"/>
 
     </RadioGroup>
@@ -129,6 +132,8 @@
         android:layout_marginLeft="0dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="64dp"
+        android:thumbTint="@color/yellow"
+        android:progressTint="@color/yellow"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewEffects"
         app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintLeft_toRightOf="@+id/imageViewEffects"
@@ -144,10 +149,12 @@
         android:layout_marginLeft="0dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="150dp"
+        android:thumbTint="@color/yellow"
+        android:progressTint="@color/yellow"
         android:defaultFocusHighlightEnabled="false"
         android:focusedByDefault="false"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewMusic"
-        app:layout_constraintHorizontal_bias="0.41"
+        app:layout_constraintHorizontal_bias="0.431"
         app:layout_constraintLeft_toRightOf="@+id/imageViewMusic"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -167,6 +174,7 @@
         android:imeOptions="actionSend"
         android:inputType="textPersonName"
         android:maxLines="1"
+        android:backgroundTint="@color/yellow"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewUser"
         app:layout_constraintLeft_toRightOf="@+id/imageViewUser"
         android:textSize="24sp"
