@@ -259,7 +259,10 @@ public class AI {
         return null;
     }
 
-    //When a tetromino is touched, get the surrounding coordinates
+    /**
+     * Set the Surrounding Coordinates of the Point in mSurroudingCoordinates
+     * @param point
+     */
     private void getSurroundingCoordinates(Point point) {
 
         int[] tempX = new int[4];
@@ -307,6 +310,12 @@ public class AI {
         }
     }
 
+    /**
+     * Get the Point from mPlayablesCoordinates (avoiding duplicates)
+     * @param x
+     * @param y
+     * @return
+     */
     private Point getPointFromPlayableCoordinates(int x, int y) {
         Point point = new Point(x, y);
         for (Point p : mPlayablesCoordinates) {
@@ -318,6 +327,11 @@ public class AI {
         return null;
     }
 
+    /**
+     * Get (and Delete) a Random Point from the Point's Array
+     * @param array
+     * @return
+     */
     private Point getRandomPoint(ArrayList<Point> array) {
         int index = (int)(Math.random() * (array.size() - 1));
         Point returnedPoint = array.get(index);
