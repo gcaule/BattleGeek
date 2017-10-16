@@ -8,6 +8,18 @@
     android:background="@drawable/battle_background"
     tools:context="fr.wcs.battlegeek.GameActivity">
 
+    <TextView
+        android:id="@+id/textViewTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/yellow"
+        android:textSize="22sp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <ViewFlipper
         android:id="@+id/viewFlipper"
         android:layout_width="0dp"
@@ -188,5 +200,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/music_loud"
         android:layout_marginEnd="16dp" />
+
+    <ImageView
+        android:id="@+id/imageViewBlink"
+        android:alpha="0"
+        android:src="@android:color/holo_red_light"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </android.support.constraint.ConstraintLayout>

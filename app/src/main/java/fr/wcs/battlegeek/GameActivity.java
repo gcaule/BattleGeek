@@ -2,31 +2,32 @@ package fr.wcs.battlegeek;
 
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v7.app.AlertDialog;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.google.gson.Gson;
-
-import java.util.concurrent.TimeUnit;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.controller.DataController;
@@ -40,8 +41,8 @@ import fr.wcs.battlegeek.ui.EndGameVictoryFragment;
 import fr.wcs.battlegeek.ui.GameView;
 import fr.wcs.battlegeek.ui.MapView;
 import fr.wcs.battlegeek.ui.QuitGameFragment;
+import fr.wcs.battlegeek.utils.Utils;
 
-import static android.R.attr.start;
 import static fr.wcs.battlegeek.R.id.viewFlipper;
 import static fr.wcs.battlegeek.model.Result.Type.DEFEATED;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
@@ -53,7 +54,7 @@ import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
  */
 public class GameActivity extends AppCompatActivity {
 
-    private final String TAG = "GameActivity";
+    private final String TAG = Settings.TAG;
 
     private AI.Level mLevel;
     private PlayerModel mPlayer;
@@ -77,14 +78,21 @@ public class GameActivity extends AppCompatActivity {
     private ImageButton mImageButtonSpeed;
     private ImageButton mImageButtonMusic;
     private ImageButton mImageButtonEffects;
+    private TextView mtextViewTimer;
+    private ImageView mImageViewBlink;
+    private AlphaAnimation mBlinkAnimation;
+    private Vibrator mVibrator;
 
     private SharedPreferences mSharedPreferences;
     private int mAnimationsSpeed;
+
 
     private SoundController mSoundController;
     private int mVolumeMusic;
     private int mVolumeEffects;
     private long mStartTime;
+    private int mShotsCounter = 0;
+    private Timer mTimer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +121,7 @@ public class GameActivity extends AppCompatActivity {
 
         // Settings
         mImageButtonSpeed = (ImageButton) findViewById(R.id.imageButtonSpeed);
-        mAnimationsSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, Settings.ANIMATION_MEDIUM);
+        mAnimationsSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, Settings.ANIMATION_DEFAULT);
         setAnimationIcon(mAnimationsSpeed);
         mImageButtonSpeed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +144,10 @@ public class GameActivity extends AppCompatActivity {
         mSoundController = new SoundController(mContext);
 
         mImageButtonMusic = (ImageButton) findViewById(R.id.imageButtonMusic);
-        mVolumeMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, 50);
+        mVolumeMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT);
+
+        // Play Music
+        mSoundController.playMusic();
 
         setMusicIcon(mVolumeMusic);
         mImageButtonMusic.setOnClickListener(new View.OnClickListener() {
@@ -156,11 +167,12 @@ public class GameActivity extends AppCompatActivity {
                 }
                 mSharedPreferences.edit().putInt(Settings.MUSIC_TAG, mVolumeMusic).apply();
                 setMusicIcon(mVolumeMusic);
+                mSoundController.setMusicVolume(mVolumeMusic);
             }
         });
 
         mImageButtonEffects = (ImageButton) findViewById(R.id.imageButtonEffects);
-        mVolumeEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG, 50);
+        mVolumeEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG, Settings.EFFECTS_DEFAULT);
         setEffectsIcon(mVolumeEffects);
         mImageButtonEffects.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,6 +191,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 mSharedPreferences.edit().putInt(Settings.EFFECTS_TAG, mVolumeEffects).apply();
                 setEffectsIcon(mVolumeEffects);
+                mSoundController.setEffectsVolume(mVolumeEffects);
             }
         });
 
@@ -207,16 +220,30 @@ public class GameActivity extends AppCompatActivity {
                 char[][] mapData = mMapView.getMapData();
                 mGameController = new GameController(mapData);
                 mMapView.setMode(MapView.Mode.PLAY);
+
                 mAI = new AI();
-                if (mLevel == AI.Level.IMPOSSIBLE) {
+                if (mLevel == AI.Level.III || mLevel == AI.Level.IMPOSSIBLE) {
                     mAI.setPlayerMap(mapData);
                 }
                 mAI.setLevel(mLevel);
+
                 buttonLaunchGame.setVisibility(View.GONE);
                 mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
+
+                // Randomize first Player
+                int player = (int)(Math.random() * 2);
+                if(player % 2 == 0) {
+                    canPlay = false;
+                    aiPlay();
+                }
+                else {
+                    mViewFlipper.showNext();
+
+                }
+
                 mTextViewAI.setText(R.string.AITurn);
-                mViewFlipper.showNext();
                 mStartTime = System.currentTimeMillis();
+                startTimer();
             }
 
         });
@@ -260,6 +287,7 @@ public class GameActivity extends AppCompatActivity {
                 }
 
                 playerPlay(x, y);
+                mShotsCounter++;
             }
         });
 
@@ -267,6 +295,34 @@ public class GameActivity extends AppCompatActivity {
         Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
 
         TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
+
+        mtextViewTimer = (TextView) findViewById(R.id.textViewTimer);
+
+        //Vibrator
+        mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        // Blink
+        mImageViewBlink = (ImageView) findViewById(R.id.imageViewBlink);
+        mBlinkAnimation= new AlphaAnimation(0f, 0.7f);
+        mBlinkAnimation.setDuration(70);
+        mBlinkAnimation.setRepeatMode(Animation.RESTART);
+
+        mBlinkAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                mImageViewBlink.setAlpha(1f);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mImageViewBlink.setAlpha(0f);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
 
         mTextViewAI.setTypeface(mainFont);
         mTextViewPlayer.setTypeface(mainFont);
@@ -306,6 +362,8 @@ public class GameActivity extends AppCompatActivity {
                 mGameView.setTouch(x, y, result.getShape());
                 mPlayer.addGameTime(mLevel, VICTORY, getPlayedTime());
                 mPlayer.addVictory(mLevel);
+                mPlayer.addShotsCount(mLevel, mShotsCounter);
+                mTimer.cancel();
                 mDataController.updatePlayer(mPlayer);
                 FragmentManager fm = getFragmentManager();
                 EndGameVictoryFragment endGameVictoryFragment = new EndGameVictoryFragment();
@@ -342,6 +400,7 @@ public class GameActivity extends AppCompatActivity {
 
         final Point aiPlayCoordinates = mAI.play();
         final Result iaResult = mGameController.shot(aiPlayCoordinates.x, aiPlayCoordinates.y);
+        //Utils.printMap(mGameController.getMap());
         final Result.Type resultType = iaResult.getType();
         Log.d(TAG, "onPlayListener: " + aiPlayCoordinates + " " + iaResult);
 
@@ -362,8 +421,13 @@ public class GameActivity extends AppCompatActivity {
                     } else {
                         mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
                         mTextViewAI.setText(R.string.AITouched);
+                        blink(0);
                         if (resultType == DROWN) {
                             mTextViewAI.setText(R.string.AIDrown);
+                            blink(5);
+                        }
+                        if (resultType == VICTORY) {
+                            mTextViewAI.setText(R.string.AIVictory);
                         }
                     }
                 }
@@ -383,7 +447,7 @@ public class GameActivity extends AppCompatActivity {
                     mPlayer.addGameTime(mLevel, DEFEATED, getPlayedTime());
                     mPlayer.addDefeat(mLevel);
                     mDataController.updatePlayer(mPlayer);
-
+                    mTimer.cancel();
                     FragmentManager fm = getFragmentManager();
                     EndGameDefeatFragment endGameDefeatFragment = new EndGameDefeatFragment();
                     endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
@@ -398,9 +462,26 @@ public class GameActivity extends AppCompatActivity {
         }.start();
     }
 
-    private int getPlayedTime() {
-        long time = System.currentTimeMillis() - mStartTime;
-        return (int) TimeUnit.MILLISECONDS.toSeconds(time);
+    private long getPlayedTime() {
+        return System.currentTimeMillis() - mStartTime;
+    }
+
+    private void startTimer() {
+        mtextViewTimer.setVisibility(View.VISIBLE);
+        mtextViewTimer.setText("00:00");
+        mTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        long time = System.currentTimeMillis() - mStartTime;
+                        mtextViewTimer.setText(Utils.timeFormat(time));
+                    }
+                });
+            }
+        }, 1000, 1000);
+
     }
 
     /**
@@ -459,6 +540,18 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    private void blink(int repetitions) {
+        mBlinkAnimation.setRepeatCount(repetitions);
+        mImageViewBlink.startAnimation(mBlinkAnimation);
+        //long[] timing = new long[] {70};
+        //int[] amplitude = new int[] {VibrationEffect.DEFAULT_AMPLITUDE};
+        //mVibrator.vibrate(VibrationEffect.createWaveform(timing, amplitude, repetitions));
+        if (Build.VERSION.SDK_INT >= 26) {
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(70L, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(70L);
+        }
+    }
 
     /**
      * Method handling Back Button Pressed
@@ -470,7 +563,14 @@ public class GameActivity extends AppCompatActivity {
         QuitGameFragment quitGameFragment = new QuitGameFragment();
         quitGameFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
         quitGameFragment.setCancelable(false);
-        mExit = quitGameFragment.shouldExit();
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mSoundController.stopMusic();
+        mSoundController.stopEffects();
+        mExit = true;
     }
 }

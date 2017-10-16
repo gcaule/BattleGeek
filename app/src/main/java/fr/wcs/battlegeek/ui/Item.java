@@ -17,7 +17,7 @@ import fr.wcs.battlegeek.utils.Utils;
  */
 
 public class Item implements View.OnTouchListener {
-    private String TAG = "Item";
+    private String TAG = Settings.TAG;
 
     /**
      * The State of the Item
@@ -34,6 +34,7 @@ public class Item implements View.OnTouchListener {
     // References
     private MapView mView;
     private Grid mGrid;
+    private Toast mToast;
 
     // Geometry
     private float mX = 0;
@@ -166,7 +167,7 @@ public class Item implements View.OnTouchListener {
      * Method returning the Width
      * @return
      */
-    private int getWidth() {
+    public int getWidth() {
         mWidth = 0;
         for(Block block : mBlocks) {
             if (block.getX() > mWidth) mWidth = (int) block.getX();
@@ -178,7 +179,7 @@ public class Item implements View.OnTouchListener {
      * Method returning the Height
      * @return
      */
-    private int getHeight() {
+    public int getHeight() {
         mHeight = 0;
         for(Block block : mBlocks) {
             if (block.getY() > mHeight) mHeight = (int) block.getY();
@@ -312,7 +313,7 @@ public class Item implements View.OnTouchListener {
                     rotate();
                     if(isHoverItem(mInitialPosition)) {
                         mBlocks = blocks;
-                        Toast.makeText(mView.getContext(), R.string.RotationImpossible, Toast.LENGTH_SHORT).show();
+                        showToast(R.string.RotationImpossible);
                     }
                 }
                 // Snap the Item to the Grid
@@ -381,6 +382,12 @@ public class Item implements View.OnTouchListener {
      * Method handling Item's Rotation (90°)
      */
     public void rotate() {
+        // The Rotation invert width and height so we first check if the grid will contains the Item
+        if(mX + mHeight >= Settings.GRID_SIZE || mY + mWidth >= Settings.GRID_SIZE ) {
+            showToast(R.string.RotationImpossible);
+            return;
+        }
+
         // Get the square's size in witch the piece rotate
         int size = Math.max(getWidth(), getHeight());
         PointF rotationCenter = new PointF(size / 2, size / 2);
@@ -393,8 +400,8 @@ public class Item implements View.OnTouchListener {
         for(Block block : mBlocks) {
             int x = (int) block.getX();
             int y = (int) block.getY();
-            int x1 = (int)(rotationCenter.x + rotationCenter.y - y);
-            int y1 = (int)(rotationCenter.y - rotationCenter.x + x);
+            int x1 = Math.round(rotationCenter.x + rotationCenter.y - y);
+            int y1 = Math.round(rotationCenter.y - rotationCenter.x + x);
             block.setX(x1);
             block.setY(y1);
 
@@ -403,15 +410,29 @@ public class Item implements View.OnTouchListener {
             minY = Math.min(minY, y1);
         }
 
-        // Apply Offset On the Blocks
+        //Apply Offset On the Blocks
         for(Block block : mBlocks) {
             block.setX(block.getX() - minX);
             block.setY(block.getY() - minY);
         }
 
         // Refresh width and height
-        mWidth = getWidth();
-        mHeight = getHeight();
+        getWidth();
+        getHeight();
+    }
+
+    /**
+     * Method Showing a Toast, avoiding Latency
+     *
+     * @param stringResource
+     */
+    private void showToast(int stringResource) {
+        if (mToast == null) {
+            mToast = Toast.makeText(mView.getContext(), mView.getResources().getString(stringResource), Toast.LENGTH_SHORT);
+        }
+        mToast.setText(mView.getResources().getString(stringResource));
+        mToast.setDuration(Toast.LENGTH_SHORT);
+        mToast.show();
     }
 
     /**
@@ -421,8 +442,9 @@ public class Item implements View.OnTouchListener {
      */
     @Override
     public String toString() {
-        return "Item{" +
-                "mBlocks=" + mBlocks +
+        return "Item{ Position=" +
+                mPosition +
+                ";\n width=" + getWidth() + "\nheight=" + getHeight() + "\nmBlocks=" + mBlocks +
                 "}";
     }
 }

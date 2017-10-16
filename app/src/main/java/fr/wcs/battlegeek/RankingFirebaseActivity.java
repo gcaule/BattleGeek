@@ -13,9 +13,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import fr.wcs.battlegeek.model.Settings;
+
 public class RankingFirebaseActivity extends AppCompatActivity {
 
-    private static final String TAG = "RankingFirebaseActivity";
+    private static final String TAG = Settings.TAG;
     // Firebase instance variables
     private FirebaseDatabase mDatabase;
     private DatabaseReference mUsersDatabaseReference;

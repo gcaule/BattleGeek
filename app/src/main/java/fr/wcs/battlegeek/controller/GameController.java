@@ -153,4 +153,8 @@ public class GameController {
         // the coordinates were already played, else, everything is ok.
         return symbol == '_' || Character.isLowerCase(symbol);
     }
+
+    public char[][] getMap() {
+        return mMap;
+    }
 }
