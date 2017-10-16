@@ -20,6 +20,7 @@ import fr.wcs.battlegeek.model.Settings;
 
 public class MainMenuActivity extends AppCompatActivity {
 
+    private final String TAG = Settings.TAG;
     SharedPreferences mSharedPreferences;
     TextView showPlayerName;
 
@@ -136,5 +137,13 @@ public class MainMenuActivity extends AppCompatActivity {
         showPlayerName.setTextColor(Color.parseColor("#FFEE00"));
         showPlayerName.setTextSize(26);
         showPlayerName.setText("Coucou " + playerName + " !");
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

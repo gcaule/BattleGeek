@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,7 +24,9 @@ import static android.view.View.GONE;
 public class ScreenLauncher extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
+    private FirebaseDatabase mDatabase;
     private Timer mTimer;
+    private boolean shouldRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,7 @@ public class ScreenLauncher extends AppCompatActivity {
 
         //Get Pref for PlayerModel Name
         final String uid = mSharedPreferences.getString(Settings.UID, null);
-
+        shouldRegister = uid == null;
 
         //Si Playername dans sharedpref vide, allez sur register. Sinon allez à MainActiv
         mTimer = new Timer();
@@ -59,7 +62,7 @@ public class ScreenLauncher extends AppCompatActivity {
             public void run() {
                 ScreenLauncher.this.runOnUiThread(new Runnable() {
                     public void run() {
-                       if (uid == null) {
+                       if (shouldRegister) {
 
                             startActivity(new Intent(ScreenLauncher.this, FirstTimeUsernameScreen.class));
                         } else {
@@ -75,8 +78,10 @@ public class ScreenLauncher extends AppCompatActivity {
         screen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ScreenLauncher.this, MainMenuActivity.class));
-                mTimer.cancel();
+                if(!shouldRegister) {
+                    startActivity(new Intent(ScreenLauncher.this, MainMenuActivity.class));
+                    mTimer.cancel();
+                }
             }
         });
     }

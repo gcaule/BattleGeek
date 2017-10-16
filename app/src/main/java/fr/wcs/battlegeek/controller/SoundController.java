@@ -3,10 +3,12 @@ package fr.wcs.battlegeek.controller;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
+
+import java.util.ArrayList;
 
 import fr.wcs.battlegeek.R;
 import fr.wcs.battlegeek.model.Result;
@@ -29,6 +31,9 @@ public class SoundController {
     // Soundpool object that will handle the sound
     private SoundPool mSoundPool;
 
+    // MediaPlayer for Music
+    private MediaPlayer mMediaPlayer;
+
     // Some sound IDs
     // TODO: Move all the sound in some lists
     private int soundID_boom = -1;
@@ -37,6 +42,10 @@ public class SoundController {
     private int soundID_boom2 = -1;
 
     private int musicID = -1;
+    private float mMusicMixRatio = 0.09f;
+
+    // Audio Streams List
+    private ArrayList<Integer> mEffectsStreams = new ArrayList<>();
 
     // Preferences reference
     private SharedPreferences mSharedPreferences;
@@ -65,14 +74,19 @@ public class SoundController {
         // Create the SoundPool
         mSoundPool = soundPoolBuilder.build();
 
+
         // Sound's ID definition from the Raw Resources
         soundID_boom = mSoundPool.load(mContext, R.raw.xplod1, 1);
         soundID_plouf = mSoundPool.load(mContext, R.raw.ploof1, 1);
         soundID_boom2 = mSoundPool.load(mContext, R.raw.longbomb1, 1);
         soundID_drown = mSoundPool.load(mContext, R.raw.wilhelm_scream, 1);
 
-        musicID = mSoundPool.load(mContext, R.raw.music_brahms, 1);
+        //musicID = R.raw.music_brahms;
+        musicID = R.raw.stupid;
 
+        // Music Player
+        mMediaPlayer = MediaPlayer.create(mContext, musicID);
+        mMediaPlayer.setLooping(true);
     }
 
     /**
@@ -81,10 +95,9 @@ public class SoundController {
      */
     public void playSound(Result.Type result){
         // Get the preferred Volume
-        float volume = (float) (mSharedPreferences.getInt(Settings.EFFECTS_TAG, 1) - 1) / 100 ;
+        float volume = (float) mSharedPreferences.getInt(Settings.EFFECTS_TAG, Settings.EFFECTS_DEFAULT) / 100 ;
         if (volume <= 0) return;
-        Log.d(TAG, "playSound() called with: result = [" + result + "]" + " Volume : " + volume);
-        int soundID = -1;
+        int soundID;
         // Get the Sound ID according to the Result's Type
         // TODO : Round Robin (Not play two similar sounds right after)
         switch (result) {
@@ -99,11 +112,44 @@ public class SoundController {
                 soundID = soundID_drown;
                 break;
             case VICTORY:
-                soundID = soundID_boom;
+                mSoundPool.play(soundID_boom, volume, volume, 0, 0, 1);
+                soundID = soundID_drown;
+                break;
+            default:
+                soundID = -1;
                 break;
         }
-
         // Play the sound
-        mSoundPool.play(soundID, volume, volume, 0, 0, 1);
+        int stream = mSoundPool.play(soundID, volume, volume, 0, 0, 1);
+        if(! mEffectsStreams.contains(stream)) mEffectsStreams.add(stream);
+    }
+
+    public void stopEffects() {
+        for(int stream : mEffectsStreams) {
+            mSoundPool.stop(stream);
+        }
+        mEffectsStreams.clear();
+    }
+
+    public void setEffectsVolume(int volume) {
+        float vol = (float) volume / 100 * 0.7f;
+        for(int stream : mEffectsStreams) {
+            mSoundPool.setVolume(stream, vol, vol);
+        }
+    }
+
+    public void playMusic(){
+        final float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, 50) / 100 * mMusicMixRatio;
+        mMediaPlayer.setVolume(volume, volume);
+        mMediaPlayer.start();
+    }
+
+    public void stopMusic(){
+        mMediaPlayer.stop();
+    }
+
+    public void setMusicVolume(int volume){
+        float vol = (float) volume / 100 * mMusicMixRatio;
+        mMediaPlayer.setVolume(vol, vol);
     }
 }

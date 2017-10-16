@@ -1,25 +1,35 @@
 package fr.wcs.battlegeek;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import fr.wcs.battlegeek.adapterRanking.CustomListAdapter;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import fr.wcs.battlegeek.adapter.CustomListAdapter;
+import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.model.PlayerModel;
+import fr.wcs.battlegeek.model.Settings;
 
 public class RankingActivity extends AppCompatActivity {
 
-    private List<PlayerModel> mPlayerModelList = new ArrayList<PlayerModel>();
+    private final String TAG = Settings.TAG;
+    private ArrayList<PlayerModel> mPlayerModelList = new ArrayList<PlayerModel>();
     private ListView listView;
     private CustomListAdapter adapter;
+
+    private PlayerModel.ComparatorFactor mComparatorFactor = PlayerModel.ComparatorFactor.BEST_TIME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,68 +48,52 @@ public class RankingActivity extends AppCompatActivity {
 
         });
 
-        SQLiteDatabase myDB = null;
+        listView = (ListView) findViewById(R.id.list);
+        adapter = new CustomListAdapter(this, mPlayerModelList);
+        listView.setAdapter(adapter);
 
-        try {
-
-            //Create a Database if doesnt exist otherwise Open It
-
-            myDB = this.openOrCreateDatabase("leaderboard", MODE_PRIVATE, null);
-
-            //Create table in database if it doesnt exist allready
-
-            myDB.execSQL("CREATE TABLE IF NOT EXISTS scores (name TEXT, score TEXT);");
-
-            //Select all rows from the table
-
-            Cursor cursor = myDB.rawQuery("SELECT * FROM scores", null);
-
-            //If there are no rows (data) then insert some in the table
-
-            if (cursor != null) {
-                if (cursor.getCount() == 0) {
-
-                    myDB.execSQL("INSERT INTO scores (name, score) VALUES ('Andy', '7');");
-                    myDB.execSQL("INSERT INTO scores (name, score) VALUES ('Marie', '4');");
-                    myDB.execSQL("INSERT INTO scores (name, score) VALUES ('George', '1');");
-
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference playersReference = firebaseDatabase.getReference("Users");
+        playersReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    mPlayerModelList.add(data.getValue(PlayerModel.class));
                 }
 
+                Collections.sort(mPlayerModelList, PlayerModel.BestTimeComparator);
+                Log.d(TAG, "onDataChange: " + mPlayerModelList);
+                adapter.notifyDataSetChanged();
             }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        } catch (Exception e) {
-
-        } finally {
-
-            //Initialize and create a new adapter with layout named list found in activity_main layout
-
-            listView = (ListView) findViewById(R.id.list);
-            adapter = new CustomListAdapter(this, mPlayerModelList);
-            listView.setAdapter(adapter);
-
-            Cursor cursor = myDB.rawQuery("SELECT * FROM scores", null);
-
-            if (cursor.moveToFirst()) {
-
-                //read all rows from the database and add to the PlayerModel array
-
-                while (!cursor.isAfterLast()) {
-
-                    PlayerModel playerModel = new PlayerModel();
-
-                    playerModel.setName(cursor.getString(0));
-                    mPlayerModelList.add(playerModel);
-                    cursor.moveToNext();
-
-
-                }
             }
+        });
+    }
 
-            //All done, so notify the adapter to populate the list using the PlayerModel Array
+    private void sortByBestTime(AI.Level level) {
+        PlayerModel.setComparatorLevel(level);
+        Collections.sort(mPlayerModelList, PlayerModel.BestTimeComparator);
+        adapter.notifyDataSetChanged();
+    }
 
-            adapter.notifyDataSetChanged();
-        }
+    private void sortByRatio(AI.Level level) {
+        PlayerModel.setComparatorLevel(level);
+        Collections.sort(mPlayerModelList, PlayerModel.RatioComparator);
+        adapter.notifyDataSetChanged();
+    }
 
+    private void sortByVictories(AI.Level level) {
+        PlayerModel.setComparatorLevel(level);
+        Collections.sort(mPlayerModelList, PlayerModel.VictoriesComparator);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void sortByShotCount(AI.Level level) {
+        PlayerModel.setComparatorLevel(level);
+        Collections.sort(mPlayerModelList, PlayerModel.BestShotsCountComparator);
+        adapter.notifyDataSetChanged();
     }
 }

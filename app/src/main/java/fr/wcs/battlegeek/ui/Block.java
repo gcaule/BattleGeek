@@ -100,18 +100,6 @@ public class Block implements Cloneable{
     }
 
     /**
-     * String Representation of a Block
-     *
-     * @return
-     */
-    @Override
-    public String toString() {
-        return "Block{" +
-                "mPosition=" + mPosition +
-                "}";
-    }
-
-    /**
      * Return the Position of the Block relative to it's parent Item
      *
      * @return
@@ -207,5 +195,16 @@ public class Block implements Cloneable{
      */
     enum State {
         ALIVE, DEAD;
+    }
+
+    /**
+     * String Representation of a Block
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Block{" +
+                "mPosition=" + mPosition +
+                "}\n";
     }
 }
