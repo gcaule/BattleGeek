@@ -546,6 +546,7 @@ public class GameActivity extends AppCompatActivity {
         //long[] timing = new long[] {70};
         //int[] amplitude = new int[] {VibrationEffect.DEFAULT_AMPLITUDE};
         //mVibrator.vibrate(VibrationEffect.createWaveform(timing, amplitude, repetitions));
+        mVibrator.vibrate(70);
         if (Build.VERSION.SDK_INT >= 26) {
             ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(70L, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {

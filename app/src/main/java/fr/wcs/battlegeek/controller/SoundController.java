@@ -3,10 +3,10 @@ package fr.wcs.battlegeek.controller;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 
 import java.util.ArrayList;
 
@@ -54,26 +54,30 @@ public class SoundController {
      * SoundController Constructor
      * @param context the application's Context
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @SuppressWarnings("deprecation")
     public SoundController(Context context) {
         mContext = context;
         // Initialisation of the Shared Preferences
         mSharedPreferences = mContext.getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
-        // Audio Attributes definition through a Builder Object
-        AudioAttributes.Builder attributesBuilder = new AudioAttributes.Builder();
-        attributesBuilder.setUsage(AudioAttributes.USAGE_GAME);
-        attributesBuilder.setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION);
-        // Build the Audio Attributes
-        AudioAttributes attributes = attributesBuilder.build();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Audio Attributes definition through a Builder Object
+            AudioAttributes.Builder attributesBuilder = new AudioAttributes.Builder();
+            attributesBuilder.setUsage(AudioAttributes.USAGE_GAME);
+            attributesBuilder.setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION);
+            // Build the Audio Attributes
+            AudioAttributes attributes = attributesBuilder.build();
 
-        // SoundPool initialisation through a Builder Object
-        SoundPool.Builder soundPoolBuilder = new SoundPool.Builder();
-        soundPoolBuilder.setAudioAttributes(attributes);
-        soundPoolBuilder.setMaxStreams(10);
-        // Create the SoundPool
-        mSoundPool = soundPoolBuilder.build();
-
+            // SoundPool initialisation through a Builder Object
+            SoundPool.Builder soundPoolBuilder = new SoundPool.Builder();
+            soundPoolBuilder.setAudioAttributes(attributes);
+            soundPoolBuilder.setMaxStreams(10);
+            // Create the SoundPool
+            mSoundPool = soundPoolBuilder.build();
+        }
+        else{
+            mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 1);
+        }
 
         // Sound's ID definition from the Raw Resources
         soundID_boom = mSoundPool.load(mContext, R.raw.xplod1, 1);
