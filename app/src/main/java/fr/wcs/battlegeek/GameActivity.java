@@ -71,6 +71,7 @@ public class GameActivity extends AppCompatActivity {
     private GameController mGameController;
     private boolean canPlay = true;
     private Bonus.Type mSelectedBonus = null;
+    private boolean mAIShouldPlay = false;
 
     private Toast mToast;
     private Context mContext;
@@ -475,6 +476,7 @@ public class GameActivity extends AppCompatActivity {
                 public void onFinish() {
                     mTextViewPlayer.setText(R.string.player_turn);
                     mViewFlipper.showPrevious();
+                    mAIShouldPlay = true;
                     aiPlay();
                 }
             }.start();
@@ -537,10 +539,12 @@ public class GameActivity extends AppCompatActivity {
                     mTextViewAI.setText(R.string.AITurn);
                     canPlay = true;
                     mViewFlipper.showPrevious();
+                    mAIShouldPlay = false;
                 }
                 else if(resultType == BONUS) {
                     canPlay = true;
                     mViewFlipper.showPrevious();
+                    mAIShouldPlay = false;
                 }
                 else if(resultType == VICTORY){
                     mPlayer.addGameTime(mLevel, DEFEATED, getPlayedTime());
@@ -551,10 +555,15 @@ public class GameActivity extends AppCompatActivity {
                     EndGameDefeatFragment endGameDefeatFragment = new EndGameDefeatFragment();
                     endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
                     endGameDefeatFragment.setCancelable(false);
+                    mAIShouldPlay = false;
                 }
 
                 else if(!mExit){
                     aiPlay();
+                }
+
+                else if(mExit) {
+                    mAIShouldPlay = true;
                 }
 
             }
@@ -723,10 +732,21 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onResume() {
+        super.onResume();
+        mSoundController = new SoundController(getApplicationContext());
+        mExit = false;
+        if(mAIShouldPlay) {
+            aiPlay();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         mSoundController.stopMusic();
         mSoundController.stopEffects();
+        mSoundController.release();
         mExit = true;
     }
 }

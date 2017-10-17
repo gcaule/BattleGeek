@@ -55,8 +55,8 @@ public class TetrominoBonus extends TetrominoBlock {
     @Override
     public void draw(Canvas canvas, float itemX, float itemY, float blockSize) {
         super.draw(canvas, itemX, itemY, blockSize);
-        float x = (itemX + mX) * mBlockSize;
-        float y = (itemY + mY) * mBlockSize;
+        float x = (Math.round(itemX) + mX) * mBlockSize;
+        float y = (Math.round(itemY) + mY) * mBlockSize;
         float centerMargin = this.mBlockSize * 15 / 100;
 
         float xPos = x + mBlockSize / 2 - (int)(mPaint.measureText(symbol)/2);

@@ -149,11 +149,18 @@ public class SoundController {
     }
 
     public void stopMusic(){
-        mMediaPlayer.stop();
+        if(mMediaPlayer.isPlaying()){
+            mMediaPlayer.stop();
+        }
     }
 
     public void setMusicVolume(int volume){
         float vol = (float) volume / 100 * mMusicMixRatio;
         mMediaPlayer.setVolume(vol, vol);
+    }
+
+    public void release(){
+        mSoundPool.release();
+        mMediaPlayer.release();
     }
 }
