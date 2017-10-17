@@ -279,6 +279,7 @@ public class GameActivity extends AppCompatActivity {
                     mButtonSwitchView.setVisibility(View.VISIBLE);
                     mViewFlipper.showNext();
                     mGameController.setMap(mMapView.getMapData());
+                    buttonLaunchGame.setVisibility(View.GONE);
                 }
             }
 
@@ -521,7 +522,11 @@ public class GameActivity extends AppCompatActivity {
                     if (resultType == MISSED) {
                         mMapView.setPlouf(aiPlayCoordinates.x, aiPlayCoordinates.y);
                         mTextViewAI.setText(R.string.missed);
-                    } else {
+                    }
+                    else if (resultType == BONUS) {
+                        mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                    }
+                    else {
                         mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
                         mTextViewAI.setText(R.string.AITouched);
                         blink(0);

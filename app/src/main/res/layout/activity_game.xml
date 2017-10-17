@@ -246,7 +246,7 @@
     <ImageView
         android:id="@+id/imageViewBlink"
         android:alpha="0"
-        android:src="@android:color/holo_red_light"
+        android:src="#590101"
         android:layout_width="0dp"
         android:layout_height="551dp"
         tools:layout_editor_absoluteY="8dp"
