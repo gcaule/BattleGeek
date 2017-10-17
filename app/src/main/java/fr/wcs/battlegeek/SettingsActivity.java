@@ -70,19 +70,17 @@ public class SettingsActivity extends AppCompatActivity {
 
         buttonSave.setVisibility(GONE);
 
-        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/SomeTimeLater.otf");
-        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
-        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/DirtyClassicMachine.ttf");
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
 
         TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
 
-        titleMessage.setTypeface(titleFont);
+        titleMessage.setTypeface(mainFont);
         titleMessage.setTextColor(Color.parseColor("#FFEE00"));
         inputPlayerName.setTypeface(mainFont);
         inputPlayerName.setTextColor(Color.parseColor("#FFEE00"));
-        textViewSettingdsAnimation.setTypeface(titleFont);
+        textViewSettingdsAnimation.setTypeface(mainFont);
         textViewSettingdsAnimation.setTextColor(Color.parseColor("#FFEE00"));
-        buttonSave.setTypeface(buttonFont);
+        buttonSave.setTypeface(mainFont);
         mRadioButtonAnimationSlow.setTypeface(mainFont);
         mRadioButtonAnimationSlow.setTextColor(Color.parseColor("#FFEE00"));
         mRadioButtonAnimationMedium.setTypeface(mainFont);
@@ -94,9 +92,6 @@ public class SettingsActivity extends AppCompatActivity {
         seekBarValueEffects.setTextColor(Color.parseColor("#FFEE00"));
         seekBarValueMusic.setTypeface(mainFont);
         seekBarValueMusic.setTextColor(Color.parseColor("#FFEE00"));
-
-        //Initialize Firebase components
-        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
 
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);

@@ -24,36 +24,36 @@
         android:id="@+id/viewFlipper"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1">
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textViewAI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
                 android:gravity="fill_vertical|center_horizontal"
+                android:lineSpacingExtra="15dp"
                 android:text="@string/place_pieces"
-                app:layout_constraintBottom_toTopOf="@+id/mapView"
                 android:textColor="@color/yellow"
-                android:textSize="22sp"
-                app:layout_constraintHorizontal_bias="0.483"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/mapView"
+                app:layout_constraintHorizontal_bias="0.504"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="32dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <fr.wcs.battlegeek.ui.MapView
                 android:id="@+id/mapView"
@@ -71,7 +71,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.502"/>
+                app:layout_constraintVertical_bias="0.502" />
 
             <Button
                 android:id="@+id/buttonLaunchGame"
@@ -79,32 +79,32 @@
                 android:layout_height="56dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="21dp"
+                android:layout_marginRight="8dp"
                 android:background="@drawable/buttoningame"
-                android:elevation="6dp"
                 android:padding="10dp"
-                android:paddingHorizontal="5dp"
-                android:paddingVertical="5dp"
                 android:text="@string/launchGame"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/buttonRandomPositions"
                 android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"/>
+                android:layout_marginStart="16dp"
+                app:layout_constraintRight_toRightOf="parent" />
 
             <Button
                 android:id="@+id/buttonRandomPositions"
                 android:layout_width="wrap_content"
-                android:layout_height="56dp"
-                android:layout_marginBottom="16dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="17dp"
                 android:layout_marginLeft="8dp"
                 android:background="@drawable/buttoningame"
                 android:padding="10dp"
-                android:paddingHorizontal="5dp"
-                android:paddingVertical="5dp"
                 android:text="@string/randomize_positions"
+                android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/buttonLaunchGame"
                 android:layout_marginStart="8dp"/>
+
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
@@ -118,20 +118,18 @@
                 android:id="@+id/textViewPlayer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="@string/place_pieces"
                 android:textColor="@color/yellow"
                 android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/gameView"
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/gameView"
-                android:layout_marginTop="32dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <fr.wcs.battlegeek.ui.GameView
                 android:id="@+id/gameView"
-                android:background="#70ffffff"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -140,6 +138,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:background="#70ffffff"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -147,7 +146,7 @@
                 tools:layout_conversion_absoluteHeight="383dp"
                 tools:layout_conversion_absoluteWidth="368dp"
                 tools:layout_conversion_absoluteX="8dp"
-                tools:layout_conversion_absoluteY="8dp"/>
+                tools:layout_conversion_absoluteY="8dp" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -162,8 +161,6 @@
         android:layout_marginRight="16dp"
         android:background="@drawable/buttoningame"
         android:padding="10dp"
-        android:paddingHorizontal="5dp"
-        android:paddingVertical="5dp"
         android:text="@string/switch_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -173,13 +170,13 @@
         android:id="@+id/imageButtonSpeed"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/rabbit"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rabbit"
         android:layout_marginStart="16dp"/>
 
     <ImageButton
@@ -211,10 +208,8 @@
     <ImageView
         android:id="@+id/imageViewBlink"
         android:alpha="0"
-        android:src="@android:color/holo_red_light"
-        android:layout_width="0dp"
-        android:layout_height="551dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp"/>
+        android:src="#810000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -35,8 +35,8 @@ public class ScreenLauncher extends AppCompatActivity {
         setContentView(R.layout.activity_screen_launcher);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-        Typeface homeFont = Typeface.createFromAsset(getAssets(), "fonts/PunkRockShow.ttf");
-        Typeface sloganFont = Typeface.createFromAsset(getAssets(), "fonts/Kurt.ttf");
+        Typeface homeFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
+        Typeface sloganFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
 
         TextView homeTitle = (TextView) findViewById(R.id.home_title);
         TextView homeSlogan = (TextView) findViewById(R.id.home_slogan);
@@ -72,7 +72,7 @@ public class ScreenLauncher extends AppCompatActivity {
                     }
                 });
             }
-        }, 6000);
+        }, 10000);
 
         View screen = findViewById(R.id.layoutScreenLauncher);
         screen.setOnClickListener(new View.OnClickListener() {

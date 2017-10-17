@@ -300,8 +300,8 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
-        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/DirtyClassicMachine.ttf");
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/openShip.otf");
+        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
 
         TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
 
