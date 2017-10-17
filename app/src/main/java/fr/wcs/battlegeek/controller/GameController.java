@@ -1,6 +1,7 @@
 package fr.wcs.battlegeek.controller;
 
 import android.graphics.Point;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -145,8 +146,8 @@ public class GameController {
             for(char symbol: row) {
                 // As the Items are stored as Item's shape symbol to Lowercase character
                 // if we found a lowercase character, the game is not win
-                // but as Bonus'symbol are neither lower or upper case, we use "not lowerCase"
-                if(!Character.isLowerCase(symbol)) {
+                if(Character.isUpperCase(symbol)) {
+                    Log.d(TAG, "victory: " + symbol);
                     return false;
                 }
             }
@@ -218,5 +219,9 @@ public class GameController {
 
     public char[][] getMap() {
         return mMap;
+    }
+
+    public void setMap(char[][] map) {
+        mMap = map;
     }
 }

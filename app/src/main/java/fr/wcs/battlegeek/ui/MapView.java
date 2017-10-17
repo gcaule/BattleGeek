@@ -189,11 +189,20 @@ public class MapView extends View {
                 int x = (int)(block.getX() + item.getX());
                 int y = (int)(block.getY() + item.getY());
                 if(item instanceof Tetromino){
-                    Tetromino tetromino = (Tetromino) item;
-                    mapData[y][x] = tetromino.getShape().toString().charAt(0);
+                    if(block instanceof TetrominoBonus) {
+                        TetrominoBonus bonus = (TetrominoBonus) block;
+                        mapData[y][x] = bonus.getType().toString().charAt(0);
+                    }
+                    else {
+                        Tetromino tetromino = (Tetromino) item;
+                        char symbol = tetromino.getShape().toString().charAt(0);
+                        mapData[y][x] = block.getState() == Block.State.ALIVE ? symbol
+                                : Character.toLowerCase(symbol);
+                    }
                 }
+                // Plouf
                 else {
-                    mapData[y][x] = 'X';
+                    mapData[y][x] = '_';
                 }
             }
         }
@@ -207,13 +216,13 @@ public class MapView extends View {
      */
     public void setDead(int x, int y) {
         Item item = getItem(new PointF(x, y));
-        Block block = item.getBlock(x,y);
-        block.setState(Block.State.DEAD);
+        item.setTouched(x, y);
         invalidate();
     }
 
     public void setPlouf(int x, int y) {
         Item item = new Item(this, mGrid, x, y);
+        item.setState(Item.State.DEAD);
         item.setBlock(new Block(0,0));
         mItems.add(item);
         invalidate();

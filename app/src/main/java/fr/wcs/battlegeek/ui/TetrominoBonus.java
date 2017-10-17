@@ -65,4 +65,8 @@ public class TetrominoBonus extends TetrominoBlock {
         mPaint.setTextSize(mBlockSize - centerMargin - 10);
         canvas.drawText(symbol, xPos, yPos, mPaint);
     }
+
+    public Bonus.Type getType() {
+        return mType;
+    }
 }

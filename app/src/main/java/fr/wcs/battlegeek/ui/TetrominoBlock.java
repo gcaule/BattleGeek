@@ -94,7 +94,7 @@ public class TetrominoBlock extends Block {
     }
 
     /**
-     * Method setting the State of the Tetromino Block: Dead or Alive
+     * Method setting the State of the Tetromino Block: DEAD or ALIVE
      * @param state
      */
     @Override

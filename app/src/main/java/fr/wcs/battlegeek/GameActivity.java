@@ -50,6 +50,7 @@ import static fr.wcs.battlegeek.R.id.viewFlipper;
 import static fr.wcs.battlegeek.model.Bonus.Type.CROSS_FIRE;
 import static fr.wcs.battlegeek.model.Bonus.Type.MOVE;
 import static fr.wcs.battlegeek.model.Bonus.Type.REPLAY;
+import static fr.wcs.battlegeek.model.Result.Type.BONUS;
 import static fr.wcs.battlegeek.model.Result.Type.DEFEATED;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
@@ -226,50 +227,59 @@ public class GameActivity extends AppCompatActivity {
         buttonLaunchGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mButtonSwitchView.setVisibility(View.VISIBLE);
-                mButtonRandomPosition.setVisibility(View.GONE);
-                mTextViewPlayer.setText(R.string.player_turn);
+                // Start The Game
+                if(mSelectedBonus == null) {
+                    mButtonSwitchView.setVisibility(View.VISIBLE);
+                    mButtonRandomPosition.setVisibility(View.GONE);
+                    mTextViewPlayer.setText(R.string.player_turn);
 
-                mMapView = (MapView) findViewById(R.id.mapView);
+                    mMapView = (MapView) findViewById(R.id.mapView);
+                    char[][] mapData = mMapView.getMapData();
+                    mGameController = new GameController(mapData);
+                    mGameController.setBonus();
+                    mMapView.setMap(mGameController.getMap());
+                    mMapView.setMode(MapView.Mode.PLAY);
 
-                char[][] mapData = mMapView.getMapData();
-                mGameController = new GameController(mapData);
-                mGameController.setBonus();
-                mMapView.setMap(mGameController.getMap());
-                mMapView.setMode(MapView.Mode.PLAY);
+                    // Bonus Buttons
+                    mButtonCrossFire.setVisibility(View.VISIBLE);
+                    mButtonMove.setVisibility(View.VISIBLE);
+                    mButtonReplay.setVisibility(View.VISIBLE);
 
-                // Bonus Buttons
-                mButtonCrossFire.setVisibility(View.VISIBLE);
-                mButtonMove.setVisibility(View.VISIBLE);
-                mButtonReplay.setVisibility(View.VISIBLE);
+                    mAI = new AI();
+                    if (mLevel == AI.Level.III || mLevel == AI.Level.IMPOSSIBLE) {
+                        mAI.setPlayerMap(mapData);
+                    }
 
-                mAI = new AI();
-                if (mLevel == AI.Level.III || mLevel == AI.Level.IMPOSSIBLE) {
-                    mAI.setPlayerMap(mapData);
+                    if (mLevel == AI.Level.II || mLevel == AI.Level.III) {
+                        mGameView.setRandomColor(true);
+                    }
+                    mAI.setLevel(mLevel);
+
+                    buttonLaunchGame.setVisibility(View.GONE);
+                    mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
+
+                    // Randomize first Player
+                    int player = (int) (Math.random() * 2);
+                    if (player % 2 == 0) {
+                        canPlay = false;
+                        aiPlay();
+                    } else {
+                        mViewFlipper.showNext();
+
+                    }
+
+                    mTextViewAI.setText(R.string.AITurn);
+                    mStartTime = System.currentTimeMillis();
+                    startTimer();
                 }
-
-                if (mLevel == AI.Level.II || mLevel == AI.Level.III) {
-                    mGameView.setRandomColor(true);
-                }
-                mAI.setLevel(mLevel);
-
-                buttonLaunchGame.setVisibility(View.GONE);
-                mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
-
-                // Randomize first Player
-                int player = (int)(Math.random() * 2);
-                if(player % 2 == 0) {
-                    canPlay = false;
-                    aiPlay();
-                }
+                // Move Bonus
                 else {
+                    mSelectedBonus = null;
+                    mButtonMove.setEnabled(false);
+                    mButtonSwitchView.setVisibility(View.VISIBLE);
                     mViewFlipper.showNext();
-
+                    mGameController.setMap(mMapView.getMapData());
                 }
-
-                mTextViewAI.setText(R.string.AITurn);
-                mStartTime = System.currentTimeMillis();
-                startTimer();
             }
 
         });
@@ -346,7 +356,11 @@ public class GameActivity extends AppCompatActivity {
                     mSelectedBonus = MOVE;
                     mButtonMove.setEnabled(false);
                     // TODO: Move Items
-                    
+                    mViewFlipper.showPrevious();
+                    mMapView.setMode(MapView.Mode.CREATE);
+                    buttonLaunchGame.setVisibility(View.VISIBLE);
+                    mButtonSwitchView.setVisibility(View.INVISIBLE);
+
                 }
                 else {
                     showToast(R.string.multiBonusError);
@@ -525,10 +539,14 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-
+                Utils.printMap(mGameController.getMap());
                 mButtonSwitchView.setVisibility(View.VISIBLE);
                 if (resultType == MISSED) {
                     mTextViewAI.setText(R.string.AITurn);
+                    canPlay = true;
+                    mViewFlipper.showPrevious();
+                }
+                else if(resultType == BONUS) {
                     canPlay = true;
                     mViewFlipper.showPrevious();
                 }
