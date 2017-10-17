@@ -10,6 +10,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import fr.wcs.battlegeek.model.Bonus;
 import fr.wcs.battlegeek.model.Settings;
 
 
@@ -104,6 +105,11 @@ public class GameView extends View{
         Tetromino.Colors color = mRandomColor ? Tetromino.getRandomColorMap().get(shape)
                 : Tetromino.getColorMap().get(shape);
         mBlocks.add(new TetrominoBlock(new PointF(x, y), color));
+        invalidate();
+    }
+
+    public void setBonus(int x, int y, Bonus.Type bonusType) {
+        mBlocks.add(new TetrominoBonus(new PointF(x, y), bonusType));
         invalidate();
     }
 

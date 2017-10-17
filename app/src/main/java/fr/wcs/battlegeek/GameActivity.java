@@ -33,6 +33,7 @@ import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.controller.GameController;
 import fr.wcs.battlegeek.controller.SoundController;
+import fr.wcs.battlegeek.model.Bonus;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
@@ -44,6 +45,7 @@ import fr.wcs.battlegeek.ui.QuitGameFragment;
 import fr.wcs.battlegeek.utils.Utils;
 
 import static fr.wcs.battlegeek.R.id.viewFlipper;
+import static fr.wcs.battlegeek.model.Result.Type.BONUS;
 import static fr.wcs.battlegeek.model.Result.Type.DEFEATED;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
@@ -63,6 +65,7 @@ public class GameActivity extends AppCompatActivity {
     private AI mAI;
     private GameController mGameController;
     private boolean canPlay = true;
+    private Bonus.Type mSelectedBonus = null;
 
     private Toast mToast;
     private Context mContext;
@@ -70,11 +73,17 @@ public class GameActivity extends AppCompatActivity {
 
     private MapView mMapView;
     private GameView mGameView;
+    private Button mButtonRandomPosition;
     private ViewFlipper mViewFlipper;
+
+    // Bonus
+    private Button mButtonMove;
+    private Button mButtonReplay;
+    private Button mButtonCrossFire;
+
     private TextView mTextViewPlayer;
     private TextView mTextViewAI;
     private Button mButtonSwitchView;
-    private Button mButtonRandomPosition;
     private ImageButton mImageButtonSpeed;
     private ImageButton mImageButtonMusic;
     private ImageButton mImageButtonEffects;
@@ -216,12 +225,19 @@ public class GameActivity extends AppCompatActivity {
                 mButtonSwitchView.setVisibility(View.VISIBLE);
                 mButtonRandomPosition.setVisibility(View.GONE);
                 mTextViewPlayer.setText(R.string.player_turn);
+
                 mMapView = (MapView) findViewById(R.id.mapView);
+
                 char[][] mapData = mMapView.getMapData();
                 mGameController = new GameController(mapData);
                 mGameController.setBonus();
                 mMapView.setMap(mGameController.getMap());
                 mMapView.setMode(MapView.Mode.PLAY);
+
+                // Bonus Buttons
+                mButtonCrossFire.setVisibility(View.VISIBLE);
+                mButtonMove.setVisibility(View.VISIBLE);
+                mButtonReplay.setVisibility(View.VISIBLE);
 
                 mAI = new AI();
                 if (mLevel == AI.Level.III || mLevel == AI.Level.IMPOSSIBLE) {
@@ -278,25 +294,6 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        mGameView = (GameView) findViewById(R.id.gameView);
-        mGameView.setOnPlayListener(new GameView.PlayListener() {
-            @Override
-            public void onPlayListener(int x, int y) {
-
-                if (!canPlay) {
-                    return;
-                }
-
-                if (mGameController.alreadyPlayed(x, y)) {
-                    showToast(R.string.alreadyPlayedMessage);
-                    return;
-                }
-
-                playerPlay(x, y);
-                mShotsCounter++;
-            }
-        });
-
         Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/Curvy.ttf");
         Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/DirtyClassicMachine.ttf");
 
@@ -337,6 +334,69 @@ public class GameActivity extends AppCompatActivity {
         mButtonSwitchView.setTypeface(buttonFont);
         buttonLaunchGame.setTypeface(buttonFont);
 
+        mButtonMove = (Button) findViewById(R.id.buttonBonusMove);
+        mButtonMove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mSelectedBonus == null) {
+                    mSelectedBonus = Bonus.Type.MOVE;
+                    mButtonMove.setEnabled(false);
+                }
+                else {
+                    showToast(R.string.multiBonusError);
+                }
+            }
+        });
+
+        mButtonReplay = (Button) findViewById(R.id.buttonBonusReplay);
+        mButtonReplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mSelectedBonus == null) {
+                    mSelectedBonus = Bonus.Type.REPLAY;
+                    mButtonReplay.setEnabled(false);
+                }
+                else {
+                    showToast(R.string.multiBonusError);
+                }
+            }
+        });
+
+        mButtonCrossFire = (Button) findViewById(R.id.buttonBonusCrossFire);
+        mButtonCrossFire.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mSelectedBonus == null) {
+                    mSelectedBonus = Bonus.Type.CROSS_FIRE;
+                    mButtonCrossFire.setEnabled(false);
+                }
+                else {
+                    showToast(R.string.multiBonusError);
+                }
+            }
+        });
+
+
+        mGameView = (GameView) findViewById(R.id.gameView);
+        mGameView.setOnPlayListener(new GameView.PlayListener() {
+            @Override
+            public void onPlayListener(int x, int y) {
+                Log.d(TAG, "onPlayListener() called with: x = [" + x + "], y = [" + y + "]");
+
+                if (!canPlay) {
+                    return;
+                }
+
+                if (mGameController.alreadyPlayed(x, y)) {
+                    showToast(R.string.alreadyPlayedMessage);
+                    return;
+                }
+
+                playerPlay(x, y);
+                mShotsCounter++;
+            }
+        });
+
     }
 
     /**
@@ -349,6 +409,7 @@ public class GameActivity extends AppCompatActivity {
         canPlay = false;
 
         Result result = mAI.shot(x, y);
+        Log.d(TAG, "playerPlay: " + result);
         mGameController.setPlayResult(x, y, result);
         Result.Type resutlType = result.getType();
         mSoundController.playSound(resutlType);
@@ -376,9 +437,26 @@ public class GameActivity extends AppCompatActivity {
                 endGameVictoryFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
                 endGameVictoryFragment.setCancelable(false);
                 return;
-            case MISSED:
-                mGameView.setPlouf(x, y);
-                mTextViewPlayer.setText(R.string.missed);
+
+            default:
+                if (resutlType == MISSED) {
+                    mGameView.setPlouf(x, y);
+                    mTextViewPlayer.setText(R.string.missed);
+                }
+                else if (resutlType == BONUS) {
+                    mGameView.setBonus(x, y, result.getBonusType());
+                    switch (result.getBonusType()) {
+                        case MOVE:
+                            mButtonMove.setEnabled(true);
+                            break;
+                        case REPLAY:
+                            mButtonReplay.setEnabled(true);
+                            break;
+                        case CROSS_FIRE:
+                            mButtonCrossFire.setEnabled(true);
+                            break;
+                    }
+                }
                 // Show the result
                 new CountDownTimer(mAnimationsSpeed, mAnimationsSpeed / 3) {
                     public void onTick(long millisUntilFinished) {
@@ -391,7 +469,6 @@ public class GameActivity extends AppCompatActivity {
                         aiPlay();
                     }
                 }.start();
-
                 break;
         }
     }
@@ -406,7 +483,6 @@ public class GameActivity extends AppCompatActivity {
 
         final Point aiPlayCoordinates = mAI.play();
         final Result iaResult = mGameController.shot(aiPlayCoordinates.x, aiPlayCoordinates.y);
-        //Utils.printMap(mGameController.getMap());
         final Result.Type resultType = iaResult.getType();
         Log.d(TAG, "onPlayListener: " + aiPlayCoordinates + " " + iaResult);
 

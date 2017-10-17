@@ -33,13 +33,10 @@ public class Bonus {
      * @return
      */
     public static Bonus.Type getBonus(char symbol) {
-        try {
-            String stringSymbol = String.valueOf(symbol);
-            return Bonus.Type.valueOf(stringSymbol);
-        }
-        catch (Exception e) {
-            return null;
-        }
+        if (symbol == '-') return Type.MOVE;
+        else if (symbol == '=') return Type.REPLAY;
+        else if (symbol == '+') return Type.CROSS_FIRE;
+        else return null;
     }
 
 

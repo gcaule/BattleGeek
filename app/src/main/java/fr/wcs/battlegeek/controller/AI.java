@@ -10,6 +10,7 @@ import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.ui.Tetromino;
+import fr.wcs.battlegeek.utils.Utils;
 
 import static fr.wcs.battlegeek.model.Result.Type.BONUS;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
@@ -62,6 +63,7 @@ public class AI {
         // Create a Game Controller
         mGameControler = new GameController(Maps.getMap());
         mGameControler.setBonus();
+        Utils.printMap(mGameControler.getMap());
         // Get all Playables Coordinates
         mPlayablesCoordinates = Maps.getPlayableCoordinates();
         mSurroudingCoordinates = new ArrayList<>();

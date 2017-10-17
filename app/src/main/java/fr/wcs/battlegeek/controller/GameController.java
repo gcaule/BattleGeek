@@ -1,6 +1,7 @@
 package fr.wcs.battlegeek.controller;
 
 import android.graphics.Point;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -8,7 +9,6 @@ import fr.wcs.battlegeek.model.Bonus;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.ui.Tetromino;
-import fr.wcs.battlegeek.utils.Utils;
 
 import static fr.wcs.battlegeek.model.Result.Type.BONUS;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
@@ -28,6 +28,7 @@ import static fr.wcs.battlegeek.ui.Tetromino.Shape.NONE;
  * It store the Item's Map and the played Shots' Results in the storage map
  */
 public class GameController {
+    private final String TAG = Settings.TAG;
 
     // Maps initialisation
 
@@ -163,6 +164,7 @@ public class GameController {
      * @return
      */
     public boolean alreadyPlayed(int x, int y) {
+        Log.d(TAG, "alreadyPlayed() called with: x = [" + x + "], y = [" + y + "]");
         // Get the symbol in the Storage Map
         char symbol = mStorageMap[y][x];
         // If the character is and underscore (Missed Symbol) or a lowercase character (touched symbol)
@@ -190,8 +192,6 @@ public class GameController {
             emptyCells.remove(index);
             mMap[position.y][position.x] = bonus[i].toString().charAt(0);
         }
-
-        Utils.printMap(mMap);
     }
 
     public char[][] getMap() {

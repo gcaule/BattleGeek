@@ -257,10 +257,7 @@ public class MapView extends View {
                 }
                 // If Bonus
                 else if (symbol != ' ') {
-                    Bonus.Type type = null;
-                    if (symbol == '-') type = Bonus.Type.MOVE;
-                    else if (symbol == '=') type = Bonus.Type.REPLAY;
-                    else if (symbol == '+') type = Bonus.Type.CROSS_FIRE;
+                    Bonus.Type type = Bonus.getBonus(symbol);
                     Tetromino itemBonus = new Tetromino(this, mGrid, j, i, Tetromino.Shape.NONE, null);
                     TetrominoBonus blockBonus = new TetrominoBonus(0, 0, type);
                     itemBonus.setBlock(blockBonus);

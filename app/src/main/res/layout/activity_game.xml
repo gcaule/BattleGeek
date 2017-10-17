@@ -13,7 +13,6 @@
         android:id="@+id/textViewTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:textColor="@color/yellow"
         android:textSize="22sp"
         android:visibility="gone"
@@ -47,9 +46,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="fill_vertical|center_horizontal"
                 android:text="@string/place_pieces"
-                app:layout_constraintBottom_toTopOf="@+id/mapView"
                 android:textColor="@color/yellow"
                 android:textSize="22sp"
+                app:layout_constraintBottom_toTopOf="@+id/mapView"
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -57,7 +56,6 @@
 
             <fr.wcs.battlegeek.ui.MapView
                 android:id="@+id/mapView"
-                android:background="#70ffffff"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -66,6 +64,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:background="#70ffffff"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -84,9 +83,9 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
+                android:background="@drawable/buttoningame"
                 android:elevation="6dp"
                 android:text="@string/launchGame"
-                android:background="@drawable/buttoningame"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
@@ -97,8 +96,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
-                android:text="@string/randomize_positions"
+                android:layout_marginStart="16dp"
                 android:background="@drawable/buttoningame"
+                android:text="@string/randomize_positions"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
         </android.support.constraint.ConstraintLayout>
@@ -110,23 +110,65 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
+            <Button
+                android:id="@+id/buttonBonusMove"
+                android:visibility="invisible"
+                android:enabled="false"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/buttoningame"
+                android:text="\u003c\u003E"
+                android:textSize="32sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <Button
+                android:id="@+id/buttonBonusReplay"
+                android:enabled="false"
+                android:visibility="invisible"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/buttoningame"
+                android:text="\u27F3"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@+id/buttonBonusMove"
+                android:layout_marginLeft="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="16dp"/>
+
+            <Button
+                android:id="@+id/buttonBonusCrossFire"
+                android:enabled="false"
+                android:visibility="invisible"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/buttoningame"
+                android:text="+"
+                android:textSize="32sp"
+                app:layout_constraintLeft_toRightOf="@+id/buttonBonusReplay"
+                android:layout_marginLeft="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="16dp"/>
+
             <TextView
                 android:id="@+id/textViewPlayer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="@string/place_pieces"
                 android:textColor="@color/yellow"
                 android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/gameView"
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/gameView"/>
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <fr.wcs.battlegeek.ui.GameView
                 android:id="@+id/gameView"
-                android:background="#70ffffff"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -135,6 +177,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:background="#70ffffff"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -158,7 +201,8 @@
         android:text="@string/switch_view"
         android:background="@drawable/buttoningame"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="16dp"/>
 
     <ImageButton
         android:id="@+id/imageButtonSpeed"
@@ -170,7 +214,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="16dp"/>
 
     <ImageButton
         android:id="@+id/imageButtonEffects"
@@ -182,7 +227,8 @@
         android:scaleType="fitCenter"
         app:layout_constraintRight_toLeftOf="@+id/imageButtonMusic"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_volume_up_black_24dp"/>
+        app:srcCompat="@drawable/ic_volume_up_black_24dp"
+        android:layout_marginEnd="16dp"/>
 
     <ImageButton
         android:id="@+id/imageButtonMusic"
@@ -194,13 +240,16 @@
         android:scaleType="fitCenter"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/music_loud"/>
+        app:srcCompat="@drawable/music_loud"
+        android:layout_marginEnd="16dp"/>
 
     <ImageView
         android:id="@+id/imageViewBlink"
         android:alpha="0"
         android:src="@android:color/holo_red_light"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_width="0dp"
+        android:layout_height="551dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp"/>
 
 </android.support.constraint.ConstraintLayout>

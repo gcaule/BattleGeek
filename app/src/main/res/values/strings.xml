@@ -14,6 +14,8 @@
     <string name="textViewSettings">ParaMètreS</string>
     <string name="buttonValidate">C\'est parti !</string>
     <string name="titleRanking">ClasSemenT</string>
+
+    <!-- Messages to Player -->
     <string name="message_welcome">Hey, je te connais pas toi !</string>
     <string name="end_game_fragment_title">La partie est terminée !</string>
     <string name="end_game_defeat">Tu as en bouche\nle goût amer de la\nDEFAITE !!</string>
@@ -28,6 +30,9 @@
     <string name="missed">Raté !</string>
     <string name="AITouched">Touché ! L\'adversaire rejoue !</string>
     <string name="AIDrown">Coulé ! L\'adversaire rejoue !</string>
+
+    <!-- Bonus -->
+    <string name="multiBonusError">Tu ne peux utiliser qu\'un bonus à la fois</string>
 
     <string name="settingsAnimationSlowText">Mou</string>
     <string name="settingsAnimationMedium">Moins Mou</string>
