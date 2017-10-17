@@ -9,8 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,12 +31,13 @@ import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Settings;
 
-public class RankingActivity extends AppCompatActivity {
+public class RankingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private final String TAG = Settings.TAG;
     private ArrayList<PlayerModel> mPlayerModelList = new ArrayList<PlayerModel>();
     private ListView listView;
     private CustomListAdapter adapter;
+    private PlayerModel mPlayer;
 
     private PlayerModel.ComparatorFactor mComparatorFactor = PlayerModel.ComparatorFactor.BEST_TIME;
 
@@ -70,6 +74,26 @@ public class RankingActivity extends AppCompatActivity {
                 RankingActivity.super.onBackPressed();
             }
 
+        });
+
+        final Spinner spinnerRanking = (Spinner) findViewById(R.id.spinnerLevelRanking);
+        ArrayList<String> spinnerLevels = new ArrayList<>();
+        spinnerLevels.add(getString(R.string.button_easy));
+        spinnerLevels.add(getString(R.string.button_medium));
+        spinnerLevels.add(getString(R.string.button_hard));
+        spinnerLevels.add(getString(R.string.button_impossible));
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerLevels);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRanking.setAdapter(spinnerAdapter);
+        spinnerRanking.setOnItemSelectedListener(RankingActivity.this);
+
+        DataController dataController = new DataController(getApplicationContext());
+        dataController.setDataReadyListener(new DataController.DataReadyListener() {
+            @Override
+            public void onDataReadyListener(PlayerModel player) {
+                mPlayer = player;
+                spinnerRanking.setSelection(0);
+            }
         });
 
         listView = (ListView) findViewById(R.id.list);
@@ -121,5 +145,14 @@ public class RankingActivity extends AppCompatActivity {
         PlayerModel.setComparatorLevel(level);
         Collections.sort(mPlayerModelList, PlayerModel.BestShotsCountComparator);
         adapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
     }
 }

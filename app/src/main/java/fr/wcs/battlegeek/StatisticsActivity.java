@@ -37,7 +37,7 @@ public class StatisticsActivity extends AppCompatActivity implements AdapterView
 
         ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
 
-        final Spinner spinner = (Spinner) findViewById(R.id.spinnerLevel);
+        final Spinner spinner = (Spinner) findViewById(R.id.spinnerLevelStats);
         ArrayList<String> spinnerLevels = new ArrayList<>();
         spinnerLevels.add(getString(R.string.button_easy));
         spinnerLevels.add(getString(R.string.button_medium));

@@ -2,6 +2,7 @@ package fr.wcs.battlegeek.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +21,14 @@ public class CustomListAdapter extends BaseAdapter {
     private LayoutInflater  inflater;
     private List<PlayerModel> mPlayerModelItems;
 
+    Typeface mainFont;
+
     public CustomListAdapter(Context context, List<PlayerModel> playerModelItems) {
         this.mContext = context;
         this.mPlayerModelItems = playerModelItems;
+
+        mainFont = Typeface.createFromAsset(context.getAssets(), "fonts/atarifull.ttf");
+
     }
 
     @Override
@@ -52,14 +58,24 @@ public class CustomListAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.name = (TextView) scoreView.findViewById(R.id.textViewName);
             holder.name.setTextColor(Color.parseColor("#FFEE00"));
+            holder.name.setTypeface(mainFont);
+            holder.name.setTextSize(8);
             holder.ratio = (TextView) scoreView.findViewById(R.id.textViewRatio);
             holder.ratio.setTextColor(Color.parseColor("#FFEE00"));
+            holder.ratio.setTypeface(mainFont);
+            holder.ratio.setTextSize(8);
             holder.bestTime = (TextView) scoreView.findViewById(R.id.textViewBestTime);
             holder.bestTime.setTextColor(Color.parseColor("#FFEE00"));
+            holder.bestTime.setTypeface(mainFont);
+            holder.bestTime.setTextSize(8);
             holder.shotsCount = (TextView) scoreView.findViewById(R.id.textViewShotsCount);
             holder.shotsCount.setTextColor(Color.parseColor("#FFEE00"));
+            holder.shotsCount.setTypeface(mainFont);
+            holder.shotsCount.setTextSize(8);
             holder.levelGames = (TextView) scoreView.findViewById(R.id.textViewLevelGames);
             holder.levelGames.setTextColor(Color.parseColor("#FFEE00"));
+            holder.levelGames.setTypeface(mainFont);
+            holder.levelGames.setTextSize(8);
 
             scoreView.setTag(holder);
 
