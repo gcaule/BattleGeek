@@ -46,7 +46,7 @@ public class AI {
     private final String TAG = Settings.TAG;
     private Level mLevel;
     private Point mLastPlayedCoordinates;
-    private Result mLastResult = new Result(NONE, MISSED, null);
+    private Result mLastResult = new Result(-1, -1, NONE, MISSED, null);
 
 
     private GameController mGameControler;
@@ -108,7 +108,7 @@ public class AI {
      * @param result
      */
     public void setResult(Result result) {
-        mGameControler.setPlayResult(mLastPlayedCoordinates.x, mLastPlayedCoordinates.y, result);
+        mGameControler.setPlayResult(result);
         mLastResult = result;
     }
 

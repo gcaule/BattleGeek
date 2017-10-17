@@ -26,6 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -45,7 +47,9 @@ import fr.wcs.battlegeek.ui.QuitGameFragment;
 import fr.wcs.battlegeek.utils.Utils;
 
 import static fr.wcs.battlegeek.R.id.viewFlipper;
-import static fr.wcs.battlegeek.model.Result.Type.BONUS;
+import static fr.wcs.battlegeek.model.Bonus.Type.CROSS_FIRE;
+import static fr.wcs.battlegeek.model.Bonus.Type.MOVE;
+import static fr.wcs.battlegeek.model.Bonus.Type.REPLAY;
 import static fr.wcs.battlegeek.model.Result.Type.DEFEATED;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
@@ -339,8 +343,10 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(mSelectedBonus == null) {
-                    mSelectedBonus = Bonus.Type.MOVE;
+                    mSelectedBonus = MOVE;
                     mButtonMove.setEnabled(false);
+                    // TODO: Move Items
+                    
                 }
                 else {
                     showToast(R.string.multiBonusError);
@@ -353,7 +359,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(mSelectedBonus == null) {
-                    mSelectedBonus = Bonus.Type.REPLAY;
+                    mSelectedBonus = REPLAY;
                     mButtonReplay.setEnabled(false);
                 }
                 else {
@@ -367,7 +373,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(mSelectedBonus == null) {
-                    mSelectedBonus = Bonus.Type.CROSS_FIRE;
+                    mSelectedBonus = CROSS_FIRE;
                     mButtonCrossFire.setEnabled(false);
                 }
                 else {
@@ -381,7 +387,6 @@ public class GameActivity extends AppCompatActivity {
         mGameView.setOnPlayListener(new GameView.PlayListener() {
             @Override
             public void onPlayListener(int x, int y) {
-                Log.d(TAG, "onPlayListener() called with: x = [" + x + "], y = [" + y + "]");
 
                 if (!canPlay) {
                     return;
@@ -408,68 +413,70 @@ public class GameActivity extends AppCompatActivity {
     private void playerPlay(int x, int y) {
         canPlay = false;
 
-        Result result = mAI.shot(x, y);
-        Log.d(TAG, "playerPlay: " + result);
-        mGameController.setPlayResult(x, y, result);
-        Result.Type resutlType = result.getType();
-        mSoundController.playSound(resutlType);
-        switch (resutlType) {
+        Result.Type resultType = null;
+
+        if (mSelectedBonus != CROSS_FIRE) {
+            Result result = mAI.shot(x, y);
+            mGameController.setPlayResult(result);
+            resultType = result.getType();
+            showResult(result);
+            mSoundController.playSound(resultType);
+        }
+        // CROSS FIRE Bonus
+        else {
+            // Deactivate bonus
+            mSelectedBonus = null;
+
+            ArrayList<Point> points = mGameController.getSurrondingcoordinates(x, y);
+            // Get the results first
+            ArrayList<Result> results = new ArrayList<>();
+            for(Point point : points) {
+                Result result = mAI.shot(point.x, point.y);
+                mGameController.setPlayResult(result);
+                results.add(result);
+            }
+            // Sort Result
+            Collections.sort(results, Result.resultComparator);
+            Log.d(TAG, "playerPlay: " + results);
+
+            // Apply the Results
+            // TODO: Animation
+            for(Result result : results) {
+                showResult(result);
+                resultType = result.getType();
+                mSoundController.playSound(resultType);
+            }
+        }
+
+        switch (resultType) {
             case TOUCHED:
-                mGameView.setTouch(x, y, result.getShape());
-                mTextViewPlayer.setText(R.string.touchedPlayAgain);
                 canPlay = true;
                 return;
             case DROWN:
-                mGameView.setTouch(x, y, result.getShape());
-                mTextViewPlayer.setText(R.string.drownPlayAgain);
-                showToast(R.string.itemDrownMessage);
                 canPlay = true;
-                return;
-            case VICTORY:
-                mGameView.setTouch(x, y, result.getShape());
-                mPlayer.addGameTime(mLevel, VICTORY, getPlayedTime());
-                mPlayer.addVictory(mLevel);
-                mPlayer.addShotsCount(mLevel, mShotsCounter);
-                mTimer.cancel();
-                mDataController.updatePlayer(mPlayer);
-                FragmentManager fm = getFragmentManager();
-                EndGameVictoryFragment endGameVictoryFragment = new EndGameVictoryFragment();
-                endGameVictoryFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
-                endGameVictoryFragment.setCancelable(false);
                 return;
 
             default:
-                if (resutlType == MISSED) {
-                    mGameView.setPlouf(x, y);
-                    mTextViewPlayer.setText(R.string.missed);
+                if(mSelectedBonus == REPLAY) {
+                    mSelectedBonus = null;
+                    canPlay = true;
                 }
-                else if (resutlType == BONUS) {
-                    mGameView.setBonus(x, y, result.getBonusType());
-                    switch (result.getBonusType()) {
-                        case MOVE:
-                            mButtonMove.setEnabled(true);
-                            break;
-                        case REPLAY:
-                            mButtonReplay.setEnabled(true);
-                            break;
-                        case CROSS_FIRE:
-                            mButtonCrossFire.setEnabled(true);
-                            break;
-                    }
-                }
-                // Show the result
-                new CountDownTimer(mAnimationsSpeed, mAnimationsSpeed / 3) {
-                    public void onTick(long millisUntilFinished) {
-                    }
+                else {
+                    // Show the result
+                    new CountDownTimer(mAnimationsSpeed, mAnimationsSpeed / 3) {
+                        public void onTick(long millisUntilFinished) {
+                        }
 
-                    // Move to MapView and AI Turn
-                    public void onFinish() {
-                        mTextViewPlayer.setText(R.string.player_turn);
-                        mViewFlipper.showPrevious();
-                        aiPlay();
-                    }
-                }.start();
+                        // Move to MapView and AI Turn
+                        public void onFinish() {
+                            mTextViewPlayer.setText(R.string.player_turn);
+                            mViewFlipper.showPrevious();
+                            aiPlay();
+                        }
+                    }.start();
+                }
                 break;
+
         }
     }
 
@@ -542,6 +549,62 @@ public class GameActivity extends AppCompatActivity {
 
             }
         }.start();
+    }
+
+    private void showResult(Result result) {
+        Result.Type resultType = result.getType();
+        int x = result.getX();
+        int y = result.getY();
+        switch (resultType) {
+            case BONUS:
+                Bonus.Type bonusType = result.getBonusType();
+                mGameView.setBonus(x, y, bonusType);
+                switch (bonusType) {
+                    case MOVE:
+                        mButtonMove.setEnabled(true);
+                        break;
+                    case REPLAY:
+                        mButtonReplay.setEnabled(true);
+                        break;
+                    case CROSS_FIRE:
+                        mButtonCrossFire.setEnabled(true);
+                        break;
+                }
+                break;
+
+            case MISSED:
+                mGameView.setPlouf(x, y);
+                mTextViewPlayer.setText(R.string.missed);
+                break;
+
+            case TOUCHED:
+                mGameView.setTouch(x, y, result.getShape());
+                mTextViewPlayer.setText(R.string.touchedPlayAgain);
+                break;
+
+            case DROWN:
+                mGameView.setTouch(x, y, result.getShape());
+                mTextViewPlayer.setText(R.string.drownPlayAgain);
+                showToast(R.string.itemDrownMessage);
+                break;
+
+            case VICTORY:
+                mGameView.setTouch(x, y, result.getShape());
+                mTimer.cancel();
+                updatePlayerStatistics();
+                FragmentManager fm = getFragmentManager();
+                EndGameVictoryFragment endGameVictoryFragment = new EndGameVictoryFragment();
+                endGameVictoryFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
+                endGameVictoryFragment.setCancelable(false);
+                break;
+        }
+    }
+
+    private void updatePlayerStatistics(){
+        mPlayer.addGameTime(mLevel, VICTORY, getPlayedTime());
+        mPlayer.addVictory(mLevel);
+        mPlayer.addShotsCount(mLevel, mShotsCounter);
+        mDataController.updatePlayer(mPlayer);
     }
 
     private long getPlayedTime() {

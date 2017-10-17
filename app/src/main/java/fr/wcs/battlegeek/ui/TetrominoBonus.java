@@ -16,6 +16,7 @@ public class TetrominoBonus extends TetrominoBlock {
     private final String TAG = Settings.TAG;
 
     private Bonus.Type mType;
+    private String symbol = "";
 
     // Graphics
     private Paint mPaint = new Paint();
@@ -35,10 +36,13 @@ public class TetrominoBonus extends TetrominoBlock {
     private void init() {
         switch(mType) {
             case MOVE:
+                symbol = "\u003c\u003E";
                 break;
             case REPLAY:
+                symbol = "\u27F3";
                 break;
             case CROSS_FIRE:
+                symbol = "+";
                 break;
         }
 
@@ -55,10 +59,10 @@ public class TetrominoBonus extends TetrominoBlock {
         float y = (itemY + mY) * mBlockSize;
         float centerMargin = this.mBlockSize * 15 / 100;
 
-        float xPos = x + mBlockSize / 2 - (int)(mPaint.measureText(mType.toString())/2);
-        float yPos = (int) (y + mBlockSize / 2 - ((mPaint.descent() +mPaint.ascent()) / 2)) ;
+        float xPos = x + mBlockSize / 2 - (int)(mPaint.measureText(symbol)/2);
+        float yPos = (int) (y + mBlockSize / 2 - ((mPaint.descent() + mPaint.ascent()) / 2)) ;
 
-        mPaint.setTextSize(mBlockSize - centerMargin);
-        canvas.drawText(mType.toString(), xPos, yPos, mPaint);
+        mPaint.setTextSize(mBlockSize - centerMargin - 10);
+        canvas.drawText(symbol, xPos, yPos, mPaint);
     }
 }

@@ -1,7 +1,6 @@
 package fr.wcs.battlegeek.controller;
 
 import android.graphics.Point;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -95,16 +94,16 @@ public class GameController {
                 resultType = VICTORY;
             }
         }
-        return new Result(resultShape, resultType, resultBonus);
+        return new Result(x, y, resultShape, resultType, resultBonus);
     }
 
     /**
      * Method responsible for storing the results of shots in the Storage Map
-     * @param x the x coordinate of the shot
-     * @param y the y coordinate of the shot
      * @param result the Result Object of the shot's result
      */
-    public void setPlayResult(int x, int y, Result result) {
+    public void setPlayResult(Result result) {
+        int x = result.getX();
+        int y = result.getY();
         // Get the type and the shape
         Result.Type resultType = result.getType();
         Tetromino.Shape resultShape = result.getShape();
@@ -164,12 +163,35 @@ public class GameController {
      * @return
      */
     public boolean alreadyPlayed(int x, int y) {
-        Log.d(TAG, "alreadyPlayed() called with: x = [" + x + "], y = [" + y + "]");
         // Get the symbol in the Storage Map
         char symbol = mStorageMap[y][x];
         // If the character is and underscore (Missed Symbol) or a lowercase character (touched symbol)
         // the coordinates were already played, else, everything is ok.
         return symbol == '_' || Character.isLowerCase(symbol);
+    }
+
+    public ArrayList<Point> getSurrondingcoordinates(int x, int y) {
+        ArrayList<Point> points = new ArrayList<Point>();
+        int xMin = Math.max(x - 1, 0);
+        int xMax = Math.min(x + 1, Settings.GRID_SIZE - 1);
+        int yMin = Math.max(y - 1, 0);
+        int yMax = Math.min(y + 1, Settings.GRID_SIZE - 1);
+
+        // Add the 3 on the x axis;
+        for (int i = xMin; i <= xMax; i++) {
+            if(!alreadyPlayed(i, y)) {
+                points.add(new Point(i, y));
+            }
+        }
+        // Add the two on the y axis
+        for (int i = yMin; i <= yMax; i++) {
+            // We already have the Point x,y
+            if(! alreadyPlayed(x, i) && i != y) {
+                points.add(new Point(x, i));
+            }
+        }
+
+        return points;
     }
 
     public void setBonus(){
