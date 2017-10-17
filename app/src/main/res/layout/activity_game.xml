@@ -112,49 +112,49 @@
 
             <Button
                 android:id="@+id/buttonBonusMove"
-                android:visibility="invisible"
-                android:enabled="false"
-                android:layout_width="88dp"
+                android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:background="@drawable/buttoningame"
+                android:enabled="false"
                 android:text="\u003c\u003E"
                 android:textSize="32sp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintLeft_toLeftOf="parent"/>
 
             <Button
                 android:id="@+id/buttonBonusReplay"
-                android:enabled="false"
-                android:visibility="invisible"
-                android:layout_width="88dp"
+                android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:background="@drawable/buttoningame"
+                android:enabled="false"
                 android:text="\u27F3"
                 android:textSize="32sp"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@+id/buttonBonusMove"
-                android:layout_marginLeft="16dp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="16dp"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintLeft_toRightOf="@+id/buttonBonusMove"/>
 
             <Button
                 android:id="@+id/buttonBonusCrossFire"
-                android:enabled="false"
-                android:visibility="invisible"
-                android:layout_width="88dp"
+                android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:background="@drawable/buttoningame"
+                android:enabled="false"
                 android:text="+"
                 android:textSize="32sp"
-                app:layout_constraintLeft_toRightOf="@+id/buttonBonusReplay"
-                android:layout_marginLeft="16dp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="16dp"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintLeft_toRightOf="@+id/buttonBonusReplay"/>
 
             <TextView
                 android:id="@+id/textViewPlayer"

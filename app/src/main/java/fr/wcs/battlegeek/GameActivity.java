@@ -544,7 +544,6 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Utils.printMap(mGameController.getMap());
                 mButtonSwitchView.setVisibility(View.VISIBLE);
                 if (resultType == MISSED) {
                     mTextViewAI.setText(R.string.AITurn);
