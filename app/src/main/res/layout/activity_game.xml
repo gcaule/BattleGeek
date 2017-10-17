@@ -114,22 +114,23 @@
                 android:id="@+id/buttonBonusMove"
                 android:visibility="invisible"
                 android:enabled="false"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="88dp"
+                android:layout_height="48dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:background="@drawable/buttoningame"
                 android:text="\u003c\u003E"
                 android:textSize="32sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginStart="16dp"/>
 
             <Button
                 android:id="@+id/buttonBonusReplay"
                 android:enabled="false"
                 android:visibility="invisible"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="88dp"
+                android:layout_height="48dp"
                 android:background="@drawable/buttoningame"
                 android:text="\u27F3"
                 android:textSize="32sp"
@@ -137,21 +138,23 @@
                 app:layout_constraintLeft_toRightOf="@+id/buttonBonusMove"
                 android:layout_marginLeft="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="16dp"/>
 
             <Button
                 android:id="@+id/buttonBonusCrossFire"
                 android:enabled="false"
                 android:visibility="invisible"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="88dp"
+                android:layout_height="48dp"
                 android:background="@drawable/buttoningame"
                 android:text="+"
                 android:textSize="32sp"
                 app:layout_constraintLeft_toRightOf="@+id/buttonBonusReplay"
                 android:layout_marginLeft="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="16dp"/>
 
             <TextView
                 android:id="@+id/textViewPlayer"
@@ -245,11 +248,18 @@
 
     <ImageView
         android:id="@+id/imageViewBlink"
-        android:alpha="0"
-        android:src="#590101"
         android:layout_width="0dp"
-        android:layout_height="551dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp"/>
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:alpha="0"
+        android:src="#6c0000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
