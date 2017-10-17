@@ -452,8 +452,6 @@ public class GameActivity extends AppCompatActivity {
             }
             // Sort Result
             Collections.sort(results, Result.resultComparator);
-            Log.d(TAG, "playerPlay: " + results);
-
             // Apply the Results
             // TODO: Animation
             for(Result result : results) {
@@ -463,35 +461,26 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
-        switch (resultType) {
-            case TOUCHED:
-                canPlay = true;
-                return;
-            case DROWN:
-                canPlay = true;
-                return;
-
-            default:
-                if(mSelectedBonus == REPLAY) {
-                    mSelectedBonus = null;
-                    canPlay = true;
+        if(mSelectedBonus == REPLAY) {
+            mSelectedBonus = null;
+            canPlay = true;
+        }
+        else if (resultType == MISSED || resultType == BONUS) {
+            // Show the result
+            new CountDownTimer(mAnimationsSpeed, mAnimationsSpeed / 3) {
+                public void onTick(long millisUntilFinished) {
                 }
-                else {
-                    // Show the result
-                    new CountDownTimer(mAnimationsSpeed, mAnimationsSpeed / 3) {
-                        public void onTick(long millisUntilFinished) {
-                        }
 
-                        // Move to MapView and AI Turn
-                        public void onFinish() {
-                            mTextViewPlayer.setText(R.string.player_turn);
-                            mViewFlipper.showPrevious();
-                            aiPlay();
-                        }
-                    }.start();
+                // Move to MapView and AI Turn
+                public void onFinish() {
+                    mTextViewPlayer.setText(R.string.player_turn);
+                    mViewFlipper.showPrevious();
+                    aiPlay();
                 }
-                break;
-
+            }.start();
+        }
+        else {
+            canPlay = true;
         }
     }
 
@@ -506,7 +495,6 @@ public class GameActivity extends AppCompatActivity {
         final Point aiPlayCoordinates = mAI.play();
         final Result iaResult = mGameController.shot(aiPlayCoordinates.x, aiPlayCoordinates.y);
         final Result.Type resultType = iaResult.getType();
-        Log.d(TAG, "onPlayListener: " + aiPlayCoordinates + " " + iaResult);
 
         mAI.setResult(iaResult);
 
