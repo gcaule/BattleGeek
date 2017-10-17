@@ -43,9 +43,9 @@ public class SettingsActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_settings);
 
-        View backgroundimage = findViewById(R.id.settingsBackgroundView);
+        /*View backgroundimage = findViewById(R.id.settingsBackgroundView);
         Drawable backgroundView = backgroundimage.getBackground();
-        backgroundView.setAlpha(50);
+        backgroundView.setAlpha(50);*/
 
         ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
 
@@ -53,7 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         final SeekBar seekBarMusic = (SeekBar) findViewById(R.id.seekBarMusic);
         final SeekBar seekBarEffects = (SeekBar) findViewById(R.id.seekBarEffects);
-        final TextView textViewSettingdsAnimation = (TextView) findViewById(R.id.textViewSettingsAnimation);
+        final TextView textViewSettingsAnimation = (TextView) findViewById(R.id.textViewSettingsAnimation);
         final TextView seekBarValueMusic = (TextView) findViewById(R.id.seekBarValueMusic);
         final TextView seekBarValueEffects = (TextView) findViewById(R.id.seekBarValueEffects);
         final EditText inputPlayerName = (EditText) findViewById(R.id.inputPlayerName);
@@ -70,16 +70,15 @@ public class SettingsActivity extends AppCompatActivity {
 
         buttonSave.setVisibility(GONE);
 
-        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
+        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
 
         TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
-
-        titleMessage.setTypeface(mainFont);
-        titleMessage.setTextColor(Color.parseColor("#FFEE00"));
+        titleMessage.setTypeface(titleFont);
         inputPlayerName.setTypeface(mainFont);
         inputPlayerName.setTextColor(Color.parseColor("#FFEE00"));
-        textViewSettingdsAnimation.setTypeface(mainFont);
-        textViewSettingdsAnimation.setTextColor(Color.parseColor("#FFEE00"));
+        textViewSettingsAnimation.setTypeface(titleFont);
+        //textViewSettingsAnimation.setTextColor(Color.parseColor("#FFEE00"));
         buttonSave.setTypeface(mainFont);
         mRadioButtonAnimationSlow.setTypeface(mainFont);
         mRadioButtonAnimationSlow.setTextColor(Color.parseColor("#FFEE00"));

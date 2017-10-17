@@ -11,7 +11,7 @@
     <string name="button_hard">Pas Cool</string>
     <string name="button_impossible">Impossible</string>
 
-    <string name="textViewSettings">ParaMètreS</string>
+    <string name="textViewSettings">ParaMetreS</string>
 
     <string name="buttonValidate">C\'est parti !</string>
     <string name="titleRanking">ClasSemenT</string>
@@ -22,13 +22,13 @@
     <string name="ok_victory">A l\'aise...</string>
     <string name="end_game_victory">Tu ressens\nl\'ennivrante exaltation de la\nVICTOIRE !!</string>
     <string name="place_pieces">Place tes pieces\n(avec strategie et savoir-faire)</string>
-    <string name="touchedPlayAgain">Pièce touchée ! Rejoue !</string>
-    <string name="drownPlayAgain">Pièce détruite ! Rejoue !</string>
+    <string name="touchedPlayAgain">Pièce touchée !\nRejoue !</string>
+    <string name="drownPlayAgain">Pièce détruite !\nRejoue !</string>
     <string name="player_turn">A ton tour !</string>
     <string name="AITurn">Au tour de l\'adversaire !</string>
     <string name="missed">Raté !</string>
-    <string name="AITouched">Touché ! L\'adversaire rejoue !</string>
-    <string name="AIDrown">Coulé ! L\'adversaire rejoue !</string>
+    <string name="AITouched">Touché !\nL\'adversaire rejoue !</string>
+    <string name="AIDrown">Coulé !\nL\'adversaire rejoue !</string>
     <string name="settingsAnimationSlowText">Mou</string>
     <string name="settingsAnimationMedium">Moins Mou</string>
     <string name="settingsAnnimationFast">Dynamique</string>
@@ -36,11 +36,11 @@
     <string name="quit_game_alert_title">Honte et déshonneur !</string>
     <string name="quit_game_alert_message">Tu vas t\'enfuir lâchement et la honte\npoursuivra ta famille sur trois générations...\nTu veux vraiment abandonner ?</string>
     <string name="message_title">BieNvenuE suR BattleGeeK</string>
-    <string name="message_firstusername">Dis moi, comment tu t\'appelles ?\nOu alors mens-moi, tu pourras\nchanger de nom plus tard si tu veux.</string>
+    <string name="message_firstusername">Dis moi, comment tu t\'appelles ?\nOu alors mens-moi, tu pourras changer de nom plus tard si tu veux.</string>
     <string name="message_error_emptyname">Tu n\'as pas entré de pseudo !</string>
     <string name="RotationImpossible">Pas assez d\'espace pour la rotation !</string>
-    <string name="switch_view">Où sont mes\npieces ?</string>
-    <string name="randomize_positions">Place les pièces\npour moi !</string>
+    <string name="switch_view">Ou sont mes\npieces ?</string>
+    <string name="randomize_positions">Place les pieces\npour moi !</string>
     <string name="home_slogan">La Bataille Navale\navec des pixels et\ndes couleurs dedans</string>
     <string name="playermap_view">Tes pieces t\'attendent sagement !</string>
     <string name="ok_exit">Oui, j\'ai piscine</string>
@@ -48,8 +48,8 @@
     <string name="save_settings">Sauvegarder</string>
     <string name="saved_parameters">Paramètres enregistrés !</string>
     <string name="statistics">Statistiques</string>
-    <string name="gamesParts">Parties Jouées</string>
-    <string name="victory_defeats">Victoires/Defaites</string>
+    <string name="gamesParts">Parties Jouees</string>
+    <string name="victory_defeats">Victoires / Defaites</string>
     <string name="ratio">Ratio</string>
     <string name="bestTime">Meilleur Temps</string>
     <string name="levelTime">Temps Level</string>

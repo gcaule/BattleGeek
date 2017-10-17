@@ -41,27 +41,25 @@ public class FirstTimeUsernameScreen extends AppCompatActivity {
         setContentView(R.layout.activity_first_time_username_screen);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-        Typeface titleHomeFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
-        TextView messageTitle = (TextView) findViewById(R.id.message_title);
-        messageTitle.setTypeface(titleHomeFont);
-        messageTitle.setTextColor(Color.parseColor("#FFEE00"));
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
 
-        Typeface welcomeMessageFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
-        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
+        TextView messageTitle = (TextView) findViewById(R.id.message_title);
+        messageTitle.setTypeface(mainFont);
+
 
         TextView welcomeMessage = (TextView) findViewById(R.id.message_welcome);
-        welcomeMessage.setTypeface(welcomeMessageFont);
+        welcomeMessage.setTypeface(mainFont);
         welcomeMessage.setTextColor(Color.parseColor("#FFEE00"));
 
         TextView infoMessage = (TextView) findViewById(R.id.textView4);
-        infoMessage.setTypeface(welcomeMessageFont);
+        infoMessage.setTypeface(mainFont);
         infoMessage.setTextColor(Color.parseColor("#FFEE00"));
 
         Button buttonSave = (Button) findViewById(R.id.button_save);
-        buttonSave.setTypeface(buttonFont);
+        buttonSave.setTypeface(mainFont);
 
         final EditText playerName = (EditText) findViewById(R.id.input_playername);
-        playerName.setTypeface(welcomeMessageFont);
+        playerName.setTypeface(mainFont);
         playerName.setTextColor(Color.parseColor("#FFEE00"));
 
         //Call SharedPref

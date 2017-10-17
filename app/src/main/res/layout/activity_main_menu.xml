@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:id="@+id/mainMenuBackgroundView"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             tools:context="fr.wcs.battlegeek.MainMenuActivity"
-                                             android:background="@drawable/backgroundlaunch"
-                                             android:orientation="vertical">
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainMenuBackgroundView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fr.wcs.battlegeek.MainMenuActivity"
+    android:background="@drawable/background"
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/buttonEasyMode"
@@ -19,14 +20,14 @@
         android:background="@drawable/buttonshapeeasy"
         android:text="@string/button_easy"
         android:textColor="#FFFFFF"
-        android:textSize="25sp"
+        android:textSize="15sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/show_playername"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintTop_creator="1"/>
 
     <Button
         android:id="@+id/buttonMediumMode"
@@ -38,14 +39,14 @@
         android:background="@drawable/buttonshapemedium"
         android:text="@string/button_medium"
         android:textColor="#FFFFFF"
-        android:textSize="25sp"
+        android:textSize="15sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonEasyMode"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintTop_creator="1"/>
 
     <Button
         android:id="@+id/buttonHardMode"
@@ -57,13 +58,13 @@
         android:background="@drawable/buttonshapehard"
         android:text="@string/button_hard"
         android:textColor="#FFFFFF"
-        android:textSize="25sp"
+        android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonMediumMode"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintTop_creator="1"/>
 
     <Button
         android:id="@+id/buttonImpossibleMode"
@@ -75,14 +76,14 @@
         android:background="@drawable/buttonshapeimpossible"
         android:text="@string/button_impossible"
         android:textColor="#FFFFFF"
-        android:textSize="25sp"
+        android:textSize="15sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonHardMode"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintTop_creator="1"/>
 
     <ImageButton
         android:id="@+id/buttonTrophy"
@@ -121,12 +122,12 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="110dp"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
         android:id="@+id/imageButtonStats"

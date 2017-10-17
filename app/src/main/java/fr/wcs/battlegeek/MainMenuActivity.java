@@ -35,7 +35,6 @@ public class MainMenuActivity extends AppCompatActivity {
         ColorFilter filter = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
 
         Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
-        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
 
         ImageButton buttonSettings = (ImageButton) findViewById(R.id.buttonSettings);
         ImageButton buttonTrophy = (ImageButton) findViewById(R.id.buttonTrophy);
@@ -50,10 +49,10 @@ public class MainMenuActivity extends AppCompatActivity {
         buttonTrophy.setColorFilter(filter);
         buttonStats.setColorFilter(filter);
 
-        buttonEasyMode.setTypeface(buttonFont);
-        buttonMediumMode.setTypeface(buttonFont);
-        buttonHardMode.setTypeface(buttonFont);
-        buttonImpossibleMode.setTypeface(buttonFont);
+        buttonEasyMode.setTypeface(mainFont);
+        buttonMediumMode.setTypeface(mainFont);
+        buttonHardMode.setTypeface(mainFont);
+        buttonImpossibleMode.setTypeface(mainFont);
         showPlayerName.setTypeface(mainFont);
 
         buttonEasyMode.setTextColor(Color.parseColor("#FFEE00"));
@@ -136,7 +135,6 @@ public class MainMenuActivity extends AppCompatActivity {
         String playerName = mSharedPreferences.getString(Settings.PLAYER_NAME, null);
 
         showPlayerName.setTextColor(Color.parseColor("#FFF825"));
-        showPlayerName.setTextSize(26);
         showPlayerName.setText("Coucou " + playerName + " !");
     }
 

@@ -3,6 +3,7 @@ package fr.wcs.battlegeek;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,6 +44,22 @@ public class RankingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ranking);
 
         ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
+
+        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
+
+        TextView titleMessage = (TextView) findViewById(R.id.rankingTitle);
+        titleMessage.setTypeface(titleFont);
+        TextView labelName = (TextView) findViewById(R.id.textViewLabelName);
+        labelName.setTypeface(titleFont);
+        TextView labelRatio = (TextView) findViewById(R.id.textViewLabelRatio);
+        labelRatio.setTypeface(titleFont);
+        TextView labelBestTime = (TextView) findViewById(R.id.textViewLabelBestTime);
+        labelBestTime.setTypeface(titleFont);
+        TextView labelShotsCount = (TextView) findViewById(R.id.textViewLabelShotsCount);
+        labelShotsCount.setTypeface(titleFont);
+        TextView labelGames = (TextView) findViewById(R.id.textViewLabelGames);
+        labelGames.setTypeface(titleFont);
 
         ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
         buttonHome.setColorFilter(filterYellow);

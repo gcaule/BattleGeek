@@ -105,6 +105,9 @@ public class GameActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_game);
 
+        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/openShip.otf");
+        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
+
         ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
 
         mContext = getApplicationContext();
@@ -300,12 +303,8 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/openShip.otf");
-        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
-
-        TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
-
         mtextViewTimer = (TextView) findViewById(R.id.textViewTimer);
+        mtextViewTimer.setTypeface(mainFont);
 
         //Vibrator
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
