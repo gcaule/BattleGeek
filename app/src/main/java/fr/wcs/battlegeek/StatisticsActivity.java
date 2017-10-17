@@ -1,5 +1,6 @@
 package fr.wcs.battlegeek;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -40,6 +41,10 @@ public class StatisticsActivity extends AppCompatActivity implements AdapterView
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
         spinner.setOnItemSelectedListener(StatisticsActivity.this);
+
+        TextView textViewStatistics = (TextView) findViewById(R.id.textViewStatistics);
+        Typeface welcomeMessageFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
+        textViewStatistics.setTypeface(welcomeMessageFont);
 
         DataController dataController = new DataController(getApplicationContext());
         dataController.setDataReadyListener(new DataController.DataReadyListener() {
