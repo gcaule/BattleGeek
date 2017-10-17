@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg"
-    android:orientation="vertical"
-    tools:context="fr.wcs.battlegeek.MainMenuActivity">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/mainMenuBackgroundView"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="@drawable/bg"
+                                             android:orientation="vertical"
+                                             tools:context="fr.wcs.battlegeek.MainMenuActivity">
 
     <Button
         android:id="@+id/buttonEasyMode"
@@ -25,7 +26,7 @@
         app:layout_constraintTop_toBottomOf="@+id/show_playername"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintTop_creator="1"/>
 
     <Button
         android:id="@+id/buttonMediumMode"
@@ -44,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonEasyMode"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintTop_creator="1"/>
 
     <Button
         android:id="@+id/buttonHardMode"
@@ -62,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonMediumMode"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintTop_creator="1"/>
 
     <Button
         android:id="@+id/buttonImpossibleMode"
@@ -81,7 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonHardMode"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintTop_creator="1"/>
 
     <ImageButton
         android:id="@+id/buttonTrophy"
@@ -95,7 +96,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintLeft_toRightOf="@+id/imageButtonStats"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/trophy128" />
+        app:srcCompat="@drawable/trophy128"/>
 
     <ImageButton
         android:id="@+id/buttonSettings"
@@ -110,7 +111,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/settings128" />
+        app:srcCompat="@drawable/settings128"/>
 
     <TextView
         android:id="@+id/show_playername"
@@ -125,7 +126,7 @@
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
         android:id="@+id/imageButtonStats"
@@ -137,6 +138,6 @@
         android:scaleType="fitCenter"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_toc_black_24dp" />
+        app:srcCompat="@drawable/ic_toc_black_24dp"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -35,6 +35,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/titleRanking"
         android:textAlignment="center"
+        android:textColor="@color/yellow"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -50,6 +51,7 @@
         android:clipToPadding="false"
         android:dividerHeight="1dp"
         android:paddingBottom="5dp"
+        android:divider="@color/yellow"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -75,7 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="Nom"/>
+            android:text="Nom"
+            android:textColor="@color/yellow"/>
 
         <TextView
             android:id="@+id/textViewLabelRatio"
@@ -83,7 +86,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="@string/ratio"/>
+            android:text="@string/ratio"
+            android:textColor="@color/yellow"/>
 
         <TextView
             android:id="@+id/textViewLabelBestTime"
@@ -91,7 +95,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="@string/bestTime"/>
+            android:text="@string/bestTime"
+            android:textColor="@color/yellow"/>
 
         <TextView
             android:id="@+id/textViewLabelShotsCount"
@@ -99,7 +104,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="@string/bestShotsCountLabel"/>
+            android:text="@string/bestShotsCountLabel"
+            android:textColor="@color/yellow"/>
 
         <TextView
             android:id="@+id/textViewLabelGames"
@@ -107,7 +113,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="@string/gamesParts"/>
+            android:text="@string/gamesParts"
+            android:textColor="@color/yellow"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settingsBackgroundView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundsea"
+    android:background="@drawable/bg"
     android:orientation="vertical"
     tools:context="fr.wcs.battlegeek.SettingsActivity"
     tools:layout_editor_absoluteX="0dp"
@@ -28,50 +29,52 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSettings"
-        app:layout_constraintVertical_bias="0.555" />
+        app:layout_constraintVertical_bias="0.555"/>
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/radioGroup"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSettings"
-        app:layout_constraintVertical_bias="0.083">
+                android:id="@+id/radioGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSettings"
+                app:layout_constraintVertical_bias="0.083">
 
         <RadioButton
             android:id="@+id/radioButtonAnimationSlow"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:buttonTint="@color/yellow"
             android:onClick="onRadioButtonAnimationSpeedClicked"
-            android:text="@string/settingsAnimationSlowText" />
+            android:text="@string/settingsAnimationSlowText"/>
 
         <RadioButton
             android:id="@+id/radioButtonAnimationMedium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:buttonTint="@color/yellow"
             android:onClick="onRadioButtonAnimationSpeedClicked"
-            android:text="@string/settingsAnimationMedium" />
+            android:text="@string/settingsAnimationMedium"/>
 
         <RadioButton
             android:id="@+id/radioButtonAnimationFast"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:buttonTint="@color/yellow"
             android:checked="true"
-            android:onClick="onRadioButtonAnimationSpeedClicked"
-            android:text="@string/settingsAnnimationFast" />
+            android:onClick="onRadioButtonAnimationSpeedClicked"/>
 
     </RadioGroup>
 
@@ -88,52 +91,56 @@
         android:scaleType="fitCenter"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/home_button" />
+        app:srcCompat="@drawable/home_button"/>
 
     <ImageView
         android:id="@+id/imageViewMusic"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginTop="41dp"
-        android:layout_marginLeft="16dp"
         android:background="@android:color/transparent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/seekBarMusic"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        app:srcCompat="@drawable/song_note128" />
+        app:srcCompat="@drawable/song_note128"/>
 
     <ImageView
         android:id="@+id/imageViewEffects"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="65dp"
+        android:adjustViewBounds="false"
         android:background="@android:color/transparent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/seekBarEffects"
         app:layout_constraintTop_toBottomOf="@+id/imageViewMusic"
-        app:srcCompat="@drawable/volume_up_interface_symbol" />
+        app:srcCompat="@drawable/volume_up_interface_symbol"/>
 
     <ImageView
         android:id="@+id/imageViewUser"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="65dp"
         android:adjustViewBounds="false"
         android:background="@android:color/transparent"
         android:cropToPadding="false"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewEffects"
-        app:srcCompat="@drawable/user"
-        android:layout_marginLeft="32dp" />
+        app:srcCompat="@drawable/user"/>
 
     <SeekBar
         android:id="@+id/seekBarEffects"
         android:layout_width="221dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginTop="83dp"
+        android:progressTint="@color/yellow"
+        android:thumbTint="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewEffects"
         app:layout_constraintLeft_toRightOf="@+id/imageViewEffects"
-        app:layout_constraintRight_toLeftOf="@+id/seekBarValueEffects"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarMusic" />
+        app:layout_constraintTop_toBottomOf="@+id/seekBarMusic"/>
 
     <SeekBar
         android:id="@+id/seekBarMusic"
@@ -142,15 +149,18 @@
         android:layout_marginTop="55dp"
         android:defaultFocusHighlightEnabled="false"
         android:focusedByDefault="false"
+        android:progressTint="@color/yellow"
+        android:thumbTint="@color/yellow"
         app:layout_constraintLeft_toRightOf="@+id/imageViewMusic"
         app:layout_constraintRight_toLeftOf="@+id/seekBarValueMusic"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"/>
 
     <EditText
         android:id="@+id/inputPlayerName"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="64dp"
+        android:backgroundTint="@color/yellow"
         android:defaultFocusHighlightEnabled="false"
         android:ems="10"
         android:hint="@string/player_name"
@@ -162,7 +172,7 @@
         app:layout_constraintLeft_toRightOf="@+id/imageViewUser"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBarEffects"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"/>
 
     <TextView
         android:id="@+id/textViewSettings"
@@ -180,8 +190,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/buttonHome"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/buttonHome"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
         android:id="@+id/buttonSave"
@@ -207,8 +216,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputPlayerName"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintVertical_bias="0.0"/>
 
     <TextView
         android:id="@+id/seekBarValueMusic"
@@ -221,8 +229,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/seekBarMusic"
         app:layout_constraintLeft_toRightOf="@+id/seekBarMusic"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/seekBarMusic" />
-
+        app:layout_constraintTop_toTopOf="@+id/seekBarMusic"/>
 
     <TextView
         android:id="@+id/seekBarValueEffects"
@@ -236,7 +243,6 @@
         app:layout_constraintLeft_toRightOf="@+id/seekBarEffects"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/seekBarEffects"
-        app:layout_constraintVertical_bias="0.45" />
-
+        app:layout_constraintVertical_bias="0.45"/>
 
 </android.support.constraint.ConstraintLayout>

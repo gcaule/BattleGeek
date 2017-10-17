@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/backgroundView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/background"
     tools:context="fr.wcs.battlegeek.GameActivity">
 
     <TextView
         android:id="@+id/textViewTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:textColor="@color/yellow"
         android:textSize="22sp"
         android:visibility="gone"
@@ -57,6 +57,7 @@
 
             <fr.wcs.battlegeek.ui.MapView
                 android:id="@+id/mapView"
+                android:background="#30ffffff"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -65,7 +66,6 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:background="#70ffffff"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -76,7 +76,7 @@
             <Button
                 android:id="@+id/buttonLaunchGame"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="21dp"
@@ -86,6 +86,8 @@
                 android:text="@string/launchGame"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/buttonRandomPositions"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 app:layout_constraintRight_toRightOf="parent" />
 
             <Button
@@ -93,6 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="17dp"
+                android:layout_marginLeft="8dp"
                 android:background="@drawable/buttoningame"
                 android:padding="10dp"
                 android:text="@string/randomize_positions"
@@ -100,7 +103,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/buttonLaunchGame"
-                android:layout_marginLeft="8dp" />
+                android:layout_marginStart="8dp"/>
+
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
@@ -152,7 +156,7 @@
     <Button
         android:id="@+id/buttonSwitchView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/buttoningame"
@@ -160,7 +164,7 @@
         android:text="@string/switch_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"/>
 
     <ImageButton
         android:id="@+id/imageButtonSpeed"
@@ -173,7 +177,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/rabbit"
-        android:layout_marginStart="16dp" />
+        android:layout_marginStart="16dp"/>
 
     <ImageButton
         android:id="@+id/imageButtonEffects"
@@ -186,7 +190,7 @@
         app:layout_constraintRight_toLeftOf="@+id/imageButtonMusic"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_volume_up_black_24dp"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"/>
 
     <ImageButton
         android:id="@+id/imageButtonMusic"
@@ -199,12 +203,12 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/music_loud"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"/>
 
     <ImageView
         android:id="@+id/imageViewBlink"
         android:alpha="0"
-        android:src="#8c0000"
+        android:src="#810000"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -1,6 +1,9 @@
 package fr.wcs.battlegeek;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -18,7 +21,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import fr.wcs.battlegeek.controller.DataController;
@@ -29,10 +31,7 @@ import static android.view.View.GONE;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private final String TAG = Settings.TAG;
-    private SharedPreferences mSharedPreferences;
-    private FirebaseDatabase mDatabase;
-    private DatabaseReference mUsersDatabaseReference;
+    SharedPreferences mSharedPreferences;
     private ImageView mImageViewMusic;
     private ImageView mImageViewEffects;
 
@@ -46,16 +45,22 @@ public class SettingsActivity extends AppCompatActivity {
 
         View backgroundimage = findViewById(R.id.settingsBackgroundView);
         Drawable backgroundView = backgroundimage.getBackground();
-        backgroundView.setAlpha(150);
+        //backgroundView.setAlpha(50);
+
+        ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
 
         //Affichage de la value pour la seekbox Music et seekbok Effects
 
         final SeekBar seekBarMusic = (SeekBar) findViewById(R.id.seekBarMusic);
         final SeekBar seekBarEffects = (SeekBar) findViewById(R.id.seekBarEffects);
+        final TextView textViewSettingdsAnimation = (TextView) findViewById(R.id.textViewSettingsAnimation);
         final TextView seekBarValueMusic = (TextView) findViewById(R.id.seekBarValueMusic);
         final TextView seekBarValueEffects = (TextView) findViewById(R.id.seekBarValueEffects);
         final EditText inputPlayerName = (EditText) findViewById(R.id.inputPlayerName);
         final ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
+        buttonHome.setColorFilter(filterYellow);
+        final ImageView imageViewUser = (ImageView) findViewById(R.id.imageViewUser);
+        imageViewUser.setColorFilter(filterYellow);
         final Button buttonSave = (Button) findViewById(R.id.buttonSave);
 
         // Radio Buttons
@@ -70,29 +75,43 @@ public class SettingsActivity extends AppCompatActivity {
         TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
 
         titleMessage.setTypeface(mainFont);
+        titleMessage.setTextColor(Color.parseColor("#FFEE00"));
         inputPlayerName.setTypeface(mainFont);
+        inputPlayerName.setTextColor(Color.parseColor("#FFEE00"));
+        textViewSettingdsAnimation.setTypeface(mainFont);
+        textViewSettingdsAnimation.setTextColor(Color.parseColor("#FFEE00"));
         buttonSave.setTypeface(mainFont);
+        mRadioButtonAnimationSlow.setTypeface(mainFont);
+        mRadioButtonAnimationSlow.setTextColor(Color.parseColor("#FFEE00"));
+        mRadioButtonAnimationMedium.setTypeface(mainFont);
+        mRadioButtonAnimationMedium.setTextColor(Color.parseColor("#FFEE00"));
+        mRadioButtonAnimationFast.setTypeface(mainFont);
+        mRadioButtonAnimationFast.setTextColor(Color.parseColor("#FFEE00"));
 
         seekBarValueEffects.setTypeface(mainFont);
+        seekBarValueEffects.setTextColor(Color.parseColor("#FFEE00"));
         seekBarValueMusic.setTypeface(mainFont);
+        seekBarValueMusic.setTextColor(Color.parseColor("#FFEE00"));
 
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
         //Get Pref for Music Volume
-        int valueMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT);
+        int valueMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG,0);
         seekBarMusic.setProgress(valueMusic);
         seekBarValueMusic.setText(String.valueOf(valueMusic));
 
         mImageViewMusic = (ImageView) findViewById(R.id.imageViewMusic);
+        mImageViewMusic.setColorFilter(filterYellow);
         setMusicIcon(valueMusic);
 
         //Get Pref for Effects Volume
-        int valueEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG, Settings.EFFECTS_DEFAULT);
+        int valueEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG,0);
         seekBarEffects.setProgress(valueEffects);
         seekBarValueEffects.setText(String.valueOf(valueEffects));
 
         mImageViewEffects = (ImageView) findViewById(R.id.imageViewEffects);
+        mImageViewEffects.setColorFilter(filterYellow);
         setEffectIcon(valueEffects);
 
         //Get Pref for PlayerModel Name
@@ -108,115 +127,118 @@ public class SettingsActivity extends AppCompatActivity {
         inputPlayerName.setText(playerName);
 
         // Get Pref for Animations Speed
-        int valueAnimationSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, Settings.ANIMATION_DEFAULT);
-
-        switch (valueAnimationSpeed) {
-            case Settings.ANIMATION_SLOW:
-                mRadioButtonAnimationSlow.setChecked(true);
-                mRadioButtonAnimationMedium.setChecked(false);
-                mRadioButtonAnimationFast.setChecked(false);
-                break;
-            case Settings.ANIMATION_MEDIUM:
-                mRadioButtonAnimationSlow.setChecked(false);
-                mRadioButtonAnimationMedium.setChecked(true);
-                mRadioButtonAnimationFast.setChecked(false);
-                break;
-            case Settings.ANIMATION_FAST:
-                mRadioButtonAnimationSlow.setChecked(false);
-                mRadioButtonAnimationMedium.setChecked(false);
-                mRadioButtonAnimationFast.setChecked(true);
-                break;
+        int valueAnimationSpeed = mSharedPreferences.getInt(Settings.ANIMATION_TAG, 0);
+        if (valueAnimationSpeed != 0) {
+            switch (valueAnimationSpeed) {
+                case Settings.ANIMATION_SLOW:
+                    mRadioButtonAnimationSlow.setChecked(true);
+                    mRadioButtonAnimationMedium.setChecked(false);
+                    mRadioButtonAnimationFast.setChecked(false);
+                    break;
+                case Settings.ANIMATION_MEDIUM:
+                    mRadioButtonAnimationSlow.setChecked(false);
+                    mRadioButtonAnimationMedium.setChecked(true);
+                    mRadioButtonAnimationFast.setChecked(false);
+                    break;
+                case Settings.ANIMATION_FAST:
+                    mRadioButtonAnimationSlow.setChecked(false);
+                    mRadioButtonAnimationMedium.setChecked(false);
+                    mRadioButtonAnimationFast.setChecked(true);
+                    break;
+            }
+        }
+        else {
+            mSharedPreferences.edit().putInt(Settings.ANIMATION_TAG, Settings.ANIMATION_MEDIUM).apply();
         }
 
-
-    //Seekbar listener for music + Display value
+        //Seekbar listener for music + Display value
         seekBarMusic.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress,
-        boolean fromUser) {
-            // TODO Auto-generated method stub
-            seekBarValueMusic.setText(String.valueOf(progress));
-            int valueMusic = seekBarMusic.getProgress();
-            mSharedPreferences.edit().putInt(Settings.MUSIC_TAG, valueMusic).apply();
-            setMusicIcon(valueMusic);
-        }
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                // TODO Auto-generated method stub
+                seekBarValueMusic.setText(String.valueOf(progress));
+                int valueMusic = seekBarMusic.getProgress();
+                mSharedPreferences.edit().putInt(Settings.MUSIC_TAG, valueMusic).apply();
+                setMusicIcon(valueMusic);
+            }
 
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-            // TODO Auto-generated method stub
-        }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
 
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-            // TODO Auto-generated method stub
-        }
-    });
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+        });
 
-    //Seekbar listener for effects + display value
+        //Seekbar listener for effects + display value
         seekBarEffects.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress,
-        boolean fromUser) {
-            // TODO Auto-generated method stub
-            seekBarValueEffects.setText(String.valueOf(progress));
-            int valueEffects = seekBarEffects.getProgress();
-            mSharedPreferences.edit().putInt(Settings.EFFECTS_TAG, valueEffects).apply();
-            setEffectIcon(valueEffects);
-        }
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                // TODO Auto-generated method stub
+                seekBarValueEffects.setText(String.valueOf(progress));
+                int valueEffects = seekBarEffects.getProgress();
+                mSharedPreferences.edit().putInt(Settings.EFFECTS_TAG, valueEffects).apply();
+                setEffectIcon(valueEffects);
+            }
 
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-            // TODO Auto-generated method stub
-        }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
 
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-            // TODO Auto-generated method stub
-        }
-    });
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+        });
 
         inputPlayerName.addTextChangedListener(new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
-        @Override
-        public void afterTextChanged(Editable editable) {
-            buttonSave.setVisibility(View.VISIBLE);
-        }
-    });
+            @Override
+            public void afterTextChanged(Editable editable) {
+                buttonSave.setVisibility(View.VISIBLE);
+            }
+        });
 
-    //Button to go to home menu
+        //Button to go to home menu
         buttonHome.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onBackPressed();
-        }
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
 
-    });
+        });
 
-    //Button to save user preferences
+        //Button to save user preferences
          buttonSave.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            final String name = inputPlayerName.getText().toString();
-            if (name.isEmpty()){
-                Toast.makeText(SettingsActivity.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT).show();
-            }
-            else {
-                mSharedPreferences.edit().putString(Settings.PLAYER_NAME, name).commit();
-                mPlayerModel.setName(name);
-                dataController.updatePlayer(mPlayerModel);
-                buttonSave.setVisibility(GONE);
-                Toast.makeText(SettingsActivity.this, R.string.saved_parameters, Toast.LENGTH_SHORT).show();
-            }
-        }
-    });
-}
+             @Override
+           public void onClick(View v) {
+                 final String name = inputPlayerName.getText().toString();
+                 if (name.isEmpty()){
+                     Toast.makeText(SettingsActivity.this, R.string.message_error_emptyname, Toast.LENGTH_SHORT).show();
+                 }
+                 else {
+                     mSharedPreferences.edit().putString(Settings.PLAYER_NAME, name).apply();
+                     mPlayerModel.setName(name);
+                     dataController.updatePlayer(mPlayerModel);
+                     buttonSave.setVisibility(GONE);
+                     Toast.makeText(SettingsActivity.this, R.string.saved_parameters, Toast.LENGTH_SHORT).show();
+                 }
+             }
+        });
+    }
 
     // RadioButtons Listener
     public void onRadioButtonAnimationSpeedClicked(View view) {

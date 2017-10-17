@@ -5,13 +5,15 @@
     <string name="player_name">Ton petit nom ici</string>
     <string name="alreadyPlayedMessage">Tu as déjà joué cette case !</string>
     <string name="itemDrownMessage">Tu as détruit cette pièce !</string>
+
     <string name="button_easy">Gentil</string>
     <string name="button_medium">Moins Gentil</string>
     <string name="button_hard">Pas Cool</string>
     <string name="button_impossible">Impossible</string>
     <string name="textViewSettings">ParaMètreS</string>
+
     <string name="buttonValidate">C\'est parti !</string>
-    <string name="titleRanking">ClasSemenT</string>
+    <string name="titleRanking">Classement</string>
     <string name="message_welcome">Hey, je te connais pas toi !</string>
     <string name="end_game_fragment_title">La partie est terminée !</string>
     <string name="end_game_defeat">Tu as en bouche\nle goût amer de la\nDEFAITE !!</string>
@@ -26,16 +28,14 @@
     <string name="missed">Raté !</string>
     <string name="AITouched">Touché ! L\'adversaire rejoue !</string>
     <string name="AIDrown">Coulé ! L\'adversaire rejoue !</string>
-
     <string name="settingsAnimationSlowText">Mou</string>
     <string name="settingsAnimationMedium">Moins Mou</string>
     <string name="settingsAnnimationFast">Dynamique</string>
-    <string name="settingsAnimationsLabel">Animations</string>
-
+    <string name="settingsAnimationsLabel">ViteSse dE jeU</string>
     <string name="quit_game_alert_title">Honte et déshonneur !</string>
     <string name="quit_game_alert_message">Tu vas t\'enfuir lâchement et la honte\npoursuivra ta famille sur trois générations...\nTu veux vraiment abandonner ?</string>
-    <string name="message_title">BienvenuE sur BattleGeeK</string>
-    <string name="message_firstusername">Dis moi comment tu t\'intitules !\nOu alors mens-moi, tu pourras\nchanger de nom plus tard si tu veux.</string>
+    <string name="message_title">BieNvenuE suR BattleGeeK</string>
+    <string name="message_firstusername">Dis moi, comment tu t\'appelles ?\nOu alors mens-moi, tu pourras\nchanger de nom plus tard si tu veux.</string>
     <string name="message_error_emptyname">Tu n\'as pas entré de pseudo !</string>
     <string name="RotationImpossible">Pas assez d\'espace pour la rotation !</string>
     <string name="switch_view">Où sont mes\npieces ?</string>
