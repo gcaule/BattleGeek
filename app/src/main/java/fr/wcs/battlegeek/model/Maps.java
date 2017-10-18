@@ -423,6 +423,7 @@ public class Maps {
      */
     public static char[][] getMap() {
         int random = (int)(Math.random() * (maps.length - 1));
+        char[][] map = copy(maps[random]);
         return maps[random];
     }
 
@@ -439,6 +440,16 @@ public class Maps {
             }
         }
         return playableCoordinates;
+    }
+
+    private static char[][] copy(char[][] map) {
+        char[][] copy = new char[Settings.GRID_SIZE][Settings.GRID_SIZE];
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                copy[i][j] = map[i][j];
+            }
+        }
+        return copy;
     }
 
     // TODO DELETE

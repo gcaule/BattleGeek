@@ -16,6 +16,8 @@ import fr.wcs.battlegeek.R;
 
 public class QuitGameFragment extends DialogFragment {
 
+    private OnCancelListener listener = null;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -31,6 +33,9 @@ public class QuitGameFragment extends DialogFragment {
         builder.setNegativeButton(R.string.no_exit, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                if(listener != null) {
+                    listener.onCancel();
+                }
             }
         });
         builder.create();
@@ -40,5 +45,13 @@ public class QuitGameFragment extends DialogFragment {
         quitGameMessage.setGravity(Gravity.CENTER);
 
         return dialog;
+    }
+
+    public interface OnCancelListener {
+        public void onCancel();
+    }
+
+    public void setOnCancelListener(OnCancelListener listener){
+        this.listener = listener;
     }
 }

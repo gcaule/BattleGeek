@@ -7,6 +7,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Class handling game's Sound
  */
 public class SoundController {
-    private static final String TAG = "Sound";
+    private static final String TAG = Settings.TAG;
     // Context to access Android's Resource System
     private Context mContext;
 
@@ -145,23 +146,39 @@ public class SoundController {
     }
 
     public void playMusic(){
+        Log.d(TAG, "playMusic() called");
         if(mMediaPlayer == null) {
             mMediaPlayer = MediaPlayer.create(mContext, musicID);
+            Log.d(TAG, "playMusic: Re Creating MediaPlayer");
         }
         final float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT) / 100 * mMusicMixRatio;
         mMediaPlayer.setVolume(volume, volume);
+
         mMediaPlayer.seekTo(mMusicPosition);
         mMediaPlayer.start();
     }
 
+    public void pauseMusic() {
+        mMediaPlayer.pause();
+    }
+
+    public void resumeMusic() {
+        final float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT) / 100 * mMusicMixRatio;
+        mMediaPlayer.setVolume(volume, volume);
+        mMediaPlayer.start();
+    }
+
     public void stopMusic(){
-        if(mMediaPlayer.isPlaying()){
+        if(mMediaPlayer != null){
             mMusicPosition = mMediaPlayer.getCurrentPosition();
             mMediaPlayer.stop();
         }
     }
 
     public void setMusicVolume(int volume){
+        if(mMediaPlayer == null) {
+            mMediaPlayer = MediaPlayer.create(mContext, musicID);
+        }
         float vol = (float) volume / 100 * mMusicMixRatio;
         mMediaPlayer.setVolume(vol, vol);
     }

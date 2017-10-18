@@ -76,6 +76,7 @@ public class GameActivity extends AppCompatActivity {
     private Toast mToast;
     private Context mContext;
     private boolean mExit = false;
+    private boolean mAlertDialogOpened = false;
 
     private MapView mMapView;
     private GameView mGameView;
@@ -720,30 +721,47 @@ public class GameActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-
+        mAlertDialogOpened = true;
+        pauseGame();
         FragmentManager fm = getFragmentManager();
         QuitGameFragment quitGameFragment = new QuitGameFragment();
         quitGameFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
         quitGameFragment.setCancelable(false);
+        quitGameFragment.setOnCancelListener(new QuitGameFragment.OnCancelListener() {
+            @Override
+            public void onCancel() {
+                mAlertDialogOpened = false;
+                resumeGame();
+            }
+        });
+    }
 
+    private void pauseGame() {
+        mExit = true;
+        mSoundController.pauseMusic();
+        mSoundController.stopEffects();
+    }
+
+    private void resumeGame() {
+        if(!mAlertDialogOpened) {
+            mExit = false;
+            if(mAIShouldPlay) {
+                aiPlay();
+            }
+        }
+        mSoundController.resumeMusic();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mSoundController.playMusic();
-        mExit = false;
-        if(mAIShouldPlay) {
-            aiPlay();
-        }
+        resumeGame();
     }
 
     @Override
     protected void onPause() {
+        Log.d(TAG, "onPause() called");
         super.onPause();
-        mSoundController.stopMusic();
-        mSoundController.stopEffects();
-        mSoundController.release();
-        mExit = true;
+        pauseGame();
     }
 }
