@@ -42,7 +42,7 @@ public class SoundController {
     private int soundID_boom2 = -1;
 
     private int musicID = -1;
-    private float mMusicMixRatio = 0.09f;
+    private float mMusicMixRatio = 0.15f;
 
     // Audio Streams List
     private ArrayList<Integer> mEffectsStreams = new ArrayList<>();
@@ -143,7 +143,7 @@ public class SoundController {
     }
 
     public void playMusic(){
-        final float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, 50) / 100 * mMusicMixRatio;
+        final float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT) / 100 * mMusicMixRatio;
         mMediaPlayer.setVolume(volume, volume);
         mMediaPlayer.start();
     }

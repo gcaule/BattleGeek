@@ -155,14 +155,8 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        // Sound
-        mSoundController = new SoundController(mContext);
-
         mImageButtonMusic = (ImageButton) findViewById(R.id.imageButtonMusic);
         mVolumeMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT);
-
-        // Play Music
-        mSoundController.playMusic();
 
         setMusicIcon(mVolumeMusic);
         mImageButtonMusic.setOnClickListener(new View.OnClickListener() {
@@ -735,6 +729,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mSoundController = new SoundController(getApplicationContext());
+        mSoundController.playMusic();
         mExit = false;
         if(mAIShouldPlay) {
             aiPlay();
@@ -748,5 +743,10 @@ public class GameActivity extends AppCompatActivity {
         mSoundController.stopEffects();
         mSoundController.release();
         mExit = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }
