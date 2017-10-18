@@ -10,6 +10,16 @@
 
     <style name="StatsMenu">
         <item name="android:textColor">#39ce39</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
+    <style name="spinner_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:textColor">@color/yellow</item>
+        <item name="android:background">@drawable/spinner_style</item>
+        <item name="android:popupBackground">@drawable/spinner_style</item>
+        <item name="android:gravity">center</item>
     </style>
 
 </resources>

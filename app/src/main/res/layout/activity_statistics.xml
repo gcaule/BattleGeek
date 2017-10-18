@@ -45,14 +45,11 @@
 
     <Spinner
         android:id="@+id/spinnerLevel"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="24dp"
+        style="@style/spinner_style"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewStatistics"/>
+        app:layout_constraintTop_toBottomOf="@+id/textViewStatistics"
+        android:layout_marginTop="32dp"/>
 
     <GridLayout
         android:layout_width="0dp"
@@ -78,8 +75,7 @@
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
             android:layout_rowWeight="1"
-            android:text="@string/gamesParts"
-            android:textColor="@color/yellow"/>
+            android:text="@string/gamesParts"/>
 
         <TextView
             android:id="@+id/textViewLevelGames1"
@@ -89,8 +85,7 @@
             android:layout_gravity="center"
             android:layout_row="1"
             android:layout_rowWeight="1"
-            android:text="0"
-            android:textColor="@color/yellow"/>
+            android:text="0"/>
 
         <TextView
             android:id="@+id/textViewLevelVictoryDefeats"
@@ -100,8 +95,7 @@
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
             android:layout_rowWeight="1"
-            android:text="@string/victory_defeats"
-            android:textColor="@color/yellow"/>
+            android:text="@string/victory_defeats"/>
 
         <TextView
             android:id="@+id/textViewLevelVictoryDefeats1"
@@ -111,8 +105,7 @@
             android:layout_gravity="center"
             android:layout_row="2"
             android:layout_rowWeight="1"
-            android:text="0"
-            android:textColor="@color/yellow"/>
+            android:text="0"/>
 
         <TextView
             android:id="@+id/textViewRatio"
@@ -122,8 +115,7 @@
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
             android:layout_rowWeight="1"
-            android:text="@string/ratio"
-            android:textColor="@color/yellow"/>
+            android:text="@string/ratio"/>
 
         <TextView
             android:id="@+id/textViewLevelRatio1"
@@ -134,8 +126,6 @@
             android:layout_row="3"
             android:layout_rowWeight="1"
             android:text="0"/>
-            android:text="0"
-            android:textColor="@color/yellow"/>
 
 
         <TextView
@@ -146,7 +136,6 @@
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
             android:text="@string/bestShotsCountLabel"/>
-            android:textColor="@color/yellow"/>
 
         <TextView
             android:id="@+id/textViewLevelBestShotsCountValue"
@@ -156,8 +145,7 @@
             android:layout_gravity="center"
             android:layout_row="4"
             android:layout_rowWeight="1"
-            android:text="0"
-            android:textColor="@color/yellow"/>
+            android:text="0"/>
 
         <TextView
             android:id="@+id/textViewBestTime"
@@ -167,8 +155,7 @@
             android:layout_gravity="left|center_vertical"
             android:layout_row="5"
             android:layout_rowWeight="1"
-            android:text="@string/bestTime"
-            android:textColor="@color/yellow"/>
+            android:text="@string/bestTime"/>
 
         <TextView
             android:id="@+id/textViewLevelBestTime1"
@@ -178,8 +165,7 @@
             android:layout_gravity="center"
             android:layout_row="5"
             android:layout_rowWeight="1"
-            android:text="0"
-            android:textColor="@color/yellow"/>
+            android:text="0"/>
 
         <TextView
             android:id="@+id/textViewLevelTime"
@@ -189,8 +175,7 @@
             android:layout_gravity="left|center_vertical"
             android:layout_row="6"
             android:layout_rowWeight="1"
-            android:text="@string/levelTime"
-            android:textColor="@color/yellow"/>
+            android:text="@string/levelTime"/>
 
         <TextView
             android:id="@+id/textViewLevelTime1"
@@ -200,8 +185,7 @@
             android:layout_gravity="center"
             android:layout_row="6"
             android:layout_rowWeight="1"
-            android:text="0"
-            android:textColor="@color/yellow"/>
+            android:text="0"/>
 
         <TextView
             android:id="@+id/textViewTotalTimeLabel"
@@ -211,8 +195,7 @@
             android:layout_gravity="left|center_vertical"
             android:layout_row="7"
             android:layout_rowWeight="1"
-            android:text="@string/totalTime"
-            android:textColor="@color/yellow"/>
+            android:text="@string/totalTime"/>
 
         <TextView
             android:id="@+id/textViewLeveTotalTime"
@@ -222,9 +205,10 @@
             android:layout_gravity="center"
             android:layout_row="7"
             android:layout_rowWeight="1"
-            android:text="0"
-            android:textColor="@color/yellow"/>
+            android:text="0"/>
 
     </GridLayout>
 
 </android.support.constraint.ConstraintLayout>
+
+

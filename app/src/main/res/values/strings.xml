@@ -10,7 +10,7 @@
     <string name="button_medium">Moins Gentil</string>
     <string name="button_hard">Pas Cool</string>
     <string name="button_impossible">Impossible</string>
-    <string name="textViewSettings">ParaMètreS</string>
+    <string name="textViewSettings">PARAMÈTRES</string>
 
     <string name="buttonValidate">C\'est parti !</string>
     <string name="titleRanking">Classement</string>
