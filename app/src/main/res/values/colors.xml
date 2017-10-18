@@ -5,4 +5,5 @@
     <color name="colorAccent">#000000</color>
     <color name="yellow">#ffee00</color>
     <color name="gridBackground">#212121</color>
+    <color name="spinner">#ffee00</color>
 </resources>

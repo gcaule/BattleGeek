@@ -47,6 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
         Drawable backgroundView = backgroundimage.getBackground();
         backgroundView.setAlpha(50);*/
 
+
         ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
 
         //Affichage de la value pour la seekbox Music et seekbok Effects
