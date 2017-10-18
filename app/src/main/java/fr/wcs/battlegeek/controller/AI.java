@@ -10,7 +10,9 @@ import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
 import fr.wcs.battlegeek.ui.Tetromino;
+import fr.wcs.battlegeek.utils.Utils;
 
+import static fr.wcs.battlegeek.model.Result.Type.BONUS;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.ui.Tetromino.Shape.NONE;
@@ -44,7 +46,7 @@ public class AI {
     private final String TAG = Settings.TAG;
     private Level mLevel;
     private Point mLastPlayedCoordinates;
-    private Result mLastResult = new Result(NONE, MISSED);
+    private Result mLastResult = new Result(-1, -1, NONE, MISSED, null);
 
 
     private GameController mGameControler;
@@ -60,6 +62,8 @@ public class AI {
     public AI() {
         // Create a Game Controller
         mGameControler = new GameController(Maps.getMap());
+        mGameControler.setBonus();
+        Utils.printMap(mGameControler.getMap());
         // Get all Playables Coordinates
         mPlayablesCoordinates = Maps.getPlayableCoordinates();
         mSurroudingCoordinates = new ArrayList<>();
@@ -104,7 +108,7 @@ public class AI {
      * @param result
      */
     public void setResult(Result result) {
-        mGameControler.setPlayResult(mLastPlayedCoordinates.x, mLastPlayedCoordinates.y, result);
+        mGameControler.setPlayResult(result);
         mLastResult = result;
     }
 
@@ -120,14 +124,17 @@ public class AI {
             // We only need to get the coordinates of all the Items in the Player's Map
             for (int i = 0; i < mPlayerMap.length; i++) {
                 for (int j = 0; j < mPlayerMap[i].length; j++) {
-                    if (mPlayerMap[i][j] != ' ') {
+                    // If not a Bonus or Empty
+                    if (mPlayerMap[i][j] != ' ' && mPlayerMap[i][j] != '+'
+                            && mPlayerMap[i][j] != '-' && mPlayerMap[i][j] != '=') {
                         String symbol = String.valueOf(mPlayerMap[i][j]);
                         Tetromino.Shape shape = Tetromino.Shape.valueOf(symbol);
-                        if(!mShapeMap.containsKey(shape)) {
+                        if (!mShapeMap.containsKey(shape)) {
                             mShapeMap.put(shape, new ArrayList<Point>());
                         }
-                        Point point = getPointFromPlayableCoordinates(j,i);
+                        Point point = getPointFromPlayableCoordinates(j, i);
                         mShapeMap.get(shape).add(point);
+
                     }
                 }
             }
@@ -152,7 +159,7 @@ public class AI {
         Tetromino.Shape resultShape = mLastResult.getShape();
 
         //Play randomly during hunt mode (nothing found and looking for tetromino)
-        if (mSurroudingCoordinates.isEmpty() && resultType == MISSED) {
+        if (mSurroudingCoordinates.isEmpty() && (resultType == MISSED || resultType == BONUS)) {
             return playLevelI();
         }
 
@@ -177,7 +184,7 @@ public class AI {
 
         //When a result type is touched, go in target mode by creating a map of possible coordinates
 
-        if (resultType != MISSED) {
+        if (resultType != MISSED && resultType != BONUS) {
             if (!mShapeMap.containsKey(resultShape)) {
                 mShapeMap.put(resultShape, new ArrayList<Point>());
             }
@@ -259,7 +266,10 @@ public class AI {
         return null;
     }
 
-    //When a tetromino is touched, get the surrounding coordinates
+    /**
+     * Set the Surrounding Coordinates of the Point in mSurroudingCoordinates
+     * @param point
+     */
     private void getSurroundingCoordinates(Point point) {
 
         int[] tempX = new int[4];
@@ -307,6 +317,12 @@ public class AI {
         }
     }
 
+    /**
+     * Get the Point from mPlayablesCoordinates (avoiding duplicates)
+     * @param x
+     * @param y
+     * @return
+     */
     private Point getPointFromPlayableCoordinates(int x, int y) {
         Point point = new Point(x, y);
         for (Point p : mPlayablesCoordinates) {
@@ -318,6 +334,11 @@ public class AI {
         return null;
     }
 
+    /**
+     * Get (and Delete) a Random Point from the Point's Array
+     * @param array
+     * @return
+     */
     private Point getRandomPoint(ArrayList<Point> array) {
         int index = (int)(Math.random() * (array.size() - 1));
         Point returnedPoint = array.get(index);

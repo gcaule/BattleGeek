@@ -10,6 +10,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import fr.wcs.battlegeek.model.Bonus;
 import fr.wcs.battlegeek.model.Settings;
 
 
@@ -21,13 +22,14 @@ import fr.wcs.battlegeek.model.Settings;
  * The Game view is the View containing The Player Game's Map
  */
 public class GameView extends View{
+    private String TAG = Settings.TAG;
 
     /**
      * Player Played Listener
      * Called when the Player Played
      */
     public interface PlayListener {
-        public void onPlayListener(int x, int y);
+        void onPlayListener(int x, int y);
     }
 
     private PlayListener listener;
@@ -35,11 +37,10 @@ public class GameView extends View{
     // The Blocks to be drawn on the Grid
     private ArrayList<Block> mBlocks = new ArrayList<>();
 
-    private String TAG = "CustomView";
-
-
     private Grid mGrid;
     private int mGridSize = Settings.GRID_SIZE;
+
+    private boolean mRandomColor = false;
 
 
     /**
@@ -80,6 +81,10 @@ public class GameView extends View{
         this.mGrid = new Grid(mGridSize);
     }
 
+    public void setRandomColor(boolean random) {
+        this.mRandomColor = random;
+    }
+
     /**
      * Method setting MISSED on the Grid
      * @param x the x coordinate in the Grid
@@ -97,8 +102,14 @@ public class GameView extends View{
      * @param shape the Shape of the Tetromino
      */
     public void setTouch(int x, int y, Tetromino.Shape shape) {
-        Tetromino.Colors color = Tetromino.getColorMap().get(shape);
+        Tetromino.Colors color = mRandomColor ? Tetromino.getRandomColorMap().get(shape)
+                : Tetromino.getColorMap().get(shape);
         mBlocks.add(new TetrominoBlock(new PointF(x, y), color));
+        invalidate();
+    }
+
+    public void setBonus(int x, int y, Bonus.Type bonusType) {
+        mBlocks.add(new TetrominoBonus(new PointF(x, y), bonusType));
         invalidate();
     }
 

@@ -10,9 +10,12 @@ import fr.wcs.battlegeek.controller.AI;
 @IgnoreExtraProperties
 public class PlayerModel {
 
+    // Enumeration for Comparators
     public enum ComparatorFactor {
         BEST_TIME, VICTORIES, RATIO, SHOTS_COUNT;
     }
+    // Level for Sorting
+    private static AI.Level comparatorLevel = AI.Level.I;
 
     private String name;
     private long totalGameTime = 0;
@@ -25,7 +28,6 @@ public class PlayerModel {
     private HashMap<String, Integer> ratio = new HashMap<>();
     private HashMap<String, Integer> bestShotsCount = new HashMap<>();
 
-    private static AI.Level comparatorLevel = AI.Level.II;
 
     public PlayerModel() {
     }
@@ -156,6 +158,10 @@ public class PlayerModel {
         return comparatorLevel;
     }
 
+    /**
+     * Method setting the Comparator Level for Sorting
+     * @param level
+     */
     public static void setComparatorLevel(AI.Level level) {
         PlayerModel.comparatorLevel = level;
     }
@@ -174,7 +180,10 @@ public class PlayerModel {
                 '}';
     }
 
-    public static Comparator<PlayerModel> BestTimeComparator = new Comparator<PlayerModel>() {
+    /**
+     * Method used by Collection.sort() to Sort the Players by Best Time
+     */
+    public static Comparator<PlayerModel> bestTimeComparator = new Comparator<PlayerModel>() {
         @Override
         public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
             return (int)(playerModel.bestTime.get(comparatorLevel.toString())
@@ -182,7 +191,10 @@ public class PlayerModel {
         }
     };
 
-    public static Comparator<PlayerModel> VictoriesComparator = new Comparator<PlayerModel>() {
+    /**
+     * Method used by Collection.sort() to Sort the Players by Victories
+     */
+    public static Comparator<PlayerModel> victoriesComparator = new Comparator<PlayerModel>() {
         @Override
         public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
             return playerModel.victories.get(comparatorLevel.toString())
@@ -190,7 +202,10 @@ public class PlayerModel {
         }
     };
 
-    public static Comparator<PlayerModel> RatioComparator = new Comparator<PlayerModel>() {
+    /**
+     * Method used by Collection.sort() to Sort the Players by Ratio
+     */
+    public static Comparator<PlayerModel> ratioComparator = new Comparator<PlayerModel>() {
         @Override
         public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
             return playerModel.victories.get(comparatorLevel.toString())
@@ -198,11 +213,21 @@ public class PlayerModel {
         }
     };
 
-    public static Comparator<PlayerModel> BestShotsCountComparator = new Comparator<PlayerModel>() {
+    /**
+     * Method used by Collection.sort() to Sort the Players by Shots Count
+     */
+    public static Comparator<PlayerModel> bestShotsCountComparator = new Comparator<PlayerModel>() {
         @Override
         public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
             return playerModel.bestShotsCount.get(comparatorLevel.toString())
                     - comparedPlayerModel.bestShotsCount.get(comparatorLevel.toString());
+        }
+    };
+
+    public static Comparator<PlayerModel> nameComparator = new Comparator<PlayerModel>() {
+        @Override
+        public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
+            return playerModel.getName().compareTo(comparedPlayerModel.getName());
         }
     };
 }

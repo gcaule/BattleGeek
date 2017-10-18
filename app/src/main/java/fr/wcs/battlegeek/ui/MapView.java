@@ -11,6 +11,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import fr.wcs.battlegeek.model.Bonus;
 import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.Settings;
 
@@ -188,11 +189,20 @@ public class MapView extends View {
                 int x = (int)(block.getX() + item.getX());
                 int y = (int)(block.getY() + item.getY());
                 if(item instanceof Tetromino){
-                    Tetromino tetromino = (Tetromino) item;
-                    mapData[y][x] = tetromino.getShape().toString().charAt(0);
+                    if(block instanceof TetrominoBonus) {
+                        TetrominoBonus bonus = (TetrominoBonus) block;
+                        mapData[y][x] = bonus.getType().toString().charAt(0);
+                    }
+                    else {
+                        Tetromino tetromino = (Tetromino) item;
+                        char symbol = tetromino.getShape().toString().charAt(0);
+                        mapData[y][x] = block.getState() == Block.State.ALIVE ? symbol
+                                : Character.toLowerCase(symbol);
+                    }
                 }
+                // Plouf
                 else {
-                    mapData[y][x] = 'X';
+                    mapData[y][x] = '_';
                 }
             }
         }
@@ -206,13 +216,13 @@ public class MapView extends View {
      */
     public void setDead(int x, int y) {
         Item item = getItem(new PointF(x, y));
-        Block block = item.getBlock(x,y);
-        block.setState(Block.State.DEAD);
+        item.setTouched(x, y);
         invalidate();
     }
 
     public void setPlouf(int x, int y) {
         Item item = new Item(this, mGrid, x, y);
+        item.setState(Item.State.DEAD);
         item.setBlock(new Block(0,0));
         mItems.add(item);
         invalidate();
@@ -222,21 +232,28 @@ public class MapView extends View {
      * Set (Fake) Random Items on Map
      */
     public void setRandomPositions() {
-        // Clear PlayerModel List
-        mItems.clear();
-
         // Request random Map
         char[][] map = Maps.getMap();
+        setMap(map);
+    }
 
+    /**
+     * Set Map to the View
+     * @param map
+     */
+    public void setMap(char[][] map) {
+        // Clear PlayerModel List
+        mItems.clear();
+        ArrayList<Item> bonus = new ArrayList<>();
         // Store Blocks in a HashMap;
         HashMap<Tetromino.Shape, ArrayList<PointF> > dict = new HashMap<>();
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 PointF point = new PointF(j,i);
-                // Symbols (char) like ' ' through errors because they doesn't correspond to
-                // any Tetromino Shape, so ...
-                try {
-                    Tetromino.Shape shape = Tetromino.Shape.valueOf(String.valueOf(map[i][j]));
+                char symbol = map[i][j];
+                // If Tetromino
+                if(Character.isUpperCase(symbol)) {
+                    Tetromino.Shape shape = Tetromino.Shape.valueOf(String.valueOf(symbol));
                     if( shape != Tetromino.Shape.NONE) {
                         // If the shape is not in the hashMap keys, we add it
                         if(! dict.containsKey(shape)) {
@@ -247,7 +264,14 @@ public class MapView extends View {
                         dict.get(shape).add(point);
                     }
                 }
-                catch (Exception e) {}
+                // If Bonus
+                else if (symbol != ' ') {
+                    Bonus.Type type = Bonus.getBonus(symbol);
+                    Tetromino itemBonus = new Tetromino(this, mGrid, j, i, Tetromino.Shape.NONE, null);
+                    TetrominoBonus blockBonus = new TetrominoBonus(0, 0, type);
+                    itemBonus.setBlock(blockBonus);
+                    bonus.add(itemBonus);
+                }
             }
         }
 
@@ -273,6 +297,7 @@ public class MapView extends View {
             tetromino.setPosition(new PointF(minX, minY));
             mItems.add(tetromino);
 
+            mItems.addAll(bonus);
             //Log.d(TAG, "setRandomPositions: " + shape + " : " + dict.get(shape).size());
         }
     }

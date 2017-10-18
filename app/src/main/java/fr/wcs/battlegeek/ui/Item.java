@@ -23,13 +23,13 @@ public class Item implements View.OnTouchListener {
      * The State of the Item
      */
     enum State {
-        Alive,
-        Hit,
-        Dead;
+        ALIVE,
+        HIT,
+        DEAD;
     }
 
     // Item State
-    State mState = State.Alive;
+    State mState = State.ALIVE;
 
     // References
     private MapView mView;
@@ -281,6 +281,10 @@ public class Item implements View.OnTouchListener {
      */
     @Override
     public boolean onTouch(View parentView, MotionEvent event) {
+
+        if(mState != State.ALIVE) {
+            return false;
+        }
         // Get the Coordinates of the Touch Event
         float x = event.getX();
         float y = event.getY();
@@ -433,6 +437,19 @@ public class Item implements View.OnTouchListener {
         mToast.setText(mView.getResources().getString(stringResource));
         mToast.setDuration(Toast.LENGTH_SHORT);
         mToast.show();
+    }
+
+    public void setTouched(int x, int y) {
+        mState = State.HIT;
+        Block block = getBlock(x,y);
+        block.setState(Block.State.DEAD);
+        // Check if Item is dead
+        for(Block b : mBlocks) {
+            if(b.getState() == Block.State.ALIVE) {
+                return;
+            }
+        }
+        mState = State.DEAD;
     }
 
     /**
