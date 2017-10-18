@@ -27,7 +27,6 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".SettingsActivity"
-            android:noHistory="true"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".RankingActivity"
@@ -35,8 +34,8 @@
         <activity
             android:name=".GameActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".RankingFirebaseActivity"/>
-        <activity android:name=".StatisticsActivity">
+        <activity android:name=".StatisticsActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
     <uses-permission android:name="android.permission.VIBRATE"/>

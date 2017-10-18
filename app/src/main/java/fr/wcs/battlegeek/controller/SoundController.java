@@ -7,7 +7,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -146,10 +145,8 @@ public class SoundController {
     }
 
     public void playMusic(){
-        Log.d(TAG, "playMusic() called");
         if(mMediaPlayer == null) {
             mMediaPlayer = MediaPlayer.create(mContext, musicID);
-            Log.d(TAG, "playMusic: Re Creating MediaPlayer");
         }
         final float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT) / 100 * mMusicMixRatio;
         mMediaPlayer.setVolume(volume, volume);

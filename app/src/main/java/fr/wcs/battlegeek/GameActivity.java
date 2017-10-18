@@ -106,9 +106,11 @@ public class GameActivity extends AppCompatActivity {
     private SoundController mSoundController;
     private int mVolumeMusic;
     private int mVolumeEffects;
-    private long mStartTime;
     private int mShotsCounter = 0;
-    private Timer mTimer = new Timer();
+
+    private Timer mTimer;
+    private long mTime = 0;
+    private boolean mTimerPaused = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -268,7 +270,6 @@ public class GameActivity extends AppCompatActivity {
                     }
 
                     mTextViewAI.setText(R.string.AITurn);
-                    mStartTime = System.currentTimeMillis();
                     startTimer();
                 }
                 // Move Bonus
@@ -545,7 +546,7 @@ public class GameActivity extends AppCompatActivity {
                     mAIShouldPlay = false;
                 }
                 else if(resultType == VICTORY){
-                    mPlayer.addGameTime(mLevel, DEFEATED, getPlayedTime());
+                    mPlayer.addGameTime(mLevel, DEFEATED, mTime);
                     mPlayer.addDefeat(mLevel);
                     mDataController.updatePlayer(mPlayer);
                     mTimer.cancel();
@@ -618,27 +619,27 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void updatePlayerStatistics(){
-        mPlayer.addGameTime(mLevel, VICTORY, getPlayedTime());
+        mPlayer.addGameTime(mLevel, VICTORY, mTime);
         mPlayer.addVictory(mLevel);
         mPlayer.addShotsCount(mLevel, mShotsCounter);
         mDataController.updatePlayer(mPlayer);
     }
 
-    private long getPlayedTime() {
-        return System.currentTimeMillis() - mStartTime;
-    }
-
     private void startTimer() {
+        mTimerPaused = false;
         mtextViewTimer.setVisibility(View.VISIBLE);
         mtextViewTimer.setText("00:00");
+        mTimer = new Timer();
         mTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        long time = System.currentTimeMillis() - mStartTime;
-                        mtextViewTimer.setText(Utils.timeFormat(time));
+                        if(!mTimerPaused) {
+                            mTime += 1000;
+                            mtextViewTimer.setText(Utils.timeFormat(mTime));
+                        }
                     }
                 });
             }
@@ -722,6 +723,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         mAlertDialogOpened = true;
+        mTimerPaused = true;
         pauseGame();
         FragmentManager fm = getFragmentManager();
         QuitGameFragment quitGameFragment = new QuitGameFragment();
@@ -744,12 +746,13 @@ public class GameActivity extends AppCompatActivity {
 
     private void resumeGame() {
         if(!mAlertDialogOpened) {
+            mTimerPaused = false;
             mExit = false;
+            mSoundController.resumeMusic();
             if(mAIShouldPlay) {
                 aiPlay();
             }
         }
-        mSoundController.resumeMusic();
     }
 
     @Override
@@ -763,5 +766,6 @@ public class GameActivity extends AppCompatActivity {
         Log.d(TAG, "onPause() called");
         super.onPause();
         pauseGame();
+        mTimerPaused = true;
     }
 }
