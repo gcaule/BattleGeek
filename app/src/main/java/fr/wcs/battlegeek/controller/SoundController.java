@@ -44,6 +44,8 @@ public class SoundController {
     private int musicID = -1;
     private float mMusicMixRatio = 0.15f;
 
+    private int mMusicPosition = 0;
+
     // Audio Streams List
     private ArrayList<Integer> mEffectsStreams = new ArrayList<>();
 
@@ -143,13 +145,18 @@ public class SoundController {
     }
 
     public void playMusic(){
+        if(mMediaPlayer == null) {
+            mMediaPlayer = MediaPlayer.create(mContext, musicID);
+        }
         final float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT) / 100 * mMusicMixRatio;
         mMediaPlayer.setVolume(volume, volume);
+        mMediaPlayer.seekTo(mMusicPosition);
         mMediaPlayer.start();
     }
 
     public void stopMusic(){
         if(mMediaPlayer.isPlaying()){
+            mMusicPosition = mMediaPlayer.getCurrentPosition();
             mMediaPlayer.stop();
         }
     }
@@ -162,5 +169,6 @@ public class SoundController {
     public void release(){
         mSoundPool.release();
         mMediaPlayer.release();
+        mMediaPlayer = null;
     }
 }

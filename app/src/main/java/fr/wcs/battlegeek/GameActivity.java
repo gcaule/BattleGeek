@@ -121,6 +121,9 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mLevel = (AI.Level) intent.getSerializableExtra("Level");
 
+        // Sound
+        mSoundController = new SoundController(mContext);
+
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
@@ -728,7 +731,6 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mSoundController = new SoundController(getApplicationContext());
         mSoundController.playMusic();
         mExit = false;
         if(mAIShouldPlay) {
@@ -743,10 +745,5 @@ public class GameActivity extends AppCompatActivity {
         mSoundController.stopEffects();
         mSoundController.release();
         mExit = true;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 }
