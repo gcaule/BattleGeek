@@ -459,7 +459,7 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
-        if(mSelectedBonus == REPLAY) {
+        if(mSelectedBonus == REPLAY && resultType == MISSED) {
             mSelectedBonus = null;
             canPlay = true;
         }
