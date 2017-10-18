@@ -18,11 +18,10 @@ public class Grid {
     private float mCellSize;
 
     // Painting
-    private Paint mBlackPaint = new Paint();
+    private Paint mPaint = new Paint();
 
     /**
      * Constructor of the Grid
-     * @param view the Parent View
      * @param mWidth the Width of the Grid (Global Coordinates System
      * @param mHeight the Height of the Grid (Global Coordinates System
      * @param size The number of Cells in a Row or in a Column
@@ -44,10 +43,10 @@ public class Grid {
     }
 
     private void init() {
-        mBlackPaint.setAntiAlias(true);
-        mBlackPaint.setStyle(Paint.Style.STROKE);
-        mBlackPaint.setColor(Color.BLACK);
-        mBlackPaint.setStrokeWidth(2);
+        mPaint.setAntiAlias(true);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setColor(Color.BLACK);
+        mPaint.setStrokeWidth(2);
     }
 
     /**
@@ -61,7 +60,7 @@ public class Grid {
             for (int column = 0; column < size; column++) {
                 float x = column * mCellSize;
                 float y = row * mCellSize + yOffset;
-                canvas.drawRect(x, y, x + mCellSize, y + mCellSize, mBlackPaint);
+                canvas.drawRect(x, y, x + mCellSize, y + mCellSize, mPaint);
             }
         }
     }
