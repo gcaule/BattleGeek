@@ -42,7 +42,7 @@ public class SoundController {
     private int soundID_boom2 = -1;
 
     private int musicID = -1;
-    private float mMusicMixRatio = 0.15f;
+    private float mMusicMixRatio = 0.09f;
 
     private int mMusicPosition = 0;
 
