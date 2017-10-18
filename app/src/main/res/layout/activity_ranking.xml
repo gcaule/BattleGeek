@@ -75,11 +75,10 @@
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="65dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        android:padding="?attr/listPreferredItemPaddingRight"
         android:weightSum="5"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -92,8 +91,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:gravity="fill_vertical|center_horizontal"
+            android:paddingLeft="16dp"
             android:text="Nom"
+            android:textAlignment="textStart"
             android:textColor="@color/yellow"
             android:textSize="8sp"/>
 
@@ -122,7 +122,7 @@
         <TextView
             android:id="@+id/textViewLabelShotsCount"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="fill_vertical|center_horizontal"

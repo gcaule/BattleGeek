@@ -54,12 +54,12 @@
     <string name="save_settings">Sauvegarder</string>
     <string name="saved_parameters">Paramètres enregistrés !</string>
     <string name="statistics">Statistiques</string>
-    <string name="gamesParts">Parties Jouees</string>
+    <string name="gamesParts">Parties</string>
     <string name="victory_defeats">Victoires / Defaites</string>
     <string name="ratio">Ratio</string>
-    <string name="bestTime">Meilleur Temps</string>
+    <string name="bestTime">Temps</string>
     <string name="levelTime">Temps Level</string>
     <string name="totalTime">Temps Total</string>
     <string name="AIVictory">Aie! Perdu !</string>
-    <string name="bestShotsCountLabel">Meilleur nombre de tirs</string>
+    <string name="bestShotsCountLabel">Tirs</string>
 </resources>

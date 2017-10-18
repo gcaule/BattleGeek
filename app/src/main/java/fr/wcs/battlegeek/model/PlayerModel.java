@@ -12,7 +12,7 @@ public class PlayerModel {
 
     // Enumeration for Comparators
     public enum ComparatorFactor {
-        BEST_TIME, VICTORIES, RATIO, SHOTS_COUNT;
+        BEST_TIME, VICTORIES, RATIO, SHOTS_COUNT, NAME;
     }
     // Level for Sorting
     private static AI.Level comparatorLevel = AI.Level.I;
@@ -208,8 +208,8 @@ public class PlayerModel {
     public static Comparator<PlayerModel> ratioComparator = new Comparator<PlayerModel>() {
         @Override
         public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
-            return playerModel.victories.get(comparatorLevel.toString())
-                    - comparedPlayerModel.victories.get(comparatorLevel.toString());
+            return comparedPlayerModel.victories.get(comparatorLevel.toString())
+                    - playerModel.victories.get(comparatorLevel.toString());
         }
     };
 

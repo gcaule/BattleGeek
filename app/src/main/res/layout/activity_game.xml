@@ -118,7 +118,7 @@
 
             <Button
                 android:id="@+id/buttonBonusMove"
-                android:layout_width="48dp"
+                android:layout_width="88dp"
                 android:layout_height="48dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
@@ -133,7 +133,7 @@
 
             <Button
                 android:id="@+id/buttonBonusReplay"
-                android:layout_width="48dp"
+                android:layout_width="88dp"
                 android:layout_height="48dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
@@ -149,7 +149,7 @@
 
             <Button
                 android:id="@+id/buttonBonusCrossFire"
-                android:layout_width="48dp"
+                android:layout_width="88dp"
                 android:layout_height="48dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
@@ -166,7 +166,6 @@
                 android:id="@+id/textViewPlayer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="0dp"
                 android:layout_marginTop="32dp"
                 android:gravity="fill_vertical|center_horizontal"
                 android:lineSpacingExtra="10sp"
@@ -259,15 +258,9 @@
 
     <ImageView
         android:id="@+id/imageViewBlink"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:alpha="0"
-        android:src="#810000"
-        android:layout_width="0dp"
-        android:layout_height="551dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp"/>
+        android:src="#810000"/>
 
 </android.support.constraint.ConstraintLayout>

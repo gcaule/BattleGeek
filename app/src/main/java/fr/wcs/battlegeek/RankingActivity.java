@@ -29,18 +29,22 @@ import java.util.Collections;
 import java.util.List;
 
 import fr.wcs.battlegeek.adapter.CustomListAdapter;
+import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Settings;
+
+import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.RATIO;
 
 
 public class RankingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private final String TAG = Settings.TAG;
-    private ArrayList<PlayerModel> mPlayerModelList = new ArrayList<PlayerModel>();
+    private ArrayList<PlayerModel> mPlayerModelList = new ArrayList<>();
     private ListView listView;
     private CustomListAdapter adapter;
     private PlayerModel mPlayer;
+    private PlayerModel.ComparatorFactor mComparatorFactor = RATIO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +117,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
                     mPlayerModelList.add(data.getValue(PlayerModel.class));
                 }
 
-                Collections.sort(mPlayerModelList, PlayerModel.ratioComparator);
+                sortByRatio();
 
                 Log.d(TAG, "onDataChange: " + mPlayerModelList);
                 adapter.notifyDataSetChanged();
@@ -122,6 +126,57 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+    }
+
+    private static class MySpinnerAdapter extends ArrayAdapter<String> {
+
+        Typeface mainFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/emulogic.ttf");
+
+        private MySpinnerAdapter(Context context, int resource, List<String> items) {
+            super(context, resource, items);
+        }
+
+        public TextView getView(int position, View convertView, ViewGroup parent) {
+            TextView spinnerText = (TextView) super.getView(position, convertView, parent);
+            spinnerText.setTypeface(mainFont);
+            return spinnerText;
+        }
+
+        public TextView getDropDownView(int position, View convertView, ViewGroup parent) {
+            TextView spinnerText = (TextView) super.getDropDownView(position, convertView, parent);
+            spinnerText.setTypeface(mainFont);
+            spinnerText.setTextSize(8);
+            spinnerText.setTextColor(Color.parseColor("#FFEE00"));
+            return spinnerText;
+        }
+
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        PlayerModel.setComparatorLevel(AI.Level.values()[i]);
+        switch (mComparatorFactor) {
+            case BEST_TIME:
+                sortByBestTime();
+                break;
+            case VICTORIES:
+                sortByVictories();
+                break;
+            case RATIO:
+                sortByRatio();
+                break;
+            case SHOTS_COUNT:
+                sortByShotCount();
+                break;
+            case NAME:
+                sortByName();
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
     }
 
     /**
@@ -159,38 +214,5 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
     private void sortByName() {
         Collections.sort(mPlayerModelList, PlayerModel.nameComparator);
         adapter.notifyDataSetChanged();
-    }
-
-    private static class MySpinnerAdapter extends ArrayAdapter<String> {
-
-        Typeface mainFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/emulogic.ttf");
-
-        private MySpinnerAdapter(Context context, int resource, List<String> items) {
-            super(context, resource, items);
-        }
-
-        public TextView getView(int position, View convertView, ViewGroup parent) {
-            TextView spinnerText = (TextView) super.getView(position, convertView, parent);
-            spinnerText.setTypeface(mainFont);
-            return spinnerText;
-        }
-
-        public TextView getDropDownView(int position, View convertView, ViewGroup parent) {
-            TextView spinnerText = (TextView) super.getDropDownView(position, convertView, parent);
-            spinnerText.setTypeface(mainFont);
-            spinnerText.setTextSize(8);
-            spinnerText.setTextColor(Color.parseColor("#FFEE00"));
-            return spinnerText;
-        }
-
-    }
-
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
     }
 }

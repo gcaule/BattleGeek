@@ -5,41 +5,51 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/listPreferredItemHeight"
     android:orientation="horizontal"
-    android:padding="?attr/listPreferredItemPaddingRight"
+    android:paddingEnd="8dp"
+    android:paddingStart="16dp"
     android:weightSum="5">
 
     <TextView
         android:id="@+id/textViewName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"/>
+        android:layout_gravity="left|center_vertical"
+        android:layout_weight="1"
+        tools:text="Name"/>
 
     <TextView
         android:id="@+id/textViewRatio"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:textAlignment="center"
+        tools:text="100%"/>
 
     <TextView
         android:id="@+id/textViewBestTime"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:textAlignment="center"
+        tools:text="00:42"/>
 
     <TextView
         android:id="@+id/textViewShotsCount"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:textAlignment="center"
+        tools:text="42"/>
 
     <TextView
         android:id="@+id/textViewLevelGames"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:textAlignment="center"
+        tools:text="42"/>
 </LinearLayout>
