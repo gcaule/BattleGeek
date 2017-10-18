@@ -12,7 +12,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,7 +23,6 @@ import static android.view.View.GONE;
 public class ScreenLauncher extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
-    private FirebaseDatabase mDatabase;
     private Timer mTimer;
     private boolean shouldRegister;
 

@@ -1,5 +1,6 @@
 package fr.wcs.battlegeek;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,12 +26,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import fr.wcs.battlegeek.adapter.CustomListAdapter;
 import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Settings;
+import fr.wcs.battlegeek.utils.Utils;
+
+import static fr.wcs.battlegeek.R.id.textViewLevelGames1;
+import static fr.wcs.battlegeek.R.id.textViewLevelRatio1;
 
 public class RankingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -50,7 +57,6 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
         ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
 
         Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
-        Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
 
         TextView titleMessage = (TextView) findViewById(R.id.rankingTitle);
         titleMessage.setTypeface(titleFont);
@@ -77,12 +83,14 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
         });
 
         final Spinner spinnerRanking = (Spinner) findViewById(R.id.spinnerLevelRanking);
+
         ArrayList<String> spinnerLevels = new ArrayList<>();
         spinnerLevels.add(getString(R.string.button_easy));
         spinnerLevels.add(getString(R.string.button_medium));
         spinnerLevels.add(getString(R.string.button_hard));
         spinnerLevels.add(getString(R.string.button_impossible));
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerLevels);
+
+        MySpinnerAdapter spinnerAdapter = new MySpinnerAdapter(this, R.layout.my_spinner_style, spinnerLevels);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRanking.setAdapter(spinnerAdapter);
         spinnerRanking.setOnItemSelectedListener(RankingActivity.this);
@@ -111,7 +119,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
                     mPlayerModelList.add(data.getValue(PlayerModel.class));
                 }
 
-                Collections.sort(mPlayerModelList, PlayerModel.BestTimeComparator);
+                Collections.sort(mPlayerModelList, PlayerModel.RatioComparator);
                 Log.d(TAG, "onDataChange: " + mPlayerModelList);
                 adapter.notifyDataSetChanged();
             }
@@ -145,6 +153,30 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
         PlayerModel.setComparatorLevel(level);
         Collections.sort(mPlayerModelList, PlayerModel.BestShotsCountComparator);
         adapter.notifyDataSetChanged();
+    }
+
+    private static class MySpinnerAdapter extends ArrayAdapter<String> {
+
+        Typeface mainFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/emulogic.ttf");
+
+        private MySpinnerAdapter(Context context, int resource, List<String> items) {
+            super(context, resource, items);
+        }
+
+        public TextView getView(int position, View convertView, ViewGroup parent) {
+            TextView spinnerText = (TextView) super.getView(position, convertView, parent);
+            spinnerText.setTypeface(mainFont);
+            return spinnerText;
+        }
+
+        public TextView getDropDownView(int position, View convertView, ViewGroup parent) {
+            TextView spinnerText = (TextView) super.getDropDownView(position, convertView, parent);
+            spinnerText.setTypeface(mainFont);
+            spinnerText.setTextSize(8);
+            spinnerText.setTextColor(Color.parseColor("#FFEE00"));
+            return spinnerText;
+        }
+
     }
 
 
