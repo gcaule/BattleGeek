@@ -84,64 +84,64 @@
 
         <TextView
             android:id="@+id/textViewLabelName"
-            android:clickable="true"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:clickable="true"
             android:paddingLeft="16dp"
             android:text="Nom"
             android:textAlignment="textStart"
             android:textColor="@color/yellow"
-            android:textSize="8sp"/>
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/textViewLabelRatio"
-            android:clickable="true"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="fill_vertical|center_horizontal"
             android:text="@string/ratio"
             android:textColor="@color/yellow"
-            android:textSize="8sp"/>
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/textViewLabelBestTime"
-            android:clickable="true"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="fill_vertical|center_horizontal"
             android:text="@string/bestTime"
             android:textColor="@color/yellow"
-            android:textSize="8sp"/>
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/textViewLabelShotsCount"
-            android:clickable="true"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="fill_vertical|center_horizontal"
             android:text="@string/bestShotsCountLabel"
             android:textColor="@color/yellow"
-            android:textSize="8sp"/>
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/textViewLabelGames"
-            android:clickable="true"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="fill_vertical|center_horizontal"
             android:text="@string/gamesParts"
             android:textColor="@color/yellow"
-            android:textSize="8sp"/>
+            android:textSize="9sp"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

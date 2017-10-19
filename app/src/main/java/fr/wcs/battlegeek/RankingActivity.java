@@ -66,6 +66,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
         labelName.setTypeface(titleFont);
         final TextView labelRatio = (TextView) findViewById(R.id.textViewLabelRatio);
         labelRatio.setTypeface(titleFont);
+        labelRatio.setTextColor(Color.parseColor("#FF960D"));
         final TextView labelBestTime = (TextView) findViewById(R.id.textViewLabelBestTime);
         labelBestTime.setTypeface(titleFont);
         final TextView labelShotsCount = (TextView) findViewById(R.id.textViewLabelShotsCount);
