@@ -324,6 +324,6 @@ public class MapView extends View {
             width = desiredWidth;
         }
 
-        setMeasuredDimension(width, width);
+        setMeasuredDimension(width - 8, width - 8);
     }
 }

@@ -390,7 +390,7 @@ public class GameActivity extends AppCompatActivity {
                     Log.d(TAG, "onClick: Settting Launch Button Visible");
                     mButtonLaunchGame.setVisibility(View.VISIBLE);
                     mButtonSwitchView.setVisibility(View.INVISIBLE);
-
+                    mGameView.setDead(mSelectedBonus);
                 }
                 else {
                     showToast(R.string.multiBonusError);
@@ -405,6 +405,7 @@ public class GameActivity extends AppCompatActivity {
                 if(mSelectedBonus == null) {
                     mSelectedBonus = REPLAY;
                     mButtonReplay.setEnabled(false);
+                    mGameView.setDead(mSelectedBonus);
                 }
                 else {
                     showToast(R.string.multiBonusError);
@@ -419,6 +420,7 @@ public class GameActivity extends AppCompatActivity {
                 if(mSelectedBonus == null) {
                     mSelectedBonus = CROSS_FIRE;
                     mButtonCrossFire.setEnabled(false);
+                    mGameView.setDead(mSelectedBonus);
                 }
                 else {
                     showToast(R.string.multiBonusError);
