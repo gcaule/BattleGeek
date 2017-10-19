@@ -34,7 +34,11 @@ import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Settings;
 
+import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.BEST_TIME;
+import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.NAME;
 import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.RATIO;
+import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.SHOTS_COUNT;
+import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.VICTORIES;
 
 
 public class RankingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -54,19 +58,19 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
 
         ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
 
-        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
+        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
 
         TextView titleMessage = (TextView) findViewById(R.id.rankingTitle);
         titleMessage.setTypeface(titleFont);
-        TextView labelName = (TextView) findViewById(R.id.textViewLabelName);
+        final TextView labelName = (TextView) findViewById(R.id.textViewLabelName);
         labelName.setTypeface(titleFont);
-        TextView labelRatio = (TextView) findViewById(R.id.textViewLabelRatio);
+        final TextView labelRatio = (TextView) findViewById(R.id.textViewLabelRatio);
         labelRatio.setTypeface(titleFont);
-        TextView labelBestTime = (TextView) findViewById(R.id.textViewLabelBestTime);
+        final TextView labelBestTime = (TextView) findViewById(R.id.textViewLabelBestTime);
         labelBestTime.setTypeface(titleFont);
-        TextView labelShotsCount = (TextView) findViewById(R.id.textViewLabelShotsCount);
+        final TextView labelShotsCount = (TextView) findViewById(R.id.textViewLabelShotsCount);
         labelShotsCount.setTypeface(titleFont);
-        TextView labelGames = (TextView) findViewById(R.id.textViewLabelGames);
+        final TextView labelGames = (TextView) findViewById(R.id.textViewLabelGames);
         labelGames.setTypeface(titleFont);
 
         ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
@@ -88,8 +92,8 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
         spinnerLevels.add(getString(R.string.button_hard));
         spinnerLevels.add(getString(R.string.button_impossible));
 
-        MySpinnerAdapter spinnerAdapter = new MySpinnerAdapter(this, R.layout.my_spinner_style, spinnerLevels);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        MySpinnerAdapter spinnerAdapter = new MySpinnerAdapter(this, R.layout.custom_spinner_item, spinnerLevels);
+        spinnerAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
         spinnerRanking.setAdapter(spinnerAdapter);
         spinnerRanking.setOnItemSelectedListener(RankingActivity.this);
 
@@ -126,6 +130,67 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+
+        labelName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                labelName.setTextColor(Color.parseColor("#FF960D"));
+                labelRatio.setTextColor(Color.parseColor("#FFEE00"));
+                labelBestTime.setTextColor(Color.parseColor("#FFEE00"));
+                labelShotsCount.setTextColor(Color.parseColor("#FFEE00"));
+                labelGames.setTextColor(Color.parseColor("#FFEE00"));
+                sortByName();
+            }
+
+        });
+        labelRatio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                labelName.setTextColor(Color.parseColor("#FFEE00"));
+                labelRatio.setTextColor(Color.parseColor("#FF960D"));
+                labelBestTime.setTextColor(Color.parseColor("#FFEE00"));
+                labelShotsCount.setTextColor(Color.parseColor("#FFEE00"));
+                labelGames.setTextColor(Color.parseColor("#FFEE00"));
+                sortByRatio();
+            }
+
+        });
+        labelBestTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                labelName.setTextColor(Color.parseColor("#FFEE00"));
+                labelRatio.setTextColor(Color.parseColor("#FFEE00"));
+                labelBestTime.setTextColor(Color.parseColor("#FF960D"));
+                labelShotsCount.setTextColor(Color.parseColor("#FFEE00"));
+                labelGames.setTextColor(Color.parseColor("#FFEE00"));
+                sortByBestTime();
+            }
+        });
+
+        labelShotsCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                labelName.setTextColor(Color.parseColor("#FFEE00"));
+                labelRatio.setTextColor(Color.parseColor("#FFEE00"));
+                labelBestTime.setTextColor(Color.parseColor("#FFEE00"));
+                labelShotsCount.setTextColor(Color.parseColor("#FF960D"));
+                labelGames.setTextColor(Color.parseColor("#FFEE00"));
+                sortByShotCount();
+            }
+        });
+
+        labelGames.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                labelName.setTextColor(Color.parseColor("#FFEE00"));
+                labelRatio.setTextColor(Color.parseColor("#FFEE00"));
+                labelBestTime.setTextColor(Color.parseColor("#FFEE00"));
+                labelShotsCount.setTextColor(Color.parseColor("#FFEE00"));
+                labelGames.setTextColor(Color.parseColor("#FF960D"));
+                sortByVictories();
+            }
+        });
+
     }
 
     private static class MySpinnerAdapter extends ArrayAdapter<String> {
@@ -145,7 +210,6 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
         public TextView getDropDownView(int position, View convertView, ViewGroup parent) {
             TextView spinnerText = (TextView) super.getDropDownView(position, convertView, parent);
             spinnerText.setTypeface(mainFont);
-            spinnerText.setTextSize(8);
             spinnerText.setTextColor(Color.parseColor("#FFEE00"));
             return spinnerText;
         }
@@ -185,6 +249,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
     private void sortByBestTime() {
         Collections.sort(mPlayerModelList, PlayerModel.bestTimeComparator);
         adapter.notifyDataSetChanged();
+        mComparatorFactor = BEST_TIME;
     }
 
     /**
@@ -193,6 +258,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
     private void sortByRatio() {
         Collections.sort(mPlayerModelList, PlayerModel.ratioComparator);
         adapter.notifyDataSetChanged();
+        mComparatorFactor = RATIO;
     }
 
     /**
@@ -201,6 +267,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
     private void sortByVictories() {
         Collections.sort(mPlayerModelList, PlayerModel.victoriesComparator);
         adapter.notifyDataSetChanged();
+        mComparatorFactor = VICTORIES;
     }
 
     /**
@@ -209,10 +276,18 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
     private void sortByShotCount() {
         Collections.sort(mPlayerModelList, PlayerModel.bestShotsCountComparator);
         adapter.notifyDataSetChanged();
+        mComparatorFactor = SHOTS_COUNT;
     }
 
     private void sortByName() {
-        Collections.sort(mPlayerModelList, PlayerModel.nameComparator);
-        adapter.notifyDataSetChanged();
+        if(mComparatorFactor != NAME) {
+            Collections.sort(mPlayerModelList, PlayerModel.nameComparator);
+            adapter.notifyDataSetChanged();
+            mComparatorFactor = NAME;
+        }
+        else {
+            Collections.reverse(mPlayerModelList);
+            adapter.notifyDataSetChanged();
+        }
     }
 }
