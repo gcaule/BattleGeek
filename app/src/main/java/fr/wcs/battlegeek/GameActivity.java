@@ -12,9 +12,9 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.RequiresApi;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -42,7 +42,6 @@ import fr.wcs.battlegeek.model.Bonus;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
-import fr.wcs.battlegeek.ui.EndGameDefeatFragment;
 import fr.wcs.battlegeek.ui.EndGameVictoryFragment;
 import fr.wcs.battlegeek.ui.GameView;
 import fr.wcs.battlegeek.ui.MapView;
@@ -53,7 +52,6 @@ import static fr.wcs.battlegeek.model.Bonus.Type.CROSS_FIRE;
 import static fr.wcs.battlegeek.model.Bonus.Type.MOVE;
 import static fr.wcs.battlegeek.model.Bonus.Type.REPLAY;
 import static fr.wcs.battlegeek.model.Result.Type.BONUS;
-import static fr.wcs.battlegeek.model.Result.Type.DEFEATED;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
@@ -272,14 +270,16 @@ public class GameActivity extends AppCompatActivity {
                     mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
 
                     // Randomize first Player
-                    int player = (int) (Math.random() * 2);
+                    /*int player = (int) (Math.random() * 2);
                     if (player % 2 == 0) {
                         canPlay = false;
                         aiPlay();
                     } else {
                         mViewFlipper.showNext();
 
-                    }
+                    }*/
+                    canPlay = false;
+                    aiPlay();
 
                     mTextViewAI.setText(R.string.AITurn);
                     startTimer();
@@ -529,7 +529,7 @@ public class GameActivity extends AppCompatActivity {
         mAI.setResult(iaResult);
 
 
-        new CountDownTimer(mAnimationsSpeed * 3, mAnimationsSpeed) {
+        new CountDownTimer(mAnimationsSpeed * 2,(int)(mAnimationsSpeed / 3)) {
 
             private int cursor = 0;
 
@@ -562,7 +562,7 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                mButtonSwitchView.setVisibility(View.VISIBLE);
+                /*mButtonSwitchView.setVisibility(View.VISIBLE);
                 if (resultType == MISSED) {
                     mTextViewAI.setText(R.string.AITurn);
                     canPlay = true;
@@ -592,7 +592,8 @@ public class GameActivity extends AppCompatActivity {
 
                 else if(mExit) {
                     mAIShouldPlay = true;
-                }
+                }*/
+                aiPlay();
 
             }
         }.start();
