@@ -14,7 +14,7 @@ import static fr.wcs.battlegeek.ui.Block.State.ALIVE;
 public class Block implements Cloneable{
 
     // State
-    private State mState = ALIVE;
+    protected State mState = ALIVE;
 
     // Geometry
     protected PointF mPosition;

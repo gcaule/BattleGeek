@@ -85,11 +85,12 @@ public class TetrominoBlock extends Block {
             mBottomHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.2f};
             mSidesHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.45f};
         }
+        // BONUS
         else {
-            mCenterHSLColor = new float[] {0f, 0f, 0.75f};
-            mTopHSLColor = new float[] {0f, 0f, 0.85f};
-            mBottomHSLColor = new float[] {0f, 0f, 0.5f};
-            mSidesHSLColor = new float[] {0f, 0f, 0.65f};
+            mCenterHSLColor = new float[] {0f, 0f, 0.5f};
+            mTopHSLColor = new float[] {0f, 0f, 0.7f};
+            mBottomHSLColor = new float[] {0f, 0f, 0.2f};
+            mSidesHSLColor = new float[] {0f, 0f, 0.45f};
         }
     }
 
@@ -101,10 +102,19 @@ public class TetrominoBlock extends Block {
     public void setState(State state) {
         super.setState(state);
         if(state == State.DEAD) {
-            mCenterHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.1f};
-            mTopHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.2f};
-            mBottomHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.05f};
-            mSidesHSLColor = new float[] {mMainHSLColorIndex, 1f, 0.08f};
+            if(mColor != null) {
+                mCenterHSLColor = new float[]{mMainHSLColorIndex, 1f, 0.1f};
+                mTopHSLColor = new float[]{mMainHSLColorIndex, 1f, 0.2f};
+                mBottomHSLColor = new float[]{mMainHSLColorIndex, 1f, 0.05f};
+                mSidesHSLColor = new float[]{mMainHSLColorIndex, 1f, 0.08f};
+            }
+            // BONUS
+            else {
+                mCenterHSLColor = new float[]{mMainHSLColorIndex, 0f, 0.1f};
+                mTopHSLColor = new float[]{mMainHSLColorIndex, 0f, 0.2f};
+                mBottomHSLColor = new float[]{mMainHSLColorIndex, 0f, 0.05f};
+                mSidesHSLColor = new float[]{mMainHSLColorIndex, 0f, 0.08f};
+            }
         }
     }
 

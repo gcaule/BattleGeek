@@ -109,7 +109,7 @@ public class GameView extends View{
     }
 
     public void setBonus(int x, int y, Bonus.Type bonusType) {
-        mBlocks.add(new TetrominoBonus(new PointF(x, y), bonusType));
+        mBlocks.add(new TetrominoBonus(new PointF(x, y), bonusType, getResources()));
         invalidate();
     }
 

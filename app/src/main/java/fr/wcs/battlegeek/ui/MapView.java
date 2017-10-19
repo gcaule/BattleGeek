@@ -268,7 +268,7 @@ public class MapView extends View {
                 else if (symbol != ' ') {
                     Bonus.Type type = Bonus.getBonus(symbol);
                     Tetromino itemBonus = new Tetromino(this, mGrid, j, i, Tetromino.Shape.NONE, null);
-                    TetrominoBonus blockBonus = new TetrominoBonus(0, 0, type);
+                    TetrominoBonus blockBonus = new TetrominoBonus(0, 0, type, getResources());
                     itemBonus.setBlock(blockBonus);
                     bonus.add(itemBonus);
                 }
