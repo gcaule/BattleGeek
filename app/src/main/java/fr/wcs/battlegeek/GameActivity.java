@@ -49,7 +49,6 @@ import fr.wcs.battlegeek.ui.MapView;
 import fr.wcs.battlegeek.ui.QuitGameFragment;
 import fr.wcs.battlegeek.utils.Utils;
 
-import static fr.wcs.battlegeek.R.id.viewFlipper;
 import static fr.wcs.battlegeek.model.Bonus.Type.CROSS_FIRE;
 import static fr.wcs.battlegeek.model.Bonus.Type.MOVE;
 import static fr.wcs.battlegeek.model.Bonus.Type.REPLAY;
@@ -94,6 +93,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView mTextViewPlayer;
     private TextView mTextViewAI;
     private Button mButtonSwitchView;
+    private Button mButtonLaunchGame;
     private ImageButton mImageButtonSpeed;
     private ImageButton mImageButtonMusic;
     private ImageButton mImageButtonEffects;
@@ -223,7 +223,7 @@ public class GameActivity extends AppCompatActivity {
         });
 
         mMapView = (MapView) findViewById(R.id.mapView);
-        mViewFlipper = (ViewFlipper) findViewById(viewFlipper);
+        mViewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
         mTextViewPlayer = (TextView) findViewById(R.id.textViewPlayer);
         mTextViewAI = (TextView) findViewById(R.id.textViewAI);
         mButtonRandomPosition = (Button) findViewById(R.id.buttonRandomPositions);
@@ -235,9 +235,9 @@ public class GameActivity extends AppCompatActivity {
         });
         mButtonSwitchView = (Button) findViewById(R.id.buttonSwitchView);
 
-        final Button buttonLaunchGame = (Button) findViewById(R.id.buttonLaunchGame);
+        mButtonLaunchGame = (Button) findViewById(R.id.buttonLaunchGame);
 
-        buttonLaunchGame.setOnClickListener(new View.OnClickListener() {
+        mButtonLaunchGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Start The Game
@@ -268,7 +268,7 @@ public class GameActivity extends AppCompatActivity {
                     }
                     mAI.setLevel(mLevel);
 
-                    buttonLaunchGame.setVisibility(View.GONE);
+                    mButtonLaunchGame.setVisibility(View.INVISIBLE);
                     mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
 
                     // Randomize first Player
@@ -291,7 +291,7 @@ public class GameActivity extends AppCompatActivity {
                     mButtonSwitchView.setVisibility(View.VISIBLE);
                     mViewFlipper.showNext();
                     mGameController.setMap(mMapView.getMapData());
-                    buttonLaunchGame.setVisibility(View.GONE);
+                    mButtonLaunchGame.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -376,7 +376,7 @@ public class GameActivity extends AppCompatActivity {
 
         mButtonRandomPosition.setTypeface(buttonFont);
         mButtonSwitchView.setTypeface(buttonFont);
-        buttonLaunchGame.setTypeface(buttonFont);
+        mButtonLaunchGame.setTypeface(buttonFont);
 
         mButtonMove = (Button) findViewById(R.id.buttonBonusMove);
         mButtonMove.setOnClickListener(new View.OnClickListener() {
@@ -385,10 +385,10 @@ public class GameActivity extends AppCompatActivity {
                 if(mSelectedBonus == null) {
                     mSelectedBonus = MOVE;
                     mButtonMove.setEnabled(false);
-                    // TODO: Move Items
                     mViewFlipper.showPrevious();
                     mMapView.setMode(MapView.Mode.CREATE);
-                    buttonLaunchGame.setVisibility(View.VISIBLE);
+                    Log.d(TAG, "onClick: Settting Launch Button Visible");
+                    mButtonLaunchGame.setVisibility(View.VISIBLE);
                     mButtonSwitchView.setVisibility(View.INVISIBLE);
 
                 }
