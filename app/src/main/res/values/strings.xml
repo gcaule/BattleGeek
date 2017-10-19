@@ -11,12 +11,11 @@
     <string name="button_hard">Pas Cool</string>
     <string name="button_impossible">Impossible</string>
 
-    <string name="textViewSettings">ParaMetreS</string>
+    <!-- Messages to Player -->
+    <string name="textViewSettings">PARAMÈTRES</string>
 
     <string name="buttonValidate">C\'est parti !</string>
-    <string name="titleRanking">ClasSemenT</string>
-
-    <!-- Messages to Player -->
+    <string name="titleRanking">Classement</string>
     <string name="message_welcome">Hey, je te connais pas toi !</string>
     <string name="end_game_fragment_title">La partie est terminée !</string>
     <string name="end_game_defeat">Tu as en bouche\nle goût amer de la\nDEFAITE !!</string>

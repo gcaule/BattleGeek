@@ -40,9 +40,10 @@ public class SoundController {
     private int soundID_plouf = -1;
     private int soundID_drown = -1;
     private int soundID_boom2 = -1;
+    private int soundID_bonus = -1;
 
     private int musicID = -1;
-    private float mMusicMixRatio = 0.15f;
+    private float mMusicMixRatio = 0.09f;
 
     private int mMusicPosition = 0;
 
@@ -86,6 +87,7 @@ public class SoundController {
         soundID_plouf = mSoundPool.load(mContext, R.raw.ploof1, 1);
         soundID_boom2 = mSoundPool.load(mContext, R.raw.longbomb1, 1);
         soundID_drown = mSoundPool.load(mContext, R.raw.wilhelm_scream, 1);
+        soundID_bonus = mSoundPool.load(mContext, R.raw.bonus, 1);
 
         //musicID = R.raw.music_brahms;
         musicID = R.raw.stupid;
@@ -120,6 +122,9 @@ public class SoundController {
             case VICTORY:
                 mSoundPool.play(soundID_boom, volume, volume, 0, 0, 1);
                 soundID = soundID_drown;
+                break;
+            case BONUS:
+                soundID = soundID_bonus;
                 break;
             default:
                 soundID = -1;
