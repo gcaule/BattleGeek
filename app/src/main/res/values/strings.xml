@@ -36,7 +36,7 @@
 
     <string name="settingsAnimationSlowText">Mou</string>
     <string name="settingsAnimationMedium">Moins Mou</string>
-    <string name="settingsAnnimationFast">Dynamique</string>
+    <string name="settingsAnnimationFast">Pas Mou</string>
     <string name="settingsAnimationsLabel">Vitesse de jeu</string>
     <string name="quit_game_alert_title">Honte et déshonneur !</string>
     <string name="quit_game_alert_message">Tu vas t\'enfuir lâchement et la honte\npoursuivra ta famille sur trois générations...\nTu veux vraiment abandonner ?</string>
@@ -61,4 +61,5 @@
     <string name="totalTime">Temps Total</string>
     <string name="AIVictory">Aie! Perdu !</string>
     <string name="bestShotsCountLabel">Tirs</string>
+    <string name="blink_text">Flash de la mort</string>
 </resources>

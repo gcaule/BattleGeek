@@ -41,15 +41,6 @@ public class SettingsActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_settings);
 
-        /*View backgroundimage = findViewById(R.id.settingsBackgroundView);
-        Drawable backgroundView = backgroundimage.getBackground();
-        backgroundView.setAlpha(50);*/
-
-
-        ColorFilter filterYellow = new LightingColorFilter(Color.YELLOW, Color.YELLOW);
-
-        //Affichage de la value pour la seekbox Music et seekbok Effects
-
         final SeekBar seekBarMusic = (SeekBar) findViewById(R.id.seekBarMusic);
         final SeekBar seekBarEffects = (SeekBar) findViewById(R.id.seekBarEffects);
         final TextView textViewSettingsAnimation = (TextView) findViewById(R.id.textViewSettingsAnimation);
@@ -57,11 +48,11 @@ public class SettingsActivity extends AppCompatActivity {
         final TextView seekBarValueEffects = (TextView) findViewById(R.id.seekBarValueEffects);
         final EditText inputPlayerName = (EditText) findViewById(R.id.inputPlayerName);
         final ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
-        buttonHome.setColorFilter(filterYellow);
         final ImageView imageViewUser = (ImageView) findViewById(R.id.imageViewUser);
-        imageViewUser.setColorFilter(filterYellow);
+        final ImageView imageViewVibrate = (ImageView) findViewById(R.id.imageView_vibrate);
         final ToggleButton toggleButtonVibrator = (ToggleButton) findViewById(R.id.toggleButton_vibrator);
         final ToggleButton toggleButtonBlink = (ToggleButton) findViewById(R.id.toggleButton_blink);
+        final TextView TextViewBlink = (TextView) findViewById(R.id.textView_Blink);
         final Button buttonSave = (Button) findViewById(R.id.buttonSave);
 
         // Radio Buttons
@@ -69,12 +60,19 @@ public class SettingsActivity extends AppCompatActivity {
         RadioButton mRadioButtonAnimationMedium = (RadioButton) findViewById(R.id.radioButtonAnimationMedium);
         RadioButton mRadioButtonAnimationFast = (RadioButton) findViewById(R.id.radioButtonAnimationFast);
 
+        ColorFilter filterYellow = new LightingColorFilter(Color.YELLOW, Color.YELLOW);
+        buttonHome.setColorFilter(filterYellow);
+        imageViewUser.setColorFilter(filterYellow);
+        imageViewVibrate.setColorFilter(filterYellow);
+        TextViewBlink.setTextColor(Color.parseColor("#FFEE00"));
+
         buttonSave.setVisibility(GONE);
 
         Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
         Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
 
         TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
+        TextViewBlink.setTypeface(mainFont);
         titleMessage.setTypeface(titleFont);
         inputPlayerName.setTypeface(mainFont);
         inputPlayerName.setTextColor(Color.parseColor("#FFEE00"));
