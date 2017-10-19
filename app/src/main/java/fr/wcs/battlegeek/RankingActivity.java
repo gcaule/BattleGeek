@@ -34,7 +34,11 @@ import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Settings;
 
+import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.BEST_TIME;
+import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.NAME;
 import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.RATIO;
+import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.SHOTS_COUNT;
+import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.VICTORIES;
 
 
 public class RankingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -58,15 +62,15 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
 
         TextView titleMessage = (TextView) findViewById(R.id.rankingTitle);
         titleMessage.setTypeface(titleFont);
-        TextView labelName = (TextView) findViewById(R.id.textViewLabelName);
+        final TextView labelName = (TextView) findViewById(R.id.textViewLabelName);
         labelName.setTypeface(titleFont);
-        TextView labelRatio = (TextView) findViewById(R.id.textViewLabelRatio);
+        final TextView labelRatio = (TextView) findViewById(R.id.textViewLabelRatio);
         labelRatio.setTypeface(titleFont);
-        TextView labelBestTime = (TextView) findViewById(R.id.textViewLabelBestTime);
+        final TextView labelBestTime = (TextView) findViewById(R.id.textViewLabelBestTime);
         labelBestTime.setTypeface(titleFont);
-        TextView labelShotsCount = (TextView) findViewById(R.id.textViewLabelShotsCount);
+        final TextView labelShotsCount = (TextView) findViewById(R.id.textViewLabelShotsCount);
         labelShotsCount.setTypeface(titleFont);
-        TextView labelGames = (TextView) findViewById(R.id.textViewLabelGames);
+        final TextView labelGames = (TextView) findViewById(R.id.textViewLabelGames);
         labelGames.setTypeface(titleFont);
 
         ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
@@ -126,6 +130,72 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+
+        labelName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                labelName.setTextColor(Color.parseColor("#FF960D"));
+                labelRatio.setTextColor(Color.parseColor("#FFEE00"));
+                labelBestTime.setTextColor(Color.parseColor("#FFEE00"));
+                labelShotsCount.setTextColor(Color.parseColor("#FFEE00"));
+                labelGames.setTextColor(Color.parseColor("#FFEE00"));
+                mComparatorFactor = NAME;
+                sortByName();
+            }
+
+        });
+        labelRatio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                labelName.setTextColor(Color.parseColor("#FFEE00"));
+                labelRatio.setTextColor(Color.parseColor("#FF960D"));
+                labelBestTime.setTextColor(Color.parseColor("#FFEE00"));
+                labelShotsCount.setTextColor(Color.parseColor("#FFEE00"));
+                labelGames.setTextColor(Color.parseColor("#FFEE00"));
+                mComparatorFactor = RATIO;
+                sortByRatio();
+            }
+
+        });
+        labelBestTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                labelName.setTextColor(Color.parseColor("#FFEE00"));
+                labelRatio.setTextColor(Color.parseColor("#FFEE00"));
+                labelBestTime.setTextColor(Color.parseColor("#FF960D"));
+                labelShotsCount.setTextColor(Color.parseColor("#FFEE00"));
+                labelGames.setTextColor(Color.parseColor("#FFEE00"));
+                mComparatorFactor = BEST_TIME;
+                sortByBestTime();
+            }
+        });
+
+        labelShotsCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                labelName.setTextColor(Color.parseColor("#FFEE00"));
+                labelRatio.setTextColor(Color.parseColor("#FFEE00"));
+                labelBestTime.setTextColor(Color.parseColor("#FFEE00"));
+                labelShotsCount.setTextColor(Color.parseColor("#FF960D"));
+                labelGames.setTextColor(Color.parseColor("#FFEE00"));
+                mComparatorFactor = SHOTS_COUNT;
+                sortByShotCount();
+            }
+        });
+
+        labelGames.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                labelName.setTextColor(Color.parseColor("#FFEE00"));
+                labelRatio.setTextColor(Color.parseColor("#FFEE00"));
+                labelBestTime.setTextColor(Color.parseColor("#FFEE00"));
+                labelShotsCount.setTextColor(Color.parseColor("#FFEE00"));
+                labelGames.setTextColor(Color.parseColor("#FF960D"));
+                mComparatorFactor = VICTORIES;
+                sortByVictories();
+            }
+        });
+
     }
 
     private static class MySpinnerAdapter extends ArrayAdapter<String> {
