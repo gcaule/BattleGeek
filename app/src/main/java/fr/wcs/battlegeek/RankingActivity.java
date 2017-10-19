@@ -58,7 +58,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
 
         ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
 
-        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
+        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
 
         TextView titleMessage = (TextView) findViewById(R.id.rankingTitle);
         titleMessage.setTypeface(titleFont);
@@ -92,8 +92,8 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
         spinnerLevels.add(getString(R.string.button_hard));
         spinnerLevels.add(getString(R.string.button_impossible));
 
-        MySpinnerAdapter spinnerAdapter = new MySpinnerAdapter(this, R.layout.my_spinner_style, spinnerLevels);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        MySpinnerAdapter spinnerAdapter = new MySpinnerAdapter(this, R.layout.custom_spinner_item, spinnerLevels);
+        spinnerAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
         spinnerRanking.setAdapter(spinnerAdapter);
         spinnerRanking.setOnItemSelectedListener(RankingActivity.this);
 
@@ -139,7 +139,6 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
                 labelBestTime.setTextColor(Color.parseColor("#FFEE00"));
                 labelShotsCount.setTextColor(Color.parseColor("#FFEE00"));
                 labelGames.setTextColor(Color.parseColor("#FFEE00"));
-                mComparatorFactor = NAME;
                 sortByName();
             }
 
@@ -152,7 +151,6 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
                 labelBestTime.setTextColor(Color.parseColor("#FFEE00"));
                 labelShotsCount.setTextColor(Color.parseColor("#FFEE00"));
                 labelGames.setTextColor(Color.parseColor("#FFEE00"));
-                mComparatorFactor = RATIO;
                 sortByRatio();
             }
 
@@ -165,7 +163,6 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
                 labelBestTime.setTextColor(Color.parseColor("#FF960D"));
                 labelShotsCount.setTextColor(Color.parseColor("#FFEE00"));
                 labelGames.setTextColor(Color.parseColor("#FFEE00"));
-                mComparatorFactor = BEST_TIME;
                 sortByBestTime();
             }
         });
@@ -178,7 +175,6 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
                 labelBestTime.setTextColor(Color.parseColor("#FFEE00"));
                 labelShotsCount.setTextColor(Color.parseColor("#FF960D"));
                 labelGames.setTextColor(Color.parseColor("#FFEE00"));
-                mComparatorFactor = SHOTS_COUNT;
                 sortByShotCount();
             }
         });
@@ -191,7 +187,6 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
                 labelBestTime.setTextColor(Color.parseColor("#FFEE00"));
                 labelShotsCount.setTextColor(Color.parseColor("#FFEE00"));
                 labelGames.setTextColor(Color.parseColor("#FF960D"));
-                mComparatorFactor = VICTORIES;
                 sortByVictories();
             }
         });
@@ -215,7 +210,6 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
         public TextView getDropDownView(int position, View convertView, ViewGroup parent) {
             TextView spinnerText = (TextView) super.getDropDownView(position, convertView, parent);
             spinnerText.setTypeface(mainFont);
-            spinnerText.setTextSize(8);
             spinnerText.setTextColor(Color.parseColor("#FFEE00"));
             return spinnerText;
         }
@@ -255,6 +249,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
     private void sortByBestTime() {
         Collections.sort(mPlayerModelList, PlayerModel.bestTimeComparator);
         adapter.notifyDataSetChanged();
+        mComparatorFactor = BEST_TIME;
     }
 
     /**
@@ -263,6 +258,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
     private void sortByRatio() {
         Collections.sort(mPlayerModelList, PlayerModel.ratioComparator);
         adapter.notifyDataSetChanged();
+        mComparatorFactor = RATIO;
     }
 
     /**
@@ -271,6 +267,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
     private void sortByVictories() {
         Collections.sort(mPlayerModelList, PlayerModel.victoriesComparator);
         adapter.notifyDataSetChanged();
+        mComparatorFactor = VICTORIES;
     }
 
     /**
@@ -279,10 +276,18 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
     private void sortByShotCount() {
         Collections.sort(mPlayerModelList, PlayerModel.bestShotsCountComparator);
         adapter.notifyDataSetChanged();
+        mComparatorFactor = SHOTS_COUNT;
     }
 
     private void sortByName() {
-        Collections.sort(mPlayerModelList, PlayerModel.nameComparator);
-        adapter.notifyDataSetChanged();
+        if(mComparatorFactor != NAME) {
+            Collections.sort(mPlayerModelList, PlayerModel.nameComparator);
+            adapter.notifyDataSetChanged();
+            mComparatorFactor = NAME;
+        }
+        else {
+            Collections.reverse(mPlayerModelList);
+            adapter.notifyDataSetChanged();
+        }
     }
 }

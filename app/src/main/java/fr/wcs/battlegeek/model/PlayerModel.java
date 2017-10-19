@@ -186,7 +186,7 @@ public class PlayerModel {
     public static Comparator<PlayerModel> bestTimeComparator = new Comparator<PlayerModel>() {
         @Override
         public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
-            return (int)(playerModel.bestTime.get(comparatorLevel.toString())
+            return (int)(-1 * playerModel.bestTime.get(comparatorLevel.toString())
                     - comparedPlayerModel.bestTime.get(comparatorLevel.toString()));
         }
     };
@@ -197,7 +197,7 @@ public class PlayerModel {
     public static Comparator<PlayerModel> victoriesComparator = new Comparator<PlayerModel>() {
         @Override
         public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
-            return playerModel.victories.get(comparatorLevel.toString())
+            return -1 * playerModel.victories.get(comparatorLevel.toString())
                     - comparedPlayerModel.victories.get(comparatorLevel.toString());
         }
     };
@@ -208,7 +208,7 @@ public class PlayerModel {
     public static Comparator<PlayerModel> ratioComparator = new Comparator<PlayerModel>() {
         @Override
         public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
-            return comparedPlayerModel.victories.get(comparatorLevel.toString())
+            return -1 * comparedPlayerModel.victories.get(comparatorLevel.toString())
                     - playerModel.victories.get(comparatorLevel.toString());
         }
     };
@@ -219,7 +219,7 @@ public class PlayerModel {
     public static Comparator<PlayerModel> bestShotsCountComparator = new Comparator<PlayerModel>() {
         @Override
         public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
-            return playerModel.bestShotsCount.get(comparatorLevel.toString())
+            return -1 * playerModel.bestShotsCount.get(comparatorLevel.toString())
                     - comparedPlayerModel.bestShotsCount.get(comparatorLevel.toString());
         }
     };
