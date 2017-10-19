@@ -424,7 +424,7 @@ public class Maps {
     public static char[][] getMap() {
         int random = (int)(Math.random() * (maps.length - 1));
         char[][] map = copy(maps[random]);
-        return maps[random];
+        return map;
     }
 
     /**
