@@ -12,9 +12,9 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.RequiresApi;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -281,6 +281,9 @@ public class GameActivity extends AppCompatActivity {
                         mViewFlipper.showNext();
 
                     }
+                    // TODO remove Test Code Configuration
+                    //canPlay = false;
+                    //aiPlay();
 
                     mTextViewAI.setText(R.string.AITurn);
                     startTimer();
@@ -530,7 +533,7 @@ public class GameActivity extends AppCompatActivity {
         mAI.setResult(iaResult);
 
 
-        new CountDownTimer(mAnimationsSpeed * 3, mAnimationsSpeed) {
+        new CountDownTimer(mAnimationsSpeed * 2,(int)(mAnimationsSpeed / 3)) {
 
             private int cursor = 0;
 
@@ -586,6 +589,8 @@ public class GameActivity extends AppCompatActivity {
                 } else if (mExit) {
                     mAIShouldPlay = true;
                 }
+                // TODO Remove test Code configuration
+                //aiPlay();
 
             }
         }.start();
