@@ -53,7 +53,6 @@ public class AI {
     private ArrayList<Point> mPlayablesCoordinates;
     private char[][] mPlayerMap;
     private ArrayList<Point> mSurroudingCoordinates = new ArrayList<>();
-    private ArrayList<Point> mEvenCoordinates = new ArrayList<>();
     private HashMap<Tetromino.Shape, ArrayList<Point>> mShapeMap = new HashMap<>();
     private Tetromino.Shape mLastTouchedShape;
 
@@ -121,10 +120,7 @@ public class AI {
     public void setLevel(Level level) {
         mLevel = level;
         // Impossible Level Strategy
-        if (level == Level.II) {
-            mEvenCoordinates = getEvenCoordinates();
-        }
-        else if ((level == Level.III || level == Level.IMPOSSIBLE) && mPlayerMap != null) {
+        if ((level == Level.III || level == Level.IMPOSSIBLE) && mPlayerMap != null) {
             // We only need to get the coordinates of all the Items in the Player's Map
             for (int i = 0; i < mPlayerMap.length; i++) {
                 for (int j = 0; j < mPlayerMap[i].length; j++) {
@@ -164,13 +160,16 @@ public class AI {
 
         //Play randomly during hunt mode (nothing found and looking for tetromino)
         if (mSurroudingCoordinates.isEmpty() && (resultType == MISSED || resultType == BONUS)) {
-            mLastPlayedCoordinates = getRandomPoint(mEvenCoordinates);
+            mLastPlayedCoordinates = getRandomPoint(mPlayablesCoordinates);
             return mLastPlayedCoordinates;
         }
 
         //When a boat is drown, clear SurroundingCoordinates to go back in hunt mode
         if (resultType == DROWN) {
-            updatePlayableCoordinates(mSurroudingCoordinates);
+            for (Point coordinates : mSurroudingCoordinates) {
+                mPlayablesCoordinates.add(coordinates);
+            }
+            mSurroudingCoordinates.clear();
 
             mShapeMap.remove((mLastResult.getShape()));
 
@@ -331,14 +330,6 @@ public class AI {
                 return p;
             }
         }
-        if(!mEvenCoordinates.isEmpty()) {
-            for (Point p : mEvenCoordinates) {
-                if (p.equals(point)) {
-                    mEvenCoordinates.remove(p);
-                    return p;
-                }
-            }
-        }
         return null;
     }
 
@@ -352,12 +343,6 @@ public class AI {
         Point returnedPoint = array.get(index);
         array.remove(index);
         return returnedPoint;
-    }
-
-    private void updatePlayableCoordinates(ArrayList<Point> points){
-        mPlayablesCoordinates.addAll(points);
-        mEvenCoordinates = getEvenCoordinates();
-        points.clear();
     }
 
     private ArrayList<Point> getEvenCoordinates(){
