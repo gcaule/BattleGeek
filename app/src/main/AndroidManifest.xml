@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="fr.wcs.battlegeek">
 
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,6 +17,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -34,10 +37,12 @@
         <activity
             android:name=".GameActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".StatisticsActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".StatisticsActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".CreditsActivity">
         </activity>
     </application>
-    <uses-permission android:name="android.permission.VIBRATE"/>
 
 </manifest>

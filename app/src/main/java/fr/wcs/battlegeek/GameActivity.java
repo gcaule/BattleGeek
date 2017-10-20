@@ -261,6 +261,7 @@ public class GameActivity extends AppCompatActivity {
                     mAI = new AI();
                     if (mLevel == AI.Level.III || mLevel == AI.Level.IMPOSSIBLE) {
                         mAI.setPlayerMap(mapData);
+                        Log.d(TAG, "voir map: " + mapData);
                     }
 
                     if (mLevel == AI.Level.III) {
