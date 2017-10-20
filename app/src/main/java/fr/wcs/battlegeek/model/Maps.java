@@ -108,9 +108,9 @@ public class Maps {
             {' ', 'I', ' ', ' ', ' ', 'O', 'O', ' ', ' ', ' '},
             {' ', 'I', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' '},
             {' ', ' ', 'L', ' ', 'S', 'S', ' ', ' ', ' ', ' '},
-            {' ', ' ', 'L', ' ', ' ', 'S', ' ', ' ', 'J', ' '},
+            {' ', ' ', 'L', ' ', ' ', 'S', ' ', ' ', ' ', ' '},
             {' ', ' ', 'L', 'L', ' ', ' ', 'J', 'J', 'J', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
+            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'J', ' '}
     };
 
     private static char[][] map8 = new char[][]{
@@ -424,7 +424,7 @@ public class Maps {
     public static char[][] getMap() {
         int random = (int)(Math.random() * (maps.length - 1));
         char[][] map = copy(maps[random]);
-        return maps[random];
+        return map;
     }
 
     /**

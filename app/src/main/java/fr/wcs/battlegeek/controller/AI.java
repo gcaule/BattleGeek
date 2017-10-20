@@ -160,10 +160,11 @@ public class AI {
 
         //Play randomly during hunt mode (nothing found and looking for tetromino)
         if (mSurroudingCoordinates.isEmpty() && (resultType == MISSED || resultType == BONUS)) {
-            return playLevelI();
+            mLastPlayedCoordinates = getRandomPoint(mPlayablesCoordinates);
+            return mLastPlayedCoordinates;
         }
 
-        //When a boat is drown, clear SurroudingCoordinates to go back in hunt mode
+        //When a boat is drown, clear SurroundingCoordinates to go back in hunt mode
         if (resultType == DROWN) {
             for (Point coordinates : mSurroudingCoordinates) {
                 mPlayablesCoordinates.add(coordinates);
@@ -193,11 +194,9 @@ public class AI {
         }
 
         //Shot in the possible coordinates (target mode)
-        int index = (int) (Math.random() * (mSurroudingCoordinates.size() - 1));
-        Point coordinates = mSurroudingCoordinates.get(index);
-        mSurroudingCoordinates.remove(index);
-        mLastPlayedCoordinates = coordinates;
-        return coordinates;
+
+        mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
+        return mLastPlayedCoordinates;
     }
 
     private Point playLevelIII() {
@@ -344,6 +343,20 @@ public class AI {
         Point returnedPoint = array.get(index);
         array.remove(index);
         return returnedPoint;
+    }
+
+    private ArrayList<Point> getEvenCoordinates(){
+        ArrayList<Point> evenCoordinates = new ArrayList<>();
+        for(Point point : mPlayablesCoordinates) {
+            if(point.x % 2 == 0 && point.y % 2 == 0) {
+                evenCoordinates.add(point);
+            }
+            else if(point.x % 2 == 1 && point.y % 2 == 1) {
+                evenCoordinates.add(point);
+            }
+        }
+        mPlayablesCoordinates.removeAll(evenCoordinates);
+        return evenCoordinates;
     }
 
     /**

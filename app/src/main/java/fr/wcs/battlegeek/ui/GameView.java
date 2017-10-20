@@ -113,6 +113,18 @@ public class GameView extends View{
         invalidate();
     }
 
+    public void setDead(Bonus.Type bonusType) {
+        for(Block block : mBlocks) {
+            if(block instanceof TetrominoBonus) {
+                TetrominoBonus bonusBlock = (TetrominoBonus) block;
+                if(bonusBlock.getType() == bonusType) {
+                    bonusBlock.setState(Block.State.DEAD);
+                }
+            }
+        }
+        invalidate();
+    }
+
     /**
      * Method handling Player's Touched Events
      * @param event
@@ -186,7 +198,7 @@ public class GameView extends View{
             width = desiredWidth;
         }
 
-        setMeasuredDimension(width, width);
+        setMeasuredDimension(width - 8, width - 8);
     }
 
     /**
@@ -196,5 +208,4 @@ public class GameView extends View{
     public void setOnPlayListener(PlayListener listener) {
         this.listener = listener;
     }
-
 }
