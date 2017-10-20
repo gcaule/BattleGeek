@@ -28,5 +28,9 @@ public class Settings {
 
     public static final int LEVEL_III_PROBABILITY = 70;
 
+    public static final String VIBRATE_TAG = "VibrateState";
+
+    public static final String BLINK_TAG = "BlinkState";
+
     public static final int ANIMATION_DEFAULT = ANIMATION_MEDIUM;
 }

@@ -115,6 +115,10 @@ public class GameActivity extends AppCompatActivity {
     private long mTime = 0;
     private boolean mTimerPaused = false;
 
+    private boolean mBlinkState;
+    private boolean mVibrateState;
+
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +130,7 @@ public class GameActivity extends AppCompatActivity {
         Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/openShip.otf");
         Typeface buttonFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
 
-        ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
+        ColorFilter filterYellow = new LightingColorFilter(Color.YELLOW, Color.YELLOW);
 
         mContext = getApplicationContext();
 
@@ -157,13 +161,11 @@ public class GameActivity extends AppCompatActivity {
         mImageButtonSpeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mAnimationsSpeed == Settings.ANIMATION_SLOW) {
+                if (mAnimationsSpeed == Settings.ANIMATION_SLOW) {
                     mAnimationsSpeed = Settings.ANIMATION_MEDIUM;
-                }
-                else if(mAnimationsSpeed == Settings.ANIMATION_MEDIUM) {
+                } else if (mAnimationsSpeed == Settings.ANIMATION_MEDIUM) {
                     mAnimationsSpeed = Settings.ANIMATION_FAST;
-                }
-                else if(mAnimationsSpeed == Settings.ANIMATION_FAST) {
+                } else if (mAnimationsSpeed == Settings.ANIMATION_FAST) {
                     mAnimationsSpeed = Settings.ANIMATION_SLOW;
                 }
                 mSharedPreferences.edit().putInt(Settings.ANIMATION_TAG, mAnimationsSpeed).apply();
@@ -179,16 +181,13 @@ public class GameActivity extends AppCompatActivity {
         mImageButtonMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mVolumeMusic > 66) {
+                if (mVolumeMusic > 66) {
                     mVolumeMusic = 0;
-                }
-                else if(mVolumeMusic > 33) {
+                } else if (mVolumeMusic > 33) {
                     mVolumeMusic = 100;
-                }
-                else if(mVolumeMusic > 0) {
+                } else if (mVolumeMusic > 0) {
                     mVolumeMusic = 66;
-                }
-                else {
+                } else {
                     mVolumeMusic = 33;
                 }
                 mSharedPreferences.edit().putInt(Settings.MUSIC_TAG, mVolumeMusic).apply();
@@ -204,16 +203,13 @@ public class GameActivity extends AppCompatActivity {
         mImageButtonEffects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mVolumeEffects > 66) {
+                if (mVolumeEffects > 66) {
                     mVolumeEffects = 0;
-                }
-                else if(mVolumeEffects > 33) {
+                } else if (mVolumeEffects > 33) {
                     mVolumeEffects = 100;
-                }
-                else if(mVolumeEffects > 0) {
+                } else if (mVolumeEffects > 0) {
                     mVolumeEffects = 66;
-                }
-                else {
+                } else {
                     mVolumeEffects = 33;
                 }
                 mSharedPreferences.edit().putInt(Settings.EFFECTS_TAG, mVolumeEffects).apply();
@@ -221,6 +217,10 @@ public class GameActivity extends AppCompatActivity {
                 mSoundController.setEffectsVolume(mVolumeEffects);
             }
         });
+
+        //Get Pref for Vibrate and Blink
+        mBlinkState = mSharedPreferences.getBoolean(Settings.BLINK_TAG, true);
+        mVibrateState = mSharedPreferences.getBoolean(Settings.VIBRATE_TAG, true);
 
         mMapView = (MapView) findViewById(R.id.mapView);
         mViewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
@@ -241,7 +241,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Start The Game
-                if(mSelectedBonus == null) {
+                if (mSelectedBonus == null) {
                     mButtonSwitchView.setVisibility(View.VISIBLE);
                     mButtonRandomPosition.setVisibility(View.GONE);
                     mTextViewPlayer.setText(R.string.player_turn);
@@ -350,7 +350,7 @@ public class GameActivity extends AppCompatActivity {
 
         // Blink
         mImageViewBlink = (ImageView) findViewById(R.id.imageViewBlink);
-        mBlinkAnimation= new AlphaAnimation(0f, 0.7f);
+        mBlinkAnimation = new AlphaAnimation(0f, 0.7f);
         mBlinkAnimation.setDuration(70);
         mBlinkAnimation.setRepeatMode(Animation.RESTART);
 
@@ -382,7 +382,7 @@ public class GameActivity extends AppCompatActivity {
         mButtonMove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mSelectedBonus == null) {
+                if (mSelectedBonus == null) {
                     mSelectedBonus = MOVE;
                     mButtonMove.setEnabled(false);
                     mViewFlipper.showPrevious();
@@ -402,7 +402,7 @@ public class GameActivity extends AppCompatActivity {
         mButtonReplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mSelectedBonus == null) {
+                if (mSelectedBonus == null) {
                     mSelectedBonus = REPLAY;
                     mButtonReplay.setEnabled(false);
                     mGameView.setDead(mSelectedBonus);
@@ -417,7 +417,7 @@ public class GameActivity extends AppCompatActivity {
         mButtonCrossFire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mSelectedBonus == null) {
+                if (mSelectedBonus == null) {
                     mSelectedBonus = CROSS_FIRE;
                     mButtonCrossFire.setEnabled(false);
                     mGameView.setDead(mSelectedBonus);
@@ -476,7 +476,7 @@ public class GameActivity extends AppCompatActivity {
             ArrayList<Point> points = mGameController.getSurrondingcoordinates(x, y);
             // Get the results first
             ArrayList<Result> results = new ArrayList<>();
-            for(Point point : points) {
+            for (Point point : points) {
                 Result result = mAI.shot(point.x, point.y);
                 mGameController.setPlayResult(result);
                 results.add(result);
@@ -485,18 +485,17 @@ public class GameActivity extends AppCompatActivity {
             Collections.sort(results, Result.resultComparator);
             // Apply the Results
             // TODO: Animation
-            for(Result result : results) {
+            for (Result result : results) {
                 showResult(result);
                 resultType = result.getType();
                 mSoundController.playSound(resultType);
             }
         }
 
-        if(mSelectedBonus == REPLAY && resultType == MISSED) {
+        if (mSelectedBonus == REPLAY && resultType == MISSED) {
             mSelectedBonus = null;
             canPlay = true;
-        }
-        else if (resultType == MISSED || resultType == BONUS) {
+        } else if (resultType == MISSED || resultType == BONUS) {
             // Show the result
             new CountDownTimer(mAnimationsSpeed, mAnimationsSpeed / 3) {
                 public void onTick(long millisUntilFinished) {
@@ -510,8 +509,7 @@ public class GameActivity extends AppCompatActivity {
                     aiPlay();
                 }
             }.start();
-        }
-        else {
+        } else {
             canPlay = true;
         }
     }
@@ -542,11 +540,9 @@ public class GameActivity extends AppCompatActivity {
                     if (resultType == MISSED) {
                         mMapView.setPlouf(aiPlayCoordinates.x, aiPlayCoordinates.y);
                         mTextViewAI.setText(R.string.missed);
-                    }
-                    else if (resultType == BONUS) {
+                    } else if (resultType == BONUS) {
                         mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
-                    }
-                    else {
+                    } else {
                         mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
                         mTextViewAI.setText(R.string.AITouched);
                         blink(0);
@@ -570,13 +566,11 @@ public class GameActivity extends AppCompatActivity {
                     canPlay = true;
                     mViewFlipper.showPrevious();
                     mAIShouldPlay = false;
-                }
-                else if(resultType == BONUS) {
+                } else if (resultType == BONUS) {
                     canPlay = true;
                     mViewFlipper.showPrevious();
                     mAIShouldPlay = false;
-                }
-                else if(resultType == VICTORY){
+                } else if (resultType == VICTORY) {
                     mPlayer.addGameTime(mLevel, DEFEATED, mTime);
                     mPlayer.addDefeat(mLevel);
                     mDataController.updatePlayer(mPlayer);
@@ -586,13 +580,9 @@ public class GameActivity extends AppCompatActivity {
                     endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
                     endGameDefeatFragment.setCancelable(false);
                     mAIShouldPlay = false;
-                }
-
-                else if(!mExit){
+                } else if (!mExit) {
                     aiPlay();
-                }
-
-                else if(mExit) {
+                } else if (mExit) {
                     mAIShouldPlay = true;
                 }
 
@@ -649,7 +639,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void updatePlayerStatistics(){
+    private void updatePlayerStatistics() {
         mPlayer.addGameTime(mLevel, VICTORY, mTime);
         mPlayer.addVictory(mLevel);
         mPlayer.addShotsCount(mLevel, mShotsCounter);
@@ -667,7 +657,7 @@ public class GameActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if(!mTimerPaused) {
+                        if (!mTimerPaused) {
                             mTime += 1000;
                             mtextViewTimer.setText(Utils.timeFormat(mTime));
                         }
@@ -695,56 +685,56 @@ public class GameActivity extends AppCompatActivity {
     private void setAnimationIcon(int settingSpeed) {
         if (settingSpeed == Settings.ANIMATION_SLOW) {
             mImageButtonSpeed.setImageResource(R.drawable.snail);
-        }
-        else if (settingSpeed == Settings.ANIMATION_MEDIUM) {
+        } else if (settingSpeed == Settings.ANIMATION_MEDIUM) {
             mImageButtonSpeed.setImageResource(R.drawable.pigeon);
-        }
-        else if (settingSpeed == Settings.ANIMATION_FAST) {
+        } else if (settingSpeed == Settings.ANIMATION_FAST) {
             mImageButtonSpeed.setImageResource(R.drawable.rabbit);
         }
     }
 
     private void setMusicIcon(int volume) {
-        if(volume > 66) {
+        if (volume > 66) {
             mImageButtonMusic.setImageResource(R.drawable.music_loud);
-        }
-        else if(volume > 33) {
+        } else if (volume > 33) {
             mImageButtonMusic.setImageResource(R.drawable.music_medium);
-        }
-        else if(volume > 0) {
+        } else if (volume > 0) {
             mImageButtonMusic.setImageResource(R.drawable.music_low);
-        }
-        else {
+        } else {
             mImageButtonMusic.setImageResource(R.drawable.no_music);
         }
     }
 
     private void setEffectsIcon(int volume) {
-        if(volume > 66) {
+        if (volume > 66) {
             mImageButtonEffects.setImageResource(R.drawable.volume_up_interface_symbol);
-        }
-        else if(volume > 33) {
+        } else if (volume > 33) {
             mImageButtonEffects.setImageResource(R.drawable.ic_volume_down_black_24dp);
-        }
-        else if(volume > 0) {
+        } else if (volume > 0) {
             mImageButtonEffects.setImageResource(R.drawable.ic_volume_mute_black_24dp);
-        }
-        else {
+        } else {
             mImageButtonEffects.setImageResource(R.drawable.ic_volume_off_black_24dp);
         }
     }
 
     private void blink(int repetitions) {
-        mBlinkAnimation.setRepeatCount(repetitions);
-        mImageViewBlink.startAnimation(mBlinkAnimation);
+        if (mBlinkState == true) {
+            mBlinkAnimation.setRepeatCount(repetitions);
+            mImageViewBlink.startAnimation(mBlinkAnimation);
+        } else {
+            mBlinkAnimation.setDuration(0);
+        }
         //long[] timing = new long[] {70};
         //int[] amplitude = new int[] {VibrationEffect.DEFAULT_AMPLITUDE};
         //mVibrator.vibrate(VibrationEffect.createWaveform(timing, amplitude, repetitions));
-        mVibrator.vibrate(70);
-        if (Build.VERSION.SDK_INT >= 26) {
-            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(70L, VibrationEffect.DEFAULT_AMPLITUDE));
+        if (mVibrateState == true) {
+            mVibrator.vibrate(70);
+            if (Build.VERSION.SDK_INT >= 26) {
+                ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(70L, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(70L);
+            }
         } else {
-            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(70L);
+            mVibrator.vibrate(0);
         }
     }
 
@@ -776,11 +766,11 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void resumeGame() {
-        if(!mAlertDialogOpened) {
+        if (!mAlertDialogOpened) {
             mTimerPaused = false;
             mExit = false;
             mSoundController.resumeMusic();
-            if(mAIShouldPlay) {
+            if (mAIShouldPlay) {
                 aiPlay();
             }
         }
