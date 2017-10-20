@@ -42,6 +42,7 @@ import fr.wcs.battlegeek.model.Bonus;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
+import fr.wcs.battlegeek.ui.EndGameDefeatFragment;
 import fr.wcs.battlegeek.ui.EndGameVictoryFragment;
 import fr.wcs.battlegeek.ui.GameView;
 import fr.wcs.battlegeek.ui.MapView;
@@ -52,6 +53,7 @@ import static fr.wcs.battlegeek.model.Bonus.Type.CROSS_FIRE;
 import static fr.wcs.battlegeek.model.Bonus.Type.MOVE;
 import static fr.wcs.battlegeek.model.Bonus.Type.REPLAY;
 import static fr.wcs.battlegeek.model.Result.Type.BONUS;
+import static fr.wcs.battlegeek.model.Result.Type.DEFEATED;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
@@ -270,16 +272,17 @@ public class GameActivity extends AppCompatActivity {
                     mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
 
                     // Randomize first Player
-                    /*int player = (int) (Math.random() * 2);
+                    int player = (int) (Math.random() * 2);
                     if (player % 2 == 0) {
                         canPlay = false;
                         aiPlay();
                     } else {
                         mViewFlipper.showNext();
 
-                    }*/
-                    canPlay = false;
-                    aiPlay();
+                    }
+                    // TODO remove Test Code Configuration
+                    //canPlay = false;
+                    //aiPlay();
 
                     mTextViewAI.setText(R.string.AITurn);
                     startTimer();
@@ -560,7 +563,7 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                /*mButtonSwitchView.setVisibility(View.VISIBLE);
+                mButtonSwitchView.setVisibility(View.VISIBLE);
                 if (resultType == MISSED) {
                     mTextViewAI.setText(R.string.AITurn);
                     canPlay = true;
@@ -584,8 +587,9 @@ public class GameActivity extends AppCompatActivity {
                     aiPlay();
                 } else if (mExit) {
                     mAIShouldPlay = true;
-                }*/
-                aiPlay();
+                }
+                // TODO Remove test Code configuration
+                //aiPlay();
 
             }
         }.start();

@@ -51,6 +51,7 @@ public class AI {
 
     private GameController mGameControler;
     private ArrayList<Point> mPlayablesCoordinates;
+    private ArrayList<Point> mEvenCoordinates;
     private char[][] mPlayerMap;
     private ArrayList<Point> mSurroudingCoordinates = new ArrayList<>();
     private HashMap<Tetromino.Shape, ArrayList<Point>> mShapeMap = new HashMap<>();
@@ -119,8 +120,11 @@ public class AI {
      */
     public void setLevel(Level level) {
         mLevel = level;
+        if(level == Level.II) {
+            mEvenCoordinates = getEvenCoordinates();
+        }
         // Impossible Level Strategy
-        if ((level == Level.III || level == Level.IMPOSSIBLE) && mPlayerMap != null) {
+        else if ((level == Level.III || level == Level.IMPOSSIBLE) && mPlayerMap != null) {
             // We only need to get the coordinates of all the Items in the Player's Map
             for (int i = 0; i < mPlayerMap.length; i++) {
                 for (int j = 0; j < mPlayerMap[i].length; j++) {
@@ -160,7 +164,10 @@ public class AI {
 
         //Play randomly during hunt mode (nothing found and looking for tetromino)
         if (mSurroudingCoordinates.isEmpty() && (resultType == MISSED || resultType == BONUS)) {
-            mLastPlayedCoordinates = getRandomPoint(mPlayablesCoordinates);
+            mLastPlayedCoordinates = getRandomPoint(mEvenCoordinates);
+            Log.d(TAG, "playLevelII: " + mPlayablesCoordinates.size());
+            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+            Log.d(TAG, "playLevelII: " + mPlayablesCoordinates.size());
             return mLastPlayedCoordinates;
         }
 
@@ -180,7 +187,11 @@ public class AI {
                     getSurroundingCoordinates(currentPoint);
                 }
             }
-            return playLevelI();
+            mLastPlayedCoordinates = getRandomPoint(mEvenCoordinates);
+            Log.d(TAG, "playLevelII: " + mPlayablesCoordinates.size());
+            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+            Log.d(TAG, "playLevelII: " + mPlayablesCoordinates.size());
+            return mLastPlayedCoordinates;
         }
 
         //When a result type is touched, go in target mode by creating a map of possible coordinates
@@ -196,6 +207,7 @@ public class AI {
         //Shot in the possible coordinates (target mode)
 
         mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
+        mEvenCoordinates.remove(mLastPlayedCoordinates);
         return mLastPlayedCoordinates;
     }
 
@@ -355,7 +367,6 @@ public class AI {
                 evenCoordinates.add(point);
             }
         }
-        mPlayablesCoordinates.removeAll(evenCoordinates);
         return evenCoordinates;
     }
 
