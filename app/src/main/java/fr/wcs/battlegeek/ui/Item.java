@@ -32,16 +32,16 @@ public class Item implements View.OnTouchListener {
     State mState = State.ALIVE;
 
     // References
-    private MapView mView;
+    protected MapView mView;
     private Grid mGrid;
     private Toast mToast;
 
     // Geometry
-    private float mX = 0;
-    private float mY = 0;
+    protected float mX = 0;
+    protected float mY = 0;
     private PointF mPosition = new PointF();
-    private int mWidth = 0;
-    private int mHeight = 0;
+    protected int mWidth = 0;
+    protected int mHeight = 0;
 
     // List of Contained Blocks
     private ArrayList<Block> mBlocks = new ArrayList<>();
@@ -430,7 +430,7 @@ public class Item implements View.OnTouchListener {
      *
      * @param stringResource
      */
-    private void showToast(int stringResource) {
+    protected void showToast(int stringResource) {
         if (mToast == null) {
             mToast = Toast.makeText(mView.getContext(), mView.getResources().getString(stringResource), Toast.LENGTH_SHORT);
         }

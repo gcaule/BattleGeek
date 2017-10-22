@@ -53,7 +53,6 @@ import static fr.wcs.battlegeek.model.Bonus.Type.CROSS_FIRE;
 import static fr.wcs.battlegeek.model.Bonus.Type.MOVE;
 import static fr.wcs.battlegeek.model.Bonus.Type.REPLAY;
 import static fr.wcs.battlegeek.model.Result.Type.BONUS;
-import static fr.wcs.battlegeek.model.Result.Type.DEFEATED;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
@@ -272,7 +271,7 @@ public class GameActivity extends AppCompatActivity {
                     mButtonLaunchGame.setVisibility(View.INVISIBLE);
                     mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
 
-                    // Randomize first Player
+                    /*// Randomize first Player
                     int player = (int) (Math.random() * 2);
                     if (player % 2 == 0) {
                         canPlay = false;
@@ -280,10 +279,10 @@ public class GameActivity extends AppCompatActivity {
                     } else {
                         mViewFlipper.showNext();
 
-                    }
+                    }*/
                     // TODO remove Test Code Configuration
-                    //canPlay = false;
-                    //aiPlay();
+                    canPlay = false;
+                    aiPlay();
 
                     mTextViewAI.setText(R.string.AITurn);
                     startTimer();
@@ -564,7 +563,7 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                mButtonSwitchView.setVisibility(View.VISIBLE);
+                /*mButtonSwitchView.setVisibility(View.VISIBLE);
                 if (resultType == MISSED) {
                     mTextViewAI.setText(R.string.AITurn);
                     canPlay = true;
@@ -588,10 +587,22 @@ public class GameActivity extends AppCompatActivity {
                     aiPlay();
                 } else if (mExit) {
                     mAIShouldPlay = true;
-                }
+                }*/
                 // TODO Remove test Code configuration
-                //aiPlay();
-
+                if (resultType == VICTORY) {
+                    mTimer.cancel();
+                    FragmentManager fm = getFragmentManager();
+                    EndGameDefeatFragment endGameDefeatFragment = new EndGameDefeatFragment();
+                    endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
+                    endGameDefeatFragment.setCancelable(false);
+                    mAIShouldPlay = false;
+                }
+                else if (!mExit) {
+                    aiPlay();
+                }
+                else if (mExit) {
+                    mAIShouldPlay = true;
+                }
             }
         }.start();
     }

@@ -401,7 +401,7 @@ public class Maps {
 
     private static char[][] map30 = new char[][]{
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {'J', 'J', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+            {' ', 'J', 'J', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {' ', 'J', ' ', ' ', ' ', 'I', 'I', 'I', 'I', ' '},
             {' ', 'J', ' ', ' ', 'T', ' ', ' ', ' ', ' ', ' '},
             {' ', ' ', 'L', ' ', 'T', 'T', ' ', ' ', 'S', ' '},
@@ -413,9 +413,9 @@ public class Maps {
     };
 
     // Store all the predefined Maps in an array
-    private static char[][][] maps = new char [][][] {map1, map2, map3, map4, map5, map6, map7, map8, map9, map10,
-            map11, map12, map13, map14, map15, map16, map17, map18, map19, map20,
-            map21, map22, map23, map24, map25, map26, map27, map28, map29, map30};
+    public static char[][][] maps = new char [][][] {map1, map2, map3, map4, map5, map6, map7, map8, map9, map10,
+            map11, /*map12, map13,*/ map14, map15, map16, /*map17,*/ map18, map19, map20,
+            map21, map22, map23, /*map24, */map25, map26, map27, /*map28,*/ map29, map30};
 
     /**
      * Method to get a Random Predefined Map
@@ -454,7 +454,7 @@ public class Maps {
 
     // TODO DELETE
     public static char[][] getMapFromIndex(int index) {
-        return maps[index];
+        return copy(maps[index]);
     }
 
 }

@@ -1,5 +1,6 @@
 package fr.wcs.battlegeek.utils;
 
+import android.graphics.Point;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -41,6 +42,14 @@ public class Utils {
             copy.add(block.clone());
         }
         return copy;
+    }
+
+    public static ArrayList<Point> copyPoints(ArrayList<Point> points) {
+        ArrayList<Point> copyPoints = new ArrayList<>();
+        for(Point p : points) {
+            copyPoints.add(new Point(p));
+        }
+        return copyPoints;
     }
 
     /**

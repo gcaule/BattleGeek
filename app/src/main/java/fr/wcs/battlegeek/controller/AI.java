@@ -4,6 +4,8 @@ import android.graphics.Point;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 import fr.wcs.battlegeek.model.Maps;
@@ -15,7 +17,14 @@ import fr.wcs.battlegeek.utils.Utils;
 import static fr.wcs.battlegeek.model.Result.Type.BONUS;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
+import static fr.wcs.battlegeek.model.Result.Type.TOUCHED;
+import static fr.wcs.battlegeek.ui.Tetromino.Shape.J;
+import static fr.wcs.battlegeek.ui.Tetromino.Shape.L;
 import static fr.wcs.battlegeek.ui.Tetromino.Shape.NONE;
+import static fr.wcs.battlegeek.ui.Tetromino.Shape.O;
+import static fr.wcs.battlegeek.ui.Tetromino.Shape.S;
+import static fr.wcs.battlegeek.ui.Tetromino.Shape.T;
+import static fr.wcs.battlegeek.ui.Tetromino.Shape.Z;
 
 /**
  * Created by adphi on 03/10/17.
@@ -55,7 +64,8 @@ public class AI {
     private char[][] mPlayerMap;
     private ArrayList<Point> mSurroudingCoordinates = new ArrayList<>();
     private HashMap<Tetromino.Shape, ArrayList<Point>> mShapeMap = new HashMap<>();
-    private Tetromino.Shape mLastTouchedShape;
+    private HashMap<Tetromino.Shape, ArrayList<Point>> mCheatMap = new HashMap<>();
+    private Tetromino.Shape mLastTouchedShape = null;
 
     /**
      * AI Constructor
@@ -120,11 +130,11 @@ public class AI {
      */
     public void setLevel(Level level) {
         mLevel = level;
-        if(level == Level.II) {
+        if(level == Level.II || level == Level.III) {
             mEvenCoordinates = getEvenCoordinates();
         }
         // Impossible Level Strategy
-        else if ((level == Level.III || level == Level.IMPOSSIBLE) && mPlayerMap != null) {
+        if ((level == Level.III || level == Level.IMPOSSIBLE) && mPlayerMap != null) {
             // We only need to get the coordinates of all the Items in the Player's Map
             for (int i = 0; i < mPlayerMap.length; i++) {
                 for (int j = 0; j < mPlayerMap[i].length; j++) {
@@ -133,11 +143,11 @@ public class AI {
                             && mPlayerMap[i][j] != '-' && mPlayerMap[i][j] != '=') {
                         String symbol = String.valueOf(mPlayerMap[i][j]);
                         Tetromino.Shape shape = Tetromino.Shape.valueOf(symbol);
-                        if (!mShapeMap.containsKey(shape)) {
-                            mShapeMap.put(shape, new ArrayList<Point>());
+                        if (!mCheatMap.containsKey(shape)) {
+                            mCheatMap.put(shape, new ArrayList<Point>());
                         }
-                        Point point = getPointFromPlayableCoordinates(j, i);
-                        mShapeMap.get(shape).add(point);
+                        Point point = new Point(j, i);
+                        mCheatMap.get(shape).add(point);
 
                     }
                 }
@@ -148,11 +158,8 @@ public class AI {
 
     //Level 1 : Play randomly
     private Point playLevelI() {
-        int index = (int) (Math.random() * (mPlayablesCoordinates.size() - 1));
-        Point coordinates = mPlayablesCoordinates.get(index);
-        mPlayablesCoordinates.remove(index);
-        mLastPlayedCoordinates = coordinates;
-        return coordinates;
+        mLastPlayedCoordinates = getRandomPoint(mPlayablesCoordinates);
+        return mLastPlayedCoordinates;
     }
 
     //Level 2 : Play randomly then play all around when TOUCHED a tetromino
@@ -164,10 +171,14 @@ public class AI {
 
         //Play randomly during hunt mode (nothing found and looking for tetromino)
         if (mSurroudingCoordinates.isEmpty() && (resultType == MISSED || resultType == BONUS)) {
-            mLastPlayedCoordinates = getRandomPoint(mEvenCoordinates);
-            Log.d(TAG, "playLevelII: " + mPlayablesCoordinates.size());
-            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
-            Log.d(TAG, "playLevelII: " + mPlayablesCoordinates.size());
+            if(!mEvenCoordinates.isEmpty()) {
+                mLastPlayedCoordinates = getRandomPoint(mEvenCoordinates);
+                mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+            }
+            else{
+                mLastPlayedCoordinates = getRandomPoint(mPlayablesCoordinates);
+            }
+
             return mLastPlayedCoordinates;
         }
 
@@ -212,69 +223,501 @@ public class AI {
     }
 
     private Point playLevelIII() {
-        /*if(mLastPlayedCoordinates == null) {
-            return playLevelI();
-        }
+        Result.Type resultType = mLastResult.getType();
+        Tetromino.Shape resultShape = mLastResult.getShape();
 
-        int random = (int)(Math.random() * 100);
-        Tetromino.Shape lastShape = mLastResult.getShape();
-        Result.Type lastResultType = mLastResult.getType();
-
-        if(lastResultType == DROWN) {
-            mPlayablesCoordinates.addAll(mSurroudingCoordinates);
-            mSurroudingCoordinates.clear();
-        }
-
-        if(lastShape != NONE && lastResultType != DROWN) {
-            mLastTouchedShape = lastShape;
-        }
-
-        if(lastResultType == DROWN) {
-            mLastTouchedShape = null;
-        }
-
-        if (random < Settings.LEVEL_III_PROBABILITY && mLastTouchedShape != null) {
-            ArrayList<Point> shapeCoordinates = mShapeMap.get(mLastTouchedShape);
-            mLastPlayedCoordinates = getRandomPoint(shapeCoordinates);
-            shapeCoordinates.remove(mLastPlayedCoordinates);
+        /*// TODO : Remove Debug Code
+        if(mPlayablesCoordinates.size() == 100) {
+            mLastPlayedCoordinates = mCheatMap.get(Z).get(0);
             mPlayablesCoordinates.remove(mLastPlayedCoordinates);
-            Log.d(TAG, "playLevelIII: PlayableCoordinates Size : " + mPlayablesCoordinates.size());
-            return mLastPlayedCoordinates;
-        }
-        else if(random < Settings.LEVEL_III_PROBABILITY && mLastTouchedShape == null) {
-            Tetromino.Shape[] shapes = Tetromino.Shape.values();
-            shapes = Arrays.copyOf(shapes, shapes.length - 1);
-            int randomIndex = (int)(Math.random() * (shapes.length - 1));
-            Tetromino.Shape randomShape = shapes[randomIndex];
-            mLastPlayedCoordinates = getRandomPoint(mShapeMap.get(randomShape));
-            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
-            return mLastPlayedCoordinates;
-        }
-
-        else if(mLastTouchedShape != NONE && mSurroudingCoordinates.isEmpty()){
-            getSurroundingCoordinates(mLastPlayedCoordinates);
-            mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
-            return mLastPlayedCoordinates;
-        }
-
-        else if (!mSurroudingCoordinates.isEmpty() && lastResultType != MISSED) {
-            mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
             return mLastPlayedCoordinates;
         }*/
 
-        return playLevelII();
+        if(resultType == TOUCHED) {
+            if (!mShapeMap.containsKey(resultShape)) {
+                mShapeMap.put(resultShape, new ArrayList<Point>());
+            }
+            mShapeMap.get(resultShape).add(mLastPlayedCoordinates);
+        }
+        if(resultType == DROWN) {
+            mShapeMap.remove(mLastTouchedShape);
+            mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+            mSurroudingCoordinates.clear();
+            mLastTouchedShape = mShapeMap.isEmpty() ? null : (Tetromino.Shape) mShapeMap.keySet().toArray()[0];
+        }
+
+        if(resultType == TOUCHED && mLastTouchedShape == null) {
+            mLastTouchedShape = resultShape;
+            mLastPlayedCoordinates = hunt(resultShape);
+            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+            mEvenCoordinates.remove(mLastPlayedCoordinates);
+            return mLastPlayedCoordinates;
+        }
+        else if(mLastTouchedShape != null) {
+            mLastPlayedCoordinates = hunt(mLastTouchedShape);
+            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+            mEvenCoordinates.remove(mLastPlayedCoordinates);
+            return mLastPlayedCoordinates;
+        }
+
+        if(!mEvenCoordinates.isEmpty()) {
+            mLastPlayedCoordinates = getRandomPoint(mEvenCoordinates);
+            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+        }
+        else{
+            mLastPlayedCoordinates = getRandomPoint(mPlayablesCoordinates);
+        }
+        return mLastPlayedCoordinates;
     }
 
     private Point playLevelImpossible() {
-        for (Tetromino.Shape shape : mShapeMap.keySet()) {
-            if(!mShapeMap.get(shape).isEmpty()) {
-                ArrayList<Point> shapeCoordinates = mShapeMap.get(shape);
+        for (Tetromino.Shape shape : mCheatMap.keySet()) {
+            if(!mCheatMap.get(shape).isEmpty()) {
+                ArrayList<Point> shapeCoordinates = mCheatMap.get(shape);
                 mLastPlayedCoordinates = shapeCoordinates.get(0);
                 shapeCoordinates.remove(mLastPlayedCoordinates);
                 return mLastPlayedCoordinates;
             }
         }
         return null;
+    }
+
+    private Point hunt(Tetromino.Shape shape) {
+        ArrayList<Point> foundedCoordinates = mShapeMap.get(shape);
+
+        if(shape == O) {
+            if(foundedCoordinates.size() == 1) {
+                if(mLastResult.getType() == TOUCHED) {
+                    getSurroundingCoordinates(mLastPlayedCoordinates);
+                }
+                mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
+                return mLastPlayedCoordinates;
+            }
+            else if(foundedCoordinates.size() == 2) {
+                mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+                mSurroudingCoordinates.clear();
+
+                Point point1 = foundedCoordinates.get(0);
+                Point point2 = foundedCoordinates.get(1);
+
+                if(point1.x == point2.x) {
+                    mSurroudingCoordinates.addAll(getSurroundingX(point1));
+                }
+                else if(point1.y == point2.y) {
+                    mSurroudingCoordinates.addAll(getSurroundingY(point1));
+                }
+                else {
+                    Point p1 = getPointFromPlayableCoordinates(point1.x, point2.y);
+                    Point p2 = getPointFromPlayableCoordinates(point2.x, point1.y);
+                    if(p1 != null) mSurroudingCoordinates.add(p1);
+                    if(p2 != null) mSurroudingCoordinates.add(p2);
+                }
+
+                return getRandomPoint(mSurroudingCoordinates);
+            }
+            else if(foundedCoordinates.size() == 3){
+                ArrayList<Integer> xCoordinates = new ArrayList<>();
+                ArrayList<Integer> yCoordinates = new ArrayList<>();
+                for (Point point : foundedCoordinates) {
+                    xCoordinates.add(point.x);
+                    yCoordinates.add(point.y);
+                }
+                int x = 0;
+                for (int i = 0; i < xCoordinates.size(); i++) {
+                    if(Collections.frequency(xCoordinates, xCoordinates.get(i)) == 1){
+                        x = xCoordinates.get(i);
+                    }
+                }
+
+                int y = 0;
+                for (int i = 0; i < yCoordinates.size(); i++) {
+                    if(Collections.frequency(yCoordinates, yCoordinates.get(i)) == 1){
+                        y = yCoordinates.get(i);
+                    }
+                }
+
+                return getPointFromPlayableCoordinates(x, y);
+            }
+        }
+        else if(shape == Tetromino.Shape.I) {
+            if(foundedCoordinates.size() == 1) {
+                getSurroundingCoordinates(mLastPlayedCoordinates);
+                return getRandomPoint(mSurroudingCoordinates);
+            }
+            else if(foundedCoordinates.size() >= 2) {
+                mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+                mSurroudingCoordinates.clear();
+                Point point1 = foundedCoordinates.get(0);
+                Point point2 = foundedCoordinates.get(1);
+
+                if(point1.x == point2.x) {
+                    for(Point p : foundedCoordinates) {
+                        mSurroudingCoordinates.addAll(getSurroundingY(p));
+                    }
+                }
+                else if(point1.y == point2.y) {
+                    for(Point p : foundedCoordinates) {
+                        mSurroudingCoordinates.addAll(getSurroundingX(p));
+                    }
+                }
+                return  getRandomPoint(mSurroudingCoordinates);
+            }
+            else if(foundedCoordinates.size() == 3) {
+                mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+                mSurroudingCoordinates.clear();
+                // TODO
+                Point point1 = foundedCoordinates.get(0);
+                Point point2 = foundedCoordinates.get(1);
+                // Vertical
+                if(point1.x == point2.x) {
+                    int x = point1.x;
+                    int minY = min(foundedCoordinates, "y");
+                    int maxY = max(foundedCoordinates, "y");
+                    if(minY - 1 >= 0 && !mGameControler.alreadyPlayed(x, minY - 1)) {
+                        mSurroudingCoordinates.add(new Point(x, minY - 1));
+                    }
+                    if(maxY + 1 < Settings.GRID_SIZE && !mGameControler.alreadyPlayed(x, maxY + 1)) {
+                        mSurroudingCoordinates.add(new Point(x, maxY + 1));
+                    }
+                }
+                // Horizontal
+                else {
+                    int y = point1.y;
+                    int minX = min(foundedCoordinates, "x");
+                    int maxX = max(foundedCoordinates, "x");
+                    if(minX - 1 >= 0 && !mGameControler.alreadyPlayed(minX - 1, y)) {
+                        mSurroudingCoordinates.add(new Point(minX - 1, y));
+                    }
+                    if(maxX + 1 < Settings.GRID_SIZE && !mGameControler.alreadyPlayed(maxX + 1, y)) {
+                        mSurroudingCoordinates.add(new Point(maxX + 1, y));
+                    }
+                }
+                return getRandomPoint(mSurroudingCoordinates);
+
+            }
+        }
+        else if(shape == T && foundedCoordinates.size() == 3) {
+            mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+            mSurroudingCoordinates.clear();
+            Point point1 = foundedCoordinates.get(0);
+            Point point2 = foundedCoordinates.get(1);
+            Point point3 = foundedCoordinates.get(2);
+            // Vertical
+            if(point1.x == point2.x && point2.x == point3.x) {
+                // Find Middle
+                ArrayList<Integer> yCoordinates = new ArrayList<>();
+                yCoordinates.add(point1.y);
+                yCoordinates.add(point2.y);
+                yCoordinates.add(point3.y);
+                Collections.sort(yCoordinates);
+                int x = point1.x;
+                int y = yCoordinates.get(1);
+                if(x - 1 >= 0) mSurroudingCoordinates.add(getPointFromPlayableCoordinates(x - 1, y));
+                if(x + 1 < Settings.GRID_SIZE) mSurroudingCoordinates.add(getPointFromPlayableCoordinates(x + 1, y));
+                return getRandomPoint(mSurroudingCoordinates);
+            }
+            else if(point1.y == point2.y && point2.y == point3.y) {
+                // Find Middle
+                ArrayList<Integer> xCoordinates = new ArrayList<>();
+                xCoordinates.add(point1.x);
+                xCoordinates.add(point2.x);
+                xCoordinates.add(point3.x);
+                Collections.sort(xCoordinates);
+                int y = point1.y;
+                int x = xCoordinates.get(1);
+                if(x - 1 >= 0) mSurroudingCoordinates.add(getPointFromPlayableCoordinates(x - 1, y));
+                if(x + 1 < Settings.GRID_SIZE) mSurroudingCoordinates.add(getPointFromPlayableCoordinates(x + 1, y));
+                return getRandomPoint(mSurroudingCoordinates);
+            }
+
+            // Common Shape
+            else {
+                ArrayList<Integer> xCoordinates = new ArrayList<>();
+                ArrayList<Integer> yCoordinates = new ArrayList<>();
+                for (Point point : foundedCoordinates) {
+                    xCoordinates.add(point.x);
+                    yCoordinates.add(point.y);
+                }
+                int x = 0;
+                for (int i = 0; i < xCoordinates.size(); i++) {
+                    if(Collections.frequency(xCoordinates, xCoordinates.get(i)) == 2){
+                        x = xCoordinates.get(i);
+                    }
+                }
+
+                int y = 0;
+                for (int i = 0; i < yCoordinates.size(); i++) {
+                    if(Collections.frequency(yCoordinates, yCoordinates.get(i)) == 2){
+                        y = yCoordinates.get(i);
+                    }
+                }
+                getSurroundingCoordinates(new Point(x,y));
+                return getRandomPoint(mSurroudingCoordinates);
+            }
+
+
+        }
+        else if((shape == L || shape == J) && foundedCoordinates.size() > 2) {
+            mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+            mSurroudingCoordinates.clear();
+            Point point1 = foundedCoordinates.get(0);
+            Point point2 = foundedCoordinates.get(1);
+            Point point3 = foundedCoordinates.get(2);
+            // Vertical
+            if(point1.x == point2.x && point2.x == point3.x) {
+                int x = point1.x;
+                // find y min and max
+                int minY = min(foundedCoordinates, "y");
+                int maxY = max(foundedCoordinates, "y");
+                if(shape == L) {
+                    if(x - 1 >= 0 && !mGameControler.alreadyPlayed(x - 1, minY)) {
+                        mSurroudingCoordinates.add(new Point(x - 1, minY));
+                    }
+                    if(x + 1 < Settings.GRID_SIZE && !mGameControler.alreadyPlayed(x + 1, maxY)) {
+                        mSurroudingCoordinates.add(new Point(x + 1, maxY));
+                    }
+                }
+                // Shape J
+                else {
+                    if(x - 1 >= 0 && !mGameControler.alreadyPlayed(x - 1, maxY)) {
+                        mSurroudingCoordinates.add(new Point(x - 1, maxY));
+                    }
+                    if(x + 1 < Settings.GRID_SIZE && !mGameControler.alreadyPlayed(x + 1, minY)) {
+                        mSurroudingCoordinates.add(new Point(x + 1, minY));
+                    }
+                }
+            }
+            // Horizontal
+            else if(point1.y == point2.y && point2.y == point3.y) {
+                int y = point1.y;
+                // find y min and max
+                int minX = min(foundedCoordinates, "x");
+                int maxX = max(foundedCoordinates, "x");
+                if(shape == L) {
+                    if(y - 1 >= 0 && !mGameControler.alreadyPlayed(maxX, y - 1)) {
+                        mSurroudingCoordinates.add(new Point(maxX, y - 1));
+                    }
+                    if(y + 1 < Settings.GRID_SIZE && !mGameControler.alreadyPlayed(minX, y + 1)) {
+                        mSurroudingCoordinates.add(new Point(minX, y + 1));
+                    }
+                }
+                // Shape J
+                else {
+                    if(y - 1 >= 0 && !mGameControler.alreadyPlayed(minX, y - 1)) {
+                        mSurroudingCoordinates.add(new Point(minX, y - 1));
+                    }
+                    if(y + 1 < Settings.GRID_SIZE && !mGameControler.alreadyPlayed(maxX, y + 1)) {
+                        mSurroudingCoordinates.add(new Point(maxX, y + 1));
+                    }
+                }
+            }
+            // Common Shape
+            else {
+                int rotation = getCommonShapeMatrixRotation(foundedCoordinates);
+                int minX = min(foundedCoordinates, "x");
+                int maxX = max(foundedCoordinates, "x");
+                int minY = min(foundedCoordinates, "y");
+                int maxY = max(foundedCoordinates, "y");
+                if(rotation == 0) {
+                    if (shape == L) {
+                        mSurroudingCoordinates.add(new Point(maxX + 1, minY));
+                    } else {
+                        mSurroudingCoordinates.add(new Point(minX, maxY + 1));
+                    }
+                }
+                else if (rotation == 1) {
+                    if (shape == L) {
+                        mSurroudingCoordinates.add(new Point(maxX, maxY + 1));
+                    } else {
+                        mSurroudingCoordinates.add(new Point(minX - 1, minY));
+                    }
+                }
+                else if (rotation == 2) {
+                    if (shape == L) {
+                        mSurroudingCoordinates.add(new Point(minX - 1, maxY));
+                    } else {
+                        mSurroudingCoordinates.add(new Point(maxX, minY - 1));
+                    }
+                }
+                else if (rotation == 3) {
+                    if (shape == L) {
+                        mSurroudingCoordinates.add(new Point(minX, minY - 1));
+                    } else {
+                        mSurroudingCoordinates.add(new Point(maxX + 1, maxY));
+                    }
+                }
+            }
+
+            return getRandomPoint(mSurroudingCoordinates);
+        }
+        else if((shape == S || shape == Z) && foundedCoordinates.size() == 3) {
+            mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+            mSurroudingCoordinates.clear();
+            int rotation = getCommonShapeMatrixRotation(foundedCoordinates);
+            int minX = min(foundedCoordinates, "x");
+            int maxX = max(foundedCoordinates, "x");
+            int minY = min(foundedCoordinates, "y");
+            int maxY = max(foundedCoordinates, "y");
+            if(rotation == 0) {
+                if(shape == S) {
+                    mSurroudingCoordinates.add(new Point(minX - 1, maxY));
+                }
+                else {
+                    mSurroudingCoordinates.add(new Point(maxX, minY - 1));
+                }
+            }
+            else if(rotation == 1) {
+                if(shape == S) {
+                    mSurroudingCoordinates.add(new Point(minX, minY - 1));
+                }
+                else {
+                    mSurroudingCoordinates.add(new Point(maxX + 1, maxY));
+                }
+            }
+            else if(rotation == 2) {
+                if(shape == S) {
+                    mSurroudingCoordinates.add(new Point(maxX + 1, minY));
+                }
+                else {
+                    mSurroudingCoordinates.add(new Point(minX, maxY + 1));
+                }
+            }
+            else if(rotation == 3) {
+                if(shape == S) {
+                    mSurroudingCoordinates.add(new Point(maxX, maxY + 1));
+                }
+                else {
+                    mSurroudingCoordinates.add(new Point(minX - 1, minY));
+                }
+            }
+            return getRandomPoint(mSurroudingCoordinates);
+        }
+        else {
+            if(foundedCoordinates.size() > 0) {
+                for(Point p : foundedCoordinates) {
+                    getSurroundingCoordinates(p);
+                }
+            }
+            else if (mLastResult.getType() == TOUCHED) {
+                getSurroundingCoordinates(mLastPlayedCoordinates);
+            }
+            return getRandomPoint(mSurroudingCoordinates);
+        }
+        return null;
+    }
+
+    private int[][] commonShapeRotation1 = new int[][]{
+            {1,1},
+            {1,0}
+    };
+    private int[][] commonShapeRotation2 = new int[][]{
+            {1,1},
+            {0,1}
+    };
+    private int[][] commonShapeRotation3 = new int[][]{
+            {0,1},
+            {1,1}
+    };
+    private int[][] commonShapeRotation4 = new int[][]{
+            {1,0},
+            {1,1}
+    };
+
+    private int getCommonShapeMatrixRotation(ArrayList<Point> points) {
+        // Rotations Definitions
+        ArrayList<Point> pointsCopy = Utils.copyPoints(points);
+        int minX = min(pointsCopy, "x");
+        int minY = min(pointsCopy, "y");
+
+        // Apply Offset && Convert to matrix
+        int[][] matrix = new int[][]{{0,0},{0,0}};
+        for (Point p : pointsCopy) {
+            p.x -= minX;
+            p.y -= minY;
+            matrix[p.y][p.x] = 1;
+        }
+
+        ArrayList<int[][]> rotations = new ArrayList<>();
+        rotations.add(commonShapeRotation1);
+        rotations.add(commonShapeRotation2);
+        rotations.add(commonShapeRotation3);
+        rotations.add(commonShapeRotation4);
+
+        for (int i = 0; i < rotations.size(); i++) {
+            if(Arrays.deepEquals(matrix, rotations.get(i))) {
+                return i;
+            }
+        }
+
+        return - 1;
+    }
+
+    private int min(ArrayList<Point> points, String axis) {
+        if(axis.equals("x")) {
+            int minX = points.get(0).x;
+            for (Point p : points) {
+                if (p.x < minX) {
+                    minX = p.x;
+                }
+            }
+            return minX;
+        }
+        else {
+            int minY = points.get(0).y;
+            for (Point p : points) {
+                if (p.y < minY) {
+                    minY = p.y;
+                }
+            }
+            return minY;
+        }
+    }
+
+    private int max(ArrayList<Point> points, String axis) {
+        if(axis.equals("x")) {
+            int maxX = points.get(0).x;
+            for (Point p : points) {
+                if (p.x > maxX) {
+                    maxX = p.x;
+                }
+            }
+            return maxX;
+        }
+        else {
+            int maxY = points.get(0).y;
+            for (Point p : points) {
+                if (p.y > maxY) {
+                    maxY = p.y;
+                }
+            }
+            return maxY;
+        }
+    }
+
+    private ArrayList<Point> getSurroundingX(Point point) {
+        ArrayList<Point> surroundingX = new ArrayList<>();
+        int minX = Math.max(point.x - 1, 0);
+        int maxX = Math.min(point.x + 1, Settings.GRID_SIZE - 1);
+        for (int i = minX; i <= maxX; i++) {
+            Point p = getPointFromPlayableCoordinates(i, point.y);
+            if(p != null) {
+                surroundingX.add(p);
+            }
+        }
+        return surroundingX;
+    }
+
+    private ArrayList<Point> getSurroundingY(Point point) {
+        ArrayList<Point> surroundingY = new ArrayList<>();
+        int minY = Math.max(point.y - 1, 0);
+        int maxY = Math.min(point.y + 1, Settings.GRID_SIZE - 1);
+        for (int i = minY; i <= maxY; i++) {
+            Point p = getPointFromPlayableCoordinates(point.x, i);
+            if(p != null) {
+                surroundingY.add(p);
+            }
+        }
+        return surroundingY;
     }
 
     /**
@@ -326,6 +769,7 @@ public class AI {
             row++;
             column++;
         }
+        Log.d(TAG, "getSurroundingCoordinates: " + mSurroudingCoordinates.size());
     }
 
     /**
@@ -361,10 +805,10 @@ public class AI {
         ArrayList<Point> evenCoordinates = new ArrayList<>();
         for(Point point : mPlayablesCoordinates) {
             if(point.x % 2 == 0 && point.y % 2 == 0) {
-                evenCoordinates.add(point);
+                evenCoordinates.add(new Point(point));
             }
             else if(point.x % 2 == 1 && point.y % 2 == 1) {
-                evenCoordinates.add(point);
+                evenCoordinates.add(new Point(point));
             }
         }
         return evenCoordinates;
