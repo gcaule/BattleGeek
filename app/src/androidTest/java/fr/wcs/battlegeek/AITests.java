@@ -13,6 +13,7 @@ import fr.wcs.battlegeek.controller.AI;
 import fr.wcs.battlegeek.controller.GameController;
 import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.Result;
+import fr.wcs.battlegeek.model.Settings;
 
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
@@ -46,14 +47,16 @@ public class AITests {
             GameController gameController = new GameController(map);
             Result result = new Result(0,0,NONE, Result.Type.MISSED,null);
             int drownCount = 0;
+            int shootCount = 0;
             while(result.getType() != VICTORY) {
+                shootCount++ ;
                 Point p = ai.play();
                 result = gameController.shot(p.x, p.y);
                 if(result.getType() == DROWN || result.getType() == VICTORY) {
                     drownCount ++;
                 }
             }
-
+            Log.d(TAG, "AILevelIII: Total Shoot Count: " + shootCount);
             assertEquals(7, drownCount);
         }
     }
@@ -77,7 +80,7 @@ public class AITests {
                     drownCount ++;
                 }
             }
-
+            Log.d(TAG, "AILevelIII: Total Shoot Count: " + shootCount);
             assertEquals(7, drownCount);
             assertNotEquals(100, shootCount);
         }
@@ -103,7 +106,7 @@ public class AITests {
                     drownCount ++;
                 }
             }
-
+            Log.d(TAG, "AILevelIII: Total Shoot Count: " + shootCount);
             assertEquals(7, drownCount);
             assertNotEquals(100, shootCount);
         }
@@ -133,5 +136,37 @@ public class AITests {
             assertEquals(7, drownCount);
             assertNotEquals(100, shootCount);
         }
+    }
+
+    @Test
+    public void testMaps() throws Exception {
+        char[] symbols = new char[] {'I', 'O', 'T', 'S', 'Z', 'L', 'J', ' '};
+        boolean valid = true;
+        for (int i = 0; i < Maps.maps.length; i++) {
+            char[][] map = Maps.getMapFromIndex(i);
+            for (int j = 0; j < Settings.GRID_SIZE; j++) {
+                for (int k = 0; k < Settings.GRID_SIZE; k++) {
+                    if(!contains(symbols, map[j][k])) {
+                        Log.d(TAG, "testMaps: Invalid Index: " + i);
+                        valid = false;
+                        break;
+                    }
+                }
+                if(!valid) {
+                    break;
+                }
+            }
+        }
+
+        assertEquals(true, valid);
+    }
+
+    public boolean contains(char[] array, char character) {
+        for (int i = 0; i < array.length; i++) {
+            if(array[i] == character) {
+                return true;
+            }
+        }
+        return false;
     }
 }
