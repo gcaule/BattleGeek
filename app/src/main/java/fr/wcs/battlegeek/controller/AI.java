@@ -226,12 +226,12 @@ public class AI {
         Result.Type resultType = mLastResult.getType();
         Tetromino.Shape resultShape = mLastResult.getShape();
 
-        /*// TODO : Remove Debug Code
+        // TODO : Remove Debug Code
         if(mPlayablesCoordinates.size() == 100) {
-            mLastPlayedCoordinates = mCheatMap.get(Z).get(0);
+            mLastPlayedCoordinates = mCheatMap.get(T).get(0);
             mPlayablesCoordinates.remove(mLastPlayedCoordinates);
             return mLastPlayedCoordinates;
-        }*/
+        }
 
         if(resultType == TOUCHED) {
             if (!mShapeMap.containsKey(resultShape)) {

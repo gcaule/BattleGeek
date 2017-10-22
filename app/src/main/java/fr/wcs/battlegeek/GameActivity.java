@@ -532,7 +532,7 @@ public class GameActivity extends AppCompatActivity {
         mAI.setResult(iaResult);
 
 
-        new CountDownTimer(mAnimationsSpeed * 2,(int)(mAnimationsSpeed / 3)) {
+        new CountDownTimer(mAnimationsSpeed,(int)(mAnimationsSpeed / 4)) {
 
             private int cursor = 0;
 
