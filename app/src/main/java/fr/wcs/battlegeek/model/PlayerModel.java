@@ -208,8 +208,8 @@ public class PlayerModel {
     public static Comparator<PlayerModel> ratioComparator = new Comparator<PlayerModel>() {
         @Override
         public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
-            return -1 * comparedPlayerModel.victories.get(comparatorLevel.toString())
-                    - playerModel.victories.get(comparatorLevel.toString());
+            return comparedPlayerModel.ratio.get(comparatorLevel.toString())
+                    - playerModel.ratio.get(comparatorLevel.toString());
         }
     };
 
@@ -227,7 +227,7 @@ public class PlayerModel {
     public static Comparator<PlayerModel> nameComparator = new Comparator<PlayerModel>() {
         @Override
         public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
-            return playerModel.getName().compareTo(comparedPlayerModel.getName());
+            return playerModel.getName().toLowerCase().compareTo(comparedPlayerModel.getName().toLowerCase());
         }
     };
 }
