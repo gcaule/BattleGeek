@@ -490,8 +490,8 @@ public class GameActivity extends AppCompatActivity {
             for (Result result : results) {
                 showResult(result);
                 resultType = result.getType();
-                mSoundController.playSound(resultType);
             }
+            mSoundController.playSoundCrossFire();
         }
 
         if (mSelectedBonus == REPLAY && (resultType == MISSED || resultType == BONUS)) {
@@ -531,7 +531,7 @@ public class GameActivity extends AppCompatActivity {
         mAI.setResult(iaResult);
 
 
-        new CountDownTimer(mAnimationsSpeed * 3,(mAnimationsSpeed)) {
+        new CountDownTimer(mAnimationsSpeed * 3, mAnimationsSpeed) {
 
             private int cursor = 0;
 

@@ -41,6 +41,7 @@ public class SoundController {
     private int soundID_drown = -1;
     private int soundID_boom2 = -1;
     private int soundID_bonus = -1;
+    private int soundID_crossFire = -1;
 
     private int musicID = -1;
     private float mMusicMixRatio = 0.09f;
@@ -88,6 +89,7 @@ public class SoundController {
         soundID_boom2 = mSoundPool.load(mContext, R.raw.longbomb1, 1);
         soundID_drown = mSoundPool.load(mContext, R.raw.wilhelm_scream, 1);
         soundID_bonus = mSoundPool.load(mContext, R.raw.bonus, 1);
+        soundID_crossFire = mSoundPool.load(mContext, R.raw.cross_fire, 1);
 
         //musicID = R.raw.music_brahms;
         musicID = R.raw.stupid;
@@ -132,6 +134,12 @@ public class SoundController {
         }
         // Play the sound
         int stream = mSoundPool.play(soundID, volume, volume, 0, 0, 1);
+        if(! mEffectsStreams.contains(stream)) mEffectsStreams.add(stream);
+    }
+
+    public void playSoundCrossFire(){
+        float volume = (float) mSharedPreferences.getInt(Settings.EFFECTS_TAG, Settings.EFFECTS_DEFAULT) / 100 ;
+        int stream = mSoundPool.play(soundID_crossFire, volume, volume, 0, 0, 1);
         if(! mEffectsStreams.contains(stream)) mEffectsStreams.add(stream);
     }
 
