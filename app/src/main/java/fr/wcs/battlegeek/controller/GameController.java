@@ -222,4 +222,8 @@ public class GameController {
     public void setMap(char[][] map) {
         mMap = map;
     }
+
+    public char[][] getStorageMap() {
+        return mStorageMap;
+    }
 }

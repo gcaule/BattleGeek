@@ -60,7 +60,7 @@ public class AI {
 
     private GameController mGameControler;
     private ArrayList<Point> mPlayablesCoordinates;
-    private ArrayList<Point> mEvenCoordinates;
+    private ArrayList<Point> mProbableCoordinates;
     private char[][] mPlayerMap;
     private ArrayList<Point> mSurroudingCoordinates = new ArrayList<>();
     private HashMap<Tetromino.Shape, ArrayList<Point>> mShapeMap = new HashMap<>();
@@ -131,7 +131,7 @@ public class AI {
     public void setLevel(Level level) {
         mLevel = level;
         if(level == Level.II || level == Level.III) {
-            mEvenCoordinates = getEvenCoordinates();
+            mProbableCoordinates = getProbablePoints();
         }
         // Impossible Level Strategy
         if ((level == Level.III || level == Level.IMPOSSIBLE) && mPlayerMap != null) {
@@ -171,8 +171,8 @@ public class AI {
 
         //Play randomly during hunt mode (nothing found and looking for tetromino)
         if (mSurroudingCoordinates.isEmpty() && (resultType == MISSED || resultType == BONUS)) {
-            if(!mEvenCoordinates.isEmpty()) {
-                mLastPlayedCoordinates = getRandomPoint(mEvenCoordinates);
+            if(!mProbableCoordinates.isEmpty()) {
+                mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
                 mPlayablesCoordinates.remove(mLastPlayedCoordinates);
             }
             else{
@@ -198,7 +198,7 @@ public class AI {
                     getSurroundingCoordinates(currentPoint);
                 }
             }
-            mLastPlayedCoordinates = getRandomPoint(mEvenCoordinates);
+            mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
             Log.d(TAG, "playLevelII: " + mPlayablesCoordinates.size());
             mPlayablesCoordinates.remove(mLastPlayedCoordinates);
             Log.d(TAG, "playLevelII: " + mPlayablesCoordinates.size());
@@ -218,7 +218,7 @@ public class AI {
         //Shot in the possible coordinates (target mode)
 
         mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
-        mEvenCoordinates.remove(mLastPlayedCoordinates);
+        mProbableCoordinates.remove(mLastPlayedCoordinates);
         return mLastPlayedCoordinates;
     }
 
@@ -226,12 +226,8 @@ public class AI {
         Result.Type resultType = mLastResult.getType();
         Tetromino.Shape resultShape = mLastResult.getShape();
 
-        // TODO : Remove Debug Code
-        if(mPlayablesCoordinates.size() == 100) {
-            mLastPlayedCoordinates = mCheatMap.get(T).get(0);
-            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
-            return mLastPlayedCoordinates;
-        }
+        // Update Probability Coordinates
+        mProbableCoordinates = getProbablePoints();
 
         if(resultType == TOUCHED) {
             if (!mShapeMap.containsKey(resultShape)) {
@@ -250,18 +246,18 @@ public class AI {
             mLastTouchedShape = resultShape;
             mLastPlayedCoordinates = hunt(resultShape);
             mPlayablesCoordinates.remove(mLastPlayedCoordinates);
-            mEvenCoordinates.remove(mLastPlayedCoordinates);
+            mProbableCoordinates.remove(mLastPlayedCoordinates);
             return mLastPlayedCoordinates;
         }
         else if(mLastTouchedShape != null) {
             mLastPlayedCoordinates = hunt(mLastTouchedShape);
             mPlayablesCoordinates.remove(mLastPlayedCoordinates);
-            mEvenCoordinates.remove(mLastPlayedCoordinates);
+            mProbableCoordinates.remove(mLastPlayedCoordinates);
             return mLastPlayedCoordinates;
         }
-
-        if(!mEvenCoordinates.isEmpty()) {
-            mLastPlayedCoordinates = getRandomPoint(mEvenCoordinates);
+        // TODO Probabilty Map
+        if(!mProbableCoordinates.isEmpty()) {
+            mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
             mPlayablesCoordinates.remove(mLastPlayedCoordinates);
         }
         else{
@@ -417,6 +413,7 @@ public class AI {
                         (new Point(x + 1, y));
                 return getRandomPoint(mSurroudingCoordinates);
             }
+            // Horizontal
             else if(point1.y == point2.y && point2.y == point3.y) {
                 // Find Middle
                 ArrayList<Integer> xCoordinates = new ArrayList<>();
@@ -815,6 +812,17 @@ public class AI {
             }
         }
         return evenCoordinates;
+    }
+
+    private ArrayList<Point> getProbablePoints(){
+        ArrayList<Point> probablePoints = new ArrayList<>();
+        for(Point p : mPlayablesCoordinates) {
+            ArrayList<Point> surrondingFreeCells = mGameControler.getSurrondingcoordinates(p.x, p.y);
+            if(surrondingFreeCells.size() >= 3) {
+                probablePoints.add(p);
+            }
+        }
+        return probablePoints;
     }
 
     /**

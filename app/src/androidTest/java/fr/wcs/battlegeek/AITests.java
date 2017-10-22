@@ -56,7 +56,7 @@ public class AITests {
                     drownCount ++;
                 }
             }
-            Log.d(TAG, "AILevelIII: Total Shoot Count: " + shootCount);
+            Log.d(TAG, "AILevelI: Total Shoot Count: " + shootCount);
             assertEquals(7, drownCount);
         }
     }
@@ -80,9 +80,8 @@ public class AITests {
                     drownCount ++;
                 }
             }
-            Log.d(TAG, "AILevelIII: Total Shoot Count: " + shootCount);
+            Log.d(TAG, "AILevelII: Total Shoot Count: " + shootCount);
             assertEquals(7, drownCount);
-            assertNotEquals(100, shootCount);
         }
     }
 
@@ -91,9 +90,9 @@ public class AITests {
         for (int i = 0; i < Maps.maps.length; i++) {
             Log.d(TAG, "AILevelIII: Using Map " + String.valueOf(i + 1));
             AI ai = new AI();
-            ai.setLevel(AI.Level.III);
             char[][] map = Maps.getMapFromIndex(i);
             ai.setPlayerMap(map);
+            ai.setLevel(AI.Level.III);
             GameController gameController = new GameController(map);
             Result result = new Result(0,0,NONE, Result.Type.MISSED,null);
             int drownCount = 0;
@@ -108,7 +107,6 @@ public class AITests {
             }
             Log.d(TAG, "AILevelIII: Total Shoot Count: " + shootCount);
             assertEquals(7, drownCount);
-            assertNotEquals(100, shootCount);
         }
     }
 
@@ -132,7 +130,7 @@ public class AITests {
                     drownCount ++;
                 }
             }
-
+            Log.d(TAG, "AILevelImpossible: Total Shoot Count: " + shootCount);
             assertEquals(7, drownCount);
             assertNotEquals(100, shootCount);
         }
