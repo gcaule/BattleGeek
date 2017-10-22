@@ -288,7 +288,7 @@ public class AI {
         if(shape == O) {
             if(foundedCoordinates.size() == 1) {
                 if(mLastResult.getType() == TOUCHED) {
-                    getSurroundingCoordinates(mLastPlayedCoordinates);
+                    getSurroundingCoordinates(foundedCoordinates.get(0));
                 }
                 mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
                 return mLastPlayedCoordinates;
@@ -341,7 +341,7 @@ public class AI {
         }
         else if(shape == Tetromino.Shape.I) {
             if(foundedCoordinates.size() == 1) {
-                getSurroundingCoordinates(mLastPlayedCoordinates);
+                getSurroundingCoordinates(foundedCoordinates.get(0));
                 return getRandomPoint(mSurroudingCoordinates);
             }
             else if(foundedCoordinates.size() >= 2) {
@@ -412,8 +412,9 @@ public class AI {
                 Collections.sort(yCoordinates);
                 int x = point1.x;
                 int y = yCoordinates.get(1);
-                if(x - 1 >= 0) mSurroudingCoordinates.add(getPointFromPlayableCoordinates(x - 1, y));
-                if(x + 1 < Settings.GRID_SIZE) mSurroudingCoordinates.add(getPointFromPlayableCoordinates(x + 1, y));
+                if(x - 1 >= 0 && !mGameControler.alreadyPlayed(x - 1,y)) mSurroudingCoordinates.add(new Point(x - 1, y));
+                if(x + 1 < Settings.GRID_SIZE && !mGameControler.alreadyPlayed(x + 1, y)) mSurroudingCoordinates.add
+                        (new Point(x + 1, y));
                 return getRandomPoint(mSurroudingCoordinates);
             }
             else if(point1.y == point2.y && point2.y == point3.y) {
@@ -425,8 +426,10 @@ public class AI {
                 Collections.sort(xCoordinates);
                 int y = point1.y;
                 int x = xCoordinates.get(1);
-                if(x - 1 >= 0) mSurroudingCoordinates.add(getPointFromPlayableCoordinates(x - 1, y));
-                if(x + 1 < Settings.GRID_SIZE) mSurroudingCoordinates.add(getPointFromPlayableCoordinates(x + 1, y));
+                if(x - 1 >= 0 && !mGameControler.alreadyPlayed(x - 1, y)) mSurroudingCoordinates.add
+                        (new Point(x - 1, y));
+                if(x + 1 < Settings.GRID_SIZE && !mGameControler.alreadyPlayed(x + 1, y)) mSurroudingCoordinates.add
+                        (new Point(x + 1, y));
                 return getRandomPoint(mSurroudingCoordinates);
             }
 
