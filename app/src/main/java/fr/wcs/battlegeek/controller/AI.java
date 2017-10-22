@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
+import fr.wcs.battlegeek.model.Bonus;
 import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
@@ -54,6 +55,8 @@ public class AI {
 
     private final String TAG = Settings.TAG;
     private Level mLevel;
+    private Bonus.Type mSelectedBonus = null;
+
     private Point mLastPlayedCoordinates;
     private Result mLastResult = new Result(-1, -1, NONE, MISSED, null);
 
@@ -66,6 +69,7 @@ public class AI {
     private HashMap<Tetromino.Shape, ArrayList<Point>> mShapeMap = new HashMap<>();
     private HashMap<Tetromino.Shape, ArrayList<Point>> mCheatMap = new HashMap<>();
     private Tetromino.Shape mLastTouchedShape = null;
+    private ArrayList<Bonus.Type> mAvaiblesBonuses = new ArrayList<>();
 
     /**
      * AI Constructor
@@ -110,6 +114,10 @@ public class AI {
                 return playLevelImpossible();
         }
         return null;
+    }
+
+    public Bonus.Type getSelectedBonus() {
+        return mSelectedBonus;
     }
 
     /**
@@ -226,8 +234,25 @@ public class AI {
         Result.Type resultType = mLastResult.getType();
         Tetromino.Shape resultShape = mLastResult.getShape();
 
+        // AI Use REPLAY Bonus if Possible
+        if(mAvaiblesBonuses.contains(Bonus.Type.REPLAY)) {
+            mSelectedBonus = Bonus.Type.REPLAY;
+            mAvaiblesBonuses.remove(Bonus.Type.REPLAY);
+        }
+        else if(resultType == MISSED || resultType == BONUS){
+            mSelectedBonus = null;
+        }
+
         // Update Probability Coordinates
         mProbableCoordinates = getProbablePoints();
+
+        if(resultType == BONUS) {
+            Bonus.Type bonus = mLastResult.getBonusType();
+            // We don't want to implement MOVE Bonus
+            if(bonus != Bonus.Type.MOVE) {
+                mAvaiblesBonuses.add(bonus);
+            }
+        }
 
         if(resultType == TOUCHED) {
             if (!mShapeMap.containsKey(resultShape)) {
@@ -255,8 +280,10 @@ public class AI {
             mProbableCoordinates.remove(mLastPlayedCoordinates);
             return mLastPlayedCoordinates;
         }
-        // TODO Probabilty Map
         if(!mProbableCoordinates.isEmpty()) {
+            if(mAvaiblesBonuses.contains(Bonus.Type.CROSS_FIRE)) {
+                // TODO BONUS
+            }
             mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
             mPlayablesCoordinates.remove(mLastPlayedCoordinates);
         }
@@ -817,12 +844,34 @@ public class AI {
     private ArrayList<Point> getProbablePoints(){
         ArrayList<Point> probablePoints = new ArrayList<>();
         for(Point p : mPlayablesCoordinates) {
-            ArrayList<Point> surrondingFreeCells = mGameControler.getSurrondingcoordinates(p.x, p.y);
-            if(surrondingFreeCells.size() >= 3) {
+            int minX = Math.max(p.x - 1, 0);
+            int maxX = Math.min(p.x + 1, Settings.GRID_SIZE - 1);
+            int minY = Math.max(p.y - 1, 0);
+            int maxY = Math.min(p.y + 1, Settings.GRID_SIZE - 1);
+            int count = 0;
+            for (int i = minX; i <= maxX; i++) {
+                for (int j = minY; j <= maxY; j++) {
+                    if(!mGameControler.alreadyPlayed(i,j)) {
+                        count++ ;
+                    }
+                }
+            }
+            if(count >= 6) {
                 probablePoints.add(p);
             }
         }
-        return probablePoints;
+        if(probablePoints.size() != 0) {
+            return probablePoints;
+        }
+        else {
+            for(Point p : mPlayablesCoordinates) {
+                ArrayList<Point> surrondingFreeCells = mGameControler.getSurrondingcoordinates(p.x, p.y);
+                if(surrondingFreeCells.size() >= 3) {
+                    probablePoints.add(p);
+                }
+            }
+            return probablePoints;
+        }
     }
 
     /**

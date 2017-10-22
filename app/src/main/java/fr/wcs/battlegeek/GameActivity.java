@@ -53,6 +53,7 @@ import static fr.wcs.battlegeek.model.Bonus.Type.CROSS_FIRE;
 import static fr.wcs.battlegeek.model.Bonus.Type.MOVE;
 import static fr.wcs.battlegeek.model.Bonus.Type.REPLAY;
 import static fr.wcs.battlegeek.model.Result.Type.BONUS;
+import static fr.wcs.battlegeek.model.Result.Type.DEFEATED;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.MISSED;
 import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
@@ -271,7 +272,7 @@ public class GameActivity extends AppCompatActivity {
                     mButtonLaunchGame.setVisibility(View.INVISIBLE);
                     mTextViewAI.setTextColor(Color.parseColor("#FF960D"));
 
-                    /*// Randomize first Player
+                    // Randomize first Player
                     int player = (int) (Math.random() * 2);
                     if (player % 2 == 0) {
                         canPlay = false;
@@ -279,10 +280,10 @@ public class GameActivity extends AppCompatActivity {
                     } else {
                         mViewFlipper.showNext();
 
-                    }*/
+                    }
                     // TODO remove Test Code Configuration
-                    canPlay = false;
-                    aiPlay();
+                    /*canPlay = false;
+                    aiPlay();*/
 
                     mTextViewAI.setText(R.string.AITurn);
                     startTimer();
@@ -342,8 +343,6 @@ public class GameActivity extends AppCompatActivity {
                 mShotsCounter++;
             }
         });
-
-        TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
 
         mtextViewTimer = (TextView) findViewById(R.id.textViewTimer);
         mtextViewTimer.setTypeface(mainFont);
@@ -532,7 +531,7 @@ public class GameActivity extends AppCompatActivity {
         mAI.setResult(iaResult);
 
 
-        new CountDownTimer(mAnimationsSpeed,(int)(mAnimationsSpeed / 4)) {
+        new CountDownTimer(mAnimationsSpeed,(int)(mAnimationsSpeed / 3)) {
 
             private int cursor = 0;
 
@@ -563,13 +562,14 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                /*mButtonSwitchView.setVisibility(View.VISIBLE);
-                if (resultType == MISSED) {
+                Bonus.Type aiSelectedBonus = mAI.getSelectedBonus();
+                mButtonSwitchView.setVisibility(View.VISIBLE);
+                if (resultType == MISSED && aiSelectedBonus != REPLAY) {
                     mTextViewAI.setText(R.string.AITurn);
                     canPlay = true;
                     mViewFlipper.showPrevious();
                     mAIShouldPlay = false;
-                } else if (resultType == BONUS) {
+                } else if (resultType == BONUS && aiSelectedBonus != REPLAY) {
                     canPlay = true;
                     mViewFlipper.showPrevious();
                     mAIShouldPlay = false;
@@ -587,8 +587,8 @@ public class GameActivity extends AppCompatActivity {
                     aiPlay();
                 } else if (mExit) {
                     mAIShouldPlay = true;
-                }*/
-                // TODO Remove test Code configuration
+                }
+                /*// TODO Remove test Code configuration
                 if (resultType == VICTORY) {
                     mTimer.cancel();
                     FragmentManager fm = getFragmentManager();
@@ -602,7 +602,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 else if (mExit) {
                     mAIShouldPlay = true;
-                }
+                }*/
             }
         }.start();
     }
