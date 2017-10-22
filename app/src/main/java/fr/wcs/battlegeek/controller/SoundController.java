@@ -177,6 +177,12 @@ public class SoundController {
         }
     }
 
+    public void playMusicDefeat(){
+        mMediaPlayer.stop();
+        mMediaPlayer = MediaPlayer.create(mContext, R.raw.requiem);
+        mMediaPlayer.start();
+    }
+
     public void setMusicVolume(int volume){
         if(mMediaPlayer == null) {
             mMediaPlayer = MediaPlayer.create(mContext, musicID);

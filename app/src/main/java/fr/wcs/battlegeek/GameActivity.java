@@ -531,7 +531,7 @@ public class GameActivity extends AppCompatActivity {
         mAI.setResult(iaResult);
 
 
-        new CountDownTimer(mAnimationsSpeed,(int)(mAnimationsSpeed / 3)) {
+        new CountDownTimer(mAnimationsSpeed * 3,(mAnimationsSpeed)) {
 
             private int cursor = 0;
 
@@ -583,6 +583,7 @@ public class GameActivity extends AppCompatActivity {
                     endGameDefeatFragment.show(fm, String.valueOf(R.string.end_game_fragment_title));
                     endGameDefeatFragment.setCancelable(false);
                     mAIShouldPlay = false;
+                    mSoundController.playMusicDefeat();
                 } else if (!mExit) {
                     aiPlay();
                 } else if (mExit) {
