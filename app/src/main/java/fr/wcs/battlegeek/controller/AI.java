@@ -81,9 +81,6 @@ public class AI {
         // Get all Playables Coordinates
         mPlayablesCoordinates = Maps.getPlayableCoordinates();
         mSurroudingCoordinates = new ArrayList<>();
-
-        // TODO: Remove Debug Code
-        mAvaiblesBonuses.add(Bonus.Type.CROSS_FIRE);
     }
 
     /**
@@ -195,6 +192,33 @@ public class AI {
         // Get the type of Tetromino shape
         Tetromino.Shape resultShape = mLastResult.getShape();
 
+        // AI Use REPLAY Bonus if Possible
+        if(mAvaiblesBonuses.contains(Bonus.Type.REPLAY)) {
+            mSelectedBonus = Bonus.Type.REPLAY;
+            mAvaiblesBonuses.remove(Bonus.Type.REPLAY);
+        }
+        else if(resultType == MISSED){
+            mSelectedBonus = null;
+        }
+        else if(mSelectedBonus == Bonus.Type.CROSS_FIRE) {
+            mSelectedBonus = null;
+        }
+
+        // BONUS CROSS FIRE
+        if(mAvaiblesBonuses.contains(Bonus.Type.CROSS_FIRE)) {
+            mSelectedBonus = Bonus.Type.CROSS_FIRE;
+            mAvaiblesBonuses.remove(mSelectedBonus);
+            // Get A Point
+            mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
+            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+            // Remove the surrounding Points
+            ArrayList<Point> bombPoints = mGameControler.getSurrondingcoordinates(mLastPlayedCoordinates.x,
+                    mLastPlayedCoordinates.y);
+            mPlayablesCoordinates.removeAll(bombPoints);
+            mSurroudingCoordinates.removeAll(bombPoints);
+            return mLastPlayedCoordinates;
+        }
+
         //Play randomly during hunt mode (nothing found and looking for tetromino)
         if (mSurroudingCoordinates.isEmpty() && (resultType == MISSED || resultType == BONUS)) {
             if(!mProbableCoordinates.isEmpty()) {
@@ -234,7 +258,6 @@ public class AI {
         }
 
         //Shot in the possible coordinates (target mode)
-
         mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
         mProbableCoordinates.remove(mLastPlayedCoordinates);
         return mLastPlayedCoordinates;
