@@ -53,8 +53,8 @@ public class TetrominoBonus extends TetrominoBlock {
 
     @Override
     public void draw(Canvas canvas, float itemX, float itemY, float blockSize) {
-        float x = (Math.round(itemX) + mX) * blockSize;
-        float y = (Math.round(itemY) + mY) * blockSize;
+        float x = (itemX + mX) * blockSize;
+        float y = (itemY + mY) * blockSize;
         Bitmap image = mState == State.ALIVE ? mImageAlive : mImageDead;
         image = Bitmap.createScaledBitmap(image, (int)blockSize, (int)blockSize, true);
         canvas.drawBitmap(image, x, y, null);

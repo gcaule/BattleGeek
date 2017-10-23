@@ -253,11 +253,6 @@ public class GameActivity extends AppCompatActivity {
                     mMapView.setMap(mGameController.getMap());
                     mMapView.setMode(MapView.Mode.PLAY);
 
-                    // Bonus Buttons
-                    mButtonCrossFire.setVisibility(View.VISIBLE);
-                    mButtonMove.setVisibility(View.VISIBLE);
-                    mButtonReplay.setVisibility(View.VISIBLE);
-
                     mAI = new AI();
                     if (mLevel == AI.Level.III || mLevel == AI.Level.IMPOSSIBLE) {
                         mAI.setPlayerMap(mapData);
@@ -618,12 +613,15 @@ public class GameActivity extends AppCompatActivity {
                 mGameView.setBonus(x, y, bonusType);
                 switch (bonusType) {
                     case MOVE:
+                        mButtonMove.setVisibility(View.VISIBLE);
                         mButtonMove.setEnabled(true);
                         break;
                     case REPLAY:
+                        mButtonReplay.setVisibility(View.VISIBLE);
                         mButtonReplay.setEnabled(true);
                         break;
                     case CROSS_FIRE:
+                        mButtonCrossFire.setVisibility(View.VISIBLE);
                         mButtonCrossFire.setEnabled(true);
                         break;
                 }
