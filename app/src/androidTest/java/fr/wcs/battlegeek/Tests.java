@@ -43,6 +43,7 @@ public class Tests {
 
     @Test
     public void AILevelI() throws Exception {
+        Maps.initMaps();
         for (int i = 0; i < Maps.maps.size(); i++) {
             AI ai = new AI();
             ai.setLevel(I);
@@ -61,13 +62,14 @@ public class Tests {
                     drownCount ++;
                 }
             }
-            Log.d(TAG, "AILevelII: Total Shoot Count: " + shootCount);
+            Log.d(TAG, "AILevelI: Total Shoot Count: " + shootCount);
             assertEquals(7, drownCount);
         }
     }
 
     @Test
     public void AILevelII() throws Exception {
+        Maps.initMaps();
         for (int i = 0; i < Maps.maps.size(); i++) {
             Log.d(TAG, "AILevelII: Using Map " + String.valueOf(i + 1));
             AI ai = new AI();
@@ -87,7 +89,7 @@ public class Tests {
                     drownCount ++;
                 }
             }
-            Log.d(TAG, "AILevelIII: Total Shoot Count: " + shootCount);
+            Log.d(TAG, "AILevelII: Total Shoot Count: " + shootCount);
             assertEquals(7, drownCount);
         }
     }

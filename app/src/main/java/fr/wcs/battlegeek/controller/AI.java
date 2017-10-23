@@ -128,6 +128,29 @@ public class AI {
     public void setResult(Result result) {
         mGameControler.setPlayResult(result);
         mLastResult = result;
+        Result.Type resultType = result.getType();
+        Tetromino.Shape resultShape = result.getShape();
+        if(resultType == BONUS) {
+            Bonus.Type bonus = mLastResult.getBonusType();
+            // We don't want to implement MOVE Bonus
+            if(bonus != Bonus.Type.MOVE) {
+                mAvaiblesBonuses.add(bonus);
+            }
+        }
+
+        if(resultType == TOUCHED) {
+            if (!mShapeMap.containsKey(resultShape)) {
+                mShapeMap.put(resultShape, new ArrayList<Point>());
+            }
+            mShapeMap.get(resultShape).add(mLastPlayedCoordinates);
+        }
+
+        if(resultType == DROWN) {
+            mShapeMap.remove(mLastTouchedShape);
+            mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+            mSurroudingCoordinates.clear();
+            mLastTouchedShape = mShapeMap.isEmpty() ? null : (Tetromino.Shape) mShapeMap.keySet().toArray()[0];
+        }
     }
 
     /**
@@ -182,34 +205,28 @@ public class AI {
             return mLastPlayedCoordinates;
         }
 
-        //When a boat is drown, clear SurroundingCoordinates to go back in hunt mode
+        //When a boat is drown go back in hunt mode
         if (resultType == DROWN) {
-            for (Point coordinates : mSurroudingCoordinates) {
-                mPlayablesCoordinates.add(coordinates);
-            }
-            mSurroudingCoordinates.clear();
-
-            mShapeMap.remove((mLastResult.getShape()));
-
-            for (HashMap.Entry<Tetromino.Shape, ArrayList<Point>> entry : mShapeMap.entrySet()) {
-                Tetromino.Shape shape = entry.getKey();
-                ArrayList<Point> pointArrayList = entry.getValue();
-                for (Point currentPoint : pointArrayList) {
-                    getSurroundingCoordinates(currentPoint);
+            if(mLastTouchedShape != null) {
+                ArrayList<Point> touchedPoint = mShapeMap.get(mLastTouchedShape);
+                for(Point p : touchedPoint) {
+                    getSurroundingCoordinates(p);
                 }
+                mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
+                mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+                return mLastPlayedCoordinates;
             }
-            mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
-            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
-            return mLastPlayedCoordinates;
+            else {
+                mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
+                mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+                return mLastPlayedCoordinates;
+            }
         }
 
         //When a result type is touched, go in target mode by creating a map of possible coordinates
 
         if (resultType != MISSED && resultType != BONUS) {
-            if (!mShapeMap.containsKey(resultShape)) {
-                mShapeMap.put(resultShape, new ArrayList<Point>());
-            }
-            mShapeMap.get(resultShape).add(mLastPlayedCoordinates);
+            mLastTouchedShape = resultShape;
             getSurroundingCoordinates(mLastPlayedCoordinates);
         }
 
@@ -229,33 +246,12 @@ public class AI {
             mSelectedBonus = Bonus.Type.REPLAY;
             mAvaiblesBonuses.remove(Bonus.Type.REPLAY);
         }
-        else if(resultType == MISSED || resultType == BONUS){
+        else if(resultType == MISSED){
             mSelectedBonus = null;
         }
 
         // Update Probability Coordinates
         mProbableCoordinates = getProbablePoints();
-
-        if(resultType == BONUS) {
-            Bonus.Type bonus = mLastResult.getBonusType();
-            // We don't want to implement MOVE Bonus
-            if(bonus != Bonus.Type.MOVE) {
-                mAvaiblesBonuses.add(bonus);
-            }
-        }
-
-        if(resultType == TOUCHED) {
-            if (!mShapeMap.containsKey(resultShape)) {
-                mShapeMap.put(resultShape, new ArrayList<Point>());
-            }
-            mShapeMap.get(resultShape).add(mLastPlayedCoordinates);
-        }
-        if(resultType == DROWN) {
-            mShapeMap.remove(mLastTouchedShape);
-            mPlayablesCoordinates.addAll(mSurroudingCoordinates);
-            mSurroudingCoordinates.clear();
-            mLastTouchedShape = mShapeMap.isEmpty() ? null : (Tetromino.Shape) mShapeMap.keySet().toArray()[0];
-        }
 
         if(resultType == TOUCHED && mLastTouchedShape == null) {
             mLastTouchedShape = resultShape;
