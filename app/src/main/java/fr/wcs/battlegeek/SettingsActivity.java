@@ -70,7 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         buttonSave.setVisibility(GONE);
 
-        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
+        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
         Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
 
         TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);

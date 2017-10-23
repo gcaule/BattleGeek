@@ -163,10 +163,13 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (mAnimationsSpeed == Settings.ANIMATION_SLOW) {
                     mAnimationsSpeed = Settings.ANIMATION_MEDIUM;
+                    showToast(R.string.Speed_medium);
                 } else if (mAnimationsSpeed == Settings.ANIMATION_MEDIUM) {
                     mAnimationsSpeed = Settings.ANIMATION_FAST;
+                    showToast(R.string.Speed_fast);
                 } else if (mAnimationsSpeed == Settings.ANIMATION_FAST) {
                     mAnimationsSpeed = Settings.ANIMATION_SLOW;
+                    showToast(R.string.Speed_slow);
                 }
                 mSharedPreferences.edit().putInt(Settings.ANIMATION_TAG, mAnimationsSpeed).apply();
                 setAnimationIcon(mAnimationsSpeed);

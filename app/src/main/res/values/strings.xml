@@ -62,6 +62,9 @@
     <string name="AIVictory">Aie! Perdu !</string>
     <string name="bestShotsCountLabel">Tirs</string>
     <string name="blink_text">Flash de la mort</string>
+    <string name="Speed_slow">Vitesse : Mou</string>
+    <string name="Speed_medium">Vitesse : Moins Mou</string>
+    <string name="Speed_fast">Vitesse : Pas mou</string>
 
     <string name="credits_title">Credits</string>
     <string name="credits_text">"From www.flaticon.com : \n "Search-Stats", "User", "Trophy" icons made by FreePik,\n "Vibrate" icon made by Those Icons,\n "Home" icon made by Google,\n "Song-note" icon made by Bogdan Rosu" </string>
