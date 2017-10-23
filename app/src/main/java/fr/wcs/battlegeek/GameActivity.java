@@ -528,6 +528,10 @@ public class GameActivity extends AppCompatActivity {
 
         mAI.setResult(iaResult);
 
+        // Notify Player AI Using REPLAY Bonus
+        if(mAI.getSelectedBonus() == REPLAY) {
+            showToast(R.string.aiUseBonusReplay);
+        }
 
         new CountDownTimer(mAnimationsSpeed * 3, mAnimationsSpeed) {
 
@@ -546,12 +550,15 @@ public class GameActivity extends AppCompatActivity {
                         switch (iaResult.getBonusType()) {
                             case CROSS_FIRE:
                             mTextViewAI.setText(R.string.aiBonusCrossFire);
+                                showToast(R.string.aiBonusCrossFire);
                                 break;
                             case REPLAY:
                                 mTextViewAI.setText(R.string.aiBonusReplay);
+                                showToast(R.string.aiBonusReplay);
                                 break;
                             case MOVE:
                                 mTextViewAI.setText(R.string.aiBonusMove);
+                                showToast(R.string.aiBonusMove);
                                 break;
                         }
                     }
