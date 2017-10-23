@@ -24,7 +24,6 @@ import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
 import static fr.wcs.battlegeek.ui.Tetromino.Shape.NONE;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 /**
  * Instrumentation test, which will execute on an Android device.
@@ -141,7 +140,7 @@ public class Tests {
             }
             Log.d(TAG, "AILevelImpossible: Total Shoot Count: " + shootCount);
             assertEquals(7, drownCount);
-            assertNotEquals(100, shootCount);
+            assertEquals(28, shootCount);
         }
     }
 
