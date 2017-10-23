@@ -186,8 +186,10 @@ public class SoundController {
     }
 
     public void playMusicDefeat(){
+        float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT) / 100 ;
         mMediaPlayer.stop();
         mMediaPlayer = MediaPlayer.create(mContext, R.raw.requiem);
+        mMediaPlayer.setVolume(volume, volume);
         mMediaPlayer.start();
     }
 

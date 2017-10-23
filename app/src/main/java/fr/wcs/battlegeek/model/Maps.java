@@ -443,6 +443,11 @@ public class Maps {
         return playableCoordinates;
     }
 
+    /**
+     * Method returning a copy of the map
+     * @param map
+     * @return
+     */
     private static char[][] copy(char[][] map) {
         char[][] copy = new char[Settings.GRID_SIZE][Settings.GRID_SIZE];
         for (int i = 0; i < map.length; i++) {
