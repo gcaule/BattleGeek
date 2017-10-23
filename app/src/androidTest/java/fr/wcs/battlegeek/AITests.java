@@ -57,6 +57,7 @@ public class AITests {
                 shootCount++ ;
                 Point p = ai.play();
                 result = gameController.shot(p.x, p.y);
+                ai.setResult(result);
                 if(result.getType() == DROWN || result.getType() == VICTORY) {
                     drownCount ++;
                 }
@@ -81,6 +82,7 @@ public class AITests {
                 Point p = ai.play();
                 shootCount ++;
                 result = gameController.shot(p.x, p.y);
+                ai.setResult(result);
                 if(result.getType() == DROWN || result.getType() == VICTORY) {
                     drownCount ++;
                 }
@@ -106,6 +108,7 @@ public class AITests {
                 Point p = ai.play();
                 shootCount ++;
                 result = gameController.shot(p.x, p.y);
+                ai.setResult(result);
                 if(result.getType() == DROWN || result.getType() == VICTORY) {
                     drownCount ++;
                 }
@@ -131,6 +134,7 @@ public class AITests {
                 Point p = ai.play();
                 shootCount ++;
                 result = gameController.shot(p.x, p.y);
+                ai.setResult(result);
                 if(result.getType() == DROWN || result.getType() == VICTORY) {
                     drownCount ++;
                 }
