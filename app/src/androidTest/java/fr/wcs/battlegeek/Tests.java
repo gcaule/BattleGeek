@@ -43,7 +43,7 @@ public class Tests {
 
     @Test
     public void AILevelI() throws Exception {
-        for (int i = 0; i < Maps.maps.length; i++) {
+        for (int i = 0; i < Maps.maps.size(); i++) {
             AI ai = new AI();
             ai.setLevel(AI.Level.I);
             Log.d(TAG, "AILevelI: Using Map " + String.valueOf(i + 1));
@@ -68,7 +68,7 @@ public class Tests {
 
     @Test
     public void AILevelII() throws Exception {
-        for (int i = 0; i < Maps.maps.length; i++) {
+        for (int i = 0; i < Maps.maps.size(); i++) {
             AI ai = new AI();
             ai.setLevel(II);
             Log.d(TAG, "AILevelII: Using Map " + String.valueOf(i + 1));
@@ -93,7 +93,7 @@ public class Tests {
 
     @Test
     public void AILevelIII() throws Exception {
-        for (int i = 0; i < Maps.maps.length; i++) {
+        for (int i = 0; i < Maps.maps.size(); i++) {
             Log.d(TAG, "AILevelIII: Using Map " + String.valueOf(i + 1));
             AI ai = new AI();
             char[][] map = Maps.getMapFromIndex(i);
@@ -119,7 +119,7 @@ public class Tests {
 
     @Test
     public void AILevelImpossible() throws Exception {
-        for (int i = 0; i < Maps.maps.length; i++) {
+        for (int i = 0; i < Maps.maps.size(); i++) {
             Log.d(TAG, "AILevelImpossible: Using Map " + String.valueOf(i + 1));
             AI ai = new AI();
             char[][] map = Maps.getMapFromIndex(i);
@@ -148,7 +148,7 @@ public class Tests {
     public void testMaps() throws Exception {
         char[] symbols = new char[] {'I', 'O', 'T', 'S', 'Z', 'L', 'J', ' '};
         boolean valid = true;
-        for (int i = 0; i < Maps.maps.length; i++) {
+        for (int i = 0; i < Maps.maps.size(); i++) {
             char[][] map = Maps.getMapFromIndex(i);
             for (int j = 0; j < Settings.GRID_SIZE; j++) {
                 for (int k = 0; k < Settings.GRID_SIZE; k++) {

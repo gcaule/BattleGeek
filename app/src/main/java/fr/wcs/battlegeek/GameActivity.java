@@ -39,6 +39,7 @@ import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.controller.GameController;
 import fr.wcs.battlegeek.controller.SoundController;
 import fr.wcs.battlegeek.model.Bonus;
+import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
@@ -248,6 +249,8 @@ public class GameActivity extends AppCompatActivity {
 
                     mMapView = (MapView) findViewById(R.id.mapView);
                     char[][] mapData = mMapView.getMapData();
+                    // Send map to Firebase
+                    Maps.addMap(mapData);
                     mGameController = new GameController(mapData);
                     mGameController.setBonus();
                     mMapView.setMap(mGameController.getMap());
