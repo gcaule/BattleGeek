@@ -1,5 +1,6 @@
 package fr.wcs.battlegeek;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -54,6 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
         final ToggleButton toggleButtonBlink = (ToggleButton) findViewById(R.id.toggleButton_blink);
         final TextView TextViewBlink = (TextView) findViewById(R.id.textView_Blink);
         final Button buttonSave = (Button) findViewById(R.id.buttonSave);
+        final ImageButton buttonCredits = (ImageButton) findViewById(R.id.buttonCredits);
 
         // Radio Buttons
         RadioButton mRadioButtonAnimationSlow = (RadioButton) findViewById(R.id.radioButtonAnimationSlow);
@@ -77,6 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
         inputPlayerName.setTypeface(mainFont);
         inputPlayerName.setTextColor(Color.parseColor("#FFEE00"));
         textViewSettingsAnimation.setTypeface(titleFont);
+        buttonCredits.setColorFilter(filterYellow);
         //textViewSettingsAnimation.setTextColor(Color.parseColor("#FFEE00"));
         buttonSave.setTypeface(mainFont);
         mRadioButtonAnimationSlow.setTypeface(mainFont);
@@ -225,6 +228,15 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
         });
+
+        //button to go to credits page
+        buttonCredits.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this, CreditsActivity.class));
+            }
+        });
+
 
         //Button to save user preferences
         buttonSave.setOnClickListener(new View.OnClickListener() {

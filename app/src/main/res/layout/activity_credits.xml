@@ -3,23 +3,40 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settingsBackgroundView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.wcs.battlegeek.CreditsActivity"
-    android:background="@drawable/bg">
+    android:background="@drawable/bg"
+    android:orientation="vertical"
+    tools:context="fr.wcs.battlegeek.CreditsActivity">
+
 
     <TextView
-        android:id="@+id/textViewSettingsAnimation"
+        android:id="@+id/CreditsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/settingsAnimationsLabel"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="15sp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButton_vibrator"
+        android:text="@string/credits_title"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/CreditsText"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/CreditsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="10sp"
+        android:text="@string/credits_text"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CreditsTitle"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>
 
     <ImageButton
         android:id="@+id/buttonHome"
@@ -35,265 +52,5 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/home_button"/>
-
-    <ImageView
-        android:id="@+id/imageViewMusic"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@android:color/transparent"
-        app:srcCompat="@drawable/song_note128"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="50dp"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSettings"
-        android:layout_marginStart="16dp"
-        />
-
-    <ImageView
-        android:id="@+id/imageViewEffects"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:adjustViewBounds="false"
-        android:background="@android:color/transparent"
-        app:srcCompat="@drawable/volume_up_interface_symbol"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewMusic"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="16dp"
-        />
-
-    <ImageView
-        android:id="@+id/imageViewUser"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="32dp"
-        android:adjustViewBounds="false"
-        android:background="@android:color/transparent"
-        android:cropToPadding="false"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/inputPlayerName"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        app:srcCompat="@drawable/user"/>
-
-    <SeekBar
-        android:id="@+id/seekBarEffects"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
-        android:progressTint="@color/yellow"
-        android:thumbTint="@color/yellow"
-        app:layout_constraintLeft_toRightOf="@+id/imageViewEffects"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarMusic"/>
-
-    <SeekBar
-        android:id="@+id/seekBarMusic"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="50dp"
-        android:defaultFocusHighlightEnabled="false"
-        android:focusedByDefault="false"
-        android:progressTint="@color/yellow"
-        android:thumbTint="@color/yellow"
-        app:layout_constraintLeft_toRightOf="@+id/imageViewMusic"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSettings"/>
-
-
-
-    <EditText
-        android:id="@+id/inputPlayerName"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:defaultFocusHighlightEnabled="false"
-        android:ems="10"
-        android:hint="@string/player_name"
-        android:imeOptions="actionSend"
-        android:inputType="textPersonName"
-        android:maxLines="1"
-        android:backgroundTint="@color/yellow"
-        android:textColorHint="@android:color/holo_orange_light"
-        android:textSize="14sp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/imageViewUser"/>
-
-    <TextView
-        android:id="@+id/textViewSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/textViewSettings"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        app:layout_constraintRight_toLeftOf="@+id/buttonHome"
-        android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="0.505"/>
-
-    <Button
-        android:id="@+id/buttonSave"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/buttonshapesave"
-        android:padding="10dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:text="@string/save_settings"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:layout_marginTop="34dp"
-        app:layout_constraintTop_toBottomOf="@+id/inputPlayerName"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"/>
-
-    <TextView
-        android:id="@+id/seekBarValueMusic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="55dp"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSettings"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/seekBarMusic"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/seekBarMusic"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintHorizontal_bias="0.46"/>
-
-    <TextView
-        android:id="@+id/seekBarValueEffects"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:layout_marginTop="37dp"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarValueMusic"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/seekBarEffects"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/seekBarEffects"
-        app:layout_constraintHorizontal_bias="0.46"
-        android:layout_marginBottom="8dp"/>
-
-    <ImageView
-        android:id="@+id/imageView_vibrate"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:srcCompat="@drawable/vibrate"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewEffects"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/toggleButton_vibrator"
-        />
-
-    <ToggleButton
-        android:id="@+id/toggleButton_vibrator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ToggleButton"
-        app:layout_constraintLeft_toRightOf="@+id/imageView_vibrate"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="42dp"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarEffects"
-        android:onClick="changeVibrateState"/>
-
-    <TextView
-        android:id="@+id/textView_Blink"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/blink_text"
-        android:textAlignment="center"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/toggleButton_blink"
-        app:layout_constraintLeft_toRightOf="@+id/toggleButton_vibrator"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarEffects"
-        app:layout_constraintVertical_bias="0.657"/>
-
-    <ToggleButton
-        android:id="@+id/toggleButton_blink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ToggleButton"
-        app:layout_constraintLeft_toRightOf="@+id/textView_Blink"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="42dp"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarEffects"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        android:onClick="changeBlinkState"/>
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSettingsAnimation"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintVertical_bias="0.105">
-
-        <RadioButton
-            android:id="@+id/radioButtonAnimationSlow"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:buttonTint="@color/yellow"
-            android:onClick="onRadioButtonAnimationSpeedClicked"
-            android:text="@string/settingsAnimationSlowText"
-            android:textSize="9sp"/>
-
-        <RadioButton
-            android:id="@+id/radioButtonAnimationMedium"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:buttonTint="@color/yellow"
-            android:onClick="onRadioButtonAnimationSpeedClicked"
-            android:text="@string/settingsAnimationMedium"
-            android:textSize="9sp"/>
-
-        <RadioButton
-            android:id="@+id/radioButtonAnimationFast"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:buttonTint="@color/yellow"
-            android:checked="true"
-            android:onClick="onRadioButtonAnimationSpeedClicked"
-            android:text="@string/settingsAnnimationFast"
-            android:textSize="9sp"/>
-
-    </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>
