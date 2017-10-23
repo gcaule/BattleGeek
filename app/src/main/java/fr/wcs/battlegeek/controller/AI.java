@@ -450,10 +450,10 @@ public class AI {
                 Collections.sort(xCoordinates);
                 int y = point1.y;
                 int x = xCoordinates.get(1);
-                if(x - 1 >= 0 && !mGameControler.alreadyPlayed(x - 1, y)) mSurroudingCoordinates.add
-                        (new Point(x - 1, y));
-                if(x + 1 < Settings.GRID_SIZE && !mGameControler.alreadyPlayed(x + 1, y)) mSurroudingCoordinates.add
-                        (new Point(x + 1, y));
+                if(y - 1 >= 0 && !mGameControler.alreadyPlayed(x, y - 1)) mSurroudingCoordinates.add
+                        (new Point(x, y - 1));
+                if(y + 1 < Settings.GRID_SIZE && !mGameControler.alreadyPlayed(x, y + 1)) mSurroudingCoordinates.add
+                        (new Point(x, y + 1));
                 return getRandomPoint(mSurroudingCoordinates);
             }
 
