@@ -108,7 +108,7 @@ public class AI {
             case II:
                 return playLevelII();
             case III:
-                return playLevelIII();
+                return playLevelII();
             case IMPOSSIBLE:
                 return playLevelImpossible();
         }
@@ -137,7 +137,7 @@ public class AI {
      */
     public void setLevel(Level level) {
         mLevel = level;
-        if(level == Level.II || level == Level.III) {
+        if(level != Level.IMPOSSIBLE) {
             mProbableCoordinates = getProbablePoints();
         }
         // Impossible Level Strategy
@@ -162,14 +162,8 @@ public class AI {
         }
     }
 
-    //Level 1 : Play randomly
+    //Level 1 : Play randomly then play all around when TOUCHED a tetromino
     private Point playLevelI() {
-        mLastPlayedCoordinates = getRandomPoint(mPlayablesCoordinates);
-        return mLastPlayedCoordinates;
-    }
-
-    //Level 2 : Play randomly then play all around when TOUCHED a tetromino
-    private Point playLevelII() {
         // Give the type of result (missed, touched ...)
         Result.Type resultType = mLastResult.getType();
         // Get the type of Tetromino shape
@@ -226,7 +220,7 @@ public class AI {
         return mLastPlayedCoordinates;
     }
 
-    private Point playLevelIII() {
+    private Point playLevelII() {
         Result.Type resultType = mLastResult.getType();
         Tetromino.Shape resultShape = mLastResult.getShape();
 
