@@ -475,7 +475,7 @@ public class Maps {
         return copy;
     }
 
-    public static void initMaps(){
+    public static void init(){
         maps = new ArrayList<>(Arrays.asList(_maps));
         FirebaseDatabase database = DataController.getDatabase();
         DatabaseReference mapsReference = database.getReference("Maps");

@@ -43,7 +43,7 @@ public class Tests {
 
     @Test
     public void AILevelI() throws Exception {
-        Maps.initMaps();
+        Maps.init();
         for (int i = 0; i < Maps.maps.size(); i++) {
             AI ai = new AI();
             ai.setLevel(I);
@@ -69,7 +69,7 @@ public class Tests {
 
     @Test
     public void AILevelII() throws Exception {
-        Maps.initMaps();
+        Maps.init();
         for (int i = 0; i < Maps.maps.size(); i++) {
             Log.d(TAG, "AILevelII: Using Map " + String.valueOf(i + 1));
             AI ai = new AI();
@@ -123,6 +123,7 @@ public class Tests {
 
     @Test
     public void testMaps() throws Exception {
+        Maps.init();
         char[] symbols = new char[] {'I', 'O', 'T', 'S', 'Z', 'L', 'J', ' '};
         boolean valid = true;
         for (int i = 0; i < Maps.maps.size(); i++) {

@@ -46,7 +46,7 @@ public class ScreenLauncher extends AppCompatActivity {
         TitleAnimation();
 
         // Init Maps with Firebase
-        Maps.initMaps();
+        Maps.init();
 
         //Access Internal files, preferences and DB of the APP via Chrome : chrome://inspect/#devices
         Stetho.initializeWithDefaults(this);

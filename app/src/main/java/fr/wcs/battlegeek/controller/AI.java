@@ -82,6 +82,8 @@ public class AI {
         mPlayablesCoordinates = Maps.getPlayableCoordinates();
         mSurroudingCoordinates = new ArrayList<>();
 
+        // TODO: Remove Debug Code
+        mAvaiblesBonuses.add(Bonus.Type.CROSS_FIRE);
     }
 
     /**
@@ -128,6 +130,7 @@ public class AI {
     public void setResult(Result result) {
         mGameControler.setPlayResult(result);
         mLastResult = result;
+        mLastPlayedCoordinates = new Point(result.getX(), result.getY());
         Result.Type resultType = result.getType();
         Tetromino.Shape resultShape = result.getShape();
         if(resultType == BONUS) {
@@ -249,6 +252,9 @@ public class AI {
         else if(resultType == MISSED){
             mSelectedBonus = null;
         }
+        else if(mSelectedBonus == Bonus.Type.CROSS_FIRE) {
+            mSelectedBonus = null;
+        }
 
         // Update Probability Coordinates
         mProbableCoordinates = getProbablePoints();
@@ -267,8 +273,19 @@ public class AI {
             return mLastPlayedCoordinates;
         }
         if(!mProbableCoordinates.isEmpty()) {
+            // BONUS CROSS FIRE
             if(mAvaiblesBonuses.contains(Bonus.Type.CROSS_FIRE)) {
-                // TODO BONUS
+                mSelectedBonus = Bonus.Type.CROSS_FIRE;
+                mAvaiblesBonuses.remove(mSelectedBonus);
+                // Get A Point
+                mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
+                mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+                // Remove the surrounding Points
+                ArrayList<Point> bombPoints = mGameControler.getSurrondingcoordinates(mLastPlayedCoordinates.x,
+                        mLastPlayedCoordinates.y);
+                mPlayablesCoordinates.removeAll(bombPoints);
+                mSurroudingCoordinates.removeAll(bombPoints);
+                return mLastPlayedCoordinates;
             }
             mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
             mPlayablesCoordinates.remove(mLastPlayedCoordinates);
@@ -857,6 +874,10 @@ public class AI {
             }
             return probablePoints;
         }
+    }
+
+    public GameController getGameControler() {
+        return mGameControler;
     }
 
     /**
