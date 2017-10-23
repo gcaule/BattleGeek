@@ -32,7 +32,7 @@ import static org.junit.Assert.assertNotEquals;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class AITests {
+public class Tests {
     private static final String TAG = "TEST";
     @Test
     public void useAppContext() throws Exception {
