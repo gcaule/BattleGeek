@@ -12,9 +12,9 @@ public class Settings {
 
     public static final String FILE_NAME = "Preferences";
     public static final int GRID_SIZE = 10;
-    public static final int ANIMATION_FAST = 600;
-    public static final int ANIMATION_MEDIUM = 1200;
-    public static final int ANIMATION_SLOW = 1800;
+    public static final int ANIMATION_FAST = 300;
+    public static final int ANIMATION_MEDIUM = 600;
+    public static final int ANIMATION_SLOW = 1200;
     public static final String ANIMATION_TAG = "AnimationsSpeed";
 
     public static final String MUSIC_TAG = "ValueMusic";
