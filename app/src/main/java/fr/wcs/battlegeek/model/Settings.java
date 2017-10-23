@@ -32,5 +32,5 @@ public class Settings {
 
     public static final String BLINK_TAG = "BlinkState";
 
-    public static final int ANIMATION_DEFAULT = ANIMATION_MEDIUM;
+    public static final int ANIMATION_DEFAULT = ANIMATION_SLOW;
 }

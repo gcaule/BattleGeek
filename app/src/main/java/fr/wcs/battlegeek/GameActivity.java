@@ -489,10 +489,10 @@ public class GameActivity extends AppCompatActivity {
             mSoundController.playSoundCrossFire();
         }
 
-        if (mSelectedBonus == REPLAY && (resultType == MISSED || resultType == BONUS)) {
+        if (mSelectedBonus == REPLAY && resultType == MISSED) {
             mSelectedBonus = null;
             canPlay = true;
-        } else if (resultType == MISSED || resultType == BONUS) {
+        } else if (resultType == MISSED) {
             // Show the result
             new CountDownTimer(mAnimationsSpeed, mAnimationsSpeed / 3) {
                 public void onTick(long millisUntilFinished) {
@@ -537,9 +537,22 @@ public class GameActivity extends AppCompatActivity {
                     if (resultType == MISSED) {
                         mMapView.setPlouf(aiPlayCoordinates.x, aiPlayCoordinates.y);
                         mTextViewAI.setText(R.string.missed);
-                    } else if (resultType == BONUS) {
+                    }
+                    else if (resultType == BONUS) {
                         mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
-                    } else {
+                        switch (iaResult.getBonusType()) {
+                            case CROSS_FIRE:
+                            mTextViewAI.setText(R.string.aiBonusCrossFire);
+                                break;
+                            case REPLAY:
+                                mTextViewAI.setText(R.string.aiBonusReplay);
+                                break;
+                            case MOVE:
+                                mTextViewAI.setText(R.string.aiBonusMove);
+                                break;
+                        }
+                    }
+                    else {
                         mMapView.setDead(aiPlayCoordinates.x, aiPlayCoordinates.y);
                         mTextViewAI.setText(R.string.AITouched);
                         blink(0);
@@ -558,17 +571,21 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 Bonus.Type aiSelectedBonus = mAI.getSelectedBonus();
-                mButtonSwitchView.setVisibility(View.VISIBLE);
                 if (resultType == MISSED && aiSelectedBonus != REPLAY) {
                     mTextViewAI.setText(R.string.AITurn);
                     canPlay = true;
                     mViewFlipper.showPrevious();
+                    mButtonSwitchView.setVisibility(View.VISIBLE);
                     mAIShouldPlay = false;
-                } else if (resultType == BONUS && aiSelectedBonus != REPLAY) {
+
+                }
+                /*// Don't replay if Bonus
+                else if (resultType == BONUS && aiSelectedBonus != REPLAY) {
                     canPlay = true;
                     mViewFlipper.showPrevious();
                     mAIShouldPlay = false;
-                } else if (resultType == VICTORY) {
+                }*/
+                else if (resultType == VICTORY) {
                     mPlayer.addGameTime(mLevel, DEFEATED, mTime);
                     mPlayer.addDefeat(mLevel);
                     mDataController.updatePlayer(mPlayer);

@@ -1,7 +1,6 @@
 package fr.wcs.battlegeek.controller;
 
 import android.graphics.Point;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -160,7 +159,6 @@ public class AI {
                     }
                 }
             }
-            Log.d(TAG, "setLevel: " + mShapeMap);
         }
     }
 
@@ -207,9 +205,7 @@ public class AI {
                 }
             }
             mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
-            Log.d(TAG, "playLevelII: " + mPlayablesCoordinates.size());
             mPlayablesCoordinates.remove(mLastPlayedCoordinates);
-            Log.d(TAG, "playLevelII: " + mPlayablesCoordinates.size());
             return mLastPlayedCoordinates;
         }
 
@@ -796,7 +792,6 @@ public class AI {
             row++;
             column++;
         }
-        Log.d(TAG, "getSurroundingCoordinates: " + mSurroudingCoordinates.size());
     }
 
     /**

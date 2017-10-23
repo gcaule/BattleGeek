@@ -62,4 +62,7 @@
     <string name="AIVictory">Aie! Perdu !</string>
     <string name="bestShotsCountLabel">Tirs</string>
     <string name="blink_text">Flash de la mort</string>
+    <string name="aiBonusCrossFire">L\'AI a gagné le Bonus Bomb</string>
+    <string name="aiBonusReplay">L\'AI a gagné le Bonus Rejouer</string>
+    <string name="aiBonusMove">L\'AI a gagné le Bonus Bouger</string>
 </resources>
