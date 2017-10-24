@@ -1,39 +1,55 @@
 <resources>
 
-    <string name="app_name">BattleGeeK</string>
+    <!--Launch Screen -->
+    <string name="app_name">Arcade Navale</string>
     <string name="launchGame">A l\'assaut !</string>
-    <string name="main_title">BattleGeeK</string>
+    <string name="main_title">Arcade\nNavale</string>
     <string name="player_name">Ton petit nom ici</string>
-    <string name="alreadyPlayedMessage">Tu as déjà joué cette case !</string>
-    <string name="itemDrownMessage">Tu as détruit cette pièce !</string>
+    <string name="message_title">Bienvenue sur BattleGeeK</string>
+    <string name="message_firstusername">Dis moi, comment tu t\'appelles ?\nOu alors mens-moi, tu pourras changer de nom plus tard si tu veux.</string>
+    <string name="message_error_emptyname">Tu n\'as pas entré de pseudo !</string>
+    <string name="home_slogan">La Bataille Navale\navec des pixels et\ndes couleurs dedans</string>
+    <string name="message_welcome">Hey, je te connais pas toi !</string>
 
+    <!--Menu-->
     <string name="button_easy">Gentil</string>
     <string name="button_medium">Moins Gentil</string>
     <string name="button_hard">Pas Cool</string>
     <string name="button_impossible">Impossible</string>
+    <string name="hello_message">Coucou</string>
 
-    <!-- Messages to Player -->
+    <!--Settings-->
     <string name="textViewSettings">Parametres</string>
+    <string name="blink_text">Epileptique ?</string>
+    <string name="Speed_slow">Vitesse : Mou</string>
+    <string name="Speed_medium">Vitesse : Moins Mou</string>
+    <string name="Speed_fast">Vitesse : Pas mou</string>
+    <string name="Yes">Oui</string>
+    <string name="No">Non</string>
+    <string name="save_settings">Sauvegarder</string>
+    <string name="saved_parameters">Paramètres enregistrés !</string>
+    <string name="settingsAnimationsLabel">Vitesse de jeu</string>
 
-    <string name="buttonValidate">C\'est parti !</string>
+    <string name="credits_text">Credits\n\n"From www.flaticon.com :\nSearch-Stats, User, Trophy icons made by FreePik\nVibrate icon made by Those Icons\nHome icon made by Google\nSong-note icon made by Bogdan Rosu"\n\nMusique :\nAdphi</string>
+
+    <!-- Ranking and Stats-->
     <string name="titleRanking">Classement</string>
-    <string name="message_welcome">Hey, je te connais pas toi !</string>
-    <string name="end_game_fragment_title">La partie est terminée !</string>
-    <string name="end_game_defeat">Tu as en bouche\nle goût amer de la\nDEFAITE !!</string>
-    <string name="ok_defeat">T\'as triché...</string>
-    <string name="ok_victory">A l\'aise...</string>
-    <string name="end_game_victory">Tu ressens\nl\'ennivrante exaltation de la\nVICTOIRE !!</string>
-    <string name="place_pieces">Place tes pieces\n(avec strategie et savoir-faire)</string>
-    <string name="touchedPlayAgain">Pièce touchée !\nRejoue !</string>
-    <string name="drownPlayAgain">Pièce détruite !\nRejoue !</string>
-    <string name="player_turn">A ton tour !</string>
-    <string name="AITurn">Au tour de l\'adversaire !</string>
-    <string name="missed">Raté !</string>
-    <string name="AITouched">Touché !\nL\'adversaire rejoue !</string>
-    <string name="AIDrown">Coulé !\nL\'adversaire rejoue !</string>
+    <string name="statistics">Statistiques</string>
+    <string name="gamesParts">Parties</string>
+    <string name="victory_defeats">Victoires / Defaites</string>
+    <string name="ratio">Ratio</string>
+    <string name="bestTime">Temps</string>
+    <string name="levelTime">Temps Level</string>
+    <string name="totalTime">Temps Total</string>
+    <string name="AIVictory">Aie! Perdu !</string>
+    <string name="bestShotsCountLabel">Tirs</string>
 
     <!-- Bonus -->
     <string name="multiBonusError">Tu ne peux utiliser qu\'un bonus à la fois</string>
+    <string name="aiBonusCrossFire">L\'adversaire dispose du bonus Tir du Fourbe !</string>
+    <string name="aiBonusReplay">L\'adversaire dispose du bonus Rejouer !</string>
+    <string name="aiBonusMove">L\'adversaire dispose du bonus Bouger !</string>
+    <string name="aiUseBonusReplay">L\'aversaire utilise son Bonus Rejouer</string>
 
     <!-- Règles du jeu -->
     <string name="gameRulesTitle">Regles du jeu</string>
@@ -69,54 +85,36 @@
     <string name="gameRulesBonusIII">Ce tir fera tomber une pluie de ravage et de destruction qui touchera (en plus de la case visee) les cases directement au dessus et en dessous, et puis celle a gauche et celle a droite aussi.\nEn un seul coup.\nC\'est le bonus des deglinguos du ravage (et de la destruction).</string>
 
 
-    <string name="gameRulesEnd">Voila, tu en sais desormais autant que moi, alors fiche-moi le camp et va detruire des tetrominos !\nSignalons egalement qu\'aucun ornythorinque ne fut maltraite pendant la conception de ce jeu - bien que c\'est pas l\'envie qui nous ai manque.</string>
-    <string name="gameRulesPS">Toute l\'equipe de developpement tiens a presenter ses confuses aupres des farouches supporters de ce noble animal qu\'est l\'ornythorinque.\nCette derniere remarque inconsideree ne reflete pas nos convictions et nous vous assurons que nous n\'eprouvons que le plus profond respect pour cette stupide creature.</string>
+    <string name="gameRulesEnd">Voila, tu en sais desormais autant que moi, alors fiche-moi le camp et va detruire des tetrominos !\nSignalons egalement qu\'aucun ornythorinque ne fut maltraite pendant la conception de ce jeu - bien que c\'est pas l\'envie qui nous ait manque.</string>
+    <string name="gameRulesPS">Toute l\'equipe de developpement tient a presenter ses confuses aupres des farouches supporters de ce noble animal qu\'est l\'ornythorinque.\nCette derniere remarque inconsideree ne reflete pas nos convictions et nous vous assurons que nous n\'eprouvons que le plus profond respect pour cette stupide creature.</string>
 
-
-    <string name="settingsAnimationsLabel">Vitesse de jeu</string>
+    <!--Message to Player-->
+    <string name="buttonValidate">C\'est parti !</string>
+    <string name="end_game_fragment_title">La partie est terminée !</string>
+    <string name="end_game_defeat">Tu as en bouche\nle goût amer de la\nDEFAITE !!</string>
+    <string name="ok_defeat">T\'as triché...</string>
+    <string name="ok_victory">A l\'aise...</string>
+    <string name="end_game_victory">Tu ressens\nl\'ennivrante exaltation de la\nVICTOIRE !!</string>
+    <string name="ok_exit">Oui, j\'ai piscine</string>
+    <string name="no_exit">Non, certainement pas !</string>
     <string name="quit_game_alert_title">Honte et déshonneur !</string>
     <string name="quit_game_alert_message">Tu vas t\'enfuir lâchement et la honte\npoursuivra ta famille sur trois générations...\nTu veux vraiment abandonner ?</string>
-    <string name="message_title">Bienvenue sur BattleGeeK</string>
-    <string name="message_firstusername">Dis moi, comment tu t\'appelles ?\nOu alors mens-moi, tu pourras changer de nom plus tard si tu veux.</string>
-    <string name="message_error_emptyname">Tu n\'as pas entré de pseudo !</string>
+
+    <string name="place_pieces">Place tes pieces\n(avec strategie et savoir-faire)</string>
+    <string name="touchedPlayAgain">Pièce touchée !\nRejoue !</string>
+    <string name="drownPlayAgain">Pièce détruite !\nRejoue !</string>
+    <string name="player_turn">A ton tour !</string>
+    <string name="AITurn">Au tour de l\'adversaire !</string>
+    <string name="missed">Raté !</string>
+    <string name="AITouched">Touché !\nL\'adversaire rejoue !</string>
+    <string name="AIDrown">Coulé !\nL\'adversaire rejoue !</string>
+
     <string name="RotationImpossible">Pas assez d\'espace pour la rotation !</string>
     <string name="switch_view">Ou sont mes\npieces ?</string>
     <string name="randomize_positions">Place les pieces\npour moi !</string>
-    <string name="home_slogan">La Bataille Navale\navec des pixels et\ndes couleurs dedans</string>
     <string name="playermap_view">Tes pieces t\'attendent sagement !</string>
-    <string name="ok_exit">Oui, j\'ai piscine</string>
-    <string name="no_exit">Non, certainement pas !</string>
-    <string name="save_settings">Sauvegarder</string>
-    <string name="saved_parameters">Paramètres enregistrés !</string>
-    <string name="statistics">Statistiques</string>
 
-    <string name="gamesParts">Parties</string>
-    <string name="victory_defeats">Victoires / Defaites</string>
-    <string name="ratio">Ratio</string>
-    <string name="bestTime">Temps</string>
-    <string name="levelTime">Temps Level</string>
-    <string name="totalTime">Temps Total</string>
-    <string name="AIVictory">Aie! Perdu !</string>
-    <string name="bestShotsCountLabel">Tirs</string>
+    <string name="alreadyPlayedMessage">Tu as déjà joué cette case !</string>
+    <string name="itemDrownMessage">Tu as détruit cette pièce !</string>
 
-    <string name="aiBonusCrossFire">L\'adversaire dispose du bonus Tir du Fourbe !</string>
-    <string name="aiBonusReplay">L\'adversaire dispose du bonus Rejouer !</string>
-    <string name="aiBonusMove">L\'adversaire dispose du bonus Bouger !</string>
-    <string name="aiUseBonusReplay">L\'aversaire utilise son Bonus Rejouer</string>
-
-    <string name="blink_text">Epileptique ?</string>
-    <string name="Speed_slow">Vitesse : Mou</string>
-    <string name="Speed_medium">Vitesse : Moins Mou</string>
-    <string name="Speed_fast">Vitesse : Pas mou</string>
-    <string name="Yes">Oui</string>
-    <string name="No">Non</string>
-
-    <string name="credits_text">Credits\n\n "From www.flaticon.com :\n\n
-        "Search-Stats", "User", "Trophy" icons made by FreePik,\n\n
-        "Vibrate" icon made by Those Icons,\n\n
-        "Home" icon made by Google,\n\n
-        "Song-note" icon made by Bogdan Rosu" \n\n
-    Musique : \n\n
-    Adphi</string>
->>>>>>> designFix
 </resources>

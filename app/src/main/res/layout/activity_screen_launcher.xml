@@ -17,17 +17,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"
         android:padding="10dp"
         android:text="@string/main_title"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_orange_dark"
+        android:textColor="@color/yellow"
         android:textSize="12sp"
         android:textStyle="bold"
-        tools:textColor="?android:attr/colorActivatedHighlight"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="130dp"/>
+        tools:textColor="?android:attr/colorActivatedHighlight"/>
 
     <TextView
         android:id="@+id/home_slogan"

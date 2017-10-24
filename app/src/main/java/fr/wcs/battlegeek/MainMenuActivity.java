@@ -149,7 +149,7 @@ public class MainMenuActivity extends AppCompatActivity {
         String playerName = mSharedPreferences.getString(Settings.PLAYER_NAME, null);
 
         showPlayerName.setTextColor(Color.parseColor("#FFF825"));
-        showPlayerName.setText("Coucou " + playerName + " !");
+        showPlayerName.setText(getString(R.string.hello_message) + " " + playerName + " !");
     }
 
     @Override

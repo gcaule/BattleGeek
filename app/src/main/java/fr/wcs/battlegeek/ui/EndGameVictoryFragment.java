@@ -20,7 +20,7 @@ public class EndGameVictoryFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setIcon(R.drawable.smiley_happy);
+        builder.setIcon(R.drawable.smiley_happy1);
         builder.setTitle(R.string.end_game_fragment_title);
         builder.setMessage(R.string.end_game_victory);
         builder.setPositiveButton(R.string.ok_victory, new DialogInterface.OnClickListener() {
