@@ -248,36 +248,60 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
      * Sort the PlayerModel List by Best Time
      */
     private void sortByBestTime() {
-        Collections.sort(mPlayerModelList, PlayerModel.bestTimeComparator);
-        adapter.notifyDataSetChanged();
-        mComparatorFactor = BEST_TIME;
+        if(mComparatorFactor != BEST_TIME) {
+            Collections.sort(mPlayerModelList, PlayerModel.bestTimeComparator);
+            adapter.notifyDataSetChanged();
+            mComparatorFactor = BEST_TIME;
+        }
+        else {
+            Collections.reverse(mPlayerModelList);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     /**
      * Sort the PlayerModel List by Ratio
      */
     private void sortByRatio() {
-        Collections.sort(mPlayerModelList, PlayerModel.ratioComparator);
-        adapter.notifyDataSetChanged();
-        mComparatorFactor = RATIO;
+        if(mComparatorFactor != RATIO) {
+            Collections.sort(mPlayerModelList, PlayerModel.ratioComparator);
+            adapter.notifyDataSetChanged();
+            mComparatorFactor = RATIO;
+        }
+        else {
+            Collections.reverse(mPlayerModelList);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     /**
      * Sort the PlayerModel List by Victories
      */
     private void sortByVictories() {
-        Collections.sort(mPlayerModelList, PlayerModel.victoriesComparator);
-        adapter.notifyDataSetChanged();
-        mComparatorFactor = VICTORIES;
+        if(mComparatorFactor != VICTORIES) {
+            Collections.sort(mPlayerModelList, PlayerModel.victoriesComparator);
+            adapter.notifyDataSetChanged();
+            mComparatorFactor = VICTORIES;
+        }
+        else {
+            Collections.reverse(mPlayerModelList);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     /**
      * Sort the PlayerModel List by Shots Count
      */
     private void sortByShotCount() {
-        Collections.sort(mPlayerModelList, PlayerModel.bestShotsCountComparator);
-        adapter.notifyDataSetChanged();
-        mComparatorFactor = SHOTS_COUNT;
+        if(mComparatorFactor != SHOTS_COUNT) {
+            Collections.sort(mPlayerModelList, PlayerModel.bestShotsCountComparator);
+            adapter.notifyDataSetChanged();
+            mComparatorFactor = SHOTS_COUNT;
+        }
+        else {
+            Collections.reverse(mPlayerModelList);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void sortByName() {

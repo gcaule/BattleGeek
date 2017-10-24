@@ -532,7 +532,7 @@ public class Maps {
     }
 
     // TODO DELETE
-    public static char[][] getMapFromIndex(int index) {
+    public static char[][] getMap(int index) {
         return copy(maps.get(index));
     }
 

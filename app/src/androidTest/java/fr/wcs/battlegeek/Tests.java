@@ -18,6 +18,7 @@ import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
+import fr.wcs.battlegeek.utils.Utils;
 
 import static fr.wcs.battlegeek.controller.AI.Level.I;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
@@ -48,7 +49,8 @@ public class Tests {
             AI ai = new AI();
             ai.setLevel(I);
             Log.d(TAG, "AILevelI: Using Map " + String.valueOf(i + 1));
-            char[][] map = Maps.getMapFromIndex(i);
+            char[][] map = Maps.getMap(i);
+            Utils.printMap(map);
             GameController gameController = new GameController(map);
             Result result = new Result(0,0,NONE, Result.Type.MISSED,null);
             int drownCount = 0;
@@ -73,7 +75,8 @@ public class Tests {
         for (int i = 0; i < Maps.maps.size(); i++) {
             Log.d(TAG, "AILevelII: Using Map " + String.valueOf(i + 1));
             AI ai = new AI();
-            char[][] map = Maps.getMapFromIndex(i);
+            char[][] map = Maps.getMap(i);
+            Utils.printMap(map);
             ai.setPlayerMap(map);
             ai.setLevel(AI.Level.II);
             GameController gameController = new GameController(map);
@@ -99,7 +102,7 @@ public class Tests {
         for (int i = 0; i < Maps.maps.size(); i++) {
             Log.d(TAG, "AILevelImpossible: Using Map " + String.valueOf(i + 1));
             AI ai = new AI();
-            char[][] map = Maps.getMapFromIndex(i);
+            char[][] map = Maps.getMap(i);
             ai.setPlayerMap(map);
             ai.setLevel(AI.Level.IMPOSSIBLE);
             GameController gameController = new GameController(map);
@@ -127,7 +130,7 @@ public class Tests {
         char[] symbols = new char[] {'I', 'O', 'T', 'S', 'Z', 'L', 'J', ' '};
         boolean valid = true;
         for (int i = 0; i < Maps.maps.size(); i++) {
-            char[][] map = Maps.getMapFromIndex(i);
+            char[][] map = Maps.getMap(i);
             for (int j = 0; j < Settings.GRID_SIZE; j++) {
                 for (int k = 0; k < Settings.GRID_SIZE; k++) {
                     if(!contains(symbols, map[j][k])) {
@@ -254,20 +257,16 @@ public class Tests {
         PlayerModel player2 = new PlayerModel("Leon");
         player2.addGameTime(AI.Level.III, VICTORY, 72L);
 
-        PlayerModel player3 = new PlayerModel("Marcel");
-
         ArrayList<PlayerModel> playerModels = new ArrayList<>();
-        playerModels.add(player3);
         playerModels.add(player2);
         playerModels.add(player1);
 
         PlayerModel.setComparatorLevel(AI.Level.III);
-        Collections.sort(playerModels, PlayerModel.bestShotsCountComparator);
+        Collections.sort(playerModels, PlayerModel.bestTimeComparator);
 
         ArrayList<PlayerModel> result = new ArrayList<>();
         result.add(player1);
         result.add(player2);
-        result.add(player3);
 
         assertEquals(result, playerModels);
     }
