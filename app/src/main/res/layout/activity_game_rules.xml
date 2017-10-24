@@ -52,7 +52,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewGameRules"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginBottom="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,8 +65,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="8sp"
-                android:paddingTop="16dp"
                 android:paddingBottom="16dp"
+                android:paddingTop="16dp"
                 android:text="@string/gameRulesGeneral"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textSize="16sp"/>
@@ -195,8 +196,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="8sp"
-                    android:paddingTop="48dp"
                     android:paddingLeft="16dp"
+                    android:paddingTop="48dp"
                     android:text="@string/gameRulesSubtilitiesTitle"
                     android:textColor="@android:color/holo_orange_dark"
                     android:textSize="16sp"/>
@@ -221,9 +222,9 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:padding="5dp"
                     android:layout_gravity="bottom"
                     android:background="@color/yellow"
+                    android:padding="5dp"
                     app:srcCompat="@drawable/move"/>
 
                 <TextView
@@ -231,8 +232,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="8sp"
-                    android:paddingTop="32dp"
                     android:paddingLeft="16dp"
+                    android:paddingTop="32dp"
                     android:text="@string/gameRulesBonusITitle"
                     android:textColor="@android:color/holo_orange_dark"
                     android:textSize="14sp"/>
@@ -257,9 +258,9 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:padding="5dp"
                     android:layout_gravity="bottom"
                     android:background="@color/yellow"
+                    android:padding="5dp"
                     app:srcCompat="@drawable/replay"/>
 
                 <TextView
@@ -267,8 +268,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="8sp"
-                    android:paddingTop="32dp"
                     android:paddingLeft="16dp"
+                    android:paddingTop="32dp"
                     android:text="@string/gameRulesBonusIITitle"
                     android:textColor="@android:color/holo_orange_dark"
                     android:textSize="14sp"/>
@@ -293,9 +294,9 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:padding="5dp"
                     android:layout_gravity="bottom"
                     android:background="@color/yellow"
+                    android:padding="5dp"
                     app:srcCompat="@drawable/bomb"/>
 
                 <TextView
@@ -303,8 +304,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="8sp"
-                    android:paddingTop="32dp"
                     android:paddingLeft="16dp"
+                    android:paddingTop="32dp"
                     android:text="@string/gameRulesBonusIIITitle"
                     android:textColor="@android:color/holo_orange_dark"
                     android:textSize="14sp"/>
