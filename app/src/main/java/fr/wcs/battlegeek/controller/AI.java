@@ -68,7 +68,7 @@ public class AI {
     private HashMap<Tetromino.Shape, ArrayList<Point>> mShapeMap = new HashMap<>();
     private HashMap<Tetromino.Shape, ArrayList<Point>> mCheatMap = new HashMap<>();
     private Tetromino.Shape mLastTouchedShape = null;
-    private ArrayList<Bonus.Type> mAvaiblesBonuses = new ArrayList<>();
+    private ArrayList<Bonus.Type> mAvailablesBonuses = new ArrayList<>();
 
     /**
      * AI Constructor
@@ -114,13 +114,18 @@ public class AI {
         return null;
     }
 
+    /**
+     * Method returning the Selected Bonus of th AI.
+     * @return
+     */
     public Bonus.Type getSelectedBonus() {
         return mSelectedBonus;
     }
 
     /**
      * Method to call after the Player's game controller process the AI play method
-     * this allow the AI'game processor to store the result in his Storage Map
+     * this allow the AI'game processor to store the result in his Storage Map and process
+     * the result in order to adapt the AI strategy
      *
      * @param result
      */
@@ -134,7 +139,7 @@ public class AI {
             Bonus.Type bonus = mLastResult.getBonusType();
             // We don't want to implement MOVE Bonus
             if(bonus != Bonus.Type.MOVE) {
-                mAvaiblesBonuses.add(bonus);
+                mAvailablesBonuses.add(bonus);
             }
         }
 
@@ -185,7 +190,11 @@ public class AI {
         }
     }
 
-    //Level 1 : Play randomly then play all around when TOUCHED a tetromino
+    /**
+     * Method that process the shot's result to return AI plays Coordinates
+     * Level 1 : Play randomly then play all around when TOUCHED a Tetromino
+     * @return
+     */
     private Point playLevelI() {
         // Give the type of result (missed, touched ...)
         Result.Type resultType = mLastResult.getType();
@@ -193,21 +202,21 @@ public class AI {
         Tetromino.Shape resultShape = mLastResult.getShape();
 
         // AI Use REPLAY Bonus if Possible
-        if(mAvaiblesBonuses.contains(Bonus.Type.REPLAY)) {
+        if(mAvailablesBonuses.contains(Bonus.Type.REPLAY)) {
             mSelectedBonus = Bonus.Type.REPLAY;
-            mAvaiblesBonuses.remove(Bonus.Type.REPLAY);
+            mAvailablesBonuses.remove(Bonus.Type.REPLAY);
         }
         else if(resultType == MISSED){
             mSelectedBonus = null;
         }
-        else if(mSelectedBonus == Bonus.Type.CROSS_FIRE) {
+        else if(mSelectedBonus == Bonus.Type.BOMB) {
             mSelectedBonus = null;
         }
 
         // BONUS CROSS FIRE
-        if(mAvaiblesBonuses.contains(Bonus.Type.CROSS_FIRE)) {
-            mSelectedBonus = Bonus.Type.CROSS_FIRE;
-            mAvaiblesBonuses.remove(mSelectedBonus);
+        if(mAvailablesBonuses.contains(Bonus.Type.BOMB)) {
+            mSelectedBonus = Bonus.Type.BOMB;
+            mAvailablesBonuses.remove(mSelectedBonus);
             // Get A Point
             mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
             mPlayablesCoordinates.remove(mLastPlayedCoordinates);
@@ -263,62 +272,95 @@ public class AI {
         return mLastPlayedCoordinates;
     }
 
+    /**
+     * Method that process the shot's result to return AI plays Coordinates
+     * Level 2 : Play randomly in probables coordinates (counting empty surrounding cells)
+     * When it founds a Tetromino it starts analysing the possibles coordinates of the
+     * remaining Blocks.
+     * @return
+     */
     private Point playLevelII() {
+        // Store the Result's Type and Shape
         Result.Type resultType = mLastResult.getType();
         Tetromino.Shape resultShape = mLastResult.getShape();
 
         // AI Use REPLAY Bonus if Possible
-        if(mAvaiblesBonuses.contains(Bonus.Type.REPLAY)) {
+        if(mAvailablesBonuses.contains(Bonus.Type.REPLAY)) {
             mSelectedBonus = Bonus.Type.REPLAY;
-            mAvaiblesBonuses.remove(Bonus.Type.REPLAY);
+            mAvailablesBonuses.remove(Bonus.Type.REPLAY);
         }
         else if(resultType == MISSED){
             mSelectedBonus = null;
         }
-        else if(mSelectedBonus == Bonus.Type.CROSS_FIRE) {
+        else if(mSelectedBonus == Bonus.Type.BOMB) {
             mSelectedBonus = null;
         }
 
         // Update Probability Coordinates
         mProbableCoordinates = getProbablePoints();
 
+        // We Touched Something !! Yihaaaaa !
         if(resultType == TOUCHED && mLastTouchedShape == null) {
+            // Store the Shape to hunt
             mLastTouchedShape = resultShape;
+            // Try to find Coordinates according to the Shape
+            // We store the result directly in the mLastPlayCoordinates buffer
             mLastPlayedCoordinates = hunt(resultShape);
+            // Remove Point for PlayablesCoordinates
             mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+            // Remove Point from ProbableCoordinates
             mProbableCoordinates.remove(mLastPlayedCoordinates);
+            // Return the coordinates
             return mLastPlayedCoordinates;
         }
+        // Are we hunting something ?
         else if(mLastTouchedShape != null) {
+            // Let's hunt !
             mLastPlayedCoordinates = hunt(mLastTouchedShape);
+            // Clean Duplicates
             mPlayablesCoordinates.remove(mLastPlayedCoordinates);
             mProbableCoordinates.remove(mLastPlayedCoordinates);
+            // Shoooooooot !
             return mLastPlayedCoordinates;
         }
+        // We don't have any Shape for hunting
         if(!mProbableCoordinates.isEmpty()) {
             // BONUS CROSS FIRE
-            if(mAvaiblesBonuses.contains(Bonus.Type.CROSS_FIRE)) {
-                mSelectedBonus = Bonus.Type.CROSS_FIRE;
-                mAvaiblesBonuses.remove(mSelectedBonus);
-                // Get A Point
+            // Let's try to drop a Bomb
+            if(mAvailablesBonuses.contains(Bonus.Type.BOMB)) {
+                // Select the Bomb bonus
+                mSelectedBonus = Bonus.Type.BOMB;
+                // Bomb is not available anymore
+                mAvailablesBonuses.remove(mSelectedBonus);
+                // Get An interesting Point
                 mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
+                // Clean duplicates
                 mPlayablesCoordinates.remove(mLastPlayedCoordinates);
                 // Remove the surrounding Points
                 ArrayList<Point> bombPoints = mGameControler.getSurrondingcoordinates(mLastPlayedCoordinates.x,
                         mLastPlayedCoordinates.y);
                 mPlayablesCoordinates.removeAll(bombPoints);
                 mSurroudingCoordinates.removeAll(bombPoints);
+                // Let's drop a Big Bomb
                 return mLastPlayedCoordinates;
             }
+            // We don't have a bomb, so, sadly try a point in probables Coordinates
             mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
+            // Cleaning
             mPlayablesCoordinates.remove(mLastPlayedCoordinates);
         }
+        // We don't have Interesting Points (should not happen)
         else{
             mLastPlayedCoordinates = getRandomPoint(mPlayablesCoordinates);
         }
         return mLastPlayedCoordinates;
     }
 
+    /**
+     * Method return each point of the Cheating Hash Map, witch contains the position of all the
+     * enemy Tetromino
+     * @return
+     */
     private Point playLevelImpossible() {
         for (Tetromino.Shape shape : mCheatMap.keySet()) {
             if(!mCheatMap.get(shape).isEmpty()) {
@@ -331,30 +373,45 @@ public class AI {
         return null;
     }
 
+    /**
+     * Method hunting the Tetromino depending on the Shape
+     * @param shape
+     * @return
+     */
     private Point hunt(Tetromino.Shape shape) {
+        // Let's Start the Hunting with the Shape
+        // Get the Shape's Founded Coordinates
         ArrayList<Point> foundedCoordinates = mShapeMap.get(shape);
-
+        // Hunt Tetromino O
         if(shape == O) {
+            // We only have found 1 point for now
             if(foundedCoordinates.size() == 1) {
+                // Get surrounding Coordinates
                 if(mLastResult.getType() == TOUCHED) {
                     getSurroundingCoordinates(foundedCoordinates.get(0));
                 }
                 mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
                 return mLastPlayedCoordinates;
             }
+            // We have Two Points
             else if(foundedCoordinates.size() == 2) {
+                // Cleaning
                 mPlayablesCoordinates.addAll(mSurroudingCoordinates);
                 mSurroudingCoordinates.clear();
 
+                // What are this points
                 Point point1 = foundedCoordinates.get(0);
                 Point point2 = foundedCoordinates.get(1);
 
+                // We have to try to find the Y value
                 if(point1.x == point2.x) {
                     mSurroudingCoordinates.addAll(getSurroundingX(point1));
                 }
+                // We have to try to find the X value
                 else if(point1.y == point2.y) {
                     mSurroudingCoordinates.addAll(getSurroundingY(point1));
                 }
+                // We have the X and Y value, so lets find the 2 remaining
                 else {
                     Point p1 = getPointFromPlayableCoordinates(point1.x, point2.y);
                     Point p2 = getPointFromPlayableCoordinates(point2.x, point1.y);
@@ -364,6 +421,7 @@ public class AI {
 
                 return getRandomPoint(mSurroudingCoordinates);
             }
+            //Let's find the last one
             else if(foundedCoordinates.size() == 3){
                 ArrayList<Integer> xCoordinates = new ArrayList<>();
                 ArrayList<Integer> yCoordinates = new ArrayList<>();
@@ -371,39 +429,48 @@ public class AI {
                     xCoordinates.add(point.x);
                     yCoordinates.add(point.y);
                 }
+                // Find X
                 int x = 0;
+                // We need to find the only X occurrence
                 for (int i = 0; i < xCoordinates.size(); i++) {
                     if(Collections.frequency(xCoordinates, xCoordinates.get(i)) == 1){
                         x = xCoordinates.get(i);
                     }
                 }
 
+                // Find Y
                 int y = 0;
+                // We need to find the only Y occurrence
                 for (int i = 0; i < yCoordinates.size(); i++) {
                     if(Collections.frequency(yCoordinates, yCoordinates.get(i)) == 1){
                         y = yCoordinates.get(i);
                     }
                 }
 
+                // We got it !!!
                 return getPointFromPlayableCoordinates(x, y);
             }
         }
+        // Oh my God !! We are hunting the easiest One
         else if(shape == Tetromino.Shape.I) {
             if(foundedCoordinates.size() == 1) {
+                // Try to get the orientation
                 getSurroundingCoordinates(foundedCoordinates.get(0));
                 return getRandomPoint(mSurroudingCoordinates);
             }
+            // We got the orientation
             else if(foundedCoordinates.size() >= 2) {
                 mPlayablesCoordinates.addAll(mSurroudingCoordinates);
                 mSurroudingCoordinates.clear();
                 Point point1 = foundedCoordinates.get(0);
                 Point point2 = foundedCoordinates.get(1);
-
+                // Horizontal
                 if(point1.x == point2.x) {
                     for(Point p : foundedCoordinates) {
                         mSurroudingCoordinates.addAll(getSurroundingY(p));
                     }
                 }
+                // Vertical
                 else if(point1.y == point2.y) {
                     for(Point p : foundedCoordinates) {
                         mSurroudingCoordinates.addAll(getSurroundingX(p));
@@ -411,10 +478,11 @@ public class AI {
                 }
                 return  getRandomPoint(mSurroudingCoordinates);
             }
+            // Let's find the Last One
             else if(foundedCoordinates.size() == 3) {
                 mPlayablesCoordinates.addAll(mSurroudingCoordinates);
                 mSurroudingCoordinates.clear();
-                // TODO
+
                 Point point1 = foundedCoordinates.get(0);
                 Point point2 = foundedCoordinates.get(1);
                 // Vertical
@@ -422,6 +490,7 @@ public class AI {
                     int x = point1.x;
                     int minY = min(foundedCoordinates, "y");
                     int maxY = max(foundedCoordinates, "y");
+                    // Try before and after the 3 known blocks (X axis)
                     if(minY - 1 >= 0 && !mGameControler.alreadyPlayed(x, minY - 1)) {
                         mSurroudingCoordinates.add(new Point(x, minY - 1));
                     }
@@ -434,6 +503,7 @@ public class AI {
                     int y = point1.y;
                     int minX = min(foundedCoordinates, "x");
                     int maxX = max(foundedCoordinates, "x");
+                    // Try before and after the 3 known blocks (Y axis)
                     if(minX - 1 >= 0 && !mGameControler.alreadyPlayed(minX - 1, y)) {
                         mSurroudingCoordinates.add(new Point(minX - 1, y));
                     }
@@ -445,13 +515,15 @@ public class AI {
 
             }
         }
+        // The Tetromino T is kind of funny
         else if(shape == T && foundedCoordinates.size() == 3) {
             mPlayablesCoordinates.addAll(mSurroudingCoordinates);
             mSurroudingCoordinates.clear();
+            // Let's see... what do we got ?
             Point point1 = foundedCoordinates.get(0);
             Point point2 = foundedCoordinates.get(1);
             Point point3 = foundedCoordinates.get(2);
-            // Vertical
+            // Vertical ?
             if(point1.x == point2.x && point2.x == point3.x) {
                 // Find Middle
                 ArrayList<Integer> yCoordinates = new ArrayList<>();
@@ -461,12 +533,14 @@ public class AI {
                 Collections.sort(yCoordinates);
                 int x = point1.x;
                 int y = yCoordinates.get(1);
+                // Let's try to get the last One.
                 if(x - 1 >= 0 && !mGameControler.alreadyPlayed(x - 1,y)) mSurroudingCoordinates.add(new Point(x - 1, y));
                 if(x + 1 < Settings.GRID_SIZE && !mGameControler.alreadyPlayed(x + 1, y)) mSurroudingCoordinates.add
                         (new Point(x + 1, y));
+                // Feel Lucky ?
                 return getRandomPoint(mSurroudingCoordinates);
             }
-            // Horizontal
+            // Horizontal ?
             else if(point1.y == point2.y && point2.y == point3.y) {
                 // Find Middle
                 ArrayList<Integer> xCoordinates = new ArrayList<>();
@@ -476,28 +550,32 @@ public class AI {
                 Collections.sort(xCoordinates);
                 int y = point1.y;
                 int x = xCoordinates.get(1);
+                // The last One is not that far away
                 if(y - 1 >= 0 && !mGameControler.alreadyPlayed(x, y - 1)) mSurroudingCoordinates.add
                         (new Point(x, y - 1));
                 if(y + 1 < Settings.GRID_SIZE && !mGameControler.alreadyPlayed(x, y + 1)) mSurroudingCoordinates.add
                         (new Point(x, y + 1));
+                // Let's try something
                 return getRandomPoint(mSurroudingCoordinates);
             }
 
             // Common Shape
             else {
+                // Let's find the Pair of x and y of the last Block
                 ArrayList<Integer> xCoordinates = new ArrayList<>();
                 ArrayList<Integer> yCoordinates = new ArrayList<>();
                 for (Point point : foundedCoordinates) {
                     xCoordinates.add(point.x);
                     yCoordinates.add(point.y);
                 }
+                // We need the x Axis (2 points with same X)
                 int x = 0;
                 for (int i = 0; i < xCoordinates.size(); i++) {
                     if(Collections.frequency(xCoordinates, xCoordinates.get(i)) == 2){
                         x = xCoordinates.get(i);
                     }
                 }
-
+                // We need the y Axis (2 points with same Y)
                 int y = 0;
                 for (int i = 0; i < yCoordinates.size(); i++) {
                     if(Collections.frequency(yCoordinates, yCoordinates.get(i)) == 2){
@@ -566,6 +644,7 @@ public class AI {
             }
             // Common Shape
             else {
+                // Which rotation ?
                 int rotation = getCommonShapeMatrixRotation(foundedCoordinates);
                 int minX = min(foundedCoordinates, "x");
                 int maxX = max(foundedCoordinates, "x");
@@ -659,6 +738,7 @@ public class AI {
         return null;
     }
 
+    // Common Shape Rotation's Matrix Definition
     private int[][] commonShapeRotation1 = new int[][]{
             {1,1},
             {1,0}
@@ -676,6 +756,12 @@ public class AI {
             {1,1}
     };
 
+    /**
+     * Method returning the rotation's ID if the common shape.
+     * The common shape is present in all Tetrominos except I.
+     * @param points
+     * @return
+     */
     private int getCommonShapeMatrixRotation(ArrayList<Point> points) {
         // Rotations Definitions
         ArrayList<Point> pointsCopy = Utils.copyPoints(points);
@@ -705,6 +791,12 @@ public class AI {
         return - 1;
     }
 
+    /**
+     * Method return the minimum for the selected axis in a Point ArrayList
+     * @param points
+     * @param axis the axis : "x" or "y"
+     * @return
+     */
     private int min(ArrayList<Point> points, String axis) {
         if(axis.equals("x")) {
             int minX = points.get(0).x;
@@ -726,6 +818,12 @@ public class AI {
         }
     }
 
+    /**
+     * Method return the maximum for the selected axis in a Point ArrayList
+     * @param points
+     * @param axis the axis : "x" or "y"
+     * @return
+     */
     private int max(ArrayList<Point> points, String axis) {
         if(axis.equals("x")) {
             int maxX = points.get(0).x;
@@ -747,6 +845,11 @@ public class AI {
         }
     }
 
+    /**
+     * Method returning the empty cells surrounding the given Point on the X axis
+     * @param point
+     * @return
+     */
     private ArrayList<Point> getSurroundingX(Point point) {
         ArrayList<Point> surroundingX = new ArrayList<>();
         int minX = Math.max(point.x - 1, 0);
@@ -760,6 +863,11 @@ public class AI {
         return surroundingX;
     }
 
+    /**
+     * Method returning the empty cells surrounding the given Point on the Y axis
+     * @param point
+     * @return
+     */
     private ArrayList<Point> getSurroundingY(Point point) {
         ArrayList<Point> surroundingY = new ArrayList<>();
         int minY = Math.max(point.y - 1, 0);
@@ -853,21 +961,13 @@ public class AI {
         return returnedPoint;
     }
 
-    private ArrayList<Point> getEvenCoordinates(){
-        ArrayList<Point> evenCoordinates = new ArrayList<>();
-        for(Point point : mPlayablesCoordinates) {
-            if(point.x % 2 == 0 && point.y % 2 == 0) {
-                evenCoordinates.add(new Point(point));
-            }
-            else if(point.x % 2 == 1 && point.y % 2 == 1) {
-                evenCoordinates.add(new Point(point));
-            }
-        }
-        return evenCoordinates;
-    }
-
+    /**
+     * Method returning an ArrayList of Points based on the empty cells' count
+     * @return
+     */
     private ArrayList<Point> getProbablePoints(){
         ArrayList<Point> probablePoints = new ArrayList<>();
+        // Try to find the points with at least 6 empty cells around it
         for(Point p : mPlayablesCoordinates) {
             int minX = Math.max(p.x - 1, 0);
             int maxX = Math.min(p.x + 1, Settings.GRID_SIZE - 1);
@@ -885,9 +985,11 @@ public class AI {
                 probablePoints.add(p);
             }
         }
+        // If non empty return the points
         if(probablePoints.size() != 0) {
             return probablePoints;
         }
+        // If empty we try with less surrounding empty cells
         else {
             for(Point p : mPlayablesCoordinates) {
                 ArrayList<Point> surrondingFreeCells = mGameControler.getSurrondingcoordinates(p.x, p.y);
@@ -899,7 +1001,11 @@ public class AI {
         }
     }
 
-    public GameController getGameControler() {
+    /**
+     * Method returning the AI's Game Controller;
+     * @return
+     */
+    public GameController getGameController() {
         return mGameControler;
     }
 

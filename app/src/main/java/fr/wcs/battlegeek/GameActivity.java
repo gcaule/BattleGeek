@@ -50,7 +50,7 @@ import fr.wcs.battlegeek.ui.MapView;
 import fr.wcs.battlegeek.ui.QuitGameFragment;
 import fr.wcs.battlegeek.utils.Utils;
 
-import static fr.wcs.battlegeek.model.Bonus.Type.CROSS_FIRE;
+import static fr.wcs.battlegeek.model.Bonus.Type.BOMB;
 import static fr.wcs.battlegeek.model.Bonus.Type.MOVE;
 import static fr.wcs.battlegeek.model.Bonus.Type.REPLAY;
 import static fr.wcs.battlegeek.model.Result.Type.BONUS;
@@ -418,7 +418,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (mSelectedBonus == null) {
-                    mSelectedBonus = CROSS_FIRE;
+                    mSelectedBonus = BOMB;
                     mButtonCrossFire.setEnabled(false);
                     mGameView.setDead(mSelectedBonus);
                 }
@@ -461,7 +461,7 @@ public class GameActivity extends AppCompatActivity {
 
         Result.Type resultType = null;
 
-        if (mSelectedBonus != CROSS_FIRE) {
+        if (mSelectedBonus != BOMB) {
             Result result = mAI.shot(x, y);
             mGameController.setPlayResult(result);
             resultType = result.getType();
@@ -489,7 +489,7 @@ public class GameActivity extends AppCompatActivity {
                 showResult(result);
                 resultType = result.getType();
             }
-            mSoundController.playSoundCrossFire();
+            mSoundController.playSoundBigBomb();
         }
 
         if (mSelectedBonus == REPLAY && resultType == MISSED) {
@@ -515,7 +515,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     /**
-     * Method displaying Result on Player Map
+     * Method displaying Result on Player Game View
      * @param result
      */
     private void showResult(Result result) {
@@ -535,7 +535,7 @@ public class GameActivity extends AppCompatActivity {
                         mButtonReplay.setVisibility(View.VISIBLE);
                         mButtonReplay.setEnabled(true);
                         break;
-                    case CROSS_FIRE:
+                    case BOMB:
                         mButtonCrossFire.setVisibility(View.VISIBLE);
                         mButtonCrossFire.setEnabled(true);
                         break;
@@ -592,8 +592,9 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onTick(long l) {
                 if (cursor == 1) {
-                    if(mAI.getSelectedBonus() == CROSS_FIRE) {
-                        ArrayList<Point> points = mAI.getGameControler()
+                    // We need to drop that Bomb ...
+                    if(mAI.getSelectedBonus() == BOMB) {
+                        ArrayList<Point> points = mAI.getGameController()
                                 .getSurrondingcoordinates(aiPlayCoordinates.x, aiPlayCoordinates.y);
                         // Get the results first
                         ArrayList<Result> results = new ArrayList<>();
@@ -610,7 +611,7 @@ public class GameActivity extends AppCompatActivity {
                             showAIResult(result);
                             resultType = result.getType();
                         }
-                        mSoundController.playSoundCrossFire();
+                        mSoundController.playSoundBigBomb();
                     }
                     else {
                         Result aiResult = mGameController.shot(aiPlayCoordinates.x, aiPlayCoordinates.y);
@@ -654,6 +655,10 @@ public class GameActivity extends AppCompatActivity {
         }.start();
     }
 
+    /**
+     * Method displaying AI shot result on the Player Map View
+     * @param result
+     */
     private void showAIResult(Result result) {
         Result.Type resultType = result.getType();
 
@@ -664,7 +669,7 @@ public class GameActivity extends AppCompatActivity {
         else if (resultType == BONUS) {
             mMapView.setDead(result.getX(), result.getY());
             switch (result.getBonusType()) {
-                case CROSS_FIRE:
+                case BOMB:
                     mTextViewAI.setText(R.string.aiBonusCrossFire);
                     showToast(R.string.aiBonusCrossFire);
                     break;
@@ -692,6 +697,9 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method handling Player Statistics Update
+     */
     private void updatePlayerStatistics() {
         mPlayer.addGameTime(mLevel, VICTORY, mTime);
         mPlayer.addVictory(mLevel);
@@ -699,6 +707,9 @@ public class GameActivity extends AppCompatActivity {
         mDataController.updatePlayer(mPlayer);
     }
 
+    /**
+     * Method stating the Timer
+     */
     private void startTimer() {
         mTimerPaused = false;
         mtextViewTimer.setVisibility(View.VISIBLE);
@@ -735,6 +746,10 @@ public class GameActivity extends AppCompatActivity {
         mToast.show();
     }
 
+    /**
+     * Method handling and showing the Icon's selection according to the Animation's speed
+     * @param settingSpeed
+     */
     private void setAnimationIcon(int settingSpeed) {
         if (settingSpeed == Settings.ANIMATION_SLOW) {
             mImageButtonSpeed.setImageResource(R.drawable.snail);
@@ -745,6 +760,10 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method Displaying the Music Icon for selected Volume
+     * @param volume
+     */
     private void setMusicIcon(int volume) {
         if (volume > 66) {
             mImageButtonMusic.setImageResource(R.drawable.music_loud);
@@ -757,6 +776,10 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method Displaying the Effect Icon for selected Volume
+     * @param volume
+     */
     private void setEffectsIcon(int volume) {
         if (volume > 66) {
             mImageButtonEffects.setImageResource(R.drawable.volume_up_interface_symbol);
@@ -769,6 +792,10 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method That try to kill epileptic People
+     * @param repetitions
+     */
     private void blink(int repetitions) {
         if (mBlinkState == true) {
             mBlinkAnimation.setRepeatCount(repetitions);
@@ -812,12 +839,18 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method pausing the game
+     */
     private void pauseGame() {
         mExit = true;
         mSoundController.pauseMusic();
         mSoundController.stopEffects();
     }
 
+    /**
+     * Method resuming the game
+     */
     private void resumeGame() {
         if (!mAlertDialogOpened) {
             mTimerPaused = false;

@@ -64,6 +64,7 @@ public class SoundController {
         // Initialisation of the Shared Preferences
         mSharedPreferences = mContext.getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
+        // Multi API support
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // Audio Attributes definition through a Builder Object
             AudioAttributes.Builder attributesBuilder = new AudioAttributes.Builder();
@@ -80,6 +81,7 @@ public class SoundController {
             mSoundPool = soundPoolBuilder.build();
         }
         else{
+            // It was really easiest ...
             mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 1);
         }
 
@@ -109,7 +111,7 @@ public class SoundController {
         if (volume <= 0) return;
         int soundID;
         // Get the Sound ID according to the Result's Type
-        // TODO : Round Robin (Not play two similar sounds right after)
+        // TODO : Round Robin (Not play two similar sounds consecutively)
         switch (result) {
             case MISSED:
                 soundID = soundID_plouf;
@@ -137,12 +139,18 @@ public class SoundController {
         if(! mEffectsStreams.contains(stream)) mEffectsStreams.add(stream);
     }
 
-    public void playSoundCrossFire(){
+    /**
+     * Play the Bomb Bonus Sound
+     */
+    public void playSoundBigBomb(){
         float volume = (float) mSharedPreferences.getInt(Settings.EFFECTS_TAG, Settings.EFFECTS_DEFAULT) / 100 ;
         int stream = mSoundPool.play(soundID_crossFire, volume, volume, 0, 0, 1);
         if(! mEffectsStreams.contains(stream)) mEffectsStreams.add(stream);
     }
 
+    /**
+     * Stop the Sound Effects
+     */
     public void stopEffects() {
         for(int stream : mEffectsStreams) {
             mSoundPool.stop(stream);
@@ -150,6 +158,10 @@ public class SoundController {
         mEffectsStreams.clear();
     }
 
+    /**
+     * Set the Sound Effect's Volume
+     * @param volume
+     */
     public void setEffectsVolume(int volume) {
         float vol = (float) volume / 100 * 0.7f;
         for(int stream : mEffectsStreams) {
@@ -157,6 +169,9 @@ public class SoundController {
         }
     }
 
+    /**
+     * Surprisingly ... Play the Music
+     */
     public void playMusic(){
         if(mMediaPlayer == null) {
             mMediaPlayer = MediaPlayer.create(mContext, musicID);
@@ -168,16 +183,25 @@ public class SoundController {
         mMediaPlayer.start();
     }
 
+    /**
+     * Pause the Music
+     */
     public void pauseMusic() {
         mMediaPlayer.pause();
     }
 
+    /**
+     * Resume the Music
+     */
     public void resumeMusic() {
         final float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT) / 100 * mMusicMixRatio;
         mMediaPlayer.setVolume(volume, volume);
         mMediaPlayer.start();
     }
 
+    /**
+     * Stop the Music
+     */
     public void stopMusic(){
         if(mMediaPlayer != null){
             mMusicPosition = mMediaPlayer.getCurrentPosition();
@@ -185,6 +209,9 @@ public class SoundController {
         }
     }
 
+    /**
+     * Play defeat Music
+     */
     public void playMusicDefeat(){
         float volume = (float) mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT) / 100 ;
         mMediaPlayer.stop();
@@ -193,6 +220,10 @@ public class SoundController {
         mMediaPlayer.start();
     }
 
+    /**
+     * Set Volume Music
+     * @param volume
+     */
     public void setMusicVolume(int volume){
         if(mMediaPlayer == null) {
             mMediaPlayer = MediaPlayer.create(mContext, musicID);
@@ -201,6 +232,9 @@ public class SoundController {
         mMediaPlayer.setVolume(vol, vol);
     }
 
+    /**
+     * Method Cleaning Sound
+     */
     public void release(){
         mSoundPool.release();
         mMediaPlayer.release();
