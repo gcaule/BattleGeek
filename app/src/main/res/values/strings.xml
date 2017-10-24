@@ -34,9 +34,6 @@
     <!-- Bonus -->
     <string name="multiBonusError">Tu ne peux utiliser qu\'un bonus à la fois</string>
 
-    <string name="settingsAnimationSlowText">Mou</string>
-    <string name="settingsAnimationMedium">Moins Mou</string>
-    <string name="settingsAnnimationFast">Pas Mou</string>
     <string name="settingsAnimationsLabel">Vitesse de jeu</string>
     <string name="quit_game_alert_title">Honte et déshonneur !</string>
     <string name="quit_game_alert_message">Tu vas t\'enfuir lâchement et la honte\npoursuivra ta famille sur trois générations...\nTu veux vraiment abandonner ?</string>
@@ -61,10 +58,12 @@
     <string name="totalTime">Temps Total</string>
     <string name="AIVictory">Aie! Perdu !</string>
     <string name="bestShotsCountLabel">Tirs</string>
-    <string name="blink_text">Flash de la mort</string>
+    <string name="blink_text">Epileptique ?</string>
     <string name="Speed_slow">Vitesse : Mou</string>
     <string name="Speed_medium">Vitesse : Moins Mou</string>
     <string name="Speed_fast">Vitesse : Pas mou</string>
+    <string name="Yes">Oui</string>
+    <string name="No">Non</string>
 
     <string name="credits_title">Credits</string>
     <string name="credits_text">"From www.flaticon.com : \n "Search-Stats", "User", "Trophy" icons made by FreePik,\n "Vibrate" icon made by Those Icons,\n "Home" icon made by Google,\n "Song-note" icon made by Bogdan Rosu" </string>

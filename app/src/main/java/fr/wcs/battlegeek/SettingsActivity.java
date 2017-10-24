@@ -70,8 +70,8 @@ public class SettingsActivity extends AppCompatActivity {
         imageViewVibrate.setColorFilter(filterYellow);
         TextViewBlink.setTextColor(Color.parseColor("#FFEE00"));
 
-        Drawable DrawableSnailLittle = getResources().getDrawable(R.drawable.snaillittle);
-        DrawableSnailLittle.setColorFilter(filterYellow);
+       // Drawable DrawableSnailLittle = getResources().getDrawable(R.drawable.snaillittle);
+        // DrawableSnailLittle.setColorFilter(filterYellow);
         Drawable DrawablePigeonLittle = getResources().getDrawable(R.drawable.pigeonlittle);
         DrawablePigeonLittle.setColorFilter(filterYellow);
         Drawable DrawableRabbitLittle = getResources().getDrawable(R.drawable.rabbitlittle);
