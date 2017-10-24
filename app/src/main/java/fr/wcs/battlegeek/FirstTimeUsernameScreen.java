@@ -60,7 +60,6 @@ public class FirstTimeUsernameScreen extends AppCompatActivity {
 
         final EditText playerName = (EditText) findViewById(R.id.input_playername);
         playerName.setTypeface(mainFont);
-        playerName.setTextColor(Color.parseColor("#FFEE00"));
 
         //Call SharedPref
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);

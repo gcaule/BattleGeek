@@ -61,7 +61,6 @@
                 android:id="@+id/gameRulesGeneral"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lineSpacingExtra="8sp"
                 android:paddingBottom="16dp"
                 android:paddingTop="16dp"
                 android:text="@string/gameRulesGeneral"
@@ -75,7 +74,7 @@
                 android:lineSpacingExtra="8sp"
                 android:text="@string/gameRulesPrinciple"
                 android:textColor="@color/yellow"
-                android:textSize="12sp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/gameRulesModes"
@@ -95,7 +94,7 @@
                 android:paddingTop="16dp"
                 android:text="@string/gameRulesLevels"
                 android:textColor="@color/yellow"
-                android:textSize="12sp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/gameRulesLevelITitle"
@@ -115,7 +114,7 @@
                 android:paddingTop="16dp"
                 android:text="@string/gameRulesLevelI"
                 android:textColor="@color/yellow"
-                android:textSize="12sp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/gameRulesLevelIITitle"
@@ -135,7 +134,7 @@
                 android:paddingTop="16dp"
                 android:text="@string/gameRulesLevelII"
                 android:textColor="@color/yellow"
-                android:textSize="12sp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/gameRulesLevelIIITitle"
@@ -155,7 +154,7 @@
                 android:paddingTop="16dp"
                 android:text="@string/gameRulesLevelIII"
                 android:textColor="@color/yellow"
-                android:textSize="12sp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/gameRulesLevelImpoTitle"
@@ -175,7 +174,7 @@
                 android:paddingTop="16dp"
                 android:text="@string/gameRulesLevelImpo"
                 android:textColor="@color/yellow"
-                android:textSize="12sp"/>
+                android:textSize="14sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -209,7 +208,7 @@
                 android:paddingTop="16dp"
                 android:text="@string/gameRulesSubtilities"
                 android:textColor="@color/yellow"
-                android:textSize="12sp"/>
+                android:textSize="14sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -245,7 +244,7 @@
                 android:paddingTop="16dp"
                 android:text="@string/gameRulesBonusI"
                 android:textColor="@color/yellow"
-                android:textSize="12sp"/>
+                android:textSize="14sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -281,7 +280,7 @@
                 android:paddingTop="16dp"
                 android:text="@string/gameRulesBonusII"
                 android:textColor="@color/yellow"
-                android:textSize="12sp"/>
+                android:textSize="14sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -317,7 +316,7 @@
                 android:paddingTop="16dp"
                 android:text="@string/gameRulesBonusIII"
                 android:textColor="@color/yellow"
-                android:textSize="12sp"/>
+                android:textSize="14sp"/>
 
             <com.codesgood.views.JustifiedTextView
                 android:id="@+id/gameRulesEnd"
@@ -327,7 +326,7 @@
                 android:paddingTop="32dp"
                 android:text="@string/gameRulesEnd"
                 android:textColor="@color/yellow"
-                android:textSize="12sp"/>
+                android:textSize="14sp"/>
 
             <com.codesgood.views.JustifiedTextView
                 android:id="@+id/gameRulesPS"
@@ -337,7 +336,7 @@
                 android:paddingTop="64dp"
                 android:text="@string/gameRulesPS"
                 android:textColor="@color/yellow"
-                android:textSize="11sp"/>
+                android:textSize="14sp"/>
 
         </LinearLayout>
 
