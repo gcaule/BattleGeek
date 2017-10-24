@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import fr.wcs.battlegeek.controller.AI;
+import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.Settings;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -35,6 +35,9 @@ public class MainMenuActivity extends AppCompatActivity {
         ColorFilter filter = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
 
         Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
+
+        // Init Maps with Firebase
+        Maps.init();
 
         ImageButton buttonSettings = (ImageButton) findViewById(R.id.buttonSettings);
         ImageButton buttonTrophy = (ImageButton) findViewById(R.id.buttonTrophy);

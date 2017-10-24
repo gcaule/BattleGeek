@@ -16,7 +16,6 @@ import com.facebook.stetho.Stetho;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.Settings;
 
 import static android.view.View.GONE;
@@ -44,9 +43,6 @@ public class ScreenLauncher extends AppCompatActivity {
         homeSlogan.setTypeface(sloganFont);
 
         TitleAnimation();
-
-        // Init Maps with Firebase
-        Maps.init();
 
         //Access Internal files, preferences and DB of the APP via Chrome : chrome://inspect/#devices
         Stetho.initializeWithDefaults(this);
