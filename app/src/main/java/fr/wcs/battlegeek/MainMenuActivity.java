@@ -36,6 +36,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
 
+        ImageButton buttonRules = (ImageButton) findViewById(R.id.buttonRules);
         ImageButton buttonSettings = (ImageButton) findViewById(R.id.buttonSettings);
         ImageButton buttonTrophy = (ImageButton) findViewById(R.id.buttonTrophy);
         ImageButton buttonStats = (ImageButton) findViewById(R.id.imageButtonStats);
@@ -45,6 +46,7 @@ public class MainMenuActivity extends AppCompatActivity {
         Button buttonImpossibleMode = (Button) findViewById(R.id.buttonImpossibleMode);
         showPlayerName = (TextView) findViewById(R.id.show_playername);
 
+        buttonRules.setColorFilter(filter);
         buttonSettings.setColorFilter(filter);
         buttonTrophy.setColorFilter(filter);
         buttonStats.setColorFilter(filter);
@@ -59,6 +61,15 @@ public class MainMenuActivity extends AppCompatActivity {
         buttonMediumMode.setTextColor(Color.parseColor("#FFEE00"));
         buttonHardMode.setTextColor(Color.parseColor("#FFEE00"));
         buttonImpossibleMode.setTextColor(Color.parseColor("#FFEE00"));
+
+        buttonRules.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainMenuActivity.this, GameRulesActivity.class);
+                startActivity(intent);
+            }
+
+        });
 
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override

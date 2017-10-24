@@ -101,6 +101,20 @@
         app:srcCompat="@drawable/trophy128"/>
 
     <ImageButton
+        android:id="@+id/buttonRules"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:adjustViewBounds="false"
+        android:background="@android:color/transparent"
+        android:cropToPadding="false"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rules"
+        app:layout_constraintRight_toLeftOf="@+id/buttonSettings"
+        android:layout_marginRight="8dp"/>
+
+    <ImageButton
         android:id="@+id/buttonSettings"
         android:layout_width="40dp"
         android:layout_height="40dp"

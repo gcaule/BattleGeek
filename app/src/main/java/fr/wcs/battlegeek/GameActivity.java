@@ -86,9 +86,9 @@ public class GameActivity extends AppCompatActivity {
     private ViewFlipper mViewFlipper;
 
     // Bonus
-    private Button mButtonMove;
-    private Button mButtonReplay;
-    private Button mButtonCrossFire;
+    private ImageButton mButtonMove;
+    private ImageButton mButtonReplay;
+    private ImageButton mButtonCrossFire;
 
     private TextView mTextViewPlayer;
     private TextView mTextViewAI;
@@ -375,7 +375,7 @@ public class GameActivity extends AppCompatActivity {
         mButtonSwitchView.setTypeface(buttonFont);
         mButtonLaunchGame.setTypeface(buttonFont);
 
-        mButtonMove = (Button) findViewById(R.id.buttonBonusMove);
+        mButtonMove = (ImageButton) findViewById(R.id.buttonBonusMove);
         mButtonMove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -395,7 +395,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        mButtonReplay = (Button) findViewById(R.id.buttonBonusReplay);
+        mButtonReplay = (ImageButton) findViewById(R.id.buttonBonusReplay);
         mButtonReplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -410,7 +410,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        mButtonCrossFire = (Button) findViewById(R.id.buttonBonusCrossFire);
+        mButtonCrossFire = (ImageButton) findViewById(R.id.buttonBonusCrossFire);
         mButtonCrossFire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

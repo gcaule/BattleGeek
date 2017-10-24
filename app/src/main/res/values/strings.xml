@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">BattleGeeK</string>
     <string name="launchGame">A l\'assaut !</string>
     <string name="main_title">BattleGeeK</string>
@@ -12,7 +13,7 @@
     <string name="button_impossible">Impossible</string>
 
     <!-- Messages to Player -->
-    <string name="textViewSettings">PARAMETRES</string>
+    <string name="textViewSettings">Parametres</string>
 
     <string name="buttonValidate">C\'est parti !</string>
     <string name="titleRanking">Classement</string>
@@ -34,6 +35,44 @@
     <!-- Bonus -->
     <string name="multiBonusError">Tu ne peux utiliser qu\'un bonus à la fois</string>
 
+    <!-- Règles du jeu -->
+    <string name="gameRulesTitle">Regles du jeu</string>
+    <string name="gameRulesGeneral">Comment on joue ? Je t\'explique ici !</string>
+    <string name="gameRulesPrinciple">Commence par disposer tes pieces sur la grille - tu peux meme les tourner en appuyant dessus.\nEnsuite, tente de detruire les pieces de ton adversaire. Si tu touches, alors tu rejoues.</string>
+
+    <string name="gameRulesGameModes">Les differents niveaux de difficulte</string>
+    <string name="gameRulesLevels">Andy sera ton adversaire binaire : c\'est contre lui que tu joueras.</string>
+
+    <string name="gameRulesLevelITitle">Le mode Gentil - doucement mais pas trop</string>
+    <string name="gameRulesLevelI">Le mode Gentil est - comme son nom l\'indique - plutot gentil : tout le monde tire au hasard et personne ne gagne jamais...\nQuoi qu\'il en soit, moi je ne sous-estimerais pas Andy pour autant...</string>
+
+    <string name="gameRulesLevelIITitle">Le mode Moins Gentil - fini les vacances</string>
+    <string name="gameRulesLevelII">Le mode Moins Gentil est - surprise, surprise - plutot moins gentil : Andy se gratte la tete avant chaque tir, et la defaite n\'est plus a exclure... Auras-tu l\'audace de relever le defi ?</string>
+
+    <string name="gameRulesLevelIIITitle">Le mode Pas Cool - civils s\'abstenir</string>
+    <string name="gameRulesLevelIII">Le mode Pas Cool est - suspense, suspense - vraiment pas cool: Andy sors ses etudes statistiques et ton horoscope pour plus de precision.\nDe plus, il applique des couleurs aleatoires sur les pieces avant de commencer la partie.</string>
+
+    <string name="gameRulesLevelImpoTitle">Le mode Impossible - masochistes et Force de l\'Ordre uniquement</string>
+    <string name="gameRulesLevelImpo">Defi a ton ego ou insulte a ton intelligence ?\nA toi de voir - ecris 105 fois le mot defi sur ta copie et discutes-en avec ton voisin de gauche jusqu\'a la fin du cours.</string>
+
+
+    <string name="gameRulesSubtilitiesTitle">Les Bonus</string>
+    <string name="gameRulesSubtilities">3 bonus sont caches sur la carte aux endroits les plus strategiques. Tire sur la case contenant un bonus pour l\'activer, et appuie sur le bouton correspondant en debut de tour pour l\'utiliser !\nTu ne peux utiliser chaque bonus qu\'une fois et son effet ne dure qu\'un tour.</string>
+
+    <string name="gameRulesBonusITitle">Deplacer</string>
+    <string name="gameRulesBonusI">Ce bonus te permet - je te jure que c\'est vrai - de deplacer tes pieces ou meme les tourner (si y\'a la place).\nNote que tu ne peux pas les poser sur une case qui a deja ete jouee; donc je te conseille de trouver ce bonus en debut de partie (je ne fais pas les regles, je me contente de les ecrire).</string>
+
+    <string name="gameRulesBonusIITitle">Rejouer</string>
+    <string name="gameRulesBonusII">Ce bonus te permet - c\'est un vrai truc de fou - de rejouer. Enfin, si tu rates. Quand tu rates tu rejoues.\nEt puis si tu rates encore, alors tu prends tes affaires et tu sors.\nY\'a des gens qui bossent ici.</string>
+
+    <string name="gameRulesBonusIIITitle">Tir du fourbe</string>
+    <string name="gameRulesBonusIII">Ce tir fera tomber une pluie de ravage et de destruction qui touchera (en plus de la case visee) les cases directement au dessus et en dessous, et puis celle a gauche et celle a droite aussi.\nEn un seul coup.\nC\'est le bonus des deglinguos du ravage (et de la destruction).</string>
+
+
+    <string name="gameRulesEnd">Voila, tu en sais desormais autant que moi, alors fiche-moi le camp et va detruire des tetrominos !\nSignalons egalement qu\'aucun ornythorinque ne fut maltraite pendant la conception de ce jeu - bien que c\'est pas l\'envie qui nous ai manque.</string>
+    <string name="gameRulesPS">Toute l\'equipe de developpement tiens a presenter ses confuses aupres des farouches supporters de ce noble animal qu\'est l\'ornythorinque.\nCette derniere remarque inconsideree ne reflete pas nos convictions et nous vous assurons que nous n\'eprouvons que le plus profond respect pour cette stupide creature.</string>
+
+
     <string name="settingsAnimationSlowText">Mou</string>
     <string name="settingsAnimationMedium">Moins Mou</string>
     <string name="settingsAnnimationFast">Pas Mou</string>
@@ -53,6 +92,7 @@
     <string name="save_settings">Sauvegarder</string>
     <string name="saved_parameters">Paramètres enregistrés !</string>
     <string name="statistics">Statistiques</string>
+
     <string name="gamesParts">Parties</string>
     <string name="victory_defeats">Victoires / Defaites</string>
     <string name="ratio">Ratio</string>
@@ -62,7 +102,9 @@
     <string name="AIVictory">Aie! Perdu !</string>
     <string name="bestShotsCountLabel">Tirs</string>
     <string name="blink_text">Flash de la mort</string>
-    <string name="aiBonusCrossFire">L\'AI a gagné le Bonus Bomb</string>
-    <string name="aiBonusReplay">L\'AI a gagné le Bonus Rejouer</string>
-    <string name="aiBonusMove">L\'AI a gagné le Bonus Bouger</string>
+
+    <string name="aiBonusCrossFire">L\'adversaire dispose du bonus Tir du Fourbe !</string>
+    <string name="aiBonusReplay">L\'adversaire dispose du bonus Rejouer !</string>
+    <string name="aiBonusMove">L\'adversaire dispose du bonus Bouger !</string>
+
 </resources>

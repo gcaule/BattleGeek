@@ -9,44 +9,53 @@
     tools:layout_editor_absoluteY="0dp"
     tools:layout_editor_absoluteX="0dp">
 
-    <Button
+    <ImageButton
         android:id="@+id/buttonBonusMove"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginBottom="21dp"
         android:layout_marginLeft="16dp"
         android:background="@drawable/buttoningame"
+        android:src="@drawable/move_selector"
+        android:scaleType="fitCenter"
+        android:cropToPadding="true"
+        android:padding="10dp"
         android:enabled="false"
-        android:text="\u003c\u003E"
         android:textSize="32sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/buttonBonusReplay"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginBottom="21dp"
         android:layout_marginLeft="8dp"
         android:background="@drawable/buttoningame"
+        android:src="@drawable/replay_selector"
+        android:scaleType="fitCenter"
+        android:cropToPadding="true"
+        android:padding="10dp"
         android:enabled="false"
-        android:text="\u27F3"
         android:textSize="32sp"
         android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/buttonBonusMove"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/buttonBonusCrossFire"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginBottom="21dp"
         android:layout_marginLeft="8dp"
         android:background="@drawable/buttoningame"
+        android:src="@drawable/bomb_selector"
+        android:scaleType="fitCenter"
+        android:cropToPadding="true"
+        android:padding="10dp"
         android:enabled="false"
-        android:text="+"
         android:textSize="32sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
