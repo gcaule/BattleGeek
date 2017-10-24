@@ -73,9 +73,6 @@
     <string name="gameRulesPS">Toute l\'equipe de developpement tiens a presenter ses confuses aupres des farouches supporters de ce noble animal qu\'est l\'ornythorinque.\nCette derniere remarque inconsideree ne reflete pas nos convictions et nous vous assurons que nous n\'eprouvons que le plus profond respect pour cette stupide creature.</string>
 
 
-    <string name="settingsAnimationSlowText">Mou</string>
-    <string name="settingsAnimationMedium">Moins Mou</string>
-    <string name="settingsAnnimationFast">Pas Mou</string>
     <string name="settingsAnimationsLabel">Vitesse de jeu</string>
     <string name="quit_game_alert_title">Honte et déshonneur !</string>
     <string name="quit_game_alert_message">Tu vas t\'enfuir lâchement et la honte\npoursuivra ta famille sur trois générations...\nTu veux vraiment abandonner ?</string>
@@ -101,11 +98,25 @@
     <string name="totalTime">Temps Total</string>
     <string name="AIVictory">Aie! Perdu !</string>
     <string name="bestShotsCountLabel">Tirs</string>
-    <string name="blink_text">Flash de la mort</string>
 
     <string name="aiBonusCrossFire">L\'adversaire dispose du bonus Tir du Fourbe !</string>
     <string name="aiBonusReplay">L\'adversaire dispose du bonus Rejouer !</string>
     <string name="aiBonusMove">L\'adversaire dispose du bonus Bouger !</string>
     <string name="aiUseBonusReplay">L\'aversaire utilise son Bonus Rejouer</string>
 
+    <string name="blink_text">Epileptique ?</string>
+    <string name="Speed_slow">Vitesse : Mou</string>
+    <string name="Speed_medium">Vitesse : Moins Mou</string>
+    <string name="Speed_fast">Vitesse : Pas mou</string>
+    <string name="Yes">Oui</string>
+    <string name="No">Non</string>
+
+    <string name="credits_text">Credits\n\n "From www.flaticon.com :\n\n
+        "Search-Stats", "User", "Trophy" icons made by FreePik,\n\n
+        "Vibrate" icon made by Those Icons,\n\n
+        "Home" icon made by Google,\n\n
+        "Song-note" icon made by Bogdan Rosu" \n\n
+    Musique : \n\n
+    Adphi</string>
+>>>>>>> designFix
 </resources>

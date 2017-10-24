@@ -1,10 +1,12 @@
 package fr.wcs.battlegeek;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -16,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
         final ToggleButton toggleButtonBlink = (ToggleButton) findViewById(R.id.toggleButton_blink);
         final TextView TextViewBlink = (TextView) findViewById(R.id.textView_Blink);
         final Button buttonSave = (Button) findViewById(R.id.buttonSave);
+        final ImageButton buttonCredits = (ImageButton) findViewById(R.id.buttonCredits);
 
         // Radio Buttons
         RadioButton mRadioButtonAnimationSlow = (RadioButton) findViewById(R.id.radioButtonAnimationSlow);
@@ -66,9 +70,16 @@ public class SettingsActivity extends AppCompatActivity {
         imageViewVibrate.setColorFilter(filterYellow);
         TextViewBlink.setTextColor(Color.parseColor("#FFEE00"));
 
+       // Drawable DrawableSnailLittle = getResources().getDrawable(R.drawable.snaillittle);
+        // DrawableSnailLittle.setColorFilter(filterYellow);
+        Drawable DrawablePigeonLittle = getResources().getDrawable(R.drawable.pigeonlittle);
+        DrawablePigeonLittle.setColorFilter(filterYellow);
+        Drawable DrawableRabbitLittle = getResources().getDrawable(R.drawable.rabbitlittle);
+        DrawableRabbitLittle.setColorFilter(filterYellow);
+
         buttonSave.setVisibility(GONE);
 
-        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
+        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
         Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
 
         TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
@@ -77,6 +88,7 @@ public class SettingsActivity extends AppCompatActivity {
         inputPlayerName.setTypeface(mainFont);
         inputPlayerName.setTextColor(Color.parseColor("#FFEE00"));
         textViewSettingsAnimation.setTypeface(titleFont);
+        buttonCredits.setColorFilter(filterYellow);
         //textViewSettingsAnimation.setTextColor(Color.parseColor("#FFEE00"));
         buttonSave.setTypeface(mainFont);
         mRadioButtonAnimationSlow.setTypeface(mainFont);
@@ -95,7 +107,7 @@ public class SettingsActivity extends AppCompatActivity {
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
         //Get Pref for Music Volume
-        int valueMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, 0);
+        int valueMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT);
         seekBarMusic.setProgress(valueMusic);
         seekBarValueMusic.setText(String.valueOf(valueMusic));
 
@@ -104,7 +116,7 @@ public class SettingsActivity extends AppCompatActivity {
         setMusicIcon(valueMusic);
 
         //Get Pref for Effects Volume
-        int valueEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG, 0);
+        int valueEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG, Settings.EFFECTS_DEFAULT);
         seekBarEffects.setProgress(valueEffects);
         seekBarValueEffects.setText(String.valueOf(valueEffects));
 
@@ -225,6 +237,15 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
         });
+
+        //button to go to credits page
+        buttonCredits.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this, CreditsActivity.class));
+            }
+        });
+
 
         //Button to save user preferences
         buttonSave.setOnClickListener(new View.OnClickListener() {
