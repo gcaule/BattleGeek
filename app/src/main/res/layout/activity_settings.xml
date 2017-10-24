@@ -270,8 +270,7 @@
             android:layout_weight="1"
             android:buttonTint="@color/yellow"
             android:onClick="onRadioButtonAnimationSpeedClicked"
-            android:text="@string/settingsAnimationSlowText"
-            android:textSize="9sp"/>
+android:drawableRight="@drawable/snail1"/>
 
         <RadioButton
             android:id="@+id/radioButtonAnimationMedium"
@@ -280,8 +279,7 @@
             android:layout_weight="1"
             android:buttonTint="@color/yellow"
             android:onClick="onRadioButtonAnimationSpeedClicked"
-            android:text="@string/settingsAnimationMedium"
-            android:textSize="9sp"/>
+            android:drawableRight="@drawable/pigeon1"/>
 
         <RadioButton
             android:id="@+id/radioButtonAnimationFast"
@@ -291,8 +289,7 @@
             android:buttonTint="@color/yellow"
             android:checked="true"
             android:onClick="onRadioButtonAnimationSpeedClicked"
-            android:text="@string/settingsAnnimationFast"
-            android:textSize="9sp"/>
+            android:drawableRight="@drawable/rabbit1test"/>
 
     </RadioGroup>
 
