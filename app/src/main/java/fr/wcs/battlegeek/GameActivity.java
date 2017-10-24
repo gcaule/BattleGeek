@@ -530,10 +530,6 @@ public class GameActivity extends AppCompatActivity {
         final Result iaResult = mGameController.shot(aiPlayCoordinates.x, aiPlayCoordinates.y);
         final Result.Type resultType = iaResult.getType();
 
-        if (iaResult.getType() == BONUS){
-            showToast(R.string.toast_bonusIA);
-        }
-
         mAI.setResult(iaResult);
 
 
@@ -609,15 +605,12 @@ public class GameActivity extends AppCompatActivity {
                 switch (bonusType) {
                     case MOVE:
                         mButtonMove.setEnabled(true);
-                        showToast(R.string.toast_bonusMove);
                         break;
                     case REPLAY:
                         mButtonReplay.setEnabled(true);
-                        showToast(R.string.toast_bonusReplay);
                         break;
                     case CROSS_FIRE:
                         mButtonCrossFire.setEnabled(true);
-                        showToast(R.string.toast_bonusCrossfire);
                         break;
                 }
                 break;

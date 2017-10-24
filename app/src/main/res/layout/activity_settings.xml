@@ -269,8 +269,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:buttonTint="@color/yellow"
-            android:onClick="onRadioButtonAnimationSpeedClicked"
-android:drawableRight="@drawable/snail1"/>
+            android:drawableRight="@drawable/snaillittle"
+            android:onClick="onRadioButtonAnimationSpeedClicked"/>
 
         <RadioButton
             android:id="@+id/radioButtonAnimationMedium"
@@ -279,7 +279,7 @@ android:drawableRight="@drawable/snail1"/>
             android:layout_weight="1"
             android:buttonTint="@color/yellow"
             android:onClick="onRadioButtonAnimationSpeedClicked"
-            android:drawableRight="@drawable/pigeon1"/>
+            android:drawableRight="@drawable/pigeonlittle"/>
 
         <RadioButton
             android:id="@+id/radioButtonAnimationFast"
@@ -289,7 +289,7 @@ android:drawableRight="@drawable/snail1"/>
             android:buttonTint="@color/yellow"
             android:checked="true"
             android:onClick="onRadioButtonAnimationSpeedClicked"
-            android:drawableRight="@drawable/rabbit1test"/>
+            android:drawableRight="@drawable/rabbitlittle"/>
 
     </RadioGroup>
 

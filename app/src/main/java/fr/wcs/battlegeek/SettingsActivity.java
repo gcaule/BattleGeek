@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +70,13 @@ public class SettingsActivity extends AppCompatActivity {
         imageViewVibrate.setColorFilter(filterYellow);
         TextViewBlink.setTextColor(Color.parseColor("#FFEE00"));
 
+        Drawable DrawableSnailLittle = getResources().getDrawable(R.drawable.snaillittle);
+        DrawableSnailLittle.setColorFilter(filterYellow);
+        Drawable DrawablePigeonLittle = getResources().getDrawable(R.drawable.pigeonlittle);
+        DrawablePigeonLittle.setColorFilter(filterYellow);
+        Drawable DrawableRabbitLittle = getResources().getDrawable(R.drawable.rabbitlittle);
+        DrawableRabbitLittle.setColorFilter(filterYellow);
+
         buttonSave.setVisibility(GONE);
 
         Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
@@ -98,7 +107,7 @@ public class SettingsActivity extends AppCompatActivity {
         mSharedPreferences = getSharedPreferences(Settings.FILE_NAME, MODE_PRIVATE);
 
         //Get Pref for Music Volume
-        int valueMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, 0);
+        int valueMusic = mSharedPreferences.getInt(Settings.MUSIC_TAG, Settings.MUSIC_DEFAULT);
         seekBarMusic.setProgress(valueMusic);
         seekBarValueMusic.setText(String.valueOf(valueMusic));
 
@@ -107,7 +116,7 @@ public class SettingsActivity extends AppCompatActivity {
         setMusicIcon(valueMusic);
 
         //Get Pref for Effects Volume
-        int valueEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG, 0);
+        int valueEffects = mSharedPreferences.getInt(Settings.EFFECTS_TAG, Settings.EFFECTS_DEFAULT);
         seekBarEffects.setProgress(valueEffects);
         seekBarValueEffects.setText(String.valueOf(valueEffects));
 
