@@ -58,7 +58,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
 
         ColorFilter filterYellow = new LightingColorFilter( Color.YELLOW, Color.YELLOW);
 
-        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
+        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
 
         TextView titleMessage = (TextView) findViewById(R.id.rankingTitle);
         titleMessage.setTypeface(titleFont);

@@ -1,8 +1,8 @@
 <resources>
 
-    <string name="app_name">BattleGeeK</string>
+    <string name="app_name">Arcade Navale</string>
     <string name="launchGame">A l\'assaut !</string>
-    <string name="main_title">BattleGeeK</string>
+    <string name="main_title">Arcade \n Navale</string>
     <string name="player_name">Ton petit nom ici</string>
     <string name="alreadyPlayedMessage">Tu as déjà joué cette case !</string>
     <string name="itemDrownMessage">Tu as détruit cette pièce !</string>
@@ -69,8 +69,8 @@
     <string name="gameRulesBonusIII">Ce tir fera tomber une pluie de ravage et de destruction qui touchera (en plus de la case visee) les cases directement au dessus et en dessous, et puis celle a gauche et celle a droite aussi.\nEn un seul coup.\nC\'est le bonus des deglinguos du ravage (et de la destruction).</string>
 
 
-    <string name="gameRulesEnd">Voila, tu en sais desormais autant que moi, alors fiche-moi le camp et va detruire des tetrominos !\nSignalons egalement qu\'aucun ornythorinque ne fut maltraite pendant la conception de ce jeu - bien que c\'est pas l\'envie qui nous ai manque.</string>
-    <string name="gameRulesPS">Toute l\'equipe de developpement tiens a presenter ses confuses aupres des farouches supporters de ce noble animal qu\'est l\'ornythorinque.\nCette derniere remarque inconsideree ne reflete pas nos convictions et nous vous assurons que nous n\'eprouvons que le plus profond respect pour cette stupide creature.</string>
+    <string name="gameRulesEnd">Voila, tu en sais desormais autant que moi, alors fiche-moi le camp et va detruire des tetrominos !\nSignalons egalement qu\'aucun ornythorinque ne fut maltraite pendant la conception de ce jeu - bien que c\'est pas l\'envie qui nous ait manque.</string>
+    <string name="gameRulesPS">Toute l\'equipe de developpement tient a presenter ses confuses aupres des farouches supporters de ce noble animal qu\'est l\'ornythorinque.\nCette derniere remarque inconsideree ne reflete pas nos convictions et nous vous assurons que nous n\'eprouvons que le plus profond respect pour cette stupide creature.</string>
 
 
     <string name="settingsAnimationsLabel">Vitesse de jeu</string>

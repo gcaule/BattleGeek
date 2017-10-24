@@ -62,7 +62,7 @@ public class StatisticsActivity extends AppCompatActivity implements AdapterView
         spinner.setOnItemSelectedListener(StatisticsActivity.this);
 
         TextView textViewStatistics = (TextView) findViewById(R.id.textViewStatistics);
-        Typeface welcomeMessageFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
+        Typeface welcomeMessageFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
         mTypeface = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
         textViewStatistics.setTypeface(welcomeMessageFont);
 

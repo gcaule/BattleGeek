@@ -70,8 +70,8 @@ public class SettingsActivity extends AppCompatActivity {
         imageViewVibrate.setColorFilter(filterYellow);
         TextViewBlink.setTextColor(Color.parseColor("#FFEE00"));
 
-       // Drawable DrawableSnailLittle = getResources().getDrawable(R.drawable.snaillittle);
-        // DrawableSnailLittle.setColorFilter(filterYellow);
+        Drawable DrawableSnailLittle = getResources().getDrawable(R.drawable.snaillittle);
+        DrawableSnailLittle.setColorFilter(filterYellow);
         Drawable DrawablePigeonLittle = getResources().getDrawable(R.drawable.pigeonlittle);
         DrawablePigeonLittle.setColorFilter(filterYellow);
         Drawable DrawableRabbitLittle = getResources().getDrawable(R.drawable.rabbitlittle);
@@ -79,7 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         buttonSave.setVisibility(GONE);
 
-        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
+        Typeface titleFont = Typeface.createFromAsset(getAssets(), "fonts/emulogic.ttf");
         Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/atarifull.ttf");
 
         TextView titleMessage = (TextView) findViewById(R.id.textViewSettings);
@@ -87,7 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
         titleMessage.setTypeface(titleFont);
         inputPlayerName.setTypeface(mainFont);
         inputPlayerName.setTextColor(Color.parseColor("#FFEE00"));
-        textViewSettingsAnimation.setTypeface(titleFont);
+        textViewSettingsAnimation.setTypeface(mainFont);
         buttonCredits.setColorFilter(filterYellow);
         //textViewSettingsAnimation.setTextColor(Color.parseColor("#FFEE00"));
         buttonSave.setTypeface(mainFont);
