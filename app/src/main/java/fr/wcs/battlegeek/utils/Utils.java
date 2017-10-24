@@ -63,8 +63,8 @@ public class Utils {
         int hours = minutes / 60;
         minutes =minutes % 60;
         seconds = seconds % 60;
-        String time = hours == 0 ? String.format("%d:%02d", minutes, seconds)
-                : String.format("%d:%d:%02d",hours, minutes, seconds);
+        String time = hours == 0 ? String.format("%02d:%02d", minutes, seconds)
+                : String.format("%d:%02d:%02d",hours, minutes, seconds);
         return time;
     }
 
