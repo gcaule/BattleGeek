@@ -106,5 +106,6 @@
     <string name="aiBonusCrossFire">L\'adversaire dispose du bonus Tir du Fourbe !</string>
     <string name="aiBonusReplay">L\'adversaire dispose du bonus Rejouer !</string>
     <string name="aiBonusMove">L\'adversaire dispose du bonus Bouger !</string>
+    <string name="aiUseBonusReplay">L\'aversaire utilise son Bonus Rejouer</string>
 
 </resources>

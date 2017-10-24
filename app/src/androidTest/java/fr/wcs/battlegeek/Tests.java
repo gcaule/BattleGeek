@@ -19,7 +19,7 @@ import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
 
-import static fr.wcs.battlegeek.controller.AI.Level.II;
+import static fr.wcs.battlegeek.controller.AI.Level.I;
 import static fr.wcs.battlegeek.model.Result.Type.DROWN;
 import static fr.wcs.battlegeek.model.Result.Type.VICTORY;
 import static fr.wcs.battlegeek.ui.Tetromino.Shape.NONE;
@@ -43,9 +43,10 @@ public class Tests {
 
     @Test
     public void AILevelI() throws Exception {
-        for (int i = 0; i < Maps.maps.length; i++) {
+        Maps.init();
+        for (int i = 0; i < Maps.maps.size(); i++) {
             AI ai = new AI();
-            ai.setLevel(AI.Level.I);
+            ai.setLevel(I);
             Log.d(TAG, "AILevelI: Using Map " + String.valueOf(i + 1));
             char[][] map = Maps.getMapFromIndex(i);
             GameController gameController = new GameController(map);
@@ -53,8 +54,8 @@ public class Tests {
             int drownCount = 0;
             int shootCount = 0;
             while(result.getType() != VICTORY) {
-                shootCount++ ;
                 Point p = ai.play();
+                shootCount ++;
                 result = gameController.shot(p.x, p.y);
                 ai.setResult(result);
                 if(result.getType() == DROWN || result.getType() == VICTORY) {
@@ -68,11 +69,13 @@ public class Tests {
 
     @Test
     public void AILevelII() throws Exception {
-        for (int i = 0; i < Maps.maps.length; i++) {
-            AI ai = new AI();
-            ai.setLevel(II);
+        Maps.init();
+        for (int i = 0; i < Maps.maps.size(); i++) {
             Log.d(TAG, "AILevelII: Using Map " + String.valueOf(i + 1));
+            AI ai = new AI();
             char[][] map = Maps.getMapFromIndex(i);
+            ai.setPlayerMap(map);
+            ai.setLevel(AI.Level.II);
             GameController gameController = new GameController(map);
             Result result = new Result(0,0,NONE, Result.Type.MISSED,null);
             int drownCount = 0;
@@ -92,34 +95,8 @@ public class Tests {
     }
 
     @Test
-    public void AILevelIII() throws Exception {
-        for (int i = 0; i < Maps.maps.length; i++) {
-            Log.d(TAG, "AILevelIII: Using Map " + String.valueOf(i + 1));
-            AI ai = new AI();
-            char[][] map = Maps.getMapFromIndex(i);
-            ai.setPlayerMap(map);
-            ai.setLevel(AI.Level.III);
-            GameController gameController = new GameController(map);
-            Result result = new Result(0,0,NONE, Result.Type.MISSED,null);
-            int drownCount = 0;
-            int shootCount = 0;
-            while(result.getType() != VICTORY) {
-                Point p = ai.play();
-                shootCount ++;
-                result = gameController.shot(p.x, p.y);
-                ai.setResult(result);
-                if(result.getType() == DROWN || result.getType() == VICTORY) {
-                    drownCount ++;
-                }
-            }
-            Log.d(TAG, "AILevelIII: Total Shoot Count: " + shootCount);
-            assertEquals(7, drownCount);
-        }
-    }
-
-    @Test
     public void AILevelImpossible() throws Exception {
-        for (int i = 0; i < Maps.maps.length; i++) {
+        for (int i = 0; i < Maps.maps.size(); i++) {
             Log.d(TAG, "AILevelImpossible: Using Map " + String.valueOf(i + 1));
             AI ai = new AI();
             char[][] map = Maps.getMapFromIndex(i);
@@ -146,9 +123,10 @@ public class Tests {
 
     @Test
     public void testMaps() throws Exception {
+        Maps.init();
         char[] symbols = new char[] {'I', 'O', 'T', 'S', 'Z', 'L', 'J', ' '};
         boolean valid = true;
-        for (int i = 0; i < Maps.maps.length; i++) {
+        for (int i = 0; i < Maps.maps.size(); i++) {
             char[][] map = Maps.getMapFromIndex(i);
             for (int j = 0; j < Settings.GRID_SIZE; j++) {
                 for (int k = 0; k < Settings.GRID_SIZE; k++) {

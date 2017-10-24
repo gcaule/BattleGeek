@@ -1,8 +1,19 @@
 package fr.wcs.battlegeek.model;
 
 import android.graphics.Point;
+import android.util.Log;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import fr.wcs.battlegeek.controller.DataController;
 
 /**
  * Created by apprenti on 27/09/17.
@@ -20,6 +31,10 @@ import java.util.ArrayList;
  *  - a lowercase Tetromino Shape symbol's character represent a Tetromino Block Shoted
  */
 public class Maps {
+
+    private static final String TAG = Settings.TAG;
+
+    private static final Gson gson = new Gson();
 
     // Pseudo Random Maps Definition
     private static char[][] map1 = new char[][]{
@@ -414,17 +429,19 @@ public class Maps {
 
 
     // Store all the predefined Maps in an array
-    public static char[][][] maps = new char [][][] {map1, map2, map3, map4, map5, map6, map7, map8, map9, map10,
+    private static char[][][] _maps = new char [][][] {map1, map2, map3, map4, map5, map6, map7, map8, map9, map10,
             map11, map12, map13, map14, map15, map16, map17, map18, map19, map20,
             map21, map22, map23, map24, map25, map26, map27, map28, map29, map30};
+
+    public static ArrayList<char[][]> maps = new ArrayList<>();
 
     /**
      * Method to get a Random Predefined Map
      * @return the Map as character two dimentional array
      */
     public static char[][] getMap() {
-        int random = (int)(Math.random() * (maps.length - 1));
-        char[][] map = copy(maps[random]);
+        int random = (int)(Math.random() * (maps.size() - 1));
+        char[][] map = copy(maps.get(random));
         return map;
     }
 
@@ -458,9 +475,65 @@ public class Maps {
         return copy;
     }
 
+    public static void init(){
+        maps = new ArrayList<>(Arrays.asList(_maps));
+        FirebaseDatabase database = DataController.getDatabase();
+        DatabaseReference mapsReference = database.getReference("Maps");
+        mapsReference.keepSynced(true);
+        mapsReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChildren()) {
+                    for(DataSnapshot data : dataSnapshot.getChildren()) {
+                        String gsonMap = data.getValue(String.class);
+                        if(isNewMap(gsonMap)) {
+                            char[][] map = gson.fromJson(gsonMap, char[][].class);
+                            maps.add(map);
+                        }
+                    }
+                }
+                Log.d(TAG, "onDataChange: Avaibles Maps Count: " + maps.size());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    public static void addMap(char[][] map) {
+        final FirebaseDatabase database = DataController.getDatabase();
+        final DatabaseReference mapsReference = database.getReference("Maps");
+        mapsReference.keepSynced(true);
+        final String mapJson = gson.toJson(map);
+        final String hash = String.valueOf(mapJson.hashCode());
+        mapsReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.hasChild(hash)) {
+                    mapsReference.child(hash).setValue(mapJson);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private static boolean isNewMap(String mapJson) {
+        for(char[][] m : maps) {
+            String jm = gson.toJson(m);
+            if(jm.hashCode() == mapJson.hashCode()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // TODO DELETE
     public static char[][] getMapFromIndex(int index) {
-        return copy(maps[index]);
+        return copy(maps.get(index));
     }
 
 }

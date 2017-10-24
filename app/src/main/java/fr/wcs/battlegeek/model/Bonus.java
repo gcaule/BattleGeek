@@ -14,7 +14,7 @@ public class Bonus {
     public enum Type {
         MOVE ("-"),
         REPLAY ("="),
-        CROSS_FIRE("+");
+        BOMB("+");
 
         private String name = "";
 
@@ -35,7 +35,7 @@ public class Bonus {
     public static Bonus.Type getBonus(char symbol) {
         if (symbol == '-') return Type.MOVE;
         else if (symbol == '=') return Type.REPLAY;
-        else if (symbol == '+') return Type.CROSS_FIRE;
+        else if (symbol == '+') return Type.BOMB;
         else return null;
     }
 

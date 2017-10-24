@@ -61,7 +61,6 @@ public class GameController {
         Bonus.Type resultBonus = null;
 
         // Map's symbol analysis
-
         // If the symbol is a space character, the shot missed
         if (symbol == ' ') {
             mMap[y][x] = '_';
