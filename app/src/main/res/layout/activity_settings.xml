@@ -8,105 +8,121 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg"
     android:orientation="vertical"
-    tools:context="fr.wcs.battlegeek.SettingsActivity">
+    tools:context="fr.wcs.battlegeek.SettingsActivity"
+    tools:layout_editor_absoluteY="25dp"
+    tools:layout_editor_absoluteX="0dp">
 
     <TextView
         android:id="@+id/textViewSettingsAnimation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:text="@string/settingsAnimationsLabel"
         android:textAlignment="center"
         android:textColor="@android:color/holo_orange_dark"
         android:textSize="20sp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelinev5"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButton_vibrator"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="16dp"
+        app:layout_constraintHorizontal_bias="0.502"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelinev6"/>
 
     <ImageButton
         android:id="@+id/buttonHome"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:adjustViewBounds="false"
         android:background="@android:color/transparent"
         android:cropToPadding="false"
         android:scaleType="fitCenter"
+        app:srcCompat="@drawable/home_button"
+        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/home_button"/>
+        android:layout_marginTop="8dp"/>
 
     <ImageView
         android:id="@+id/imageViewMusic"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="50dp"
         android:background="@android:color/transparent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSettings"
-        app:srcCompat="@drawable/song_note128"/>
+        app:srcCompat="@drawable/song_note128"
+        app:layout_constraintTop_toTopOf="@+id/guidelinev2"
+        app:layout_constraintRight_toLeftOf="@+id/guidelineh1"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelinev3"/>
 
     <ImageView
         android:id="@+id/imageViewEffects"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
         android:adjustViewBounds="false"
         android:background="@android:color/transparent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewMusic"
         app:srcCompat="@drawable/volume_up_interface_symbol"
-        />
+        app:layout_constraintTop_toTopOf="@+id/guidelinev3"
+        app:layout_constraintRight_toLeftOf="@+id/guidelineh1"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelinev4"/>
 
     <ImageView
         android:id="@+id/imageViewUser"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="32dp"
         android:adjustViewBounds="false"
         android:background="@android:color/transparent"
         android:cropToPadding="false"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/inputPlayerName"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        app:srcCompat="@drawable/user"/>
+        app:srcCompat="@drawable/user"
+        app:layout_constraintTop_toTopOf="@+id/guidelinev7"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toLeftOf="@+id/guidelineh1"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelinev8"
+        app:layout_constraintVertical_bias="0.473"/>
 
     <SeekBar
         android:id="@+id/seekBarEffects"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
         android:progressTint="@color/yellow"
         android:thumbTint="@color/yellow"
-        app:layout_constraintLeft_toRightOf="@+id/imageViewEffects"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarMusic"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelinev3"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guidelineh1"
+        app:layout_constraintRight_toLeftOf="@+id/guidelineh3"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelinev4"/>
 
     <SeekBar
         android:id="@+id/seekBarMusic"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="50dp"
         android:defaultFocusHighlightEnabled="false"
         android:focusedByDefault="false"
         android:progressTint="@color/yellow"
         android:thumbTint="@color/yellow"
-        app:layout_constraintLeft_toRightOf="@+id/imageViewMusic"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSettings"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelinev2"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guidelineh1"
+        app:layout_constraintRight_toLeftOf="@+id/guidelineh3"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelinev3"/>
 
 
     <EditText
         android:id="@+id/inputPlayerName"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:backgroundTint="@color/yellow"
         android:defaultFocusHighlightEnabled="false"
         android:ems="10"
@@ -116,33 +132,37 @@
         android:maxLines="1"
         android:textColorHint="@android:color/holo_orange_light"
         android:textSize="14sp"
-        app:layout_constraintLeft_toRightOf="@+id/imageViewUser"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelinev7"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="32dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guidelineh1"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelinev8"
+        app:layout_constraintVertical_bias="0.558"
+        app:layout_constraintRight_toLeftOf="@+id/guidelineh3"
+        android:layout_marginRight="8dp"
+        app:layout_constraintHorizontal_bias="0.538"/>
 
     <TextView
         android:id="@+id/textViewSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="56dp"
         android:text="@string/textViewSettings"
         android:textColor="@android:color/holo_orange_dark"
         android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/buttonHome"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_marginLeft="32dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guidelineh1"
+        app:layout_constraintRight_toLeftOf="@+id/guidelineh3"
+        android:layout_marginRight="8dp"
+        app:layout_constraintTop_toTopOf="@+id/guidelinev1"
+        android:layout_marginTop="0dp"
+        app:layout_constraintHorizontal_bias="0.512"/>
 
     <Button
         android:id="@+id/buttonSave"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
         android:background="@drawable/buttonshapesave"
         android:padding="10dp"
         android:paddingBottom="10dp"
@@ -152,118 +172,114 @@
         android:text="@string/save_settings"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelinev8"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputPlayerName"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.822"/>
 
     <TextView
         android:id="@+id/seekBarValueMusic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="55dp"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/seekBarMusic"
-        app:layout_constraintHorizontal_bias="0.46"
-        app:layout_constraintLeft_toRightOf="@+id/seekBarMusic"
+        app:layout_constraintTop_toTopOf="@+id/guidelinev2"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guidelineh3"
+        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSettings"/>
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelinev3"
+        tools:text="42"/>
 
     <TextView
         android:id="@+id/seekBarValueEffects"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="37dp"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/seekBarEffects"
-        app:layout_constraintHorizontal_bias="0.46"
-        app:layout_constraintLeft_toRightOf="@+id/seekBarEffects"
+        app:layout_constraintTop_toTopOf="@+id/guidelinev3"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guidelineh3"
+        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarValueMusic"/>
+        tools:text="42"
+        android:layout_marginTop="0dp"
+        app:layout_constraintHorizontal_bias="0.49"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelinev4"/>
 
     <ImageView
         android:id="@+id/imageView_vibrate"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/toggleButton_vibrator"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewEffects"
         app:srcCompat="@drawable/vibrate"
-        />
+        app:layout_constraintTop_toTopOf="@+id/guidelinev4"
+        app:layout_constraintRight_toLeftOf="@+id/guidelineh1"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelinev5"
+        app:layout_constraintVertical_bias="0.333"/>
 
     <ToggleButton
         android:id="@+id/toggleButton_vibrator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="42dp"
         android:onClick="changeVibrateState"
         android:text="ToggleButton"
-        app:layout_constraintLeft_toRightOf="@+id/imageView_vibrate"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarEffects"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelinev4"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="32dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guidelineh1"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelinev5"
+        app:layout_constraintVertical_bias="0.6"/>
 
     <TextView
         android:id="@+id/textView_Blink"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/blink_text"
         android:textAlignment="center"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/toggleButton_blink"
-        app:layout_constraintLeft_toRightOf="@+id/toggleButton_vibrator"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarEffects"
-        app:layout_constraintVertical_bias="0.657"/>
+        android:textSize="10sp"
+        app:layout_constraintLeft_toLeftOf="@+id/guidelineh2"
+        app:layout_constraintTop_toTopOf="@+id/guidelinev4"/>
 
     <ToggleButton
         android:id="@+id/toggleButton_blink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="42dp"
         android:onClick="changeBlinkState"
         android:text="ToggleButton"
         android:textOn="@string/No"
         android:textOff="@string/Yes"
-        app:layout_constraintLeft_toRightOf="@+id/textView_Blink"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarEffects"/>
+        android:layout_marginLeft="32dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guidelineh2"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelinev5"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView_Blink"/>
 
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelinev6"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelinev7"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSettingsAnimation"
-        app:layout_constraintVertical_bias="0.105">
+        android:layout_marginTop="16dp">
 
         <RadioButton
             android:id="@+id/radioButtonAnimationSlow"
@@ -302,12 +318,115 @@
         android:id="@+id/buttonCredits"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:layout_constraintRight_toLeftOf="@+id/buttonHome"
+        app:srcCompat="@drawable/copyright_symbol"
+        android:layout_marginEnd="8dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/copyright_symbol"/>
+        android:layout_marginTop="8dp"
+        app:layout_constraintRight_toLeftOf="@+id/buttonHome"
+        android:layout_marginRight="8dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineh1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="46dp"
+        app:layout_constraintGuide_percent="0.12"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineh2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="180dp"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineh3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="297dp"
+        app:layout_constraintGuide_percent="0.80"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinev1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="56dp"
+        app:layout_constraintGuide_percent="0.1"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinev2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="123dp"
+        app:layout_constraintGuide_percent="0.2"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="122dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinev3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="172dp"
+        app:layout_constraintGuide_percent="0.3"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="172dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinev4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="218dp"
+        app:layout_constraintGuide_percent="0.4"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="218dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinev5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="281dp"
+        app:layout_constraintGuide_percent="0.55"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="280dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinev6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="325dp"
+        app:layout_constraintGuide_percent="0.6"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="324dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinev7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="408dp"
+        app:layout_constraintGuide_percent="0.8"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="408dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelinev8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="463dp"
+        app:layout_constraintGuide_percent="0.85"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="462dp"/>
 
 </android.support.constraint.ConstraintLayout>

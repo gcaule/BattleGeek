@@ -20,16 +20,13 @@ public class CreditsActivity extends AppCompatActivity {
 
         final ImageButton buttonHome = (ImageButton) findViewById(R.id.buttonHome);
         final TextView CreditsText = (TextView) findViewById(R.id.CreditsText);
-        final TextView CreditsTitle = (TextView) findViewById(R.id.CreditsTitle);
 
         ColorFilter filterYellow = new LightingColorFilter(Color.YELLOW, Color.YELLOW);
         Typeface mainFont = Typeface.createFromAsset(getAssets(), "fonts/openShip.otf");
 
         buttonHome.setColorFilter(filterYellow);
         CreditsText.setTextColor(Color.parseColor("#FFEE00"));
-        CreditsTitle.setTextColor(Color.parseColor("#FFEE00"));
         CreditsText.setTypeface(mainFont);
-        CreditsTitle.setTypeface(mainFont);
 
 
         //button to go to credits page

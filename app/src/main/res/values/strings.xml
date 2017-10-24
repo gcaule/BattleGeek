@@ -66,5 +66,11 @@
     <string name="No">Non</string>
 
     <string name="credits_title">Credits</string>
-    <string name="credits_text">"From www.flaticon.com : \n "Search-Stats", "User", "Trophy" icons made by FreePik,\n "Vibrate" icon made by Those Icons,\n "Home" icon made by Google,\n "Song-note" icon made by Bogdan Rosu" </string>
+    <string name="credits_text">Credits\n\n "From www.flaticon.com :\n\n
+        "Search-Stats", "User", "Trophy" icons made by FreePik,\n\n
+        "Vibrate" icon made by Those Icons,\n\n
+        "Home" icon made by Google,\n\n
+        "Song-note" icon made by Bogdan Rosu" \n\n
+    Musique : \n\n
+    Adphi</string>
 </resources>
