@@ -56,23 +56,23 @@ public class CustomListAdapter extends BaseAdapter {
 
             scoreView = inflater.inflate(R.layout.list_row, parent, false);
             holder = new ViewHolder();
-            holder.name = (TextView) scoreView.findViewById(R.id.textViewName);
+            holder.name = scoreView.findViewById(R.id.textViewName);
             holder.name.setTextColor(Color.parseColor("#39ce39"));
             holder.name.setTypeface(mainFont);
             holder.name.setTextSize(8);
-            holder.ratio = (TextView) scoreView.findViewById(R.id.textViewRatio);
+            holder.ratio = scoreView.findViewById(R.id.textViewRatio);
             holder.ratio.setTextColor(Color.parseColor("#39ce39"));
             holder.ratio.setTypeface(mainFont);
             holder.ratio.setTextSize(8);
-            holder.bestTime = (TextView) scoreView.findViewById(R.id.textViewBestTime);
+            holder.bestTime = scoreView.findViewById(R.id.textViewBestTime);
             holder.bestTime.setTextColor(Color.parseColor("#39ce39"));
             holder.bestTime.setTypeface(mainFont);
             holder.bestTime.setTextSize(8);
-            holder.shotsCount = (TextView) scoreView.findViewById(R.id.textViewShotsCount);
+            holder.shotsCount = scoreView.findViewById(R.id.textViewShotsCount);
             holder.shotsCount.setTextColor(Color.parseColor("#39ce39"));
             holder.shotsCount.setTypeface(mainFont);
             holder.shotsCount.setTextSize(8);
-            holder.levelGames = (TextView) scoreView.findViewById(R.id.textViewLevelGames);
+            holder.levelGames = scoreView.findViewById(R.id.textViewLevelGames);
             holder.levelGames.setTextColor(Color.parseColor("#39ce39"));
             holder.levelGames.setTypeface(mainFont);
             holder.levelGames.setTextSize(8);

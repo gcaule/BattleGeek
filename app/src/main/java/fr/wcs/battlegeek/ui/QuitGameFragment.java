@@ -48,7 +48,7 @@ public class QuitGameFragment extends DialogFragment {
     }
 
     public interface OnCancelListener {
-        public void onCancel();
+        void onCancel();
     }
 
     public void setOnCancelListener(OnCancelListener listener){

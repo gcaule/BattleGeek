@@ -25,7 +25,7 @@ public class Item implements View.OnTouchListener {
     enum State {
         ALIVE,
         HIT,
-        DEAD;
+        DEAD
     }
 
     // Item State

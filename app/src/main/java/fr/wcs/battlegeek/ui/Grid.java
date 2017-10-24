@@ -131,9 +131,7 @@ public class Grid {
         PointF pointF = mapToGrid(x, y);
         float pX = pointF.x;
         float pY = pointF.y;
-        if (pX >= 0 && pX < size && pY >= 0 && pY < size) {
-            return true;
-        } else return false;
+        return pX >= 0 && pX < size && pY >= 0 && pY < size;
     }
 
     /**
@@ -142,9 +140,7 @@ public class Grid {
      * @return
      */
     public boolean contains(PointF pointF) {
-        if (pointF.x >= 0 && pointF.x < size && pointF.y >= 0 && pointF.y < size) {
-            return true;
-        } else return false;
+        return pointF.x >= 0 && pointF.x < size && pointF.y >= 0 && pointF.y < size;
     }
 
     /**

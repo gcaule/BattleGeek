@@ -19,7 +19,7 @@ public class Result {
      * The Result Types
      */
     public enum Type {
-        TOUCHED, MISSED, DROWN, VICTORY, DEFEATED, BONUS;
+        TOUCHED, MISSED, DROWN, VICTORY, DEFEATED, BONUS
     }
 
     // Shape and Type attributes

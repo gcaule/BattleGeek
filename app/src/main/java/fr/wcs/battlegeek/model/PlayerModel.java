@@ -12,7 +12,7 @@ public class PlayerModel {
 
     // Enumeration for Comparators
     public enum ComparatorFactor {
-        BEST_TIME, VICTORIES, RATIO, SHOTS_COUNT, NAME;
+        BEST_TIME, VICTORIES, RATIO, SHOTS_COUNT, NAME
     }
     // Level for Sorting
     private static AI.Level comparatorLevel = AI.Level.I;

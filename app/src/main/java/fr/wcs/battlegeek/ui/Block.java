@@ -161,10 +161,8 @@ public class Block implements Cloneable{
      * @return
      */
     public boolean contains(PointF pointF) {
-        if(this.mX <= pointF.x && pointF.x < this.mX + 1 &&
-                this.mY <= pointF.y && pointF.y < this.mY + 1)
-            return true;
-        else return false;
+        return this.mX <= pointF.x && pointF.x < this.mX + 1 &&
+                this.mY <= pointF.y && pointF.y < this.mY + 1;
     }
 
     /**
@@ -194,7 +192,7 @@ public class Block implements Cloneable{
      * Enumeration Block's Stats : ALIVE (initial State), DEAD (When the Block in the Item is Touch)
      */
     enum State {
-        ALIVE, DEAD;
+        ALIVE, DEAD
     }
 
     /**
