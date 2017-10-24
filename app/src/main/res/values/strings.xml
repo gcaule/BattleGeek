@@ -2,7 +2,7 @@
 
     <string name="app_name">Arcade Navale</string>
     <string name="launchGame">A l\'assaut !</string>
-    <string name="main_title">Arcade \n Navale</string>
+    <string name="main_title">Arcade\nNavale</string>
     <string name="player_name">Ton petit nom ici</string>
     <string name="alreadyPlayedMessage">Tu as déjà joué cette case !</string>
     <string name="itemDrownMessage">Tu as détruit cette pièce !</string>
@@ -111,12 +111,5 @@
     <string name="Yes">Oui</string>
     <string name="No">Non</string>
 
-    <string name="credits_text">Credits\n\n "From www.flaticon.com :\n\n
-        "Search-Stats", "User", "Trophy" icons made by FreePik,\n\n
-        "Vibrate" icon made by Those Icons,\n\n
-        "Home" icon made by Google,\n\n
-        "Song-note" icon made by Bogdan Rosu" \n\n
-    Musique : \n\n
-    Adphi</string>
->>>>>>> designFix
+    <string name="credits_text">Credits\n\n"From www.flaticon.com :\nSearch-Stats, User, Trophy icons made by FreePik\nVibrate icon made by Those Icons\nHome icon made by Google\nSong-note icon made by Bogdan Rosu"\n\nMusique :\nAdphi</string>
 </resources>

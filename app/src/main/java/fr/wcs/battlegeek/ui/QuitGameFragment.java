@@ -21,7 +21,7 @@ public class QuitGameFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setIcon(R.drawable.smiley_neutral);
+        builder.setIcon(R.drawable.smiley_neutral1);
         builder.setTitle(R.string.quit_game_alert_title);
         builder.setMessage(R.string.quit_game_alert_message);
         builder.setPositiveButton(R.string.ok_exit, new DialogInterface.OnClickListener() {
