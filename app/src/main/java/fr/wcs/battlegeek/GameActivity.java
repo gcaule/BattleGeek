@@ -39,7 +39,6 @@ import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.controller.GameController;
 import fr.wcs.battlegeek.controller.SoundController;
 import fr.wcs.battlegeek.model.Bonus;
-import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
@@ -282,9 +281,6 @@ public class GameActivity extends AppCompatActivity {
                         mViewFlipper.showNext();
 
                     }
-                    // TODO remove Test Code Configuration
-                    /*canPlay = false;
-                    aiPlay();*/
 
                     mTextViewAI.setText(R.string.AITurn);
                     startTimer();
@@ -582,7 +578,6 @@ public class GameActivity extends AppCompatActivity {
         mTextViewAI.setText(R.string.AITurn);
 
         final Point aiPlayCoordinates = mAI.play();
-
         // Notify Player AI Using REPLAY Bonus
         if(mAI.getSelectedBonus() == REPLAY) {
             showToast(R.string.aiUseBonusReplay);

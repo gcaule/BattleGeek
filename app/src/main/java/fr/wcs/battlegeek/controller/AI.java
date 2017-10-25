@@ -61,7 +61,7 @@ public class AI {
 
 
     private GameController mGameControler;
-    private ArrayList<Point> mPlayablesCoordinates;
+    private ArrayList<Point> mPlayableCoordinates;
     private ArrayList<Point> mProbableCoordinates;
     private char[][] mPlayerMap;
     private ArrayList<Point> mSurroudingCoordinates = new ArrayList<>();
@@ -79,7 +79,7 @@ public class AI {
         mGameControler.setBonus();
         Utils.printMap(mGameControler.getMap());
         // Get all Playables Coordinates
-        mPlayablesCoordinates = Maps.getPlayableCoordinates();
+        mPlayableCoordinates = Maps.getPlayableCoordinates();
         mSurroudingCoordinates = new ArrayList<>();
     }
 
@@ -115,50 +115,6 @@ public class AI {
     }
 
     /**
-     * Method returning the Selected Bonus of th AI.
-     * @return
-     */
-    public Bonus.Type getSelectedBonus() {
-        return mSelectedBonus;
-    }
-
-    /**
-     * Method to call after the Player's game controller process the AI play method
-     * this allow the AI'game processor to store the result in his Storage Map and process
-     * the result in order to adapt the AI strategy
-     *
-     * @param result
-     */
-    public void setResult(Result result) {
-        mGameControler.setPlayResult(result);
-        mLastResult = result;
-        mLastPlayedCoordinates = new Point(result.getX(), result.getY());
-        Result.Type resultType = result.getType();
-        Tetromino.Shape resultShape = result.getShape();
-        if(resultType == BONUS) {
-            Bonus.Type bonus = mLastResult.getBonusType();
-            // We don't want to implement MOVE Bonus
-            if(bonus != Bonus.Type.MOVE) {
-                mAvailablesBonuses.add(bonus);
-            }
-        }
-
-        if(resultType == TOUCHED) {
-            if (!mShapeMap.containsKey(resultShape)) {
-                mShapeMap.put(resultShape, new ArrayList<Point>());
-            }
-            mShapeMap.get(resultShape).add(mLastPlayedCoordinates);
-        }
-
-        if(resultType == DROWN) {
-            mShapeMap.remove(mLastTouchedShape);
-            mPlayablesCoordinates.addAll(mSurroudingCoordinates);
-            mSurroudingCoordinates.clear();
-            mLastTouchedShape = mShapeMap.isEmpty() ? null : (Tetromino.Shape) mShapeMap.keySet().toArray()[0];
-        }
-    }
-
-    /**
      * Method setting the AI Level
      *
      * @param level
@@ -191,6 +147,53 @@ public class AI {
     }
 
     /**
+     * Method returning the Selected Bonus of th AI.
+     * @return
+     */
+    public Bonus.Type getSelectedBonus() {
+        return mSelectedBonus;
+    }
+
+    /**
+     * Method to call after the Player's game controller process the AI play method
+     * this allow the AI'game processor to store the result in his Storage Map and process
+     * the result in order to adapt the AI strategy
+     *
+     * @param result
+     */
+    public void setResult(Result result) {
+        mGameControler.setPlayResult(result);
+        mLastResult = result;
+        mLastPlayedCoordinates = new Point(result.getX(), result.getY());
+        mPlayableCoordinates.remove(mLastPlayedCoordinates);
+        mProbableCoordinates.remove(mLastPlayedCoordinates);
+        mSurroudingCoordinates.remove(mLastPlayedCoordinates);
+        Result.Type resultType = result.getType();
+        Tetromino.Shape resultShape = result.getShape();
+        if(resultType == BONUS) {
+            Bonus.Type bonus = mLastResult.getBonusType();
+            // We don't want to implement MOVE Bonus
+            if(bonus != Bonus.Type.MOVE) {
+                mAvailablesBonuses.add(bonus);
+            }
+        }
+
+        if(resultType == TOUCHED) {
+            if (!mShapeMap.containsKey(resultShape)) {
+                mShapeMap.put(resultShape, new ArrayList<Point>());
+            }
+            mShapeMap.get(resultShape).add(mLastPlayedCoordinates);
+        }
+
+        if(resultType == DROWN) {
+            mShapeMap.remove(resultShape);
+            mPlayableCoordinates.addAll(mSurroudingCoordinates);
+            mSurroudingCoordinates.clear();
+            mLastTouchedShape = mShapeMap.isEmpty() ? null : (Tetromino.Shape) mShapeMap.keySet().toArray()[0];
+        }
+    }
+
+    /**
      * Method that process the shot's result to return AI plays Coordinates
      * Level 1 : Play randomly then play all around when TOUCHED a Tetromino
      * @return
@@ -219,11 +222,11 @@ public class AI {
             mAvailablesBonuses.remove(mSelectedBonus);
             // Get A Point
             mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
-            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+            mPlayableCoordinates.remove(mLastPlayedCoordinates);
             // Remove the surrounding Points
             ArrayList<Point> bombPoints = mGameControler.getSurrondingcoordinates(mLastPlayedCoordinates.x,
                     mLastPlayedCoordinates.y);
-            mPlayablesCoordinates.removeAll(bombPoints);
+            mPlayableCoordinates.removeAll(bombPoints);
             mSurroudingCoordinates.removeAll(bombPoints);
             return mLastPlayedCoordinates;
         }
@@ -232,10 +235,10 @@ public class AI {
         if (mSurroudingCoordinates.isEmpty() && (resultType == MISSED || resultType == BONUS)) {
             if(!mProbableCoordinates.isEmpty()) {
                 mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
-                mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+                mPlayableCoordinates.remove(mLastPlayedCoordinates);
             }
             else{
-                mLastPlayedCoordinates = getRandomPoint(mPlayablesCoordinates);
+                mLastPlayedCoordinates = getRandomPoint(mPlayableCoordinates);
             }
 
             return mLastPlayedCoordinates;
@@ -249,12 +252,12 @@ public class AI {
                     getSurroundingCoordinates(p);
                 }
                 mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
-                mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+                mPlayableCoordinates.remove(mLastPlayedCoordinates);
                 return mLastPlayedCoordinates;
             }
             else {
                 mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
-                mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+                mPlayableCoordinates.remove(mLastPlayedCoordinates);
                 return mLastPlayedCoordinates;
             }
         }
@@ -307,7 +310,7 @@ public class AI {
             // We store the result directly in the mLastPlayCoordinates buffer
             mLastPlayedCoordinates = hunt(resultShape);
             // Remove Point for PlayablesCoordinates
-            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+            mPlayableCoordinates.remove(mLastPlayedCoordinates);
             // Remove Point from ProbableCoordinates
             mProbableCoordinates.remove(mLastPlayedCoordinates);
             // Return the coordinates
@@ -318,7 +321,7 @@ public class AI {
             // Let's hunt !
             mLastPlayedCoordinates = hunt(mLastTouchedShape);
             // Clean Duplicates
-            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+            mPlayableCoordinates.remove(mLastPlayedCoordinates);
             mProbableCoordinates.remove(mLastPlayedCoordinates);
             // Shoooooooot !
             return mLastPlayedCoordinates;
@@ -335,11 +338,11 @@ public class AI {
                 // Get An interesting Point
                 mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
                 // Clean duplicates
-                mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+                mPlayableCoordinates.remove(mLastPlayedCoordinates);
                 // Remove the surrounding Points
                 ArrayList<Point> bombPoints = mGameControler.getSurrondingcoordinates(mLastPlayedCoordinates.x,
                         mLastPlayedCoordinates.y);
-                mPlayablesCoordinates.removeAll(bombPoints);
+                mPlayableCoordinates.removeAll(bombPoints);
                 mSurroudingCoordinates.removeAll(bombPoints);
                 // Let's drop a Big Bomb
                 return mLastPlayedCoordinates;
@@ -347,11 +350,11 @@ public class AI {
             // We don't have a bomb, so, sadly try a point in probables Coordinates
             mLastPlayedCoordinates = getRandomPoint(mProbableCoordinates);
             // Cleaning
-            mPlayablesCoordinates.remove(mLastPlayedCoordinates);
+            mPlayableCoordinates.remove(mLastPlayedCoordinates);
         }
         // We don't have Interesting Points (should not happen)
         else{
-            mLastPlayedCoordinates = getRandomPoint(mPlayablesCoordinates);
+            mLastPlayedCoordinates = getRandomPoint(mPlayableCoordinates);
         }
         return mLastPlayedCoordinates;
     }
@@ -387,16 +390,14 @@ public class AI {
             // We only have found 1 point for now
             if(foundedCoordinates.size() == 1) {
                 // Get surrounding Coordinates
-                if(mLastResult.getType() == TOUCHED) {
-                    getSurroundingCoordinates(foundedCoordinates.get(0));
-                }
+                getSurroundingCoordinates(foundedCoordinates.get(0));
                 mLastPlayedCoordinates = getRandomPoint(mSurroudingCoordinates);
                 return mLastPlayedCoordinates;
             }
             // We have Two Points
             else if(foundedCoordinates.size() == 2) {
                 // Cleaning
-                mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+                mPlayableCoordinates.addAll(mSurroudingCoordinates);
                 mSurroudingCoordinates.clear();
 
                 // What are this points
@@ -460,7 +461,7 @@ public class AI {
             }
             // We got the orientation
             else if(foundedCoordinates.size() >= 2) {
-                mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+                mPlayableCoordinates.addAll(mSurroudingCoordinates);
                 mSurroudingCoordinates.clear();
                 Point point1 = foundedCoordinates.get(0);
                 Point point2 = foundedCoordinates.get(1);
@@ -480,7 +481,7 @@ public class AI {
             }
             // Let's find the Last One
             else if(foundedCoordinates.size() == 3) {
-                mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+                mPlayableCoordinates.addAll(mSurroudingCoordinates);
                 mSurroudingCoordinates.clear();
 
                 Point point1 = foundedCoordinates.get(0);
@@ -517,7 +518,7 @@ public class AI {
         }
         // The Tetromino T is kind of funny
         else if(shape == T && foundedCoordinates.size() == 3) {
-            mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+            mPlayableCoordinates.addAll(mSurroudingCoordinates);
             mSurroudingCoordinates.clear();
             // Let's see... what do we got ?
             Point point1 = foundedCoordinates.get(0);
@@ -589,7 +590,7 @@ public class AI {
 
         }
         else if((shape == L || shape == J) && foundedCoordinates.size() > 2) {
-            mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+            mPlayableCoordinates.addAll(mSurroudingCoordinates);
             mSurroudingCoordinates.clear();
             Point point1 = foundedCoordinates.get(0);
             Point point2 = foundedCoordinates.get(1);
@@ -643,7 +644,7 @@ public class AI {
                 }
             }
             // Common Shape
-            else {
+            else if(isCommonShape(foundedCoordinates)){
                 // Which rotation ?
                 int rotation = getCommonShapeMatrixRotation(foundedCoordinates);
                 int minX = min(foundedCoordinates, "x");
@@ -679,11 +680,16 @@ public class AI {
                     }
                 }
             }
+            else {
+                for(Point p : foundedCoordinates) {
+                    getSurroundingCoordinates(p);
+                }
+            }
 
             return getRandomPoint(mSurroudingCoordinates);
         }
-        else if((shape == S || shape == Z) && foundedCoordinates.size() == 3) {
-            mPlayablesCoordinates.addAll(mSurroudingCoordinates);
+        else if((shape == S || shape == Z) && foundedCoordinates.size() == 3 && isCommonShape(foundedCoordinates)) {
+            mPlayableCoordinates.addAll(mSurroudingCoordinates);
             mSurroudingCoordinates.clear();
             int rotation = getCommonShapeMatrixRotation(foundedCoordinates);
             int minX = min(foundedCoordinates, "x");
@@ -789,6 +795,15 @@ public class AI {
         }
 
         return - 1;
+    }
+
+    private boolean isCommonShape(ArrayList<Point> points){
+        int minX = min(points, "x");
+        int maxX = max(points, "x");
+        int minY = min(points, "y");
+        int maxY = max(points, "y");
+
+        return (maxX - minX) < 2 && (maxY - minY) < 2;
     }
 
     /**
@@ -933,16 +948,16 @@ public class AI {
     }
 
     /**
-     * Get the Point from mPlayablesCoordinates (avoiding duplicates)
+     * Get the Point from mPlayableCoordinates (avoiding duplicates)
      * @param x
      * @param y
      * @return
      */
     private Point getPointFromPlayableCoordinates(int x, int y) {
         Point point = new Point(x, y);
-        for (Point p : mPlayablesCoordinates) {
+        for (Point p : mPlayableCoordinates) {
             if (p.equals(point)) {
-                mPlayablesCoordinates.remove(p);
+                mPlayableCoordinates.remove(p);
                 return p;
             }
         }
@@ -968,7 +983,7 @@ public class AI {
     private ArrayList<Point> getProbablePoints(){
         ArrayList<Point> probablePoints = new ArrayList<>();
         // Try to find the points with at least 6 empty cells around it
-        for(Point p : mPlayablesCoordinates) {
+        for(Point p : mPlayableCoordinates) {
             int minX = Math.max(p.x - 1, 0);
             int maxX = Math.min(p.x + 1, Settings.GRID_SIZE - 1);
             int minY = Math.max(p.y - 1, 0);
@@ -991,7 +1006,7 @@ public class AI {
         }
         // If empty we try with less surrounding empty cells
         else {
-            for(Point p : mPlayablesCoordinates) {
+            for(Point p : mPlayableCoordinates) {
                 ArrayList<Point> surrondingFreeCells = mGameControler.getSurrondingcoordinates(p.x, p.y);
                 if(surrondingFreeCells.size() >= 3) {
                     probablePoints.add(p);
