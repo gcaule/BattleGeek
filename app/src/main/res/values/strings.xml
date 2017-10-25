@@ -5,7 +5,7 @@
     <string name="launchGame">A l\'assaut !</string>
     <string name="main_title">Arcade\nNavale</string>
     <string name="player_name">Ton petit nom ici</string>
-    <string name="message_title">Bienvenue sur BattleGeeK</string>
+    <string name="message_title">Bienvenue sur Arcade Navale</string>
     <string name="message_firstusername">Dis moi, comment tu t\'appelles ?\nOu alors mens-moi, tu pourras changer de nom plus tard si tu veux.</string>
     <string name="message_error_emptyname">Tu n\'as pas entré de pseudo !</string>
     <string name="home_slogan">La Bataille Navale\navec des pixels et\ndes couleurs dedans</string>
@@ -30,7 +30,7 @@
     <string name="saved_parameters">Paramètres enregistrés !</string>
     <string name="settingsAnimationsLabel">Vitesse de jeu</string>
 
-    <string name="credits_text">Credits\n\n"From www.flaticon.com :\nSearch-Stats, User, Trophy icons made by FreePik\nVibrate icon made by Those Icons\nHome icon made by Google\nSong-note icon made by Bogdan Rosu"\n\nMusique :\nAdphi</string>
+    <string name="credits_text" translatable="false">Credits\n\n"From www.flaticon.com :\nSearch-Stats, User, Trophy icons made by FreePik\nVibrate icon made by Those Icons\nHome icon made by Google\nSong-note icon made by Bogdan Rosu"\n\nMusique :\nAdphi</string>
 
     <!-- Ranking and Stats-->
     <string name="titleRanking">Classement</string>
