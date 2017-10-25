@@ -107,6 +107,7 @@ public class Tests {
 
     @Test
     public void AILevelImpossible() throws Exception {
+        Maps.init();
         for (int i = 0; i < Maps.maps.size(); i++) {
             Log.d(TAG, "AILevelImpossible: Using Map " + String.valueOf(i + 1));
             AI ai = new AI();

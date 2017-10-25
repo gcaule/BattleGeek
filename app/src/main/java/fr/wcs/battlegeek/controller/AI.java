@@ -121,9 +121,9 @@ public class AI {
      */
     public void setLevel(Level level) {
         mLevel = level;
-        if(level != Level.IMPOSSIBLE) {
-            mProbableCoordinates = getProbablePoints();
-        }
+
+        mProbableCoordinates = getProbablePoints();
+
         // Impossible Level Strategy
         if ((level == Level.III || level == Level.IMPOSSIBLE) && mPlayerMap != null) {
             // We only need to get the coordinates of all the Items in the Player's Map
