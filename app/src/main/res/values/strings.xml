@@ -30,7 +30,7 @@
     <string name="saved_parameters">Paramètres enregistrés !</string>
     <string name="settingsAnimationsLabel">Vitesse de jeu</string>
 
-    <string name="credits_text" translatable="false">Credits\n\n"From www.flaticon.com :\nSearch-Stats, User, Trophy icons made by FreePik\nVibrate icon made by Those Icons\nHome icon made by Google\nSong-note icon made by Bogdan Rosu"\n\nMusique :\nAdphi</string>
+    <string name="credits_text" translatable="false">Credits\n\n"From www.flaticon.com :\n\nSearch-Stats, User, Trophy icons made by FreePik\n\nVibrate icon made by Those Icons\n\nHome icon made by Google\n\nSong-note icon made by Bogdan Rosu"\n\nMusique :\n\nAdphi</string>
 
     <!-- Ranking and Stats-->
     <string name="titleRanking">Classement</string>
