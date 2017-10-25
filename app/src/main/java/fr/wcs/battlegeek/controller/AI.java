@@ -204,7 +204,7 @@ public class AI {
         // Get the type of Tetromino shape
         Tetromino.Shape resultShape = mLastResult.getShape();
 
-        /*// AI Use REPLAY Bonus if Possible
+        // AI Use REPLAY Bonus if Possible
         if(mAvailablesBonuses.contains(Bonus.Type.REPLAY)) {
             mSelectedBonus = Bonus.Type.REPLAY;
             mAvailablesBonuses.remove(Bonus.Type.REPLAY);
@@ -229,7 +229,7 @@ public class AI {
             mPlayableCoordinates.removeAll(bombPoints);
             mSurroudingCoordinates.removeAll(bombPoints);
             return mLastPlayedCoordinates;
-        }*/
+        }
 
         //Play randomly during hunt mode (nothing found and looking for tetromino)
         if (mSurroudingCoordinates.isEmpty() && (resultType == MISSED || resultType == BONUS)) {
@@ -644,7 +644,7 @@ public class AI {
                 }
             }
             // Common Shape
-            else {
+            else if(isCommonShape(foundedCoordinates)){
                 // Which rotation ?
                 int rotation = getCommonShapeMatrixRotation(foundedCoordinates);
                 int minX = min(foundedCoordinates, "x");
@@ -680,10 +680,15 @@ public class AI {
                     }
                 }
             }
+            else {
+                for(Point p : foundedCoordinates) {
+                    getSurroundingCoordinates(p);
+                }
+            }
 
             return getRandomPoint(mSurroudingCoordinates);
         }
-        else if((shape == S || shape == Z) && foundedCoordinates.size() == 3) {
+        else if((shape == S || shape == Z) && foundedCoordinates.size() == 3 && isCommonShape(foundedCoordinates)) {
             mPlayableCoordinates.addAll(mSurroudingCoordinates);
             mSurroudingCoordinates.clear();
             int rotation = getCommonShapeMatrixRotation(foundedCoordinates);
@@ -790,6 +795,15 @@ public class AI {
         }
 
         return - 1;
+    }
+
+    private boolean isCommonShape(ArrayList<Point> points){
+        int minX = min(points, "x");
+        int maxX = max(points, "x");
+        int minY = min(points, "y");
+        int maxY = max(points, "y");
+
+        return (maxX - minX) < 2 && (maxY - minY) < 2;
     }
 
     /**

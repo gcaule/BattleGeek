@@ -281,9 +281,6 @@ public class GameActivity extends AppCompatActivity {
                         mViewFlipper.showNext();
 
                     }
-                    // TODO remove Test Code Configuration
-                    /*canPlay = false;
-                    aiPlay();*/
 
                     mTextViewAI.setText(R.string.AITurn);
                     startTimer();
@@ -581,7 +578,6 @@ public class GameActivity extends AppCompatActivity {
         mTextViewAI.setText(R.string.AITurn);
 
         final Point aiPlayCoordinates = mAI.play();
-        Log.d(TAG, "aiPlay() called " + aiPlayCoordinates);
         // Notify Player AI Using REPLAY Bonus
         if(mAI.getSelectedBonus() == REPLAY) {
             showToast(R.string.aiUseBonusReplay);
@@ -629,7 +625,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 Bonus.Type aiSelectedBonus = mAI.getSelectedBonus();
-                /*if (resultType == MISSED && aiSelectedBonus != REPLAY) {
+                if (resultType == MISSED && aiSelectedBonus != REPLAY) {
                     mTextViewAI.setText(R.string.AITurn);
                     canPlay = true;
                     mViewFlipper.showPrevious();
@@ -637,7 +633,7 @@ public class GameActivity extends AppCompatActivity {
                     mAIShouldPlay = false;
 
                 }
-                else */if (resultType == VICTORY) {
+                else if (resultType == VICTORY) {
                     mPlayer.addGameTime(mLevel, DEFEATED, mTime);
                     mPlayer.addDefeat(mLevel);
                     mDataController.updatePlayer(mPlayer);
