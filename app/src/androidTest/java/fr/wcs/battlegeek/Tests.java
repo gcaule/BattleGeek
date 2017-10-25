@@ -287,9 +287,9 @@ public class Tests {
         Collections.sort(playerModels, PlayerModel.bestTimeComparator);
 
         ArrayList<PlayerModel> result = new ArrayList<>();
+        result.add(player3);
         result.add(player1);
         result.add(player2);
-        result.add(player3);
 
         for (PlayerModel player : playerModels) {
             Log.d(TAG, "testBestTime: " + player.getName() + " " + player.getBestTime().get(String.valueOf(AI.Level.III)));

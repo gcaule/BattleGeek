@@ -48,7 +48,8 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
     private ListView listView;
     private CustomListAdapter adapter;
     private PlayerModel mPlayer;
-    private PlayerModel.ComparatorFactor mComparatorFactor = RATIO;
+    private PlayerModel.ComparatorFactor mComparatorFactor = NAME;
+    private AI.Level mLastSelectedLevel = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,6 +221,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        mLastSelectedLevel = PlayerModel.getComparatorLevel();
         PlayerModel.setComparatorLevel(AI.Level.values()[i]);
         switch (mComparatorFactor) {
             case BEST_TIME:
@@ -248,7 +250,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
      * Sort the PlayerModel List by Best Time
      */
     private void sortByBestTime() {
-        if(mComparatorFactor != BEST_TIME) {
+        if(mComparatorFactor != BEST_TIME || mLastSelectedLevel != PlayerModel.getComparatorLevel()) {
             Collections.sort(mPlayerModelList, PlayerModel.bestTimeComparator);
             adapter.notifyDataSetChanged();
             mComparatorFactor = BEST_TIME;
@@ -263,7 +265,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
      * Sort the PlayerModel List by Ratio
      */
     private void sortByRatio() {
-        if(mComparatorFactor != RATIO) {
+        if(mComparatorFactor != RATIO || mLastSelectedLevel != PlayerModel.getComparatorLevel()) {
             Collections.sort(mPlayerModelList, PlayerModel.ratioComparator);
             adapter.notifyDataSetChanged();
             mComparatorFactor = RATIO;
@@ -278,7 +280,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
      * Sort the PlayerModel List by Victories
      */
     private void sortByGameParts() {
-        if(mComparatorFactor != GAME_PARTS) {
+        if(mComparatorFactor != GAME_PARTS || mLastSelectedLevel != PlayerModel.getComparatorLevel()) {
             Collections.sort(mPlayerModelList, PlayerModel.gamePartsComparator);
             adapter.notifyDataSetChanged();
             mComparatorFactor = GAME_PARTS;
@@ -293,7 +295,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
      * Sort the PlayerModel List by Shots Count
      */
     private void sortByShotCount() {
-        if(mComparatorFactor != SHOTS_COUNT) {
+        if(mComparatorFactor != SHOTS_COUNT || mLastSelectedLevel != PlayerModel.getComparatorLevel()) {
             Collections.sort(mPlayerModelList, PlayerModel.bestShotsCountComparator);
             adapter.notifyDataSetChanged();
             mComparatorFactor = SHOTS_COUNT;
@@ -305,7 +307,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
     }
 
     private void sortByName() {
-        if(mComparatorFactor != NAME) {
+        if(mComparatorFactor != NAME || mLastSelectedLevel != PlayerModel.getComparatorLevel()) {
             Collections.sort(mPlayerModelList, PlayerModel.nameComparator);
             adapter.notifyDataSetChanged();
             mComparatorFactor = NAME;
