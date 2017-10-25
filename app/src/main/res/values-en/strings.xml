@@ -76,7 +76,7 @@
     <string name="message_title">Welcome on Arcade Navale</string>
     <string name="message_welcome">Hey, I don\'t know you !</string>
 
-    <string name="message_firstusername">Tell me, what\'s your name ?\nOr lie to me, you can change later it later if you want.</string>
+    <string name="message_firstusername">Tell me, what\'s your name ?\nOr lie to me, you can change it later if you want.</string>
     <string name="player_name">Your little name here</string>
     <string name="message_error_emptyname">Please choose a name !</string>
     <string name="buttonValidate">Let\'s go !</string>
