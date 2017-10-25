@@ -6,9 +6,9 @@
     <string name="AIVictory">Aie! Lost!</string>
     <string name="No">No</string>
     <string name="RotationImpossible">Not enough space for rotation!</string>
-    <string name="Speed_fast">Speed : Slow</string>
+    <string name="Speed_fast">Speed : Fast</string>
     <string name="Speed_medium">Speed : Normal</string>
-    <string name="Speed_slow">Speed : Fast</string>
+    <string name="Speed_slow">Speed : Slow</string>
     <string name="Yes">Yes</string>
     <string name="aiBonusCrossFire">Your opponent got the Power Bomb bonus !</string>
     <string name="aiBonusMove">Your opponent got the Move bonus!</string>
