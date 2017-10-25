@@ -253,7 +253,7 @@ public class GameActivity extends AppCompatActivity {
                     mMapView = (MapView) findViewById(R.id.mapView);
                     char[][] mapData = mMapView.getMapData();
                     // Send map to Firebase
-                    Maps.addMap(mapData);
+                    //Maps.addMap(mapData);
                     mGameController = new GameController(mapData);
                     mGameController.setBonus();
                     mMapView.setMap(mGameController.getMap());

@@ -44,7 +44,7 @@
     <string name="missed">Missed !</string>
     <string name="multiBonusError">"You can only use one bonus at a time "</string>
     <string name="no_exit">No , definitely not!</string>
-    <string name="ok_defeat">You cheated ...</string>
+    <string name="ok_defeat">Andy, you cheated ...</string>
     <string name="ok_exit">Yes, the baby is crying ...</string>
     <string name="ok_victory">Ok easy ...</string>
     <string name="place_pieces">Place the blocks (with strategy and expertise)</string>
@@ -57,7 +57,7 @@
     <string name="saved_parameters">Settings saved !</string>
     <string name="settingsAnimationsLabel">Animations speed</string>
     <string name="statistics">Statistics</string>
-    <string name="switch_view">Where are my blocks ?</string>
+    <string name="switch_view">Where are\n my blocks ?</string>
     <string name="textViewSettings">Settings</string>
     <string name="titleRanking">Ranking</string>
     <string name="totalTime">Time Spent</string>

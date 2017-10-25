@@ -38,7 +38,7 @@ import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.BEST_TIME;
 import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.NAME;
 import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.RATIO;
 import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.SHOTS_COUNT;
-import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.VICTORIES;
+import static fr.wcs.battlegeek.model.PlayerModel.ComparatorFactor.GAME_PARTS;
 
 
 public class RankingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -188,7 +188,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
                 labelBestTime.setTextColor(Color.parseColor("#FFEE00"));
                 labelShotsCount.setTextColor(Color.parseColor("#FFEE00"));
                 labelGames.setTextColor(Color.parseColor("#FF960D"));
-                sortByVictories();
+                sortByGameParts();
             }
         });
 
@@ -225,8 +225,8 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
             case BEST_TIME:
                 sortByBestTime();
                 break;
-            case VICTORIES:
-                sortByVictories();
+            case GAME_PARTS:
+                sortByGameParts();
                 break;
             case RATIO:
                 sortByRatio();
@@ -277,11 +277,11 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
     /**
      * Sort the PlayerModel List by Victories
      */
-    private void sortByVictories() {
-        if(mComparatorFactor != VICTORIES) {
-            Collections.sort(mPlayerModelList, PlayerModel.victoriesComparator);
+    private void sortByGameParts() {
+        if(mComparatorFactor != GAME_PARTS) {
+            Collections.sort(mPlayerModelList, PlayerModel.gamePartsComparator);
             adapter.notifyDataSetChanged();
-            mComparatorFactor = VICTORIES;
+            mComparatorFactor = GAME_PARTS;
         }
         else {
             Collections.reverse(mPlayerModelList);

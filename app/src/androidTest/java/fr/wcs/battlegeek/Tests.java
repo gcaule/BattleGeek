@@ -168,8 +168,11 @@ public class Tests {
         player2.addVictory(AI.Level.III);
         player2.addDefeat(AI.Level.III);
 
+        PlayerModel player3 = new PlayerModel("GDO");
+
         ArrayList<PlayerModel> playerModels = new ArrayList<>();
         playerModels.add(player2);
+        playerModels.add(player3);
         playerModels.add(player1);
 
         PlayerModel.setComparatorLevel(AI.Level.III);
@@ -178,12 +181,13 @@ public class Tests {
         ArrayList<PlayerModel> result = new ArrayList<>();
         result.add(player1);
         result.add(player2);
+        result.add(player3);
 
         assertEquals(result, playerModels);
     }
 
     @Test
-    public void testSortVictory() throws Exception {
+    public void testSortGameParts() throws Exception {
         PlayerModel player1 = new PlayerModel("Georges");
         player1.addVictory(AI.Level.III);
         player1.addVictory(AI.Level.III);
@@ -191,16 +195,24 @@ public class Tests {
         PlayerModel player2 = new PlayerModel("Leon");
         player2.addVictory(AI.Level.III);
 
+        PlayerModel player3 = new PlayerModel("DSOI");
+
         ArrayList<PlayerModel> playerModels = new ArrayList<>();
         playerModels.add(player2);
+        playerModels.add(player3);
         playerModels.add(player1);
 
         PlayerModel.setComparatorLevel(AI.Level.III);
-        Collections.sort(playerModels, PlayerModel.victoriesComparator);
+        Collections.sort(playerModels, PlayerModel.gamePartsComparator);
 
         ArrayList<PlayerModel> result = new ArrayList<>();
         result.add(player1);
         result.add(player2);
+        result.add(player3);
+
+        for (PlayerModel player : playerModels) {
+            Log.d(TAG, "testSortGameParts: " + player.getName() + " " + player.getGameParts().get(String.valueOf(AI.Level.III)));
+        }
 
         assertEquals(result, playerModels);
     }
@@ -215,7 +227,10 @@ public class Tests {
         PlayerModel player2 = new PlayerModel("Leon");
         player2.addShotsCount(AI.Level.III, 42);
 
+        PlayerModel player3 = new PlayerModel("Fij");
+
         ArrayList<PlayerModel> playerModels = new ArrayList<>();
+        playerModels.add(player3);
         playerModels.add(player2);
         playerModels.add(player1);
 
@@ -225,7 +240,11 @@ public class Tests {
         ArrayList<PlayerModel> result = new ArrayList<>();
         result.add(player1);
         result.add(player2);
+        result.add(player3);
 
+        for (PlayerModel player : playerModels) {
+            Log.d(TAG, "testSortBestShots: " + player.getName() + " " + player.getBestShotsCount().get(String.valueOf(AI.Level.III)));
+        }
         assertEquals(result, playerModels);
     }
 
@@ -257,7 +276,10 @@ public class Tests {
         PlayerModel player2 = new PlayerModel("Leon");
         player2.addGameTime(AI.Level.III, VICTORY, 72L);
 
+        PlayerModel player3 = new PlayerModel("Zob");
+
         ArrayList<PlayerModel> playerModels = new ArrayList<>();
+        playerModels.add(player3);
         playerModels.add(player2);
         playerModels.add(player1);
 
@@ -267,6 +289,11 @@ public class Tests {
         ArrayList<PlayerModel> result = new ArrayList<>();
         result.add(player1);
         result.add(player2);
+        result.add(player3);
+
+        for (PlayerModel player : playerModels) {
+            Log.d(TAG, "testBestTime: " + player.getName() + " " + player.getBestTime().get(String.valueOf(AI.Level.III)));
+        }
 
         assertEquals(result, playerModels);
     }
