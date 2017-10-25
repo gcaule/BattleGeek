@@ -33,7 +33,10 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(AndroidJUnit4.class)
 public class Tests {
+
     private static final String TAG = "TEST";
+    private static final int NUM_TESTS = 100;
+
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
@@ -45,55 +48,60 @@ public class Tests {
     @Test
     public void AILevelI() throws Exception {
         Maps.init();
-        for (int i = 0; i < Maps.maps.size(); i++) {
-            AI ai = new AI();
-            ai.setLevel(I);
-            Log.d(TAG, "AILevelI: Using Map " + String.valueOf(i + 1));
-            char[][] map = Maps.getMap(i);
-            Utils.printMap(map);
-            GameController gameController = new GameController(map);
-            Result result = new Result(0,0,NONE, Result.Type.MISSED,null);
-            int drownCount = 0;
-            int shootCount = 0;
-            while(result.getType() != VICTORY) {
-                Point p = ai.play();
-                shootCount ++;
-                result = gameController.shot(p.x, p.y);
-                ai.setResult(result);
-                if(result.getType() == DROWN || result.getType() == VICTORY) {
-                    drownCount ++;
+        for (int t = 0; t < NUM_TESTS; t++) {
+            for (int i = 0; i < Maps.maps.size(); i++) {
+                Log.d(TAG, "Game n° " + (t * Maps.maps.size() + i));
+                Log.d(TAG, "AILevelI: Using Map " + String.valueOf(i + 1));
+                AI ai = new AI();
+                ai.setLevel(I);
+                char[][] map = Maps.getMap(i);
+                Utils.printMap(map);
+                GameController gameController = new GameController(map);
+                Result result = new Result(0, 0, NONE, Result.Type.MISSED, null);
+                int drownCount = 0;
+                int shootCount = 0;
+                while (result.getType() != VICTORY) {
+                    Point p = ai.play();
+                    shootCount++;
+                    result = gameController.shot(p.x, p.y);
+                    ai.setResult(result);
+                    if (result.getType() == DROWN || result.getType() == VICTORY) {
+                        drownCount++;
+                    }
                 }
+                Log.d(TAG, "AILevelI: Total Shoot Count: " + shootCount);
+                assertEquals(7, drownCount);
             }
-            Log.d(TAG, "AILevelI: Total Shoot Count: " + shootCount);
-            assertEquals(7, drownCount);
         }
     }
 
     @Test
     public void AILevelII() throws Exception {
         Maps.init();
-        for (int i = 0; i < Maps.maps.size(); i++) {
-            Log.d(TAG, "AILevelII: Using Map " + String.valueOf(i + 1));
-            AI ai = new AI();
-            char[][] map = Maps.getMap(i);
-            Utils.printMap(map);
-            ai.setPlayerMap(map);
-            ai.setLevel(AI.Level.II);
-            GameController gameController = new GameController(map);
-            Result result = new Result(0,0,NONE, Result.Type.MISSED,null);
-            int drownCount = 0;
-            int shootCount = 0;
-            while(result.getType() != VICTORY) {
-                Point p = ai.play();
-                shootCount ++;
-                result = gameController.shot(p.x, p.y);
-                ai.setResult(result);
-                if(result.getType() == DROWN || result.getType() == VICTORY) {
-                    drownCount ++;
+        for (int t = 0; t < NUM_TESTS; t++) {
+            for (int i = 0; i < Maps.maps.size(); i++) {
+                Log.d(TAG, "Game n° " + (t * Maps.maps.size()+ i));
+                Log.d(TAG, "AILevelII: Using Map " + String.valueOf(i + 1));
+                AI ai = new AI();
+                char[][] map = Maps.getMap(i);
+                Utils.printMap(map);
+                ai.setLevel(AI.Level.II);
+                GameController gameController = new GameController(map);
+                Result result = new Result(0, 0, NONE, Result.Type.MISSED, null);
+                int drownCount = 0;
+                int shootCount = 0;
+                while (result.getType() != VICTORY) {
+                    Point p = ai.play();
+                    shootCount++;
+                    result = gameController.shot(p.x, p.y);
+                    ai.setResult(result);
+                    if (result.getType() == DROWN || result.getType() == VICTORY) {
+                        drownCount++;
+                    }
                 }
+                Log.d(TAG, "AILevelII: Total Shoot Count: " + shootCount);
+                assertEquals(7, drownCount);
             }
-            Log.d(TAG, "AILevelII: Total Shoot Count: " + shootCount);
-            assertEquals(7, drownCount);
         }
     }
 
@@ -131,6 +139,8 @@ public class Tests {
         boolean valid = true;
         for (int i = 0; i < Maps.maps.size(); i++) {
             char[][] map = Maps.getMap(i);
+            Log.d(Settings.TAG, "testMaps: " + i);
+            Utils.printMap(map);
             for (int j = 0; j < Settings.GRID_SIZE; j++) {
                 for (int k = 0; k < Settings.GRID_SIZE; k++) {
                     if(!contains(symbols, map[j][k])) {

@@ -43,6 +43,11 @@ public class GameController {
      */
     public GameController(char[][] map) {
         mMap = map;
+        for (int i = 0; i < Settings.GRID_SIZE; i++) {
+            for (int j = 0; j < Settings.GRID_SIZE; j++) {
+                mStorageMap[i][j] = ' ';
+            }
+        }
     }
 
     /**
@@ -168,6 +173,22 @@ public class GameController {
         return symbol == '_' || Character.isLowerCase(symbol);
     }
 
+    public boolean alreadyPlayed(Point point) {
+        return alreadyPlayed(point.x, point.y);
+    }
+
+    public ArrayList<Point> getAvailableCoordinates(){
+        ArrayList<Point> availableCoordinates = new ArrayList<>();
+        for (int i = 0; i < mStorageMap.length; i++) {
+            for (int j = 0; j < mStorageMap[i].length; j++) {
+                if(mStorageMap[i][j] == ' ') {
+                    availableCoordinates.add(new Point(j, i));
+                }
+            }
+        }
+        return availableCoordinates;
+    }
+
     public ArrayList<Point> getSurrondingcoordinates(int x, int y) {
         ArrayList<Point> points = new ArrayList<Point>();
         int xMin = Math.max(x - 1, 0);
@@ -190,6 +211,10 @@ public class GameController {
         }
 
         return points;
+    }
+
+    public ArrayList<Point> getSurrondingcoordinates(Point point) {
+        return getSurrondingcoordinates(point.x, point.y);
     }
 
     public void setBonus(){

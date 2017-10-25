@@ -39,7 +39,6 @@ import fr.wcs.battlegeek.controller.DataController;
 import fr.wcs.battlegeek.controller.GameController;
 import fr.wcs.battlegeek.controller.SoundController;
 import fr.wcs.battlegeek.model.Bonus;
-import fr.wcs.battlegeek.model.Maps;
 import fr.wcs.battlegeek.model.PlayerModel;
 import fr.wcs.battlegeek.model.Result;
 import fr.wcs.battlegeek.model.Settings;
@@ -253,7 +252,7 @@ public class GameActivity extends AppCompatActivity {
                     mMapView = (MapView) findViewById(R.id.mapView);
                     char[][] mapData = mMapView.getMapData();
                     // Send map to Firebase
-                    Maps.addMap(mapData);
+                    //Maps.addMap(mapData);
                     mGameController = new GameController(mapData);
                     mGameController.setBonus();
                     mMapView.setMap(mGameController.getMap());
@@ -582,7 +581,7 @@ public class GameActivity extends AppCompatActivity {
         mTextViewAI.setText(R.string.AITurn);
 
         final Point aiPlayCoordinates = mAI.play();
-
+        Log.d(TAG, "aiPlay() called " + aiPlayCoordinates);
         // Notify Player AI Using REPLAY Bonus
         if(mAI.getSelectedBonus() == REPLAY) {
             showToast(R.string.aiUseBonusReplay);
@@ -630,7 +629,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 Bonus.Type aiSelectedBonus = mAI.getSelectedBonus();
-                if (resultType == MISSED && aiSelectedBonus != REPLAY) {
+                /*if (resultType == MISSED && aiSelectedBonus != REPLAY) {
                     mTextViewAI.setText(R.string.AITurn);
                     canPlay = true;
                     mViewFlipper.showPrevious();
@@ -638,7 +637,7 @@ public class GameActivity extends AppCompatActivity {
                     mAIShouldPlay = false;
 
                 }
-                else if (resultType == VICTORY) {
+                else */if (resultType == VICTORY) {
                     mPlayer.addGameTime(mLevel, DEFEATED, mTime);
                     mPlayer.addDefeat(mLevel);
                     mDataController.updatePlayer(mPlayer);
