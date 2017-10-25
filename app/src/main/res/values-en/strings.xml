@@ -1,89 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Arcade Navale</string>
+    <string name="main_title">Arcade Navale</string>
+    <string name="home_slogan">The BattleShip with pixels and colors inside</string>
+
     <string name="AIDrown">Destroyed ! Your opponent plays again !</string>
     <string name="AITouched">Hit ! Your opponent plays again !</string>
-    <string name="AIVictory">Aie! Lost!</string>
+    <string name="AIVictory">Ow! Lost!</string>
+
+    <string name="Yes">Yes</string>
     <string name="No">No</string>
-    <string name="RotationImpossible">Not enough space for rotation!</string>
+    <string name="blink_text">Epileptic ?</string>
+    <string name="settingsAnimationsLabel">Game speed</string>
     <string name="Speed_fast">Speed : Slow</string>
     <string name="Speed_medium">Speed : Normal</string>
     <string name="Speed_slow">Speed : Fast</string>
-    <string name="Yes">Yes</string>
-    <string name="aiBonusCrossFire">Your opponent got the Power Bomb bonus !</string>
-    <string name="aiBonusMove">Your opponent got the Move bonus!</string>
-    <string name="aiBonusReplay">Your opponent got the Replay bonus !</string>
-    <string name="aiUseBonusReplay">Your opponent used the Replay bonus</string>
-    <string name="alreadyPlayedMessage">You already played here</string>
-    <string name="bestShotsCountLabel">Shots</string>
-    <string name="bestTime">Time</string>
-    <string name="blink_text">Epileptic ?</string>
-    <string name="buttonValidate">Let\'s go !</string>
-    <string name="button_easy">Nice</string>
-    <string name="button_hard">Not nice</string>
-    <string name="button_impossible">Impossible</string>
-    <string name="button_medium">Less nice</string>
-    <string name="drownPlayAgain">Destroyed ! Play again !</string>
-    <string name="end_game_defeat">Do you feel the hard taste of DEFEAT ?</string>
-    <string name="end_game_fragment_title">The game is over !</string>
-    <string name="end_game_victory">Happier and stronger than ever, you are the BOSS !</string>
-    <string name="gameRulesSubtilitiesTitle">Bonus</string>
-    <string name="gameRulesTitle">Rules of the Game</string>
-    <string name="gamesParts">Games Played</string>
-    <string name="hello_message">Hey</string>
-    <string name="home_slogan">The BattleShip with pixels and colors inside</string>
-    <string name="itemDrownMessage">You destroyed the block !</string>
-    <string name="launchGame">Fight !</string>
-    <string name="levelTime">Time Level</string>
-    <string name="main_title">Arcade Navale</string>
-    <string name="message_error_emptyname">Please choose a name !</string>
-    <string name="message_title">Welcome on Arcade Navale</string>
-    <string name="AITurn">Opponent\'s turn !</string>
-    <string name="message_firstusername">Tell me, what\'s your name ? Or lie, you can change later your name later if you want.</string>
-    <string name="message_welcome">Hey, I don\'t know you !</string>
-    <string name="missed">Missed !</string>
-    <string name="multiBonusError">"You can only use one bonus at a time "</string>
-    <string name="no_exit">No , definitely not!</string>
-    <string name="ok_defeat">You cheated ...</string>
-    <string name="ok_exit">Yes, the baby is crying ...</string>
-    <string name="ok_victory">Ok easy ...</string>
-    <string name="place_pieces">Place the blocks (with strategy and expertise)</string>
-    <string name="player_name">Your little name here</string>
-    <string name="player_turn">Your turn !</string>
-    <string name="playermap_view">Your blocks are quietly waiting !</string>
-    <string name="randomize_positions">Place blocks for me please !</string>
-    <string name="ratio">Ratio</string>
     <string name="save_settings">Save</string>
     <string name="saved_parameters">Settings saved !</string>
-    <string name="settingsAnimationsLabel">Animations speed</string>
-    <string name="statistics">Statistics</string>
-    <string name="switch_view">Where are my blocks ?</string>
+
+    <string name="aiBonusCrossFire">Your opponent got the Power Bomb bonus !</string>
+    <string name="aiUseBonusReplay">Your opponent used the Replay bonus !</string>
+    <string name="aiBonusReplay">Your opponent got the Replay bonus !</string>
+    <string name="aiBonusMove">Your opponent got the Move bonus!</string>
+
+    <string name="player_turn">Your turn !</string>
+    <string name="AITurn">Opponent\'s turn !</string>
+
+    <string name="multiBonusError">"You can only use one bonus at a time !"</string>
+    <string name="RotationImpossible">Not enough space for rotation !</string>
+    <string name="alreadyPlayedMessage">You already played here !</string>
+    <string name="itemDrownMessage">You destroyed this block !</string>
+    <string name="drownPlayAgain">Destroyed ! Play again !</string>
+    <string name="touchedPlayAgain">Block hit ! Play again !</string>
+    <string name="missed">Missed !</string>
+
+    <string name="place_pieces">Place the blocks\n(with strategy and expertise)</string>
+    <string name="randomize_positions">Place blocks for me !</string>
+    <string name="launchGame">Fight !</string>
+
+    <string name="hello_message">Hi</string>
+
+    <string name="button_easy">Nice</string>
+    <string name="button_medium">Less nice</string>
+    <string name="button_hard">Not nice</string>
+    <string name="button_impossible">Impossible</string>
+
+    <string name="quit_game_alert_title">Shame and dishonour !</string>
+    <string name="quit_game_alert_message">You will run cowardly and the shame will be on your family for generations to come ! You really want to give up ?</string>
+    <string name="ok_exit">Yes, I think I left the water on...</string>
+    <string name="no_exit">No, definitely not !</string>
+
+    <string name="end_game_fragment_title">The game is over !</string>
+    <string name="end_game_defeat">You have in mouth\nthe bitter taste of\nDEFEAT !!</string>
+    <string name="end_game_victory">You feel the\nsweet exaltation of\nVICTORY !!</string>
+    <string name="ok_defeat">You cheated...</string>
+    <string name="ok_victory">So easy...</string>
+
     <string name="textViewSettings">Settings</string>
     <string name="titleRanking">Ranking</string>
-    <string name="totalTime">Time Spent</string>
-    <string name="touchedPlayAgain">Block hit ! Play again !</string>
+    <string name="statistics">Statistics</string>
+
+    <string name="switch_view">Where are my blocks ?</string>
+    <string name="playermap_view">Your blocks are quietly waiting for you !</string>
+
     <string name="victory_defeats">Victories / Defeats</string>
-    <string name="quit_game_alert_title">Shame and dishonour !</string>
-    <string name="quit_game_alert_message">You will run cowardly and the shame will be on your family for years and years ! You really want to give up ?</string>
+    <string name="gamesParts">Games Played</string>
+    <string name="bestShotsCountLabel">Shots</string>
+    <string name="levelTime">Time Level</string>
+    <string name="totalTime">Time Spent</string>
+    <string name="bestTime">Time</string>
+    <string name="ratio">Ratio</string>
+
+    <string name="message_title">Welcome on Arcade Navale</string>
+    <string name="message_welcome">Hey, I don\'t know you !</string>
+    <string name="message_firstusername">Tell me, what\'s your name ?\nOr lie to me, you can change later it later if you want.</string>
+    <string name="player_name">Your little name here</string>
+    <string name="message_error_emptyname">Please choose a name !</string>
+    <string name="buttonValidate">Let\'s go !</string>
+
+
+    <string name="gameRulesTitle">Rules of the Game</string>
+    <string name="gameRulesGameModes">Levels</string>
+    <string name="gameRulesSubtilitiesTitle">Bonus</string>
+
     <string name="gameRulesBonusITitle">Move</string>
     <string name="gameRulesBonusIITitle">Replay</string>
     <string name="gameRulesBonusIIITitle">Big Bomb</string>
-    <string name="gameRulesBonusI">This bonus let you - I swear - to move all the blocks or rotate (space needed). Please note you can\'t place it on a case already played; so I advise you to find this bonus quickly (I don\'t do rules, I just write it).</string>
-    <string name="gameRulesBonusII">This bonus let you - a totally crazy thing - to play again. But, if you miss. When you miss, you play again. And if you miss again, take your stuff and leave. Work in progress here.</string>
-    <string name="gameRulesBonusIII">This bonus let you - I swear - to move all the blocks or rotate (space needed). Please note you can\'t place it on a case already played; so I advise you to find this bonus quickly (I don\'t do rules, I just write it).</string>
-    <string name="gameRulesGameModes">Levels</string>
-    <string name="gameRulesEnd">Right, I told you all I know, so get ready to destroy all those tetrominos ! Please note no ant was injured during the development of the game - even if my whip was closed.</string>
-    <string name="gameRulesGeneral">How do we play ? Sit and read ..</string>
-    <string name="gameRulesLevelIITitle">The level Less Nice - Holidays are over</string>
+
+    <string name="gameRulesGeneral">How do we play ? I\'ll tell you now...</string>
+    <string name="gameRulesPrinciple">Start to place your blocks on the grid - you can even rotate it by clicking on it.\nThen, try to destroy all the blocks of your opponent. If you hit a block, you play again.</string>
+    <string name="gameRulesLevels">Andy will be your lovely opponent: you will play against him.</string>
+    <string name="gameRulesSubtilities">3 Bonus are hidden on the map at strategic places. Shot the cell with a bonus to get it, and press the corresponding button during your turn to use it !\nYou can use it only once, so think twice.</string>
+
     <string name="gameRulesLevelITitle">The level Nice - Slowly but not too much</string>
-    <string name="gameRulesLevelImpoTitle">Level Impossible - masochistic and Police only</string>
-    <string name="gameRulesLevels">Andy will be your lovely opponent : You will play against him.</string>
-    <string name="gameRulesLevelI">The Level Nice is - as you know - mostly nice : everyone shots randomly and no one wins... Whatever, don\'t underestimate Andy ...</string>
-    <string name="gameRulesLevelII">The Level Less Nice is - surprise, surprise - mostly less nice : Andy scratches is head before shotting and the defeat shouldn\'t be excluded ... Are you ready for the challenge ? \"</string>
-    <string name="gameRulesLevelIII">The Level Not Nice is - suspense, suspense - really not nice : Andy just got graduated in statistics and read your horoscope to know it all. Plus, he applies random colors on blocks before starting the game.</string>
-    <string name="gameRulesLevelIIITitle">The Level Not Nice - Civilians, step back</string>
-    <string name="gameRulesSubtilities">3 Bonus are hidden on the map at strategic places. Shot the box with a bonus to get it, and push the button during your turn to use it. You can use it only once, think twice.</string>
-    <string name="gameRulesLevelImpo">Challenge to your ego or injure to your intelligence ? Up to you - write 105 times the word challenge on your paper and discuss with your colleague until the end of the lesson.</string>
-    <string name="gameRulesPS">The development team apologises to all the great fans of the fabulous ants. The last observation is not us, and I swear this creature really do have a place in our hearts.</string>
-    <string name="gameRulesPrinciple">Start to place your blocks on the grid - you can even rotate it by clicking on it. Then, try to destroy all the blocks of your opponent. if you hit a block, you play again.</string>
+    <string name="gameRulesLevelIITitle">The level Less Nice - Holidays are over</string>
+    <string name="gameRulesLevelIIITitle">The Level Not Nice - No civilians allowed</string>
+    <string name="gameRulesLevelImpoTitle">Level Impossible - Masochistic and police only</string>
+
+    <string name="gameRulesLevelI">The Level Nice is - as the name suggests it - mostly nice: everyone shots randomly and no one wins...\nWell, I wouldn\'t underestimate Andy nonetheless ...</string>
+    <string name="gameRulesLevelII">The Level Less Nice is - surprise, surprise - mostly less nice: Andy scratches its head before every shot and the defeat shouldn\'t be excluded anymore ... Will you dare to meet the challenge ?"</string>
+    <string name="gameRulesLevelIII">The Level Not Nice is - suspense, suspense - really not nice: Andy brings its statistics studies and your horoscope to know it all.\nPlus, he applies random colors on blocks before starting the game.</string>
+    <string name="gameRulesLevelImpo">Challenge to your ego or insult to your intellect ?\nThat\'s up to you - write 105 times the word challenge on your paper and discuss it with your left neighbour until the end of the class.</string>
+
+    <string name="gameRulesBonusI">This bonus let you - I swear it\'s true - to move all the blocks or rotate (if there is enough space).\nNote that you can\'t place it on a case already played; so I advise you to find this bonus at the beginning of the game (I don\'t make the rules, I merely write it).</string>
+    <string name="gameRulesBonusII">This bonus let you - a totally crazy thing - to play again. Well, if you miss. When you miss, you play again.\nAnd if you miss again, take your stuff and leave. People are working here.</string>
+    <string name="gameRulesBonusIII">This bomb will make devastation and destruction rain on the battlefield. It will touch (in addtion to the played cell) the cells on the top and the one on the bottom, and the one on the left and on the right too.\nWith one single shot.\nIt\'s the devastation (and destruction) freaks\' bonus.</string>
+
+    <string name="gameRulesEnd">Right, you now know as much as me, so get the heck out of here and go destroy some tetrominos !\nPlease also note that no platypus was injured during the development of this game - although we always kept a whip for reach (just in case).</string>
+    <string name="gameRulesPS">All the development team would like to apologize to the fierce supporters of this noble animal that is the platypus. This last mindless remark does not reflect our convictions and we assure you that we feel only the most profound respect for this stupid creature.</string>
+
 </resources>
