@@ -83,7 +83,6 @@ public class CustomListAdapter extends BaseAdapter {
             holder = (ViewHolder) scoreView.getTag();
         }
 
-        try {
             final PlayerModel m = mPlayerModelItems.get(position);
             String level = PlayerModel.getComparatorLevel().toString();
             holder.name.setText(m.getName());
@@ -93,8 +92,6 @@ public class CustomListAdapter extends BaseAdapter {
             int shotsCount = m.getBestShotsCount().get(level.toString());
             holder.shotsCount.setText(shotsCount != 2_147_483_647 ? String.valueOf(shotsCount) : "-");
             holder.levelGames.setText(m.getGameParts().get(level).toString());
-        }
-        catch (Exception e){}
 
         return scoreView;
     }

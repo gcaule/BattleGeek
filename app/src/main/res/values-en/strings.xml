@@ -11,11 +11,12 @@
 
     <string name="Yes">Yes</string>
     <string name="No">No</string>
+
     <string name="blink_text">Epileptic ?</string>
     <string name="settingsAnimationsLabel">Game speed</string>
-    <string name="Speed_fast">Speed : Slow</string>
+    <string name="Speed_fast">Speed : Fast</string>
     <string name="Speed_medium">Speed : Normal</string>
-    <string name="Speed_slow">Speed : Fast</string>
+    <string name="Speed_slow">Speed : Slow</string>
     <string name="save_settings">Save</string>
     <string name="saved_parameters">Settings saved !</string>
 
@@ -54,14 +55,14 @@
     <string name="end_game_fragment_title">The game is over !</string>
     <string name="end_game_defeat">You have in mouth\nthe bitter taste of\nDEFEAT !!</string>
     <string name="end_game_victory">You feel the\nsweet exaltation of\nVICTORY !!</string>
-    <string name="ok_defeat">You cheated...</string>
+    <string name="ok_defeat">Andy, you cheated...</string>
     <string name="ok_victory">So easy...</string>
 
     <string name="textViewSettings">Settings</string>
     <string name="titleRanking">Ranking</string>
     <string name="statistics">Statistics</string>
 
-    <string name="switch_view">Where are my blocks ?</string>
+    <string name="switch_view">Where are\n my blocks ?</string>
     <string name="playermap_view">Your blocks are quietly waiting for you !</string>
 
     <string name="victory_defeats">Victories / Defeats</string>
@@ -74,6 +75,7 @@
 
     <string name="message_title">Welcome on Arcade Navale</string>
     <string name="message_welcome">Hey, I don\'t know you !</string>
+
     <string name="message_firstusername">Tell me, what\'s your name ?\nOr lie to me, you can change later it later if you want.</string>
     <string name="player_name">Your little name here</string>
     <string name="message_error_emptyname">Please choose a name !</string>

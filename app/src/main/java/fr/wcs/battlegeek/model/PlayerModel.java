@@ -12,7 +12,7 @@ public class PlayerModel {
 
     // Enumeration for Comparators
     public enum ComparatorFactor {
-        BEST_TIME, VICTORIES, RATIO, SHOTS_COUNT, NAME
+        BEST_TIME, GAME_PARTS, RATIO, SHOTS_COUNT, NAME
     }
     // Level for Sorting
     private static AI.Level comparatorLevel = AI.Level.I;
@@ -41,7 +41,7 @@ public class PlayerModel {
         this.totalGameTime = 0;
         for(AI.Level level : AI.Level.values()) {
             this.gameTime.put(level.toString(), 0L);
-            this.bestTime.put(level.toString(), 2_147_483_647L);
+            this.bestTime.put(level.toString(), -1L);
             this.gameParts.put(level.toString(), 0);
             this.victories.put(level.toString(), 0);
             this.defeats.put(level.toString(), 0);
@@ -71,8 +71,9 @@ public class PlayerModel {
     public void addGameTime(AI.Level level, Result.Type result, long time) {
         this.totalGameTime += time;
         long lastBestTime = this.bestTime.get(level.toString());
-        this.bestTime.put(level.toString(),
-                time < lastBestTime && result == Result.Type.VICTORY ? time : lastBestTime);
+        if((lastBestTime == -1 || time < lastBestTime) && result == Result.Type.VICTORY) {
+            bestTime.put(level.toString(), time);
+        }
         this.gameTime.put(level.toString(), gameTime.get(level.toString()) + time);
     }
 
@@ -194,11 +195,11 @@ public class PlayerModel {
     /**
      * Method used by Collection.sort() to Sort the Players by Victories
      */
-    public static Comparator<PlayerModel> victoriesComparator = new Comparator<PlayerModel>() {
+    public static Comparator<PlayerModel> gamePartsComparator = new Comparator<PlayerModel>() {
         @Override
         public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
-            return comparedPlayerModel.victories.get(comparatorLevel.toString())
-                    - playerModel.victories.get(comparatorLevel.toString());
+            return comparedPlayerModel.gameParts.get(comparatorLevel.toString())
+            - playerModel.gameParts.get(comparatorLevel.toString());
         }
     };
 
@@ -219,7 +220,7 @@ public class PlayerModel {
     public static Comparator<PlayerModel> bestShotsCountComparator = new Comparator<PlayerModel>() {
         @Override
         public int compare(PlayerModel playerModel, PlayerModel comparedPlayerModel) {
-            return -1 * playerModel.bestShotsCount.get(comparatorLevel.toString())
+            return playerModel.bestShotsCount.get(comparatorLevel.toString())
                     - comparedPlayerModel.bestShotsCount.get(comparatorLevel.toString());
         }
     };
