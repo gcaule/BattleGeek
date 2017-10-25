@@ -240,6 +240,7 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
                 sortByName();
                 break;
         }
+        mLastSelectedLevel = PlayerModel.getComparatorLevel();
     }
 
     @Override
