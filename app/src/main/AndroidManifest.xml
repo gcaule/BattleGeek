@@ -41,9 +41,12 @@
             android:name=".StatisticsActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".CreditsActivity">
+        <activity android:name=".CreditsActivity"
+                  android:screenOrientation="portrait"
+            android:noHistory="true">
         </activity>
-        <activity android:name=".GameRulesActivity">
+        <activity android:name=".GameRulesActivity"
+                  android:screenOrientation="portrait">
         </activity>
     </application>
 
