@@ -8,7 +8,7 @@
     <string name="message_title">Bienvenue sur Arcade Navale</string>
     <string name="message_firstusername">Dis moi, comment tu t\'appelles ?\nOu alors mens-moi, tu pourras changer de nom plus tard si tu veux.</string>
     <string name="message_error_emptyname">Tu n\'as pas entré de pseudo !</string>
-    <string name="home_slogan">La Bataille Navale\navec des pixels et\ndes couleurs dedans</string>
+    <string name="home_slogan">La Bataille Navale avec des pixels et des couleurs dedans</string>
     <string name="message_welcome">Hey, je te connais pas toi !</string>
 
     <!--Menu-->

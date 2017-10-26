@@ -91,11 +91,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:clickable="true"
-            android:paddingLeft="16dp"
             android:text="Nom"
-            android:textAlignment="textStart"
+            android:textAlignment="center"
             android:textColor="@color/yellow"
             android:textSize="10sp"/>
 
@@ -108,6 +107,7 @@
             android:clickable="true"
             android:gravity="fill_vertical|center_horizontal"
             android:text="@string/ratio"
+            android:textAlignment="textEnd"
             android:textColor="@color/yellow"
             android:textSize="10sp"/>
 
@@ -120,6 +120,7 @@
             android:clickable="true"
             android:gravity="fill_vertical|center_horizontal"
             android:text="@string/bestTime"
+            android:textAlignment="textEnd"
             android:textColor="@color/yellow"
             android:textSize="10sp"/>
 
@@ -132,6 +133,7 @@
             android:clickable="true"
             android:gravity="fill_vertical|center_horizontal"
             android:text="@string/bestShotsCountLabel"
+            android:textAlignment="textEnd"
             android:textColor="@color/yellow"
             android:textSize="10sp"/>
 
@@ -140,10 +142,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:clickable="true"
             android:gravity="fill_vertical|center_horizontal"
             android:text="@string/gamesParts"
+            android:textAlignment="textEnd"
             android:textColor="@color/yellow"
             android:textSize="10sp"/>
     </LinearLayout>
