@@ -6,7 +6,7 @@
     <string name="main_title">Arcade\nNavale</string>
     <string name="player_name">Ton petit nom ici</string>
     <string name="message_title">Bienvenue sur Arcade Navale</string>
-    <string name="message_firstusername">Dis moi, comment tu t\'appelles ?\nOu alors mens-moi, tu pourras changer de nom plus tard si tu veux.</string>
+    <string name="message_firstusername">Dis moi, comment tu t\'appelles ? Ou alors mens-moi, tu pourras changer de nom plus tard si tu veux.</string>
     <string name="message_error_emptyname">Tu n\'as pas entré de pseudo !</string>
     <string name="home_slogan">La Bataille Navale avec des pixels et des couleurs dedans</string>
     <string name="message_welcome">Hey, je te connais pas toi !</string>
@@ -30,7 +30,7 @@
     <string name="saved_parameters">Paramètres enregistrés !</string>
     <string name="settingsAnimationsLabel">Vitesse de jeu</string>
 
-    <string name="credits_text" translatable="false">Credits\n\n"From www.flaticon.com :\n\nSearch-Stats, User, Trophy icons made by FreePik\n\nVibrate icon made by Those Icons\n\nHome icon made by Google\n\nSong-note icon made by Bogdan Rosu"\n\nMusique :\n\nAdphi</string>
+    <string name="credits_text" translatable="false">Credits  "From www.flaticon.com :  Search-Stats, User, Trophy icons made by FreePik  Vibrate icon made by Those Icons  Home icon made by Google  Song-note icon made by Bogdan Rosu"  Musique :  Adphi</string>
 
     <!-- Ranking and Stats-->
     <string name="titleRanking">Classement</string>
@@ -54,64 +54,64 @@
     <!-- Règles du jeu -->
     <string name="gameRulesTitle">Regles du jeu</string>
     <string name="gameRulesGeneral">Comment on joue ? Je t\'explique ici !</string>
-    <string name="gameRulesPrinciple">Commence par disposer tes pieces sur la grille - tu peux meme les tourner en appuyant dessus.\nEnsuite, tente de detruire les pieces de ton adversaire. Si tu touches, alors tu rejoues.</string>
+    <string name="gameRulesPrinciple">Commence par disposer tes pieces sur la grille - tu peux meme les tourner en appuyant dessus. Ensuite, tente de detruire les pieces de ton adversaire. Si tu touches, alors tu rejoues.</string>
 
     <string name="gameRulesGameModes">Les differents niveaux de difficulte</string>
     <string name="gameRulesLevels">Andy sera ton adversaire binaire : c\'est contre lui que tu joueras.</string>
 
     <string name="gameRulesLevelITitle">Le mode Gentil - doucement mais pas trop</string>
-    <string name="gameRulesLevelI">Le mode Gentil est - comme son nom l\'indique - plutot gentil : tout le monde tire au hasard et personne ne gagne jamais...\nQuoi qu\'il en soit, moi je ne sous-estimerais pas Andy pour autant...</string>
+    <string name="gameRulesLevelI">Le mode Gentil est - comme son nom l\'indique - plutot gentil : tout le monde tire au hasard et personne ne gagne jamais... Quoi qu\'il en soit, moi je ne sous-estimerais pas Andy pour autant...</string>
 
     <string name="gameRulesLevelIITitle">Le mode Moins Gentil - fini les vacances</string>
     <string name="gameRulesLevelII">Le mode Moins Gentil est - surprise, surprise - plutot moins gentil : Andy se gratte la tete avant chaque tir, et la defaite n\'est plus a exclure... Auras-tu l\'audace de relever le defi ?</string>
 
     <string name="gameRulesLevelIIITitle">Le mode Pas Cool - civils s\'abstenir</string>
-    <string name="gameRulesLevelIII">Le mode Pas Cool est - suspense, suspense - vraiment pas cool: Andy sors ses etudes statistiques et ton horoscope pour plus de precision.\nDe plus, il applique des couleurs aleatoires sur les pieces avant de commencer la partie.</string>
+    <string name="gameRulesLevelIII">Le mode Pas Cool est - suspense, suspense - vraiment pas cool: Andy sors ses etudes statistiques et ton horoscope pour plus de precision. De plus, il applique des couleurs aleatoires sur les pieces avant de commencer la partie.</string>
 
     <string name="gameRulesLevelImpoTitle">Le mode Impossible - masochistes et Force de l\'Ordre uniquement</string>
-    <string name="gameRulesLevelImpo">Defi a ton ego ou insulte a ton intelligence ?\nA toi de voir - ecris 105 fois le mot defi sur ta copie et discutes-en avec ton voisin de gauche jusqu\'a la fin du cours.</string>
+    <string name="gameRulesLevelImpo">Defi a ton ego ou insulte a ton intelligence ? A toi de voir - ecris 105 fois le mot defi sur ta copie et discutes-en avec ton voisin de gauche jusqu\'a la fin du cours.</string>
 
 
     <string name="gameRulesSubtilitiesTitle">Les Bonus</string>
-    <string name="gameRulesSubtilities">3 bonus sont caches sur la carte aux endroits les plus strategiques. Tire sur la case contenant un bonus pour l\'activer, et appuie sur le bouton correspondant en debut de tour pour l\'utiliser !\nTu ne peux utiliser chaque bonus qu\'une fois et son effet ne dure qu\'un tour.</string>
+    <string name="gameRulesSubtilities">3 bonus sont caches sur la carte aux endroits les plus strategiques. Tire sur la case contenant un bonus pour l\'activer, et appuie sur le bouton correspondant en debut de tour pour l\'utiliser ! Tu ne peux utiliser chaque bonus qu\'une fois et son effet ne dure qu\'un tour.</string>
 
     <string name="gameRulesBonusITitle">Deplacer</string>
-    <string name="gameRulesBonusI">Ce bonus te permet - je te jure que c\'est vrai - de deplacer tes pieces ou meme les tourner (si y\'a la place).\nNote que tu ne peux pas les poser sur une case qui a deja ete jouee; donc je te conseille de trouver ce bonus en debut de partie (je ne fais pas les regles, je me contente de les ecrire).</string>
+    <string name="gameRulesBonusI">Ce bonus te permet - je te jure que c\'est vrai - de deplacer tes pieces ou meme les tourner (si y\'a la place). Note que tu ne peux pas les poser sur une case qui a deja ete jouee; donc je te conseille de trouver ce bonus en debut de partie (je ne fais pas les regles, je me contente de les ecrire).</string>
 
     <string name="gameRulesBonusIITitle">Rejouer</string>
-    <string name="gameRulesBonusII">Ce bonus te permet - c\'est un vrai truc de fou - de rejouer. Enfin, si tu rates. Quand tu rates tu rejoues.\nEt puis si tu rates encore, alors tu prends tes affaires et tu sors.\nY\'a des gens qui bossent ici.</string>
+    <string name="gameRulesBonusII">Ce bonus te permet - c\'est un vrai truc de fou - de rejouer. Enfin, si tu rates. Quand tu rates tu rejoues. Et puis si tu rates encore, alors tu prends tes affaires et tu sors. Y\'a des gens qui bossent ici.</string>
 
     <string name="gameRulesBonusIIITitle">Tir du fourbe</string>
-    <string name="gameRulesBonusIII">Ce tir fera tomber une pluie de ravage et de destruction qui touchera (en plus de la case visee) les cases directement au dessus et en dessous, et puis celle a gauche et celle a droite aussi.\nEn un seul coup.\nC\'est le bonus des deglinguos du ravage (et de la destruction).</string>
+    <string name="gameRulesBonusIII">Ce tir fera tomber une pluie de ravage et de destruction qui touchera (en plus de la case visee) les cases directement au dessus et en dessous, et puis celle a gauche et celle a droite aussi. En un seul coup. C\'est le bonus des deglinguos du ravage (et de la destruction).</string>
 
 
-    <string name="gameRulesEnd">Voila, tu en sais desormais autant que moi, alors fiche-moi le camp et va detruire des tetrominos !\nSignalons egalement qu\'aucun ornithorynque ne fut maltraite pendant la conception de ce jeu - bien qu\'on ait toujours garde un fouet a portee (au cas ou).</string>
-    <string name="gameRulesPS">Toute l\'equipe de developpement tient a presenter ses confuses aupres des farouches supporters de ce noble animal qu\'est l\'ornithorynque.\nCette derniere remarque inconsideree ne reflete pas nos convictions et nous vous assurons que nous n\'eprouvons que le plus profond respect pour cette stupide creature.</string>
+    <string name="gameRulesEnd">Voila, tu en sais desormais autant que moi, alors fiche-moi le camp et va detruire des tetrominos ! Signalons egalement qu\'aucun ornithorynque ne fut maltraite pendant la conception de ce jeu - bien qu\'on ait toujours garde un fouet a portee (au cas ou).</string>
+    <string name="gameRulesPS">Toute l\'equipe de developpement tient a presenter ses confuses aupres des farouches supporters de ce noble animal qu\'est l\'ornithorynque. Cette derniere remarque inconsideree ne reflete pas nos convictions et nous vous assurons que nous n\'eprouvons que le plus profond respect pour cette stupide creature.</string>
 
     <!--Message to Player-->
     <string name="buttonValidate">C\'est parti !</string>
     <string name="end_game_fragment_title">La partie est terminée !</string>
-    <string name="end_game_defeat">Tu as en bouche\nle goût amer de la\nDEFAITE !!</string>
+    <string name="end_game_defeat">Tu as en bouche le goût amer de la DEFAITE !!</string>
     <string name="ok_defeat">T\'as triché...</string>
     <string name="ok_victory">A l\'aise...</string>
-    <string name="end_game_victory">Tu ressens\nl\'ennivrante exaltation de la\nVICTOIRE !!</string>
+    <string name="end_game_victory">Tu ressens l\'ennivrante exaltation de la VICTOIRE !!</string>
     <string name="ok_exit">Oui, j\'ai piscine</string>
     <string name="no_exit">Non, certainement pas !</string>
     <string name="quit_game_alert_title">Honte et déshonneur !</string>
-    <string name="quit_game_alert_message">Tu vas t\'enfuir lâchement et la honte\npoursuivra ta famille sur trois générations...\nTu veux vraiment abandonner ?</string>
+    <string name="quit_game_alert_message">Tu vas t\'enfuir lâchement et la honte poursuivra ta famille sur trois générations... Tu veux vraiment abandonner ?</string>
 
-    <string name="place_pieces">Place tes pieces\n(avec strategie et savoir-faire)</string>
-    <string name="touchedPlayAgain">Pièce touchée !\nRejoue !</string>
-    <string name="drownPlayAgain">Pièce détruite !\nRejoue !</string>
+    <string name="place_pieces">Place tes pieces (avec strategie et savoir-faire)</string>
+    <string name="touchedPlayAgain">Pièce touchée ! Rejoue !</string>
+    <string name="drownPlayAgain">Pièce détruite ! Rejoue !</string>
     <string name="player_turn">A ton tour !</string>
     <string name="AITurn">Au tour de l\'adversaire !</string>
     <string name="missed">Raté !</string>
-    <string name="AITouched">Touché !\nL\'adversaire rejoue !</string>
-    <string name="AIDrown">Coulé !\nL\'adversaire rejoue !</string>
+    <string name="AITouched">Touché ! L\'adversaire rejoue !</string>
+    <string name="AIDrown">Coulé ! L\'adversaire rejoue !</string>
 
     <string name="RotationImpossible">Pas assez d\'espace pour la rotation !</string>
-    <string name="switch_view">Ou sont\n mes pieces ?</string>
-    <string name="randomize_positions">Place les pieces\npour moi !</string>
+    <string name="switch_view">Ou sont  mes pieces ?</string>
+    <string name="randomize_positions">Place les pieces pour moi !</string>
     <string name="playermap_view">Tes pieces t\'attendent sagement !</string>
 
     <string name="alreadyPlayedMessage">Tu as déjà joué cette case !</string>
