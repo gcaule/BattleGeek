@@ -529,14 +529,17 @@ public class GameActivity extends AppCompatActivity {
                     case MOVE:
                         mButtonMove.setVisibility(View.VISIBLE);
                         mButtonMove.setEnabled(true);
+                        showToast(R.string.playerBonusMove);
                         break;
                     case REPLAY:
                         mButtonReplay.setVisibility(View.VISIBLE);
                         mButtonReplay.setEnabled(true);
+                        showToast(R.string.playerBonusReplay);
                         break;
                     case BOMB:
                         mButtonCrossFire.setVisibility(View.VISIBLE);
                         mButtonCrossFire.setEnabled(true);
+                        showToast(R.string.playerBonusCrossFire);
                         break;
                 }
                 break;
