@@ -111,5 +111,8 @@
 
     <string name="gameRulesEnd">Right, you now know as much as me, so get the heck out of here and go destroy some tetrominos !\nPlease also note that no platypus was injured during the development of this game - although we always kept a whip for reach (just in case).</string>
     <string name="gameRulesPS">All the development team would like to apologize to the fierce supporters of this noble animal that is the platypus. This last mindless remark does not reflect our convictions and we assure you that we feel only the most profound respect for this stupid creature.</string>
+    <string name="playerBonusCrossFire">You got the Power Bomb bonus !</string>
+    <string name="playerBonusReplay">You got the Replay bonus !</string>
+    <string name="playerBonusMove">You got the Move bonus!</string>
 
 </resources>
