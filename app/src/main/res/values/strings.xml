@@ -114,7 +114,7 @@
     <string name="AIDrown">Coulé !\nL\'adversaire rejoue !</string>
 
     <string name="RotationImpossible">Pas assez d\'espace pour la rotation !</string>
-    <string name="switch_view">Ou sont\nmes pieces ?</string>
+    <string name="switch_view">Et mes\npieces ?</string>
     <string name="randomize_positions">Place les pieces\npour moi !</string>
     <string name="playermap_view">Tes pieces\nt\'attendent sagement !</string>
 
