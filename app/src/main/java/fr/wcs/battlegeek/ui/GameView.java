@@ -198,7 +198,7 @@ public class GameView extends View{
             width = desiredWidth;
         }
 
-        setMeasuredDimension(width - 8, width - 8);
+        setMeasuredDimension(width, width);
     }
 
     /**

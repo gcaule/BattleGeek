@@ -61,7 +61,7 @@ public class Utils {
         int seconds = (int) (milliseconds / 1000);
         int minutes = seconds / 60;
         int hours = minutes / 60;
-        minutes =minutes % 60;
+        minutes = minutes % 60;
         seconds = seconds % 60;
         String time = hours == 0 ? String.format("%02d:%02d", minutes, seconds)
                 : String.format("%d:%02d:%02d",hours, minutes, seconds);

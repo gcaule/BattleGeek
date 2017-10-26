@@ -88,7 +88,7 @@ public class CustomListAdapter extends BaseAdapter {
             holder.name.setText(m.getName());
             holder.ratio.setText(m.getRatio().get(level).toString() + "%");
             long bestTime = m.getBestTime().get(level.toString());
-            holder.bestTime.setText(bestTime != 2_147_483_647L ? Utils.timeFormat(bestTime) : "-");
+            holder.bestTime.setText(bestTime != -1 ? Utils.timeFormat(bestTime) : "-");
             int shotsCount = m.getBestShotsCount().get(level.toString());
             holder.shotsCount.setText(shotsCount != 2_147_483_647 ? String.valueOf(shotsCount) : "-");
             holder.levelGames.setText(m.getGameParts().get(level).toString());
