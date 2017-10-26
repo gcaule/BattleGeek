@@ -596,7 +596,7 @@ public class GameActivity extends AppCompatActivity {
                     // We need to drop that Bomb ...
                     if(mAI.getSelectedBonus() == BOMB) {
                         ArrayList<Point> points = mAI.getGameController()
-                                .getSurrondingcoordinates(aiPlayCoordinates.x, aiPlayCoordinates.y);
+                                .getSurrondingcoordinates(aiPlayCoordinates);
                         // Get the results first
                         ArrayList<Result> results = new ArrayList<>();
                         for (Point point : points) {

@@ -252,7 +252,16 @@ public class RankingActivity extends AppCompatActivity implements AdapterView.On
      */
     private void sortByBestTime() {
         if(mComparatorFactor != BEST_TIME || mLastSelectedLevel != PlayerModel.getComparatorLevel()) {
+            ArrayList<PlayerModel> filteredPlayers = new ArrayList<>();
+            // Filter Bullshit
+            for(PlayerModel p : mPlayerModelList) {
+                if(p.getBestTime().get(PlayerModel.getComparatorLevel().toString()) == -1L) {
+                    filteredPlayers.add(p);
+                }
+            }
+            mPlayerModelList.removeAll(filteredPlayers);
             Collections.sort(mPlayerModelList, PlayerModel.bestTimeComparator);
+            mPlayerModelList.addAll(filteredPlayers);
             adapter.notifyDataSetChanged();
             mComparatorFactor = BEST_TIME;
         }
