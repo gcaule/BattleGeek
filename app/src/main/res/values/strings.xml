@@ -6,7 +6,7 @@
     <string name="main_title">Arcade\nNavale</string>
     <string name="player_name">Ton petit nom ici</string>
     <string name="message_title">Bienvenue sur Arcade Navale</string>
-    <string name="message_firstusername">Dis moi, comment tu t\'appelles ? Ou alors mens-moi, tu pourras changer de nom plus tard si tu veux.</string>
+    <string name="message_firstusername">Dis moi, comment tu t\'appelles ?\nOu alors mens-moi, tu pourras changer de nom plus tard si tu veux.</string>
     <string name="message_error_emptyname">Tu n\'as pas entré de pseudo !</string>
     <string name="home_slogan">La Bataille Navale avec des pixels et des couleurs dedans</string>
     <string name="message_welcome">Hey, je te connais pas toi !</string>
@@ -30,7 +30,7 @@
     <string name="saved_parameters">Paramètres enregistrés !</string>
     <string name="settingsAnimationsLabel">Vitesse de jeu</string>
 
-    <string name="credits_text" translatable="false">Credits  "From www.flaticon.com :  Search-Stats, User, Trophy icons made by FreePik  Vibrate icon made by Those Icons  Home icon made by Google  Song-note icon made by Bogdan Rosu"  Musique :  Adphi</string>
+    <string name="credits_text" translatable="false">Credits\n\n"From www.flaticon.com :\n\nSearch-Stats, User, Trophy icons made by FreePik\n\nVibrate icon made by Those Icons\n\nHome icon made by Google\n\nSong-note icon made by Bogdan Rosu"\n\nMusique :  Adphi</string>
 
     <!-- Ranking and Stats-->
     <string name="titleRanking">Classement</string>
@@ -50,6 +50,10 @@
     <string name="aiBonusReplay">L\'adversaire dispose du bonus Rejouer !</string>
     <string name="aiBonusMove">L\'adversaire dispose du bonus Bouger !</string>
     <string name="aiUseBonusReplay">L\'adversaire utilise son bonus Rejouer !</string>
+
+    <string name="playerBonusCrossFire">Tu disposes du bonus Tir du Fourbe !</string>
+    <string name="playerBonusReplay">Tu disposes du bonus Rejouer !</string>
+    <string name="playerBonusMove">Tu disposes du bonus Bouger !</string>
 
     <!-- Règles du jeu -->
     <string name="gameRulesTitle">Regles du jeu</string>
@@ -91,28 +95,28 @@
     <!--Message to Player-->
     <string name="buttonValidate">C\'est parti !</string>
     <string name="end_game_fragment_title">La partie est terminée !</string>
-    <string name="end_game_defeat">Tu as en bouche le goût amer de la DEFAITE !!</string>
+    <string name="end_game_defeat">Tu as en bouche\nle goût amer de la\nDEFAITE !!</string>
     <string name="ok_defeat">T\'as triché...</string>
     <string name="ok_victory">A l\'aise...</string>
-    <string name="end_game_victory">Tu ressens l\'ennivrante exaltation de la VICTOIRE !!</string>
+    <string name="end_game_victory">Tu ressens\nl\'ennivrante exaltation de la\nVICTOIRE !!</string>
     <string name="ok_exit">Oui, j\'ai piscine</string>
     <string name="no_exit">Non, certainement pas !</string>
     <string name="quit_game_alert_title">Honte et déshonneur !</string>
-    <string name="quit_game_alert_message">Tu vas t\'enfuir lâchement et la honte poursuivra ta famille sur trois générations... Tu veux vraiment abandonner ?</string>
+    <string name="quit_game_alert_message">Tu vas t\'enfuir lâchement\net la honte poursuivra ta\nfamille sur trois générations...\nTu veux vraiment abandonner ?</string>
 
-    <string name="place_pieces">Place tes pieces (avec strategie et savoir-faire)</string>
-    <string name="touchedPlayAgain">Pièce touchée ! Rejoue !</string>
-    <string name="drownPlayAgain">Pièce détruite ! Rejoue !</string>
+    <string name="place_pieces">Place tes pièces\n(avec strategie et savoir-faire)</string>
+    <string name="touchedPlayAgain">Pièce touchée !\nRejoue !</string>
+    <string name="drownPlayAgain">Pièce détruite !\nRejoue !</string>
     <string name="player_turn">A ton tour !</string>
     <string name="AITurn">Au tour de l\'adversaire !</string>
     <string name="missed">Raté !</string>
-    <string name="AITouched">Touché ! L\'adversaire rejoue !</string>
-    <string name="AIDrown">Coulé ! L\'adversaire rejoue !</string>
+    <string name="AITouched">Touché !\nL\'adversaire rejoue !</string>
+    <string name="AIDrown">Coulé !\nL\'adversaire rejoue !</string>
 
     <string name="RotationImpossible">Pas assez d\'espace pour la rotation !</string>
-    <string name="switch_view">Ou sont  mes pieces ?</string>
-    <string name="randomize_positions">Place les pieces pour moi !</string>
-    <string name="playermap_view">Tes pieces t\'attendent sagement !</string>
+    <string name="switch_view">Ou sont\nmes pieces ?</string>
+    <string name="randomize_positions">Place les pieces\npour moi !</string>
+    <string name="playermap_view">Tes pieces\nt\'attendent sagement !</string>
 
     <string name="alreadyPlayedMessage">Tu as déjà joué cette case !</string>
     <string name="itemDrownMessage">Tu as détruit cette pièce !</string>
