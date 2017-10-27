@@ -261,7 +261,6 @@ public class GameActivity extends AppCompatActivity {
                     mAI = new AI();
                     if (mLevel == AI.Level.III || mLevel == AI.Level.IMPOSSIBLE) {
                         mAI.setPlayerMap(mapData);
-                        Log.d(TAG, "voir map: " + mapData);
                     }
 
                     if (mLevel == AI.Level.III) {
@@ -871,9 +870,14 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        Log.d(TAG, "onPause() called");
         super.onPause();
         pauseGame();
         mTimerPaused = true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        mSoundController.release();
+        super.onDestroy();
     }
 }
