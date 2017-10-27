@@ -441,15 +441,20 @@ public class Item implements View.OnTouchListener {
 
     public void setTouched(int x, int y) {
         mState = State.HIT;
-        Block block = getBlock(x,y);
-        block.setState(Block.State.DEAD);
-        // Check if Item is dead
-        for(Block b : mBlocks) {
-            if(b.getState() == Block.State.ALIVE) {
-                return;
+        try {
+            Block block = getBlock(x, y);
+            block.setState(Block.State.DEAD);
+            // Check if Item is dead
+            for (Block b : mBlocks) {
+                if (b.getState() == Block.State.ALIVE) {
+                    return;
+                }
             }
+            mState = State.DEAD;
         }
-        mState = State.DEAD;
+        catch (Exception e) {
+            showToast(R.string.bug);
+        }
     }
 
     /**

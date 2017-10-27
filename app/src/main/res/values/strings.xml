@@ -121,4 +121,6 @@
     <string name="alreadyPlayedMessage">Tu as déjà joué cette case !</string>
     <string name="itemDrownMessage">Tu as détruit cette pièce !</string>
 
+    <string name="bug">Oups</string>
+
 </resources>

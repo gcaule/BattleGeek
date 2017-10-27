@@ -114,5 +114,6 @@
     <string name="playerBonusCrossFire">You got the Power Bomb bonus !</string>
     <string name="playerBonusReplay">You got the Replay bonus !</string>
     <string name="playerBonusMove">You got the Move bonus!</string>
+    <string name="bug">Oops</string>
 
 </resources>
