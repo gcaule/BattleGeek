@@ -1,3 +1,9 @@
+Wild Code School -- https://wildcodeschool.fr/
+
+Second project -IA and literature inside.
+
+ 
+ 
  ![](https://lh3.googleusercontent.com/hMnXFS5UVjfvha3ZWBvecJ5StdtHJubn2ao6x75LqZ2hPNRUzfu_XmVqE2p8n2DL5smr=w300-rw) 
  
  **Arcade Navale**
