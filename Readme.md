@@ -1,6 +1,6 @@
 Wild Code School -- https://wildcodeschool.fr/
 
-Second project - IA and literature inside.
+Second project - AI and literature inside.
 
  
  
