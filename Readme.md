@@ -11,7 +11,7 @@ Second project - AI and literature inside.
 
 _Arcade Navale_ is a Arcade Tetris style BattleShip Android Game develop as  a learning Project at the Toulouse's [Wild Code School](https://wildcodeschool.fr/toulouse/).
 
-It is avaible on the [Play Store](https://play.google.com/store/apps/details?id=fr.wcs.battlegeek&hl=fr).
+It was avaible on the Play Store, but it is not the case anymore.
 
 -------------------------
 
